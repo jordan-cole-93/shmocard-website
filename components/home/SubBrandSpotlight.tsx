@@ -61,7 +61,7 @@ export function SubBrandSpotlight({
           </motion.p>
           <motion.div {...fadeUp(0.15)}>
             {ctaIsLive ? (
-              <Link className="btn btn--accent btn--lg spotlight__cta" href={cta.href}>
+              <Link className="btn btn--primary btn--lg spotlight__cta" href={cta.href}>
                 {cta.label} <Icon.Arrow style={{ width: 16, height: 16 }} />
               </Link>
             ) : (
