@@ -17,8 +17,8 @@ export interface SubBrandSpotlightProps {
     type: "live" | "soon";
   };
   visualLabel: string;
-  /** Surface variant. Drives section background. "chocolate" inverts text colors. */
-  surface?: "cream" | "snow" | "honey" | "blush" | "graham" | "chocolate";
+  /** Box surface. "chocolate" inverts text colors. */
+  surface?: "cream" | "snow" | "honey" | "blush" | "graham" | "chocolate" | "paper";
   /** If true, visual is on the left and copy on the right. */
   flip?: boolean;
 }
@@ -30,7 +30,7 @@ export function SubBrandSpotlight({
   lede,
   cta,
   visualLabel,
-  surface = "cream",
+  surface = "paper",
   flip = false,
 }: SubBrandSpotlightProps) {
   const reduceMotion = useReducedMotion();
@@ -44,11 +44,14 @@ export function SubBrandSpotlight({
   const ctaIsLive = cta.type === "live";
 
   return (
-    <section
-      id={id}
-      className={`spotlight spotlight--${surface}`}
-    >
-      <div className={`spotlight__inner ${flip ? "spotlight__inner--flip" : ""}`}>
+    <section id={id} className="spotlight">
+      <motion.div
+        className={`spotlight__box spotlight__box--${surface} ${flip ? "spotlight__box--flip" : ""}`}
+        initial={reduceMotion ? false : { opacity: 0, y: 24 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, margin: "-80px" }}
+        transition={{ duration: 0.4, ease: "easeOut" }}
+      >
         <div className="spotlight__copy">
           <motion.span className="spotlight__eyebrow" {...fadeUp(0)}>
             {eyebrow}
@@ -79,7 +82,7 @@ export function SubBrandSpotlight({
         <motion.div className="spotlight__visual" {...fadeUp(0.1)}>
           <Placeholder label={visualLabel} aspect="4 / 3" />
         </motion.div>
-      </div>
+      </motion.div>
     </section>
   );
 }

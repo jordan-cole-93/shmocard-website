@@ -1674,36 +1674,51 @@ img, svg { max-width: 100%; }
 }
 
 
-/* ---------- Sub-brand spotlights ---------- */
+/* ---------- Sub-brand spotlights — boxed cards ---------- */
 .spotlight {
-  padding: 80px 0;
+  padding: 36px 0;
   background: var(--cream);
 }
 
-.spotlight--cream { background: var(--cream); }
-.spotlight--snow { background: var(--snow); }
-.spotlight--graham { background: var(--graham-soft); }
-.spotlight--honey { background: var(--honey-soft); }
-.spotlight--blush { background: var(--blush-soft); }
-
-/* Chocolate variant: dark warm bg, inverted text colors */
-.spotlight--chocolate {
-  background: var(--chocolate);
+#review, #biz, #link, #reputation {
+  scroll-margin-top: 80px;
 }
-.spotlight--chocolate .spotlight__eyebrow {
+
+.spotlight__box {
+  max-width: var(--maxw);
+  margin: 0 auto;
+  padding: 56px 56px;
+  border-radius: var(--r-2xl);
+  border: 1px solid var(--hair);
+  box-shadow: var(--sh-card);
+  display: grid;
+  grid-template-columns: 5fr 6fr;
+  gap: 56px;
+  align-items: center;
+}
+
+/* Surface variants — apply to the BOX, not the section */
+.spotlight__box--paper { background: var(--paper); }
+.spotlight__box--cream { background: var(--cream); border-color: var(--hair-2); }
+.spotlight__box--snow { background: var(--snow); }
+.spotlight__box--graham { background: var(--graham-soft); border-color: rgba(184, 122, 24, 0.18); }
+.spotlight__box--honey { background: var(--honey-soft); border-color: rgba(184, 122, 24, 0.18); }
+.spotlight__box--blush { background: var(--blush-soft); border-color: rgba(184, 76, 24, 0.18); }
+
+/* Chocolate variant — dark warm box, inverted text colors */
+.spotlight__box--chocolate {
+  background: var(--chocolate);
+  border-color: rgba(255, 184, 51, 0.2);
+  box-shadow: var(--sh-lg);
+}
+.spotlight__box--chocolate .spotlight__eyebrow {
   color: var(--honey-soft);
   background: rgba(255, 248, 234, 0.12);
 }
-.spotlight--chocolate .spotlight__title {
-  color: var(--snow);
-}
-.spotlight--chocolate .spotlight__title em {
-  color: var(--honey);
-}
-.spotlight--chocolate .spotlight__lede {
-  color: var(--blush-soft);
-}
-.spotlight--chocolate .placeholder {
+.spotlight__box--chocolate .spotlight__title { color: var(--snow); }
+.spotlight__box--chocolate .spotlight__title em { color: var(--honey); }
+.spotlight__box--chocolate .spotlight__lede { color: var(--blush-soft); }
+.spotlight__box--chocolate .placeholder {
   background:
     repeating-linear-gradient(
       135deg,
@@ -1715,37 +1730,20 @@ img, svg { max-width: 100%; }
   border-color: rgba(255, 248, 234, 0.25);
   color: var(--honey-soft);
 }
-.spotlight--chocolate .placeholder__icon {
-  color: var(--honey-soft);
-}
-.spotlight--chocolate .placeholder__label {
-  color: var(--honey-soft);
-}
-.spotlight--chocolate .btn--ghost {
+.spotlight__box--chocolate .placeholder__icon { color: var(--honey-soft); }
+.spotlight__box--chocolate .placeholder__label { color: var(--honey-soft); }
+.spotlight__box--chocolate .btn--ghost {
   color: var(--snow);
   border-color: rgba(255, 248, 234, 0.25);
 }
-.spotlight--chocolate .btn--ghost:hover {
+.spotlight__box--chocolate .btn--ghost:hover {
   background: rgba(255, 248, 234, 0.08);
   border-color: rgba(255, 248, 234, 0.4);
 }
 
-#review, #biz, #link, #reputation {
-  scroll-margin-top: 80px;
-}
-
-.spotlight__inner {
-  max-width: var(--maxw);
-  margin: 0 auto;
-  padding: 0 var(--gutter);
-  display: grid;
-  grid-template-columns: 5fr 6fr;
-  gap: 72px;
-  align-items: center;
-}
-
-.spotlight__inner--flip > .spotlight__copy { order: 2; }
-.spotlight__inner--flip > .spotlight__visual { order: 1; }
+/* Flip alternation — visual on left */
+.spotlight__box--flip > .spotlight__copy { order: 2; }
+.spotlight__box--flip > .spotlight__visual { order: 1; }
 
 .spotlight__copy {
   max-width: 520px;
@@ -1772,13 +1770,12 @@ img, svg { max-width: 100%; }
 .spotlight__title {
   font-family: var(--font-sans);
   font-weight: 600;
-  font-size: 40px;
+  font-size: 38px;
   letter-spacing: -0.025em;
   line-height: 1.05;
   color: var(--ink);
   margin: 0;
 }
-
 .spotlight__title em {
   font-family: var(--font-serif);
   font-style: italic;
@@ -1805,21 +1802,21 @@ img, svg { max-width: 100%; }
   justify-content: center;
   align-items: center;
 }
-
 .spotlight__visual .placeholder {
   width: 100%;
-  max-width: 520px;
+  max-width: 460px;
 }
 
-@media (max-width: 900px) {
-  .spotlight { padding: 56px 0; }
-  .spotlight__inner {
+@media (max-width: 980px) {
+  .spotlight { padding: 24px 0; }
+  .spotlight__box {
+    padding: 36px 28px;
     grid-template-columns: 1fr;
-    gap: 32px;
+    gap: 28px;
   }
-  .spotlight__inner--flip > .spotlight__copy { order: 1; }
-  .spotlight__inner--flip > .spotlight__visual { order: 2; }
-  .spotlight__title { font-size: 30px; }
+  .spotlight__box--flip > .spotlight__copy { order: 1; }
+  .spotlight__box--flip > .spotlight__visual { order: 2; }
+  .spotlight__title { font-size: 28px; }
 }
 
 /* Footer "soon" inline pill */
