@@ -76,10 +76,18 @@ img, svg { max-width: 100%; }
 
 /* top nav */
 .nav {
-  position: sticky; top: 0; z-index: 40;
+  position: sticky; top: 0; z-index: 50;
   backdrop-filter: saturate(140%) blur(10px);
-  background: rgba(253, 246, 233, 0.85);
+  background: var(--cream);
   border-bottom: 1px solid var(--hair);
+  transition: background 200ms ease, backdrop-filter 200ms ease, box-shadow 200ms ease;
+}
+
+.nav--scrolled {
+  background: rgba(255, 241, 220, 0.85);
+  backdrop-filter: saturate(140%) blur(10px);
+  -webkit-backdrop-filter: saturate(140%) blur(10px);
+  box-shadow: var(--sh-sm);
 }
 .nav__inner {
   max-width: var(--maxw);
