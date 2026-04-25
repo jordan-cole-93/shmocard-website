@@ -3,6 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { motion, useReducedMotion } from "framer-motion";
+import { Sparkles } from "lucide-react";
 import { Icon } from "@/lib/icons";
 
 export function Hero() {
@@ -19,16 +20,22 @@ export function Hero() {
         <div className="home-hero__grid">
           <div>
             <div className="home-hero__copy">
-              <motion.h1 className="home-hero__title" {...fadeUp(0)}>
+              <motion.span className="home-hero__pill" {...fadeUp(0)}>
+                <span className="home-hero__pill-dot">
+                  <Sparkles style={{ width: 12, height: 12 }} />
+                </span>
+                Live now: Shmo Review · 3 more on the way
+              </motion.span>
+              <motion.h1 className="home-hero__title" {...fadeUp(0.05)}>
                 The toolkit your crew&apos;s been{" "}
                 <em>missing</em>.
               </motion.h1>
-              <motion.p className="home-hero__lede" {...fadeUp(0.05)}>
+              <motion.p className="home-hero__lede" {...fadeUp(0.1)}>
                 Four tools built for Main Street. Reviews, contacts, links,
                 reputation — every customer interaction your crew was letting
                 slip through the cracks.
               </motion.p>
-              <motion.div className="home-hero__ctas" {...fadeUp(0.1)}>
+              <motion.div className="home-hero__ctas" {...fadeUp(0.15)}>
                 <a className="btn btn--accent btn--lg" href="#family">
                   Meet the tools <span aria-hidden="true">↓</span>
                 </a>
@@ -36,7 +43,7 @@ export function Hero() {
                   Shop Shmo Review <Icon.Arrow style={{ width: 16, height: 16 }} />
                 </Link>
               </motion.div>
-              <motion.div className="home-hero__meta" {...fadeUp(0.15)}>
+              <motion.div className="home-hero__meta" {...fadeUp(0.2)}>
                 <span className="home-hero__meta-item">
                   <Icon.Check style={{ width: 13, height: 13, color: "var(--shmo-success)" }} />
                   No subscription required
