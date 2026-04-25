@@ -27,9 +27,9 @@ const jetbrainsMono = JetBrains_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Shmocard — Built for crews. Priced for bulk.",
+  title: "Shmocard — The toolkit your crew's been missing",
   description:
-    "NFC review cards, signs and discs for teams that talk to customers all day. One card per crew member, not one card per shop — equip everyone and watch the five-stars roll in.",
+    "Four tools built for Main Street. Reviews, contacts, links, reputation — every customer interaction your crew was letting slip through the cracks.",
 };
 
 export default function RootLayout({
