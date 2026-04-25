@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Shmocard — Built for crews. Priced for bulk.</title>
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500;600;700;800&family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400;1,9..144,500&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet"/>
+
+  <link rel="stylesheet" href="styles.css"/>
+  <link rel="stylesheet" href="home-styles.css?v=4"/>
+
+  <!-- Resources referenced from JS strings (lifted for the bundler) -->
+  <meta name="ext-resource-dependency" content="assets/mascot/hero-crew.png" data-resource-id="heroCrew" />
+  <meta name="ext-resource-dependency" content="assets/mascot/pointing.png" data-resource-id="mascot_pointing" />
+  <meta name="ext-resource-dependency" content="assets/products/card-cr80.jpg" data-resource-id="cardCr80" />
+  <meta name="ext-resource-dependency" content="assets/products/card-lsign.jpg" data-resource-id="cardLsign" />
+  <meta name="ext-resource-dependency" content="assets/products/card-square.jpg" data-resource-id="cardSquare" />
+</head>
+<body>
+  <template id="__bundler_thumbnail" data-bg-color="#FAEFD9">
+    <svg viewBox="0 0 1200 800" xmlns="http://www.w3.org/2000/svg">
+      <!-- Cream backdrop is supplied by data-bg-color -->
+      <!-- Stylized s'more mark -->
+      <g transform="translate(600 400)">
+        <!-- top graham -->
+        <rect x="-180" y="-160" width="360" height="80" rx="14" fill="#B07A4A"/>
+        <rect x="-180" y="-160" width="360" height="80" rx="14" fill="none" stroke="#7C4A23" stroke-width="3" stroke-dasharray="3 6" stroke-opacity="0.45"/>
+        <!-- chocolate -->
+        <rect x="-170" y="-86" width="340" height="34" rx="6" fill="#3B1F14"/>
+        <!-- marshmallow -->
+        <rect x="-170" y="-56" width="340" height="80" rx="14" fill="#F8EBD5"/>
+        <!-- bottom graham -->
+        <rect x="-180" y="22" width="360" height="80" rx="14" fill="#B07A4A"/>
+        <rect x="-180" y="22" width="360" height="80" rx="14" fill="none" stroke="#7C4A23" stroke-width="3" stroke-dasharray="3 6" stroke-opacity="0.45"/>
+        <!-- eyes -->
+        <circle cx="-60" cy="-12" r="9" fill="#3B1F14"/>
+        <circle cx="60" cy="-12" r="9" fill="#3B1F14"/>
+        <!-- smile -->
+        <path d="M -28 14 Q 0 32 28 14" fill="none" stroke="#3B1F14" stroke-width="5" stroke-linecap="round"/>
+        <!-- cheek dots -->
+        <circle cx="-100" cy="6" r="6" fill="#E8967E" opacity="0.7"/>
+        <circle cx="100" cy="6" r="6" fill="#E8967E" opacity="0.7"/>
+      </g>
+      <!-- Wordmark -->
+      <text x="600" y="650" text-anchor="middle" font-family="Georgia, serif" font-size="48" font-weight="600" fill="#3B1F14" letter-spacing="-1">
+        Shmo<tspan fill="#A66B33">card</tspan>
+      </text>
+    </svg>
+  </template>
+  <div id="root"></div>
+
+  <!-- React + Babel (pinned) -->
+  <script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+
+  <!-- Tweaks -->
+  <script type="text/babel" src="tweaks-panel.jsx"></script>
+
+  <!-- Home components -->
+  <script type="text/babel" src="home-icons.jsx"></script>
+  <script type="text/babel" src="home-nav.jsx"></script>
+  <script type="text/babel" src="standalone-build/home-hero.jsx"></script>
+  <script type="text/babel" src="home-family.jsx"></script>
+  <script type="text/babel" src="standalone-build/home-products.jsx"></script>
+  <script type="text/babel" src="standalone-build/home-bundles.jsx"></script>
+  <script type="text/babel" src="standalone-build/home-shopextras.jsx"></script>
+  <script type="text/babel" src="home-bulkmath.jsx"></script>
+  <script type="text/babel" src="home-testimonials.jsx"></script>
+  <script type="text/babel" src="home-pricing.jsx"></script>
+  <script type="text/babel" src="home-footer.jsx"></script>
+  <script type="text/babel" src="home-app.jsx"></script>
+</body>
+</html>

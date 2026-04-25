@@ -1,0 +1,40 @@
+{
+  "fileFiltering": {
+    "respectHiddenFiles": false
+  },
+  "permissions": {
+    "allow": [
+      "Bash(npm run dev)",
+      "Bash(npm run build)",
+      "Bash(npx next dev)",
+      "Bash(npx next lint)",
+      "Bash(npx next start)",
+      "Bash(npm install:*)"
+    ]
+  },
+  "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "Write|Edit",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "jq -r '.tool_input.file_path // empty' | { read -r f; case \"$f\" in *.env|*.env.*) echo '{\"hookSpecificOutput\":{\"hookEventName\":\"PreToolUse\",\"permissionDecision\":\"deny\",\"permissionDecisionReason\":\".env files are protected. Ask Jordan before editing.\"}}';; *) echo '{}';; esac; }",
+            "statusMessage": "Checking .env protection..."
+          }
+        ]
+      },
+      {
+        "matcher": "Bash",
+        "hooks": [
+          {
+            "type": "prompt",
+            "prompt": "The user is working on the Shmocard Website project which uses a READ-ONLY Shopify Storefront API. The live store at shop.shmocard.com must not be modified. Check this bash command input: $ARGUMENTS — Does it attempt to write to Shopify Admin API, modify Shopify theme files, or run any destructive Shopify CLI command? If yes, deny it. If it's a read-only operation or not Shopify-related, allow it.",
+            "if": "Bash(*shopify*)",
+            "statusMessage": "Checking Shopify safety..."
+          }
+        ]
+      }
+    ]
+  }
+}
