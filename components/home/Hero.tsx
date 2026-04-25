@@ -2,9 +2,17 @@
 
 import Link from "next/link";
 import { motion, useReducedMotion } from "framer-motion";
-import { Sparkles } from "lucide-react";
+import { Sparkles, Star } from "lucide-react";
 import { Icon } from "@/lib/icons";
 import { Placeholder } from "@/components/ui/Placeholder";
+
+const AVATAR_COLORS = [
+  "#FFE3B0", // honey-soft
+  "#FFD8C2", // blush-soft
+  "#FFE0C2", // graham-soft
+  "#FFA378", // peach
+  "#FFF1DC", // cream
+];
 
 export function Hero() {
   const reduceMotion = useReducedMotion();
@@ -43,16 +51,36 @@ export function Hero() {
                   Shop Shmo Review <Icon.Arrow style={{ width: 16, height: 16 }} />
                 </Link>
               </motion.div>
-              <motion.div className="home-hero__meta" {...fadeUp(0.2)}>
-                <span className="home-hero__meta-item">
-                  <Icon.Check style={{ width: 13, height: 13, color: "var(--shmo-success)" }} />
-                  No subscription required
-                </span>
-                <span className="home-hero__meta-sep" />
-                <span className="home-hero__meta-item">
-                  <Icon.Check style={{ width: 13, height: 13, color: "var(--shmo-success)" }} />
-                  Made for Main Street
-                </span>
+              <motion.div className="hero-avatar-stack" {...fadeUp(0.2)}>
+                <div className="hero-avatar-stack__row">
+                  {AVATAR_COLORS.map((color, i) => (
+                    <span
+                      key={i}
+                      className="hero-avatar"
+                      style={{
+                        background: color,
+                        marginLeft: i === 0 ? 0 : -10,
+                        zIndex: AVATAR_COLORS.length - i,
+                      }}
+                      aria-hidden="true"
+                    />
+                  ))}
+                </div>
+                <div className="hero-avatar-stack__copy">
+                  <span className="hero-avatar-stack__stars" aria-label="5 out of 5 stars">
+                    {[0, 1, 2, 3, 4].map((i) => (
+                      <Star
+                        key={i}
+                        style={{ width: 12, height: 12 }}
+                        fill="currentColor"
+                      />
+                    ))}
+                  </span>
+                  <p className="hero-avatar-stack__text">
+                    Loved by <strong>Carly</strong>, <strong>Marshall</strong>, and{" "}
+                    <em>500+</em> Main Street crews
+                  </p>
+                </div>
               </motion.div>
             </div>
           </div>

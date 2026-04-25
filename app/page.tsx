@@ -4,7 +4,10 @@ import { Hero } from "@/components/home/Hero";
 import { TrustBar } from "@/components/home/TrustBar";
 import { ShmoFamily } from "@/components/home/ShmoFamily";
 import { WhyShmocard } from "@/components/home/WhyShmocard";
-import { SubBrandSpotlights } from "@/components/home/SubBrandSpotlights";
+import { SubBrandShowcase } from "@/components/home/SubBrandShowcase";
+import { RealResults } from "@/components/home/RealResults";
+import { Testimonials } from "@/components/home/Testimonials";
+import { FAQ } from "@/components/home/FAQ";
 
 export default function HomePage() {
   return (
@@ -15,7 +18,10 @@ export default function HomePage() {
         <TrustBar />
         <ShmoFamily />
         <WhyShmocard />
-        <SubBrandSpotlights />
+        <SubBrandShowcase />
+        <RealResults />
+        <Testimonials />
+        <FAQ />
       </main>
       <Footer />
     </div>

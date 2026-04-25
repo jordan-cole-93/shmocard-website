@@ -4,6 +4,7 @@ import { motion, useReducedMotion } from "framer-motion";
 import { Users, Zap, Boxes } from "lucide-react";
 
 interface Pillar {
+  num: string;
   Icon: typeof Users;
   title: string;
   body: string;
@@ -11,16 +12,19 @@ interface Pillar {
 
 const PILLARS: Pillar[] = [
   {
+    num: "01",
     Icon: Users,
     title: "Built for the whole crew",
     body: "Not just the owner. One tool per employee means seven times more interactions captured.",
   },
   {
+    num: "02",
     Icon: Zap,
     title: "No apps. No logins. No friction.",
-    body: "Customers tap, scan, or click. That's it. No account creation, no download.",
+    body: "Customers tap, scan, or click. That's it. No account creation, no download, no walkthroughs.",
   },
   {
+    num: "03",
     Icon: Boxes,
     title: "One family. Not four subscriptions.",
     body: "Every Shmocard tool works together. Early adopters get grandfathered into new tools.",
@@ -34,7 +38,7 @@ export function WhyShmocard() {
     <section id="why" className="why-section">
       <div className="why-section__inner">
         <div className="why-section__intro">
-          <div className="why-section__eyebrow">Why Shmocard</div>
+          <span className="why-section__eyebrow">Why Shmocard</span>
           <h2 className="why-section__title">
             Simple tools. Real results. <em>No</em> subscription on the cards.
           </h2>
@@ -45,21 +49,24 @@ export function WhyShmocard() {
         </div>
 
         <ul className="why-section__pillars">
-          {PILLARS.map(({ Icon, title, body }, i) => (
+          {PILLARS.map((p, i) => (
             <motion.li
-              key={title}
+              key={p.num}
               className="why-pillar"
-              initial={reduceMotion ? false : { opacity: 0, x: 16 }}
-              whileInView={{ opacity: 1, x: 0 }}
+              initial={reduceMotion ? false : { opacity: 0, y: 16 }}
+              whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "-60px" }}
-              transition={{ duration: 0.34, delay: i * 0.08, ease: "easeOut" }}
+              transition={{ duration: 0.36, delay: i * 0.08, ease: "easeOut" }}
             >
-              <span className="why-pillar__icon">
-                <Icon style={{ width: 18, height: 18 }} />
-              </span>
-              <div className="why-pillar__text">
-                <h3 className="why-pillar__title">{title}</h3>
-                <p className="why-pillar__body">{body}</p>
+              <span className="why-pillar__num">{p.num}</span>
+              <div className="why-pillar__body">
+                <div className="why-pillar__row">
+                  <span className="why-pillar__icon">
+                    <p.Icon style={{ width: 16, height: 16 }} />
+                  </span>
+                  <h3 className="why-pillar__title">{p.title}</h3>
+                </div>
+                <p className="why-pillar__text">{p.body}</p>
               </div>
             </motion.li>
           ))}

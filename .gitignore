@@ -18,6 +18,11 @@
 # Vercel
 .vercel
 
+# Session artifacts (dev-only, not for repo)
+/.playwright-mcp/
+/screenshots/
+/.claude/agent-memory/
+
 # TypeScript
 *.tsbuildinfo
 next-env.d.ts
