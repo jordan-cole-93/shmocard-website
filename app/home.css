@@ -1682,6 +1682,25 @@ img, svg { max-width: 100%; }
 }
 
 
+.home-hero__icon-row {
+  display: flex;
+  gap: 14px;
+  margin-top: 28px;
+  flex-wrap: wrap;
+}
+
+.home-hero__icon-cell {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  border-radius: var(--r-md);
+  background: var(--paper);
+  border: 1px solid var(--hair);
+  color: var(--ink-3);
+}
+
 /* Footer "soon" inline pill */
 .home-footer__soon {
   display: inline-block;
