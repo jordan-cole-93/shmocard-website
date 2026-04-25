@@ -2092,3 +2092,14 @@ img, svg { max-width: 100%; }
   color: var(--hair-3);
   font-size: 14px;
 }
+
+.spotlight__cta {
+  display: flex;
+  justify-content: center;
+  margin-top: 56px;
+}
+
+#why,
+#review {
+  scroll-margin-top: 80px;
+}
