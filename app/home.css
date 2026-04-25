@@ -1682,6 +1682,10 @@ img, svg { max-width: 100%; }
 }
 
 
+#family {
+  scroll-margin-top: 80px;
+}
+
 .home-hero__icon-row {
   display: flex;
   gap: 14px;
