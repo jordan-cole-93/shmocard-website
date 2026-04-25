@@ -1674,6 +1674,106 @@ img, svg { max-width: 100%; }
 }
 
 
+/* ---------- Sub-brand spotlights ---------- */
+.spotlight {
+  padding: 80px 0;
+  background: var(--cream);
+}
+
+.spotlight--snow { background: var(--snow); }
+
+#review, #biz, #link, #reputation {
+  scroll-margin-top: 80px;
+}
+
+.spotlight__inner {
+  max-width: var(--maxw);
+  margin: 0 auto;
+  padding: 0 var(--gutter);
+  display: grid;
+  grid-template-columns: 5fr 6fr;
+  gap: 72px;
+  align-items: center;
+}
+
+.spotlight__inner--flip > .spotlight__copy { order: 2; }
+.spotlight__inner--flip > .spotlight__visual { order: 1; }
+
+.spotlight__copy {
+  max-width: 520px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 16px;
+}
+
+.spotlight__eyebrow {
+  display: inline-block;
+  font-family: var(--font-sans);
+  font-weight: 600;
+  font-size: 11px;
+  letter-spacing: 1.6px;
+  text-transform: uppercase;
+  color: var(--ink-2);
+  padding: 4px 10px;
+  background: rgba(59, 31, 20, 0.06);
+  border-radius: var(--r-full);
+  margin: 0;
+}
+
+.spotlight__title {
+  font-family: var(--font-sans);
+  font-weight: 600;
+  font-size: 40px;
+  letter-spacing: -0.025em;
+  line-height: 1.05;
+  color: var(--ink);
+  margin: 0;
+}
+
+.spotlight__title em {
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-weight: 400;
+  color: var(--graham);
+}
+
+.spotlight__lede {
+  font-family: var(--font-sans);
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 1.55;
+  color: var(--ink-3);
+  margin: 0;
+}
+
+.spotlight__cta {
+  margin-top: 8px;
+}
+
+.spotlight__visual {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.spotlight__visual .placeholder {
+  width: 100%;
+  max-width: 520px;
+}
+
+@media (max-width: 900px) {
+  .spotlight { padding: 56px 0; }
+  .spotlight__inner {
+    grid-template-columns: 1fr;
+    gap: 32px;
+  }
+  .spotlight__inner--flip > .spotlight__copy { order: 1; }
+  .spotlight__inner--flip > .spotlight__visual { order: 2; }
+  .spotlight__title { font-size: 30px; }
+}
+
 /* Footer "soon" inline pill */
 .home-footer__soon {
   display: inline-block;

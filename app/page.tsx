@@ -4,6 +4,7 @@ import { Hero } from "@/components/home/Hero";
 import { TrustBar } from "@/components/home/TrustBar";
 import { ShmoFamily } from "@/components/home/ShmoFamily";
 import { WhyShmocard } from "@/components/home/WhyShmocard";
+import { SubBrandSpotlights } from "@/components/home/SubBrandSpotlights";
 
 export default function HomePage() {
   return (
@@ -14,6 +15,7 @@ export default function HomePage() {
         <TrustBar />
         <ShmoFamily />
         <WhyShmocard />
+        <SubBrandSpotlights />
       </main>
       <Footer />
     </div>
