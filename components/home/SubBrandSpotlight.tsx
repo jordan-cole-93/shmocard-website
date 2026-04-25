@@ -17,8 +17,8 @@ export interface SubBrandSpotlightProps {
     type: "live" | "soon";
   };
   visualLabel: string;
-  /** Surface variant — "cream" (default) or "snow" (lifted). */
-  surface?: "cream" | "snow";
+  /** Surface variant. Drives section background. "chocolate" inverts text colors. */
+  surface?: "cream" | "snow" | "honey" | "blush" | "graham" | "chocolate";
   /** If true, visual is on the left and copy on the right. */
   flip?: boolean;
 }
@@ -46,7 +46,7 @@ export function SubBrandSpotlight({
   return (
     <section
       id={id}
-      className={`spotlight ${surface === "snow" ? "spotlight--snow" : ""}`}
+      className={`spotlight spotlight--${surface}`}
     >
       <div className={`spotlight__inner ${flip ? "spotlight__inner--flip" : ""}`}>
         <div className="spotlight__copy">

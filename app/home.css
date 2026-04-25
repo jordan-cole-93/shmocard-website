@@ -1680,7 +1680,55 @@ img, svg { max-width: 100%; }
   background: var(--cream);
 }
 
+.spotlight--cream { background: var(--cream); }
 .spotlight--snow { background: var(--snow); }
+.spotlight--graham { background: var(--graham-soft); }
+.spotlight--honey { background: var(--honey-soft); }
+.spotlight--blush { background: var(--blush-soft); }
+
+/* Chocolate variant: dark warm bg, inverted text colors */
+.spotlight--chocolate {
+  background: var(--chocolate);
+}
+.spotlight--chocolate .spotlight__eyebrow {
+  color: var(--honey-soft);
+  background: rgba(255, 248, 234, 0.12);
+}
+.spotlight--chocolate .spotlight__title {
+  color: var(--snow);
+}
+.spotlight--chocolate .spotlight__title em {
+  color: var(--honey);
+}
+.spotlight--chocolate .spotlight__lede {
+  color: var(--blush-soft);
+}
+.spotlight--chocolate .placeholder {
+  background:
+    repeating-linear-gradient(
+      135deg,
+      rgba(255, 248, 234, 0.10) 0,
+      rgba(255, 248, 234, 0.10) 14px,
+      rgba(255, 248, 234, 0.05) 14px,
+      rgba(255, 248, 234, 0.05) 28px
+    );
+  border-color: rgba(255, 248, 234, 0.25);
+  color: var(--honey-soft);
+}
+.spotlight--chocolate .placeholder__icon {
+  color: var(--honey-soft);
+}
+.spotlight--chocolate .placeholder__label {
+  color: var(--honey-soft);
+}
+.spotlight--chocolate .btn--ghost {
+  color: var(--snow);
+  border-color: rgba(255, 248, 234, 0.25);
+}
+.spotlight--chocolate .btn--ghost:hover {
+  background: rgba(255, 248, 234, 0.08);
+  border-color: rgba(255, 248, 234, 0.4);
+}
 
 #review, #biz, #link, #reputation {
   scroll-margin-top: 80px;

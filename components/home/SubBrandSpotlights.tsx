@@ -28,7 +28,7 @@ export function SubBrandSpotlights() {
         lede="Paper business cards get lost. Shmo Biz lives on the customer's phone the moment you tap. Name, title, phone, website, socials — always up to date."
         cta={{ label: "Get notified", href: "#", type: "soon" }}
         visualLabel="Shmo Biz · Phone + business card mock"
-        surface="snow"
+        surface="honey"
         flip
       />
 
@@ -43,7 +43,7 @@ export function SubBrandSpotlights() {
         lede="When a customer asks where to find you, one link sends them to your Google page, your booking, your menu, your socials. A branded hub built for Main Street."
         cta={{ label: "Get notified", href: "#", type: "soon" }}
         visualLabel="Shmo Link · Phone showing link hub"
-        surface="cream"
+        surface="blush"
       />
 
       <SubBrandSpotlight
@@ -57,7 +57,7 @@ export function SubBrandSpotlights() {
         lede="Responding to reviews builds trust and improves local ranking. Shmo Reputation answers every review automatically, in your brand's voice."
         cta={{ label: "Get notified", href: "#", type: "soon" }}
         visualLabel="Shmo Reputation · Review + auto-reply mock"
-        surface="snow"
+        surface="chocolate"
         flip
       />
     </>
