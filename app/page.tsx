@@ -5,13 +5,13 @@ import { ShmoFamily } from "@/components/home/ShmoFamily";
 
 export default function HomePage() {
   return (
-    <>
+    <div className="home">
       <Nav />
       <main>
         <Hero />
         <ShmoFamily />
       </main>
       <Footer />
-    </>
+    </div>
   );
 }
