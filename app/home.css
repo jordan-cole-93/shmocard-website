@@ -1689,6 +1689,73 @@ img, svg { max-width: 100%; }
   vertical-align: middle;
 }
 
+/* ---------- Why Shmocard — peachy section ---------- */
+.why-section {
+  background: var(--graham-soft);
+  position: relative;
+}
+
+#why { scroll-margin-top: 80px; }
+
+.why-pillars {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+  max-width: var(--maxw);
+  margin: 0 auto;
+  padding: 0 var(--gutter);
+}
+
+.why-pillar {
+  background: var(--paper);
+  border: 1px solid var(--hair);
+  border-radius: var(--r-lg);
+  padding: 32px 28px;
+  box-shadow: var(--sh-card);
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.why-pillar__icon {
+  width: 48px;
+  height: 48px;
+  border-radius: var(--r-md);
+  background: var(--graham-soft);
+  color: var(--graham-deep);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.why-pillar__title {
+  font-family: var(--font-sans);
+  font-weight: 600;
+  font-size: 18px;
+  letter-spacing: -0.01em;
+  color: var(--ink);
+  margin: 0;
+  line-height: 1.25;
+}
+
+.why-pillar__body {
+  font-family: var(--font-sans);
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 1.55;
+  color: var(--ink-3);
+  margin: 0;
+}
+
+@media (max-width: 900px) {
+  .why-pillars {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+  .why-pillar { padding: 24px; }
+}
+
 /* ---------- Image placeholder (build-time, swapped at end) ---------- */
 .placeholder {
   width: 100%;

@@ -3,6 +3,7 @@ import { Footer } from "@/components/footer/Footer";
 import { Hero } from "@/components/home/Hero";
 import { TrustBar } from "@/components/home/TrustBar";
 import { ShmoFamily } from "@/components/home/ShmoFamily";
+import { WhyShmocard } from "@/components/home/WhyShmocard";
 
 export default function HomePage() {
   return (
@@ -12,6 +13,7 @@ export default function HomePage() {
         <Hero />
         <TrustBar />
         <ShmoFamily />
+        <WhyShmocard />
       </main>
       <Footer />
     </div>
