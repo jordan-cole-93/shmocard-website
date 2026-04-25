@@ -237,10 +237,13 @@ img, svg { max-width: 100%; }
   text-align: center; justify-items: center; max-width: 780px;
 }
 .hsection__eyebrow {
-  font-family: var(--font-serif);
-  font-style: italic; font-weight: 400;
-  font-size: 15px; color: var(--tomato);
-  letter-spacing: 0.2px;
+  font-family: var(--font-inter-tight), sans-serif;
+  font-weight: 600;
+  font-size: 11px;
+  letter-spacing: 1.6px;
+  text-transform: uppercase;
+  color: var(--muted);
+  font-style: normal;
   margin-bottom: 10px;
   display: inline-flex; align-items: baseline; gap: 10px;
 }
@@ -397,9 +400,8 @@ img, svg { max-width: 100%; }
 .home-hero__stage::before {
   content: "";
   position: absolute; inset: 0;
-  background-image:
-    radial-gradient(circle at 30% 20%, rgba(255,255,255,0.4), transparent 45%),
-    radial-gradient(circle at 75% 80%, rgba(245,184,61,0.18), transparent 50%);
+  background: var(--graham-soft);
+  opacity: 0.6;
   pointer-events: none;
 }
 .home-hero__mascot {

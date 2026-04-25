@@ -80,8 +80,8 @@ export function ShmoFamily() {
           </h2>
         </div>
         <p className="hsection__lede">
-          Four sub-brands, one shared platform. Shmo Review is shipping today;
-          the rest roll out over the next few quarters.
+          Four sub-brands, one shared platform. Shmo Review is available now;
+          the rest are coming over the next few quarters.
         </p>
       </div>
       <div className="hsection__body">

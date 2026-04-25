@@ -4,8 +4,9 @@
 
 | Surface | Headline |
 |---|---|
-| Homepage hero | **"Built for crews. Priced for bulk."** |
-| Shmo Review hero | **"One tap. One five-star review."** |
+| Homepage hero (Shmocard parent brand) | **"The toolkit your crew's been missing."** |
+| Shmo Review category page hero | **"One tap. One five-star review."** |
+| Shmo Review homepage spotlight | **"Built for crews. Priced for bulk."** |
 
 Do not change these without explicit approval.
 
