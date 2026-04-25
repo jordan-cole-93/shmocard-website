@@ -1688,3 +1688,43 @@ img, svg { max-width: 100%; }
   border-radius: var(--r-full);
   vertical-align: middle;
 }
+
+/* ---------- Image placeholder (build-time, swapped at end) ---------- */
+.placeholder {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  background:
+    repeating-linear-gradient(
+      135deg,
+      var(--graham-soft) 0,
+      var(--graham-soft) 14px,
+      var(--blush-soft) 14px,
+      var(--blush-soft) 28px
+    );
+  border: 1.5px dashed var(--hair-3);
+  border-radius: var(--r-lg);
+  color: var(--choc-deep);
+  padding: 24px;
+  user-select: none;
+}
+.placeholder__icon {
+  width: 36px;
+  height: 36px;
+  opacity: 0.6;
+  stroke-width: 1.5;
+}
+.placeholder__label {
+  font-family: var(--font-mono, "JetBrains Mono", monospace);
+  font-size: 11px;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+  text-align: center;
+  max-width: 80%;
+  line-height: 1.4;
+  opacity: 0.8;
+}

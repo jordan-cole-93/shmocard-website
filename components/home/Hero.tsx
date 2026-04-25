@@ -1,10 +1,10 @@
 "use client";
 
-import Image from "next/image";
 import Link from "next/link";
 import { motion, useReducedMotion } from "framer-motion";
 import { Sparkles } from "lucide-react";
 import { Icon } from "@/lib/icons";
+import { Placeholder } from "@/components/ui/Placeholder";
 
 export function Hero() {
   const reduceMotion = useReducedMotion();
@@ -63,12 +63,9 @@ export function Hero() {
             animate={{ opacity: 1 }}
             transition={{ duration: 0.5, delay: 0.1, ease: "easeOut" }}
           >
-            <Image
-              src="/mascot/hero-toolkit.png"
-              alt="Shmocard mascot holding a toolkit of tools"
-              width={520}
-              height={520}
-              priority
+            <Placeholder
+              label="Hero mascot · toolkit pose"
+              aspect="1 / 1"
               className="home-hero__mascot"
             />
           </motion.div>
