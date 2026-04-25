@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import { Inter_Tight, Fraunces, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
+import "./styles.css";
+import "./home.css";
 
 const interTight = Inter_Tight({
   subsets: ["latin"],
@@ -25,9 +27,9 @@ const jetbrainsMono = JetBrains_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Shmocard — The toolkit your crew's been missing",
+  title: "Shmocard — Built for crews. Priced for bulk.",
   description:
-    "Four tools built for Main Street. Reviews, contacts, links, reputation — every customer interaction your crew was letting slip through the cracks.",
+    "NFC review cards, signs and discs for teams that talk to customers all day. One card per crew member, not one card per shop — equip everyone and watch the five-stars roll in.",
 };
 
 export default function RootLayout({

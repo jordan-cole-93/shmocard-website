@@ -130,6 +130,3 @@ body {
 }
 
 a { color: inherit; }
-
-@import "./styles.css";
-@import "./home.css";
