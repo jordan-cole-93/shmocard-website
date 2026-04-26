@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import { Inter_Tight, Fraunces } from "next/font/google";
 import "./globals.css";
+import Nav from "@/components/nav/Nav";
+import Footer from "@/components/footer/Footer";
 
 const interTight = Inter_Tight({
   subsets: ["latin"],
@@ -31,7 +33,11 @@ export default function RootLayout({
       lang="en"
       className={`${interTight.variable} ${fraunces.variable}`}
     >
-      <body>{children}</body>
+      <body>
+        <Nav />
+        {children}
+        <Footer />
+      </body>
     </html>
   );
 }

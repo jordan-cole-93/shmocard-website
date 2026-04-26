@@ -1,6 +1,6 @@
 import { Boxes, Users, Zap } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
-import { Section, Eyebrow, H2, Lede, I } from "@/components/shm/Shm";
+import { Section, Eyebrow, H2, Lede } from "@/components/shm/Shm";
 
 type Pillar = {
   num: string;
@@ -34,14 +34,12 @@ export default function WhyShmocard() {
   return (
     <Section recipe="snow" id="why">
       <div className="grid grid-cols-1 lg:grid-cols-[1fr_1.4fr] gap-8 lg:gap-16 items-start">
-        <div className="max-w-[28ch]">
+        <div>
           <Eyebrow>Why Shmocard</Eyebrow>
-          <H2 className="mt-3">
-            Simple tools. Real results. <I>No</I> subscription on the cards.
-          </H2>
-          <Lede className="mt-4">
+          <H2 className="mt-3">Simple tools. Real results.</H2>
+          <Lede className="mt-4 max-w-[40ch]">
             Built around the one thing every customer carries — their phone.
-            No apps, no logins, no rituals. Just tap.
+            No apps, no logins, no subscription on the cards. Just tap.
           </Lede>
         </div>
 

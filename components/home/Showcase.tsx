@@ -130,7 +130,7 @@ export default function Showcase() {
       </div>
 
       <div className="mt-8 flex justify-center">
-        <ol className="inline-flex items-center gap-6 lg:gap-8 px-6 py-4 rounded-lg bg-[rgba(255,248,234,0.04)] border border-[rgba(255,235,210,0.14)] flex-wrap">
+        <ol className="inline-flex items-center gap-6 lg:gap-8 px-6 py-4 rounded-lg bg-cocoa-tint border border-paper-line flex-wrap">
           {ROADMAP.map((node, i) => (
             <li
               key={node.sublabel}
@@ -139,36 +139,35 @@ export default function Showcase() {
               {i > 0 && (
                 <span
                   aria-hidden="true"
-                  className="hidden sm:inline-block w-7 h-px bg-[rgba(255,235,210,0.25)]"
+                  className="hidden sm:inline-block w-7 h-px bg-paper-line"
                 />
               )}
               <span className="flex items-center gap-2">
                 <span
-                  className={`rounded-full flex items-center justify-center ${
+                  className={`rounded-full flex items-center justify-center w-4 h-4 ${
                     node.done
                       ? "bg-ember text-paper"
-                      : "border border-[rgba(255,235,210,0.35)] bg-transparent"
+                      : "border border-paper-line bg-transparent"
                   }`}
-                  style={{ width: "16px", height: "16px" }}
                 >
                   {node.done && <Check size={9} strokeWidth={3} />}
                 </span>
                 <span className="flex flex-col leading-tight">
                   <span
                     className={`text-[10.5px] font-semibold tracking-[0.8px] uppercase ${
-                      node.done ? "text-ember" : "text-[rgba(255,235,210,0.55)]"
+                      node.done ? "text-ember" : "text-paper-mute"
                     }`}
                   >
                     {node.label}
                   </span>
-                  <span className="text-[12px] text-[rgba(255,235,210,0.85)] mt-[2px]">
+                  <span className="text-[12px] text-paper-soft mt-[2px]">
                     {node.sublabel}
                   </span>
                 </span>
               </span>
             </li>
           ))}
-          <li className="flex flex-col leading-tight pl-6 border-l border-[rgba(255,235,210,0.18)]">
+          <li className="flex flex-col leading-tight pl-6 border-l border-paper-line">
             <span className="text-[10.5px] font-semibold tracking-[0.8px] uppercase text-honey mb-[2px]">
               Currently shipping
             </span>
@@ -182,14 +181,14 @@ export default function Showcase() {
       <div
         onMouseEnter={() => setPaused(true)}
         onMouseLeave={() => setPaused(false)}
-        className="mt-8 rounded-2xl border border-[rgba(255,235,210,0.14)] bg-[rgba(255,248,234,0.04)] p-8 lg:p-10"
+        className="mt-8 rounded-2xl border border-paper-line bg-cocoa-tint p-8 lg:p-10"
       >
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-10 items-center">
-          <div key={brand.id} className="flex flex-col items-start text-left">
+          <div key={brand.id} className="flex flex-col items-center text-center">
             <span
               className={`inline-flex items-center gap-2 text-[10.5px] font-semibold tracking-[0.8px] uppercase rounded-full px-2.5 py-1 mb-4 ${
                 brand.status === "live"
-                  ? "bg-success/20 text-[#6EE3A1]"
+                  ? "bg-success/20 text-success-bright"
                   : "bg-honey/20 text-honey"
               }`}
             >
@@ -197,12 +196,7 @@ export default function Showcase() {
             </span>
 
             <h3
-              className="font-sans font-semibold text-paper text-balance"
-              style={{
-                fontSize: "40px",
-                lineHeight: 1.04,
-                letterSpacing: "-0.025em",
-              }}
+              className="font-sans font-semibold text-paper text-balance text-[40px] leading-[1.04] tracking-[-0.025em]"
             >
               {brand.headlinePre}
               <em className="font-serif italic font-normal text-honey">
@@ -211,11 +205,11 @@ export default function Showcase() {
               {brand.headlinePost}
             </h3>
 
-            <p className="mt-4 text-[16px] leading-[1.55] text-[rgba(255,235,210,0.8)] max-w-[48ch]">
+            <p className="mt-4 text-[16px] leading-[1.55] text-paper-soft max-w-[48ch]">
               {brand.lede}
             </p>
 
-            <div className="mt-6 w-full flex flex-wrap gap-2">
+            <div className="mt-6 w-full flex flex-wrap gap-2 justify-center">
               {brand.status === "live" ? (
                 <a
                   href={brand.ctaHref}
@@ -225,7 +219,7 @@ export default function Showcase() {
                   <ArrowRight size={16} strokeWidth={1.75} />
                 </a>
               ) : isSubmitted ? (
-                <div className="inline-flex items-center gap-2 px-4 py-3 rounded-md bg-success/20 border border-[rgba(110,227,161,0.35)] text-[#B8F3CE] text-[13.5px]">
+                <div className="inline-flex items-center gap-2 px-4 py-3 rounded-md bg-success/20 border border-success-bright/35 text-success-bright text-[13.5px]">
                   <Check size={16} strokeWidth={2} />
                   <span>
                     You&apos;re on the list — we&apos;ll email when{" "}
@@ -247,7 +241,7 @@ export default function Showcase() {
                     placeholder="you@yourshop.com"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
-                    className="flex-1 min-w-0 px-4 py-3 rounded-md bg-[rgba(255,248,234,0.08)] border border-[rgba(255,235,210,0.25)] text-paper placeholder:text-[rgba(255,235,210,0.45)] focus:outline-none focus:border-ember focus:ring-2 focus:ring-ember/25"
+                    className="flex-1 min-w-0 px-4 py-3 rounded-md bg-paper/10 border border-paper-line text-paper placeholder:text-paper-dim focus:outline-none focus:border-ember focus:ring-2 focus:ring-ember/25"
                   />
                   <button
                     type="submit"
@@ -266,7 +260,7 @@ export default function Showcase() {
               key={`${brand.id}-vis`}
               role="img"
               aria-label={`Placeholder: ${brand.visualLabel}`}
-              className="relative w-full max-w-[480px] mx-auto lg:ml-auto lg:mr-0 rounded-xl border border-[rgba(255,235,210,0.18)] bg-ember-soft overflow-hidden"
+              className="relative w-full max-w-[480px] mx-auto lg:ml-auto lg:mr-0 rounded-xl border border-paper-line bg-ember-soft overflow-hidden"
               style={{
                 aspectRatio: "4/3",
                 backgroundImage:
@@ -288,7 +282,7 @@ export default function Showcase() {
         </div>
       </div>
 
-      <div role="tablist" className="mt-7 grid grid-cols-2 lg:grid-cols-4 gap-3">
+      <div role="tablist" className="mt-7 grid grid-cols-2 lg:grid-cols-4 gap-3 max-w-[880px] mx-auto">
         {BRANDS.map((b, i) => {
           const isActive = i === active;
           return (
@@ -301,16 +295,13 @@ export default function Showcase() {
               className={`flex items-center gap-3 px-4 py-3 rounded-lg text-left transition-colors ${
                 isActive
                   ? "bg-ember border border-ember text-paper hover:bg-ember-deep"
-                  : "bg-[rgba(255,248,234,0.04)] border border-[rgba(255,235,210,0.14)] text-[rgba(255,235,210,0.85)] hover:border-[rgba(255,235,210,0.24)]"
+                  : "bg-cocoa-tint border border-paper-line text-paper-soft hover:border-paper-line-2"
               }`}
             >
               <span
-                className={`shrink-0 rounded-sm flex items-center justify-center font-bold text-[13px] text-paper ${
-                  isActive
-                    ? "bg-[rgba(255,255,255,0.25)]"
-                    : "bg-[rgba(255,235,210,0.18)]"
+                className={`shrink-0 rounded-sm flex items-center justify-center font-bold text-[13px] text-paper w-8 h-8 ${
+                  isActive ? "bg-paper/25" : "bg-paper-line"
                 }`}
-                style={{ width: "32px", height: "32px" }}
               >
                 {b.glyph}
               </span>
@@ -320,9 +311,7 @@ export default function Showcase() {
                 </span>
                 <span
                   className={`text-[11.5px] truncate ${
-                    isActive
-                      ? "text-[rgba(255,255,255,0.85)]"
-                      : "text-[rgba(255,235,210,0.6)]"
+                    isActive ? "text-paper-soft" : "text-paper-mute"
                   }`}
                 >
                   {b.role}

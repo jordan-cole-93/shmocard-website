@@ -32,9 +32,9 @@ export default function TrustBar() {
   return (
     <section
       aria-label="Why crews choose Shmocard"
-      className="bg-paper border-y border-hair"
+      className="bg-snow border-y border-hair"
     >
-      <div className="shm-container py-5">
+      <div className="shm-container py-6">
         <ul className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5 lg:gap-7">
           {TRUST_ITEMS.map(({ title, sub, Icon }) => (
             <li key={title} className="flex items-center gap-3">

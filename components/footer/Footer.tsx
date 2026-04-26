@@ -1,4 +1,18 @@
 import Link from "next/link";
+import Image from "next/image";
+import {
+  FaXTwitter,
+  FaInstagram,
+  FaLinkedinIn,
+  FaYoutube,
+} from "react-icons/fa6";
+
+const SOCIALS = [
+  { label: "X", href: "#", Icon: FaXTwitter },
+  { label: "Instagram", href: "#", Icon: FaInstagram },
+  { label: "LinkedIn", href: "#", Icon: FaLinkedinIn },
+  { label: "YouTube", href: "#", Icon: FaYoutube },
+];
 
 const COLS: Array<{ title: string; links: Array<{ label: string; href: string; soon?: boolean }> }> = [
   {
@@ -45,7 +59,7 @@ export default function Footer() {
   return (
     <footer className="bg-cream-soft border-t border-hair">
       <div className="shm-container py-9">
-        <div className="grid grid-cols-2 lg:grid-cols-5 gap-8 lg:gap-10">
+        <div className="grid grid-cols-2 lg:grid-cols-6 gap-8 lg:gap-10">
           <div className="col-span-2">
             <Link
               href="/"
@@ -53,14 +67,19 @@ export default function Footer() {
               className="inline-flex items-center gap-2"
             >
               <span
-                className="rounded-md bg-ink text-paper font-semibold flex items-center justify-center"
-                style={{ width: "36px", height: "36px", fontSize: "16px" }}
+                className="rounded-md bg-ink flex items-center justify-center"
+                style={{ width: "36px", height: "36px" }}
               >
-                S
+                <Image
+                  src="/logos/logo-shmocard.png"
+                  alt="Shmocard logo"
+                  width={20}
+                  height={20}
+                />
               </span>
               <span className="text-[18px] font-semibold tracking-[-0.015em] text-ink">
                 Shmo
-                <em className="font-serif italic font-normal text-ember">
+                <em className="font-serif italic font-normal text-ember text-[22px] leading-none">
                   card
                 </em>
               </span>
@@ -68,6 +87,19 @@ export default function Footer() {
             <p className="mt-4 text-[14px] leading-[1.55] text-ink-3 max-w-[36ch]">
               NFC tools for crews. Built in Minneapolis, shipped worldwide.
             </p>
+            <ul className="mt-5 flex items-center gap-2">
+              {SOCIALS.map(({ label, href, Icon }) => (
+                <li key={label}>
+                  <a
+                    href={href}
+                    aria-label={label}
+                    className="w-9 h-9 rounded-md bg-paper border border-hair flex items-center justify-center text-ink-2 hover:text-ink hover:border-hair-2 transition-colors"
+                  >
+                    <Icon size={14} />
+                  </a>
+                </li>
+              ))}
+            </ul>
           </div>
 
           {COLS.map((col) => (
@@ -80,11 +112,11 @@ export default function Footer() {
                   <li key={l.label}>
                     <a
                       href={l.href}
-                      className="text-[14px] text-ink-2 hover:text-ink transition-colors inline-flex items-center gap-2"
+                      className="text-[14px] text-ink-2 hover:text-ink transition-colors inline-flex flex-wrap items-center gap-x-2 gap-y-1"
                     >
-                      {l.label}
+                      <span className="whitespace-nowrap">{l.label}</span>
                       {l.soon && (
-                        <span className="text-[10px] font-semibold tracking-[1.2px] uppercase rounded-full bg-ember-soft text-ember-deep px-2 py-[2px]">
+                        <span className="text-[10px] font-semibold tracking-[1.2px] uppercase rounded-full bg-ember-soft text-ember-deep px-2 py-[2px] whitespace-nowrap">
                           soon
                         </span>
                       )}

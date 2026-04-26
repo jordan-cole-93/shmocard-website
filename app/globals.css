@@ -50,6 +50,15 @@
   --color-hair-2:       rgba(59,31,20,0.16);
   --color-hair-3:       rgba(59,31,20,0.24);
 
+  /* Paper-on-cocoa (text + lines on cocoa surfaces) */
+  --color-paper-soft:   rgba(255,235,210,0.85);
+  --color-paper-mute:   rgba(255,235,210,0.62);
+  --color-paper-dim:    rgba(255,235,210,0.45);
+  --color-paper-line:   rgba(255,235,210,0.18);
+  --color-paper-line-2: rgba(255,235,210,0.28);
+  --color-cocoa-tint:   rgba(255,248,234,0.04);
+  --color-success-bright: #6EE3A1;
+
   /* Semantic */
   --color-success:      #2E7D44;
   --color-success-soft: #DDF0E2;

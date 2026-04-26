@@ -6,9 +6,9 @@ const CREWS: Crew[] = [
   { id: "garden", client: "Garden City", tileBg: "bg-cream" },
   { id: "buffalo", client: "Buffalo Jewelry", tileBg: "bg-honey-soft" },
   { id: "axels", client: "Axel's Pawn", tileBg: "bg-ember-soft" },
-  { id: "cc", client: "CC Pawn", tileBg: "bg-graham-soft" },
+  { id: "cc", client: "CC Pawn", tileBg: "bg-cream-soft" },
   { id: "granters", client: "Granters", tileBg: "bg-snow" },
-  { id: "allan", client: "Allan Macias", tileBg: "bg-peach" },
+  { id: "allan", client: "Allan Macias", tileBg: "bg-honey-soft" },
 ];
 
 const STRIPE_PATTERN =

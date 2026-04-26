@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { Search, ShoppingBag, ArrowRight, Menu, X } from "lucide-react";
 
 const PRODUCT_LINKS = [
@@ -43,12 +44,18 @@ export default function Nav() {
           aria-label="Shmocard home"
           className="flex items-center gap-2 shrink-0"
         >
-          <span className="w-10 h-10 rounded-md bg-ink text-paper font-bold flex items-center justify-center text-[18px]">
-            S
+          <span className="w-10 h-10 rounded-md bg-ink flex items-center justify-center">
+            <Image
+              src="/logos/logo-shmocard.png"
+              alt="Shmocard logo"
+              width={22}
+              height={22}
+              priority
+            />
           </span>
           <span className="text-[20px] font-semibold tracking-[-0.015em] text-ink">
             Shmo
-            <em className="font-serif italic font-normal text-ember">
+            <em className="font-serif italic font-normal text-ember text-[24px] leading-none">
               card
             </em>
           </span>
@@ -62,11 +69,11 @@ export default function Nav() {
             <a
               key={l.href}
               href={l.href}
-              className="t-body text-ink-3 hover:text-ink transition-colors flex items-center gap-2"
+              className="text-[13.5px] text-ink-3 hover:text-ink transition-colors flex items-center gap-2"
             >
               {l.label}
               {l.live && (
-                <span className="t-eyebrow rounded-full bg-success-soft text-success px-2 py-[2px] tracking-[1.2px]">
+                <span className="text-[10px] font-semibold uppercase rounded-full bg-success-soft text-success px-2 py-[2px] tracking-[1.2px]">
                   Live
                 </span>
               )}
@@ -84,7 +91,7 @@ export default function Nav() {
             <a
               key={l.href}
               href={l.href}
-              className="t-body text-ink-3 hover:text-ink transition-colors"
+              className="text-[13.5px] text-ink-3 hover:text-ink transition-colors"
             >
               {l.label}
             </a>
@@ -103,9 +110,6 @@ export default function Nav() {
             className="relative w-10 h-10 flex items-center justify-center rounded-md text-ink-3 hover:text-ink hover:bg-cream-soft transition-colors"
           >
             <ShoppingBag size={18} strokeWidth={1.5} />
-            <span className="absolute top-1 right-1 min-w-[16px] h-[16px] rounded-full bg-ember text-paper text-[10px] font-semibold flex items-center justify-center px-1">
-              2
-            </span>
           </button>
           <a
             href="#review"
@@ -142,18 +146,18 @@ export default function Nav() {
             className="lg:hidden fixed top-16 inset-x-0 bg-paper border-b border-hair-2 px-7 py-7"
           >
             <div className="mb-5">
-              <div className="t-eyebrow text-muted mb-3">Products</div>
+              <div className="text-[11px] font-semibold uppercase tracking-[1.2px] text-ink-3 mb-3">Products</div>
               <div className="flex flex-col gap-3">
                 {PRODUCT_LINKS.map((l) => (
                   <a
                     key={l.href}
                     href={l.href}
                     onClick={close}
-                    className="t-h3 text-ink flex items-center gap-3"
+                    className="text-[17px] font-semibold text-ink flex items-center gap-3"
                   >
                     {l.label}
                     {l.live && (
-                      <span className="t-eyebrow rounded-full bg-success-soft text-success px-2 py-[2px] tracking-[1.2px]">
+                      <span className="text-[10px] font-semibold uppercase rounded-full bg-success-soft text-success px-2 py-[2px] tracking-[1.2px]">
                         Live
                       </span>
                     )}
@@ -162,14 +166,14 @@ export default function Nav() {
               </div>
             </div>
             <div className="mb-6">
-              <div className="t-eyebrow text-muted mb-3">Company</div>
+              <div className="text-[11px] font-semibold uppercase tracking-[1.2px] text-ink-3 mb-3">Company</div>
               <div className="flex flex-col gap-3">
                 {COMPANY_LINKS.map((l) => (
                   <a
                     key={l.href}
                     href={l.href}
                     onClick={close}
-                    className="t-body text-ink-2"
+                    className="text-[14px] text-ink-2"
                   >
                     {l.label}
                   </a>
