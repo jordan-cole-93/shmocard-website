@@ -17,7 +17,8 @@
       "Bash(cp \"/Users/jordancole/Downloads/design-system 2/components/Faq.tsx\" \"components/shm/Faq.tsx\")",
       "Bash(cp \"/Users/jordancole/Downloads/design-system 2/app/_reference/page.tsx\" \"app/_reference/page.tsx\")",
       "Bash(npm run *)",
-      "Bash(git checkout *)"
+      "Bash(git checkout *)",
+      "Bash(gh pr create --title 'feat: rebuild homepage from Claude Design v2 starter' --body ' *)"
     ]
   },
   "hooks": {
