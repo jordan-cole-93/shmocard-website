@@ -11,14 +11,20 @@
       "mcp__plugin_playwright_playwright__browser_evaluate",
       "Read(//Users/jordancole/Downloads/design-system 2/**)",
       "Bash(git commit -m ' *)",
-      "Bash(mkdir -p components/shm app/_reference)",
-      "Bash(cp \"/Users/jordancole/Downloads/design-system 2/globals.css\" \"app/globals.css\")",
-      "Bash(cp \"/Users/jordancole/Downloads/design-system 2/components/Shm.tsx\" \"components/shm/Shm.tsx\")",
-      "Bash(cp \"/Users/jordancole/Downloads/design-system 2/components/Faq.tsx\" \"components/shm/Faq.tsx\")",
-      "Bash(cp \"/Users/jordancole/Downloads/design-system 2/app/_reference/page.tsx\" \"app/_reference/page.tsx\")",
-      "Bash(npm run *)",
       "Bash(git checkout *)",
-      "Bash(gh pr create --title 'feat: rebuild homepage from Claude Design v2 starter' --body ' *)"
+      "Bash(git stash *)",
+      "Bash(git reset *)",
+      "Bash(gh pr create --title 'feat: rebuild homepage from Claude Design v2 starter' --body ' *)",
+      "Bash(node \"/Users/jordancole/.claude/skills/impeccable/scripts/load-context.mjs\")",
+      "Bash(curl -s -o /dev/null -w \"%{http_code}\" http://localhost:3000/)",
+      "Bash(curl -s -o /dev/null -w \"HTTP:%{http_code} TIME:%{time_total}s\\\\n\" http://localhost:3000/)",
+      "Bash(echo \"started bg pid=$!\")",
+      "Read(//Users/jordancole/Library/Caches/ms-playwright/**)",
+      "Bash(curl -s -o /dev/null -w \"HTTP:%{http_code}\\\\n\" http://localhost:3000/)",
+      "Read(//private/tmp/**)",
+      "Read(//Users/jordancole/.claude/skills/impeccable/reference/**)",
+      "Edit(/.claude/skills/build-shmocard-component/**)",
+      "Edit(/.claude/skills/impeccable-shmocard/**)"
     ]
   },
   "hooks": {
