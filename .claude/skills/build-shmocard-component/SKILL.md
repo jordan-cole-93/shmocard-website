@@ -83,7 +83,6 @@ If `<Placeholder>` doesn't exist yet in the project, create it at `components/ui
 
 ## References
 
-- `DESIGN.md` — full design system
-- `DESIGN.json` — machine-readable tokens
-- `app/globals.css` — Tailwind v4 `@theme` token definitions
+- `app/globals.css` — Tailwind v4 `@theme` token definitions (source of truth)
+- `DESIGN.md` — design system companion (defers to globals.css)
 - `.claude/rules/verification.md` — verification standards

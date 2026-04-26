@@ -14,8 +14,7 @@ Brand website for Shmocard at `shmocard.com`. Retail front door — not an ad fu
 | Last session context | `handoff.md` |
 | Tech stack details (Shopify, env vars, Vercel) | `backend.md` |
 | Tools (skills, commands, hooks, MCPs) | `tools.md` |
-| Design system narrative | `DESIGN.md` |
-| Design tokens (machine-readable) | `DESIGN.json` |
+| Design system | `DESIGN.md` (companion to `app/globals.css` — globals.css wins on conflict) |
 | Engineering rules (testing, store protection, data discipline, file org, vault) | `.claude/rules/` |
 | Personal preferences | `CLAUDE.local.md` (gitignored) |
 

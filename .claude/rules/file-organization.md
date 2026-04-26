@@ -12,8 +12,7 @@ If you think the structure should change, **ask first**. Don't move folders, ren
 |---|---|
 | `CLAUDE.md` | Lean entry point — system brain + pointer table |
 | `CLAUDE.local.md` | Personal developer preferences (gitignored) |
-| `DESIGN.md` | Full design system narrative |
-| `DESIGN.json` | Machine-readable design tokens |
+| `DESIGN.md` | Design system companion — source of truth lives in `app/globals.css` |
 | `scope.md` | Project state — what's built, what's next |
 | `handoff.md` | Last session summary |
 | `backend.md` | Tech stack details (Shopify, Next.js, env vars, Vercel) |
@@ -52,7 +51,7 @@ If you think the structure should change, **ask first**. Don't move folders, ren
 - **Don't move rule files at root.** `scope.md`, `backend.md`, `tools.md`, `handoff.md` stay at repo root — not in `.claude/rules/`.
 - **Don't move code folders.** `app/`, `components/`, `lib/` must stay at root (Next.js conventions).
 - **Don't move `.claude/settings.json` or `.claude/settings.local.json`.** Claude Code requires them inside `.claude/`.
-- **Don't move `DESIGN.md` or `DESIGN.json`.** They're project deliverables that live at root.
+- **Don't move `DESIGN.md`.** It's a project deliverable that lives at root.
 - **Vault context lives in the vault.** `context.md`, `marketing.md`, `product.md`, and `wireframe/*` are in `Jordan's Brain/`, not this repo. Don't duplicate them here.
 
 ## When the structure changes

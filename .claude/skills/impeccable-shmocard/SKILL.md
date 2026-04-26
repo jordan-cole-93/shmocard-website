@@ -27,10 +27,9 @@ Triggers on Shmocard-related prompts mentioning: UI review, design audit, polish
 ## What this skill does NOT do
 
 - Does not redo what `/impeccable` already covers — that skill handles general design taste.
-- Does not enforce rules that contradict DESIGN.md (e.g., common patterns elsewhere may be Shmocard anti-patterns — defer to DESIGN.md when conflict).
+- Does not enforce rules that contradict the design system (common patterns elsewhere may be Shmocard anti-patterns — defer to `app/globals.css` + `DESIGN.md` when conflict).
 
 ## References
 
-- `DESIGN.md` (repo root) — full design system narrative
-- `DESIGN.json` (repo root) — machine-readable token + rule reference
-- `app/globals.css` — Tailwind v4 `@theme` token definitions
+- `app/globals.css` — Tailwind v4 `@theme` token definitions (source of truth)
+- `DESIGN.md` (repo root) — design system companion (defers to globals.css on conflict)

@@ -132,4 +132,4 @@ JetBrains Mono was dropped in Step 2 — not used in the new design system.
 
 - No `scripts/` folder — generation scripts (mascot poses, hero variants) are out of scope until late in the build.
 - No `outputs/` folder — sub-agent outputs aren't needed because no sub-agents are active.
-- No `branding guide/` folder — replaced by `DESIGN.md` + `DESIGN.json` at repo root.
+- No `branding guide/` folder — replaced by `DESIGN.md` at repo root (companion to `app/globals.css`).

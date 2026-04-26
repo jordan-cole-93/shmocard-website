@@ -11,7 +11,7 @@ Steps:
    - Run `git log --oneline -20` to see recent commits
    - Run `git status` to see what's uncommitted
    - List `app/`, `components/`, `app/preview/` to see what's built
-   - Check if `DESIGN.md` + `DESIGN.json` exist at repo root
+   - Check if `DESIGN.md` exists at repo root
    - Check if dev server boots cleanly (`npm run build` would catch real errors but is slow — only run if uncertain)
 3. **Compare** documented state vs. real state. Note any drift:
    - Steps marked done that aren't actually done
