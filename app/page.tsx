@@ -4,6 +4,11 @@ import TrustBar from "@/components/home/TrustBar";
 import ShmoFamily from "@/components/home/ShmoFamily";
 import WhyShmocard from "@/components/home/WhyShmocard";
 import Showcase from "@/components/home/Showcase";
+import RealResults from "@/components/home/RealResults";
+import Testimonials from "@/components/home/Testimonials";
+import FAQ from "@/components/home/FAQ";
+import FinalCTA from "@/components/home/FinalCTA";
+import Footer from "@/components/footer/Footer";
 
 export default function Home() {
   return (
@@ -15,7 +20,12 @@ export default function Home() {
         <ShmoFamily />
         <WhyShmocard />
         <Showcase />
+        <RealResults />
+        <Testimonials />
+        <FAQ />
+        <FinalCTA />
       </main>
+      <Footer />
     </>
   );
 }

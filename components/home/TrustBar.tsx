@@ -6,7 +6,11 @@ const TRUST_ITEMS: Array<{
   sub: string;
   Icon: LucideIcon;
 }> = [
-  { title: "Made for local shops", sub: "Independent crews everywhere", Icon: Home },
+  {
+    title: "Made for local shops",
+    sub: "Independent crews everywhere",
+    Icon: Home,
+  },
   {
     title: "No subscription on cards",
     sub: "One-time purchase, yours forever",
@@ -30,7 +34,7 @@ export default function TrustBar() {
       aria-label="Why crews choose Shmocard"
       className="bg-paper border-y border-hair"
     >
-      <div className="max-w-[1320px] mx-auto px-7 py-5">
+      <div className="shm-container py-5">
         <ul className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5 lg:gap-7">
           {TRUST_ITEMS.map(({ title, sub, Icon }) => (
             <li key={title} className="flex items-center gap-3">

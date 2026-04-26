@@ -26,6 +26,9 @@
 /.claude/memory
 /.claude/plans
 
+# Local design system reference (Claude Design v2 export — too large + per-developer)
+/design system/
+
 # Personal developer overrides (per-developer, not committed)
 /CLAUDE.local.md
 /.claude/settings.local.json

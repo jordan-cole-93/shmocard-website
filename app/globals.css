@@ -1,208 +1,392 @@
-/* =============================================================
-   SHMOCARD — globals.css
-   Tailwind v4 (CSS-first config, no tailwind.config.js).
-   Single source of truth for design tokens.
-   Tokens declared inside @theme automatically generate Tailwind
-   utilities (bg-*, text-*, rounded-*, font-*, p-*, etc.).
-
-   Fonts are loaded via next/font in app/layout.tsx — do NOT add
-   an @import url("https://fonts.googleapis.com/...") line here.
-   ============================================================= */
-
+/* ==============================================================
+   SHMOCARD — globals.css  (Tailwind v4, CSS-first config)
+   Drop into app/globals.css
+   ============================================================== */
 @import "tailwindcss";
 
-/* =============================================================
-   @theme — Tailwind v4 token declarations
-   Token names use Tailwind's namespaces so utilities generate:
-     --color-*    -> bg-*, text-*, border-*, fill-*, ring-*
+/* Fonts loaded via next/font in app/layout.tsx (--font-inter-tight, --font-fraunces) */
+
+/* ==============================================================
+   @theme — token declarations (auto-generates Tailwind utilities)
+     --color-*    -> bg-*, text-*, border-*, ring-*
      --font-*     -> font-*
      --radius-*   -> rounded-*
-     --spacing-*  -> p-*, m-*, gap-*, w-*, h-*
      --shadow-*   -> shadow-*
-   ============================================================= */
+   NOTE: We intentionally do NOT override --spacing-* — keeping
+   Tailwind's default 0.25rem step prevents collisions with p-1,
+   p-2, etc. Use Tailwind's spacing scale directly.
+   ============================================================== */
 @theme {
-  /* ---------- Surfaces ---------- */
-  --color-cream:        #FFF1DC;   /* warm marshmallow base */
-  --color-cream-soft:   #FFFBF1;   /* lifted cream — cards on cream */
-  --color-snow:         #FFF8EA;   /* main warm surface (page bg) */
-  --color-paper:        #FFFFFF;   /* clean white card */
+  /* Surfaces */
+  --color-cream:        #FFF1DC;
+  --color-cream-soft:   #FFFBF1;
+  --color-snow:         #FFF8EA;
+  --color-paper:        #FFFFFF;
+  --color-graham-soft:  #FFE0C2;
+  --color-cocoa:        #6B3A1E;
+  --color-cocoa-deep:   #3B1F14;
 
-  /* ---------- Brand · Ember (primary accent) ---------- */
-  --color-ember:        #FF5B1F;   /* primary ember — CTAs, italic accent */
-  --color-ember-deep:   #E04210;   /* hover, pressed text */
+  /* Ember (primary) */
+  --color-ember:        #FF5B1F;
+  --color-ember-deep:   #E04210;
   --color-ember-soft:   #FFD8C2;
+  --color-orange:       #FF7A3A;
+  --color-peach:        #FFA378;
 
-  /* ---------- Brand · Honey (secondary accent) ---------- */
+  /* Honey (secondary) */
   --color-honey:        #FFB833;
   --color-honey-soft:   #FFE3B0;
   --color-honey-deep:   #E89A1A;
 
-  /* ---------- Brand · Cocoa (deep secondary / dark sections) ---------- */
-  --color-cocoa-deep:   #3B1F14;   /* darkest — chocolate hot section bg */
+  /* Ink */
+  --color-ink:          #3B1F14;
+  --color-ink-2:        #4A2C1E;
+  --color-ink-3:        #6B4A37;
+  --color-muted:        #8A6E5A;
+  --color-muted-2:      #B89A82;
 
-  /* ---------- Ink & neutrals (chocolate, never pure black) ---------- */
-  --color-ink:          #3B1F14;   /* primary text */
-  --color-ink-2:        #4A2C1E;   /* secondary text */
-  --color-ink-3:        #6B4A37;   /* tertiary / lede */
-  --color-muted:        #8A6E5A;   /* meta, captions */
-  --color-muted-2:      #B89A82;   /* placeholders, dim numbers */
+  /* Hairlines */
+  --color-hair:         rgba(59,31,20,0.10);
+  --color-hair-2:       rgba(59,31,20,0.16);
+  --color-hair-3:       rgba(59,31,20,0.24);
 
-  /* Hairlines — translucent ink for borders on warm surfaces */
-  --color-hair:         rgba(59, 31, 20, 0.10);
-  --color-hair-2:       rgba(59, 31, 20, 0.16);
-  --color-hair-3:       rgba(59, 31, 20, 0.24);
-
-  /* ---------- Semantic ---------- */
+  /* Semantic */
   --color-success:      #2E7D44;
   --color-success-soft: #DDF0E2;
   --color-warn:         #C8472D;
   --color-warn-soft:    #FBE0D6;
 
-  /* ---------- Typography (next/font CSS variables, then fallbacks) ---------- */
+  /* Type — next/font CSS vars first, then fallback stacks */
   --font-sans:    var(--font-inter-tight), "Inter Tight", "Inter", system-ui, -apple-system, "Segoe UI", sans-serif;
   --font-serif:   var(--font-fraunces), "Fraunces", "Source Serif Pro", Georgia, serif;
 
-  /* ---------- Radii ---------- */
-  --radius-xs:   4px;
-  --radius-sm:   6px;
-  --radius-md:  10px;
-  --radius-lg:  14px;
-  --radius-xl:  20px;
-  --radius-2xl: 28px;
+  /* Radii */
+  --radius-xs:    4px;
+  --radius-sm:    6px;
+  --radius-md:   10px;
+  --radius-lg:   14px;
+  --radius-xl:   20px;
+  --radius-2xl:  28px;
   --radius-full: 999px;
 
-  /* ---------- Shadows (chocolate-tinted, never gray/black) ---------- */
+  /* Shadows (chocolate-tinted) */
   --shadow-sm:   0 1px 2px rgba(59,31,20,0.08);
   --shadow-md:   0 1px 2px rgba(59,31,20,0.08), 0 8px 20px -8px rgba(59,31,20,0.20);
   --shadow-lg:   0 1px 2px rgba(59,31,20,0.08), 0 16px 40px -12px rgba(59,31,20,0.24);
   --shadow-card: 0 1px 0 rgba(59,31,20,0.06), 0 12px 32px -16px rgba(59,31,20,0.22);
-
-  /* ---------- Spacing scale (4/8 base) ---------- */
-  --spacing-1:  4px;
-  --spacing-2:  8px;
-  --spacing-3: 12px;
-  --spacing-4: 16px;
-  --spacing-5: 24px;
-  --spacing-6: 32px;
-  --spacing-7: 48px;
-  --spacing-8: 64px;
-  --spacing-9: 96px;
-
-  /* Layout primitives */
-  --spacing-gutter:   28px;
-  --spacing-section:  88px;   /* vertical rhythm between sections */
-  --spacing-maxw:   1320px;   /* page max-width container */
-
-  /* ---------- Motion ---------- */
-  --motion-fast:    150ms;
-  --motion-normal:  220ms;
-  --motion-slow:    320ms;
-  --ease-standard:  cubic-bezier(0.2, 0.8, 0.2, 1);
-  --ease-out:       cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-/* =============================================================
-   Base resets
-   ============================================================= */
-html, body {
-  background: var(--color-snow);
-  color: var(--color-ink);
-  font-family: var(--font-sans);
-  -webkit-font-smoothing: antialiased;
-  text-rendering: optimizeLegibility;
-}
-* { box-sizing: border-box; }
+/* ==============================================================
+   Base layer
+   ============================================================== */
+@layer base {
+  html, body {
+    background: var(--color-snow);
+    color: var(--color-ink);
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+  *, *::before, *::after { box-sizing: border-box; }
 
-/* =============================================================
-   Typography utility classes (use directly OR with @apply)
-   These mirror the Shmocard type ramp. Wrapped in @layer components
-   so Tailwind utilities (text-ember, text-ink, etc.) can override.
-   ============================================================= */
+  :where(button, a, input, textarea, select, [tabindex]):focus-visible {
+    outline: 2px solid var(--color-ember);
+    outline-offset: 2px;
+    border-radius: var(--radius-sm);
+  }
+}
+
+/* ==============================================================
+   Component layer — reusable classes Claude Code can compose
+   These are the SAME visual primitives as home-v2.css/home-styles.css,
+   ported into Tailwind-friendly utility classes.
+   ============================================================== */
 @layer components {
-.t-display {
-  font-family: var(--font-sans);
-  font-weight: 600;
-  font-size: clamp(44px, 6.2vw, 84px);
-  line-height: 0.98;
-  letter-spacing: -0.035em;
-  color: var(--color-ink);
-  text-wrap: balance;
-}
-.t-display em,
-.t-italic {
-  font-family: var(--font-serif);
-  font-style: italic;
-  font-weight: 400;
-  color: var(--color-ember);
-  letter-spacing: -0.025em;
-}
-.t-h1 {
-  font-family: var(--font-sans);
-  font-weight: 600;
-  font-size: 60px;
-  line-height: 64px;
-  letter-spacing: -0.035em;
-  color: var(--color-ink);
-}
-.t-h2 {
-  font-family: var(--font-sans);
-  font-weight: 600;
-  font-size: 44px;
-  line-height: 46px;
-  letter-spacing: -0.025em;
-  color: var(--color-ink);
-}
-.t-h3 {
-  font-family: var(--font-sans);
-  font-weight: 600;
-  font-size: 22px;
-  line-height: 26px;
-  letter-spacing: -0.015em;
-  color: var(--color-ink);
-}
-.t-lede {
-  font-family: var(--font-sans);
-  font-weight: 400;
-  font-size: 17px;
-  line-height: 26px;
-  color: var(--color-ink-3);
-  text-wrap: pretty;
-}
-.t-body {
-  font-family: var(--font-sans);
-  font-weight: 400;
-  font-size: 14px;
-  line-height: 22px;
-  color: var(--color-ink-2);
-}
-.t-meta {
-  font-family: var(--font-sans);
-  font-size: 13px;
-  color: var(--color-muted);
-}
-.t-eyebrow {
-  font-family: var(--font-sans);
-  font-weight: 600;
-  font-size: 11px;
-  letter-spacing: 1.6px;
-  text-transform: uppercase;
-  color: var(--color-muted);
-}
-.t-eyebrow-italic {
-  font-family: var(--font-serif);
-  font-style: italic;
-  font-weight: 400;
-  font-size: 15px;
-  color: var(--color-ember);
-  letter-spacing: 0.2px;
-}
-}
+  /* ---------- Layout primitives ---------- */
+  .shm-container {
+    max-width: 1320px;
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: 28px;
+    padding-right: 28px;
+  }
+  .shm-section { padding-top: 88px; padding-bottom: 88px; }
+  @media (max-width: 720px) {
+    .shm-section { padding-top: 56px; padding-bottom: 56px; }
+  }
 
-/* =============================================================
-   Focus — single, brand-tinted ring used everywhere
-   ============================================================= */
-:where(button, a, input, textarea, select, [tabindex]):focus-visible {
-  outline: 2px solid var(--color-ember);
-  outline-offset: 2px;
-  border-radius: var(--radius-sm);
+  /* ---------- Typography ---------- */
+  .shm-display {
+    font-family: var(--font-sans);
+    font-weight: 600;
+    font-size: clamp(44px, 6.2vw, 84px);
+    line-height: 0.98;
+    letter-spacing: -0.035em;
+    color: var(--color-ink);
+    text-wrap: balance;
+  }
+  .shm-h1 {
+    font-family: var(--font-sans); font-weight: 600;
+    font-size: 60px; line-height: 64px; letter-spacing: -0.035em;
+    color: var(--color-ink); text-wrap: balance;
+  }
+  .shm-h2 {
+    font-family: var(--font-sans); font-weight: 600;
+    font-size: 44px; line-height: 1.04; letter-spacing: -0.025em;
+    color: var(--color-ink); text-wrap: balance;
+  }
+  .shm-h3 {
+    font-family: var(--font-sans); font-weight: 600;
+    font-size: 22px; line-height: 26px; letter-spacing: -0.015em;
+    color: var(--color-ink);
+  }
+  .shm-lede {
+    font-family: var(--font-sans); font-weight: 400;
+    font-size: 17px; line-height: 26px;
+    color: var(--color-ink-3); text-wrap: pretty;
+  }
+  .shm-body {
+    font-family: var(--font-sans); font-weight: 400;
+    font-size: 14px; line-height: 22px;
+    color: var(--color-ink-2);
+  }
+  .shm-meta { font-size: 13px; color: var(--color-muted); }
+  .shm-eyebrow {
+    font-family: var(--font-sans); font-weight: 600;
+    font-size: 11px; letter-spacing: 1.6px;
+    text-transform: uppercase; color: var(--color-muted);
+  }
+  /* The ember italic eyebrow used in v2 sections */
+  .shm-eyebrow-italic {
+    display: inline-flex; align-items: center; gap: 10px;
+    font-family: var(--font-serif); font-style: italic;
+    font-weight: 400; font-size: 15px; color: var(--color-ember);
+    letter-spacing: 0.2px;
+  }
+  .shm-eyebrow-italic::before {
+    content: ""; display: inline-block;
+    width: 22px; height: 1px; background: currentColor; opacity: 0.5;
+  }
+  /* Italic accent word inside any headline */
+  .shm-italic {
+    font-family: var(--font-serif); font-style: italic;
+    font-weight: 400; color: var(--color-ember);
+    letter-spacing: -0.025em;
+  }
+  /* When inside cocoa-hot section, italic accent is honey instead of ember */
+  .shm-cocoa-hot .shm-italic { color: var(--color-honey); }
+
+  /* ---------- Buttons ---------- */
+  .shm-btn {
+    display: inline-flex; align-items: center; gap: 8px;
+    font-family: var(--font-sans); font-weight: 600;
+    font-size: 14px; letter-spacing: -0.005em;
+    padding: 11px 18px;
+    border-radius: var(--radius-md);
+    border: 1px solid transparent;
+    cursor: pointer;
+    transition: background .15s ease, border-color .15s ease,
+                color .15s ease, transform .15s ease, box-shadow .15s ease;
+    text-decoration: none;
+    min-height: 44px;
+  }
+  .shm-btn--lg { padding: 14px 22px; font-size: 15px; }
+  .shm-btn--sm { padding: 8px 14px; font-size: 13px; min-height: 36px; }
+  .shm-btn--primary {
+    background: var(--color-ember); color: #FFFFFF;
+    border-color: var(--color-ember);
+  }
+  .shm-btn--primary:hover {
+    background: var(--color-ember-deep);
+    border-color: var(--color-ember-deep);
+  }
+  .shm-btn--secondary {
+    background: var(--color-paper); color: var(--color-ink);
+    border-color: var(--color-hair-2);
+  }
+  .shm-btn--secondary:hover { border-color: var(--color-hair-3); }
+  .shm-btn--ghost {
+    background: transparent; color: var(--color-ink);
+    border-color: var(--color-hair-2);
+  }
+  .shm-btn--ghost:hover { background: rgba(59,31,20,0.04); }
+  .shm-btn--accent {
+    /* Used in HERO primary — uses ink-on-cream rather than ember,
+       per v2 design where hero primary CTA is ink chocolate */
+    background: var(--color-ink); color: var(--color-paper);
+    border-color: var(--color-ink);
+  }
+  .shm-btn--accent:hover {
+    background: #2A130A; border-color: #2A130A;
+  }
+  /* Button on cocoa-hot dark surface */
+  .shm-cocoa-hot .shm-btn--ghost {
+    background: rgba(255,248,234,0.08);
+    border-color: rgba(255,235,210,0.30);
+    color: #FFFFFF;
+  }
+  .shm-cocoa-hot .shm-btn--ghost:hover {
+    background: rgba(255,248,234,0.16);
+    border-color: rgba(255,235,210,0.50);
+  }
+
+  /* ---------- Cards ---------- */
+  .shm-card {
+    background: var(--color-paper);
+    border: 1px solid var(--color-hair);
+    border-radius: var(--radius-xl);
+    box-shadow: var(--shadow-sm);
+    padding: 28px 24px;
+    transition: transform .15s ease, box-shadow .15s ease;
+  }
+  .shm-card--hover:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-md);
+  }
+  /* Stronger border for cards on cream-soft sections */
+  .shm-cream-soft .shm-card { border-color: var(--color-hair-2); }
+
+  /* ---------- Badges (status pills) ---------- */
+  .shm-badge {
+    display: inline-flex; align-items: center; gap: 6px;
+    font-size: 11px; font-weight: 600;
+    letter-spacing: 1.6px; text-transform: uppercase;
+    padding: 4px 10px;
+    border-radius: var(--radius-full);
+  }
+  .shm-badge--live {
+    background: var(--color-success-soft);
+    color: var(--color-success);
+  }
+  .shm-badge--soon {
+    background: var(--color-ember-soft);
+    color: var(--color-ember-deep);
+  }
+  .shm-badge--neutral {
+    background: var(--color-paper);
+    border: 1px solid var(--color-hair);
+    color: var(--color-ink);
+  }
+
+  /* ---------- Section recipes ---------- */
+  /* Apply ONE of these to a <section>; pick by recipe (PATTERNS.md) */
+  .shm-snow       { background: var(--color-snow); }
+  .shm-cream-soft { background: var(--color-cream-soft); }
+  .shm-cream      { background: var(--color-cream); }
+  .shm-paper      { background: var(--color-paper); }
+
+  .shm-cocoa-hot {
+    position: relative;
+    background: var(--color-cocoa-deep);
+    color: #FFFFFF;
+    overflow: hidden;
+  }
+  .shm-cocoa-hot__glow {
+    position: absolute; top: -50px; left: 50%;
+    transform: translateX(-50%);
+    width: 1100px; max-width: 100%; height: 600px;
+    background:
+      radial-gradient(ellipse at center,
+        rgba(255,91,31,0.40),
+        rgba(255,184,51,0.18) 30%,
+        transparent 65%);
+    filter: blur(20px);
+    pointer-events: none;
+    z-index: 0;
+  }
+  .shm-cocoa-hot > .shm-container { position: relative; z-index: 1; }
+  .shm-cocoa-hot .shm-h2,
+  .shm-cocoa-hot .shm-display {
+    color: #FFFFFF;
+  }
+  .shm-cocoa-hot .shm-lede {
+    color: rgba(255,235,210,0.78);
+  }
+  .shm-cocoa-hot .shm-eyebrow-italic {
+    color: var(--color-honey);
+  }
+
+  /* ---------- Image frame (marketing 3D imagery slot) ---------- */
+  .shm-image-frame {
+    border-radius: var(--radius-xl);
+    border: 1px solid var(--color-hair);
+    box-shadow: var(--shadow-sm);
+    overflow: hidden;
+    background: var(--color-graham-soft);
+  }
+
+  /* ---------- Family tile (ShmoFamily section) ---------- */
+  .shm-family-tile {
+    position: relative;
+    display: flex; flex-direction: column;
+    background: var(--color-paper);
+    border: 1px solid var(--color-hair-2);
+    border-radius: var(--radius-xl);
+    box-shadow: var(--shadow-sm);
+    padding: 28px 24px 24px;
+    min-height: 320px;
+    overflow: hidden;
+    text-decoration: none;
+    transition: transform .15s ease, box-shadow .15s ease;
+  }
+  .shm-family-tile:hover {
+    transform: translateY(-3px);
+    box-shadow: var(--shadow-md);
+  }
+  .shm-family-tile, .shm-family-tile * { text-decoration: none; }
+
+  .shm-family-glyph {
+    width: 36px; height: 36px;
+    border-radius: var(--radius-sm);
+    display: inline-flex; align-items: center; justify-content: center;
+    font-family: var(--font-sans); font-weight: 700; font-size: 18px;
+    color: #FFFFFF;
+    margin-bottom: 18px;
+  }
+  .shm-family-glyph--review { background: var(--color-ember); }
+  .shm-family-glyph--biz    { background: var(--color-cocoa-deep); }
+  .shm-family-glyph--link   { background: var(--color-honey); color: var(--color-cocoa-deep); }
+  .shm-family-glyph--rep    { background: var(--color-cocoa); }
+
+  /* ---------- FAQ accordion ---------- */
+  .shm-faq-list {
+    list-style: none; padding: 0; margin: 0;
+    border-top: 1px solid var(--color-hair);
+  }
+  .shm-faq-item { border-bottom: 1px solid var(--color-hair); }
+  .shm-faq-trigger {
+    width: 100%;
+    display: flex; align-items: center; justify-content: space-between;
+    gap: 24px;
+    padding: 22px 4px;
+    background: transparent; border: 0;
+    cursor: pointer; text-align: left;
+    color: var(--color-ink);
+    transition: color .15s ease;
+  }
+  .shm-faq-trigger:hover { color: var(--color-ember-deep); }
+  .shm-faq-question {
+    font-weight: 600; font-size: 17px;
+    letter-spacing: -0.015em; flex: 1;
+  }
+  .shm-faq-icon {
+    width: 32px; height: 32px;
+    border-radius: 50%;
+    border: 1px solid var(--color-hair-2);
+    background: var(--color-paper);
+    display: inline-flex; align-items: center; justify-content: center;
+    color: var(--color-ink);
+    flex-shrink: 0;
+  }
+  .shm-faq-trigger[aria-expanded="true"] .shm-faq-icon {
+    background: var(--color-ember);
+    border-color: var(--color-ember);
+    color: #FFFFFF;
+  }
+  .shm-faq-answer {
+    font-size: 15px; line-height: 1.6;
+    color: var(--color-ink-3);
+    margin: 0 60px 22px 4px;
+    text-wrap: pretty; max-width: 70ch;
+  }
 }
