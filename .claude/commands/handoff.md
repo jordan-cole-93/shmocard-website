@@ -1,46 +1,62 @@
 ---
-description: "End-of-session handoff. Summarizes what was built, what's next, and blockers into .claude/rules/handoff.md so the next session can pick up instantly."
+description: Write structured end-of-session handoff to handoff.md
 ---
 
-Write a structured session handoff. The next session reads `.claude/rules/handoff.md` first — make it count.
+Write a complete handoff summary to `handoff.md` at the project root. Replace the existing file content entirely (don't append).
 
-## Steps
-
-1. Scan recent changes:
-   - `git diff --stat` for what files changed
-   - `git log --oneline -10` for recent commits
-   - Review what was discussed and built this session
-2. Overwrite `.claude/rules/handoff.md` with this structure:
+Use this structure:
 
 ```markdown
 # handoff.md — Session Handoff
 
-**Update this file at the end of every session.** The next session reads this first.
+**Last session:** YYYY-MM-DD — <one-sentence summary>
 
 ---
 
-**Last session:** YYYY-MM-DD
+## Project phase
 
-## What was built
-- [Completed components, pages, features]
+<which step of scope.md is in progress, what's next>
 
-## What's in progress
-- [Unfinished work — include current state and file paths]
+---
+
+## What was done this session
+
+<grouped bullet list — focus on outcomes, not minute-by-minute commentary>
+
+- **<Group 1>:** what changed, why
+- **<Group 2>:** what changed, why
+...
+
+---
 
 ## What's next
-- [Next logical step to pick up]
 
-## Blockers
-- [Anything preventing progress — missing assets, decisions needed, bugs]
+**Step <N> — <name>** per scope.md.
 
-## Open questions
-- [Decisions Jordan needs to make]
+<concrete next actions in order — what should Claude do at the start of next session?>
+
+---
+
+## Open decisions
+
+<things that need Jordan's input before they can be resolved>
+
+---
+
+## How to start next session
+
+1. Read this file.
+2. Read `CLAUDE.md`.
+3. Ask Jordan: "<specific question for him>"
+4. <other guidance>
 ```
 
-3. Also update the "Current status" section in `.claude/rules/scope.md` to match
+Rules:
+- **Be honest.** If something didn't get finished, say so. Don't pad.
+- **Date format:** absolute (2026-04-26), never "today" or "Thursday."
+- **Group changes by topic, not chronologically.** "Hooks installed" is more useful than "at 14:22 I created inject-design-rules.sh."
+- **No fluff.** Skip "we made great progress" — just say what changed.
+- **Include file paths** for anything created/modified, so Jordan can locate them.
+- **Reference scope.md steps** so the project plan stays the source of truth.
 
-## Rules
-
-- Keep it factual. No fluff. The next Claude needs to pick up in under 30 seconds.
-- Include file paths for in-progress work.
-- If nothing was built (planning session), say so — don't invent progress.
+After writing, run `git status` to remind Jordan what's uncommitted (so he can decide whether to commit before closing).

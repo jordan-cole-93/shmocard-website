@@ -1,132 +1,205 @@
+/* =============================================================
+   SHMOCARD — globals.css
+   Tailwind v4 (CSS-first config, no tailwind.config.js).
+   Single source of truth for design tokens.
+   Tokens declared inside @theme automatically generate Tailwind
+   utilities (bg-*, text-*, rounded-*, font-*, p-*, etc.).
+
+   Fonts are loaded via next/font in app/layout.tsx — do NOT add
+   an @import url("https://fonts.googleapis.com/...") line here.
+   ============================================================= */
+
 @import "tailwindcss";
 
-/* =========================================================
-   SHMOCARD — Design Tokens  (--shmo-* prefix)
-   Source of truth. All component CSS must reference these vars.
-   ========================================================= */
-
-:root {
+/* =============================================================
+   @theme — Tailwind v4 token declarations
+   Token names use Tailwind's namespaces so utilities generate:
+     --color-*    -> bg-*, text-*, border-*, fill-*, ring-*
+     --font-*     -> font-*
+     --radius-*   -> rounded-*
+     --spacing-*  -> p-*, m-*, gap-*, w-*, h-*
+     --shadow-*   -> shadow-*
+   ============================================================= */
+@theme {
   /* ---------- Surfaces ---------- */
-  --shmo-cream:        #FFF1DC; /* default page bg — warm marshmallow */
-  --shmo-snow:         #FFF8EA; /* lifted surface */
-  --shmo-paper:        #FFFFFF; /* pure white card surface */
-  --shmo-graham-soft:  #FFE0C2; /* peachy graham wash */
+  --color-cream:        #FFF1DC;   /* warm marshmallow base */
+  --color-cream-soft:   #FFFBF1;   /* lifted cream — cards on cream */
+  --color-snow:         #FFF8EA;   /* main warm surface (page bg) */
+  --color-paper:        #FFFFFF;   /* clean white card */
 
-  /* ---------- Brand ---------- */
-  --shmo-ember:        #FF5B1F; /* PRIMARY — CTAs, focus, accent */
-  --shmo-ember-deep:   #E04210; /* hover / pressed */
-  --shmo-chocolate:    #6B3A1E; /* secondary deep */
-  --shmo-choc-deep:    #3B1F14; /* deepest chocolate / ink */
+  /* ---------- Brand · Ember (primary accent) ---------- */
+  --color-ember:        #FF5B1F;   /* primary ember — CTAs, italic accent */
+  --color-ember-deep:   #E04210;   /* hover, pressed text */
+  --color-ember-soft:   #FFD8C2;
 
-  /* ---------- Pop accent (use sparingly) ---------- */
-  --shmo-honey:        #FFB833;
-  --shmo-honey-soft:   #FFE3B0;
-  --shmo-honey-deep:   #E89A1A;
+  /* ---------- Brand · Honey (secondary accent) ---------- */
+  --color-honey:        #FFB833;
+  --color-honey-soft:   #FFE3B0;
+  --color-honey-deep:   #E89A1A;
 
-  /* ---------- Warm spectrum ---------- */
-  --shmo-orange:       #FF7A3A;
-  --shmo-peach:        #FFA378;
-  --shmo-blush:        #FFA378;
-  --shmo-blush-soft:   #FFD8C2;
+  /* ---------- Brand · Cocoa (deep secondary / dark sections) ---------- */
+  --color-cocoa-deep:   #3B1F14;   /* darkest — chocolate hot section bg */
 
-  /* ---------- Ink (always chocolate, never pure black) ---------- */
-  --shmo-ink:          #3B1F14; /* primary text */
-  --shmo-ink-2:        #4A2C1E; /* strong text */
-  --shmo-ink-3:        #6B4A37; /* secondary text */
-  --shmo-muted:        #8A6E5A; /* tertiary / labels */
-  --shmo-muted-2:      #B89A82; /* placeholder */
+  /* ---------- Ink & neutrals (chocolate, never pure black) ---------- */
+  --color-ink:          #3B1F14;   /* primary text */
+  --color-ink-2:        #4A2C1E;   /* secondary text */
+  --color-ink-3:        #6B4A37;   /* tertiary / lede */
+  --color-muted:        #8A6E5A;   /* meta, captions */
+  --color-muted-2:      #B89A82;   /* placeholders, dim numbers */
 
-  /* ---------- Borders ---------- */
-  --shmo-hair:         rgba(59, 31, 20, 0.10);
-  --shmo-hair-2:       rgba(59, 31, 20, 0.16);
-  --shmo-hair-3:       rgba(59, 31, 20, 0.24);
+  /* Hairlines — translucent ink for borders on warm surfaces */
+  --color-hair:         rgba(59, 31, 20, 0.10);
+  --color-hair-2:       rgba(59, 31, 20, 0.16);
+  --color-hair-3:       rgba(59, 31, 20, 0.24);
 
   /* ---------- Semantic ---------- */
-  --shmo-success:      #2E7D44;
-  --shmo-success-soft: #DDF0E2;
-  --shmo-warn:         #C8472D;
-  --shmo-warn-soft:    #FBE0D6;
+  --color-success:      #2E7D44;
+  --color-success-soft: #DDF0E2;
+  --color-warn:         #C8472D;
+  --color-warn-soft:    #FBE0D6;
 
-  /* ---------- Typography ---------- */
-  --shmo-font-sans:  var(--font-inter-tight), "Inter Tight", "Inter", system-ui, -apple-system, "Segoe UI", sans-serif;
-  --shmo-font-serif: var(--font-fraunces), "Fraunces", "Source Serif Pro", Georgia, serif;
-  --shmo-font-mono:  var(--font-jetbrains-mono), "JetBrains Mono", ui-monospace, "SF Mono", Menlo, monospace;
+  /* ---------- Typography (next/font CSS variables, then fallbacks) ---------- */
+  --font-sans:    var(--font-inter-tight), "Inter Tight", "Inter", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-serif:   var(--font-fraunces), "Fraunces", "Source Serif Pro", Georgia, serif;
 
   /* ---------- Radii ---------- */
-  --shmo-r-xs:   4px;
-  --shmo-r-sm:   6px;
-  --shmo-r-md:  10px;
-  --shmo-r-lg:  14px;
-  --shmo-r-xl:  20px;
-  --shmo-r-2xl: 28px;
-  --shmo-r-full: 999px;
+  --radius-xs:   4px;
+  --radius-sm:   6px;
+  --radius-md:  10px;
+  --radius-lg:  14px;
+  --radius-xl:  20px;
+  --radius-2xl: 28px;
+  --radius-full: 999px;
 
-  /* ---------- Shadow (chocolate-tinted, never grey) ---------- */
-  --shmo-sh-sm:   0 1px 2px rgba(59,31,20,0.08);
-  --shmo-sh-md:   0 1px 2px rgba(59,31,20,0.08), 0 8px 20px -8px rgba(59,31,20,0.20);
-  --shmo-sh-lg:   0 1px 2px rgba(59,31,20,0.08), 0 16px 40px -12px rgba(59,31,20,0.24);
-  --shmo-sh-card: 0 1px 0  rgba(59,31,20,0.06), 0 12px 32px -16px rgba(59,31,20,0.22);
+  /* ---------- Shadows (chocolate-tinted, never gray/black) ---------- */
+  --shadow-sm:   0 1px 2px rgba(59,31,20,0.08);
+  --shadow-md:   0 1px 2px rgba(59,31,20,0.08), 0 8px 20px -8px rgba(59,31,20,0.20);
+  --shadow-lg:   0 1px 2px rgba(59,31,20,0.08), 0 16px 40px -12px rgba(59,31,20,0.24);
+  --shadow-card: 0 1px 0 rgba(59,31,20,0.06), 0 12px 32px -16px rgba(59,31,20,0.22);
 
-  /* ---------- Page rhythm ---------- */
-  --shmo-gutter:     28px;
-  --shmo-section-y:  88px;
-  --shmo-maxw:     1320px;
+  /* ---------- Spacing scale (4/8 base) ---------- */
+  --spacing-1:  4px;
+  --spacing-2:  8px;
+  --spacing-3: 12px;
+  --spacing-4: 16px;
+  --spacing-5: 24px;
+  --spacing-6: 32px;
+  --spacing-7: 48px;
+  --spacing-8: 64px;
+  --spacing-9: 96px;
+
+  /* Layout primitives */
+  --spacing-gutter:   28px;
+  --spacing-section:  88px;   /* vertical rhythm between sections */
+  --spacing-maxw:   1320px;   /* page max-width container */
+
+  /* ---------- Motion ---------- */
+  --motion-fast:    150ms;
+  --motion-normal:  220ms;
+  --motion-slow:    320ms;
+  --ease-standard:  cubic-bezier(0.2, 0.8, 0.2, 1);
+  --ease-out:       cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-/* ---------- Base typography classes ---------- */
-.shmo-display {
-  font-family: var(--shmo-font-sans);
+/* =============================================================
+   Base resets
+   ============================================================= */
+html, body {
+  background: var(--color-snow);
+  color: var(--color-ink);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+* { box-sizing: border-box; }
+
+/* =============================================================
+   Typography utility classes (use directly OR with @apply)
+   These mirror the Shmocard type ramp.
+   ============================================================= */
+.t-display {
+  font-family: var(--font-sans);
   font-weight: 600;
-  letter-spacing: -0.025em;
-  line-height: 1.04;
-  color: var(--shmo-ink);
+  font-size: clamp(44px, 6.2vw, 84px);
+  line-height: 0.98;
+  letter-spacing: -0.035em;
+  color: var(--color-ink);
+  text-wrap: balance;
 }
-/* Italic accent: ONE word per headline, em element, Fraunces italic, ember. */
-.shmo-display em,
-.shmo-italic {
-  font-family: var(--shmo-font-serif);
+.t-display em,
+.t-italic {
+  font-family: var(--font-serif);
   font-style: italic;
   font-weight: 400;
-  color: var(--shmo-ember);
-  letter-spacing: -0.02em;
+  color: var(--color-ember);
+  letter-spacing: -0.025em;
 }
-
-.shmo-eyebrow {
-  font-family: var(--shmo-font-sans);
+.t-h1 {
+  font-family: var(--font-sans);
+  font-weight: 600;
+  font-size: 60px;
+  line-height: 64px;
+  letter-spacing: -0.035em;
+  color: var(--color-ink);
+}
+.t-h2 {
+  font-family: var(--font-sans);
+  font-weight: 600;
+  font-size: 44px;
+  line-height: 46px;
+  letter-spacing: -0.025em;
+  color: var(--color-ink);
+}
+.t-h3 {
+  font-family: var(--font-sans);
+  font-weight: 600;
+  font-size: 22px;
+  line-height: 26px;
+  letter-spacing: -0.015em;
+  color: var(--color-ink);
+}
+.t-lede {
+  font-family: var(--font-sans);
+  font-weight: 400;
+  font-size: 17px;
+  line-height: 26px;
+  color: var(--color-ink-3);
+  text-wrap: pretty;
+}
+.t-body {
+  font-family: var(--font-sans);
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 22px;
+  color: var(--color-ink-2);
+}
+.t-meta {
+  font-family: var(--font-sans);
+  font-size: 13px;
+  color: var(--color-muted);
+}
+.t-eyebrow {
+  font-family: var(--font-sans);
   font-weight: 600;
   font-size: 11px;
   letter-spacing: 1.6px;
   text-transform: uppercase;
-  color: var(--shmo-muted);
+  color: var(--color-muted);
+}
+.t-eyebrow-italic {
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-weight: 400;
+  font-size: 15px;
+  color: var(--color-ember);
+  letter-spacing: 0.2px;
 }
 
-.shmo-lede {
-  font-size: 17px;
-  line-height: 1.55;
-  color: var(--shmo-ink-3);
+/* =============================================================
+   Focus — single, brand-tinted ring used everywhere
+   ============================================================= */
+:where(button, a, input, textarea, select, [tabindex]):focus-visible {
+  outline: 2px solid var(--color-ember);
+  outline-offset: 2px;
+  border-radius: var(--radius-sm);
 }
-
-/* ---------- Global resets ---------- */
-* { box-sizing: border-box; }
-
-html {
-  scroll-behavior: smooth;
-}
-
-@media (prefers-reduced-motion: reduce) {
-  html {
-    scroll-behavior: auto;
-  }
-}
-
-body {
-  background: var(--shmo-cream);
-  color: var(--shmo-ink);
-  font-family: var(--shmo-font-sans);
-  -webkit-font-smoothing: antialiased;
-  text-rendering: optimizeLegibility;
-  margin: 0;
-  padding: 0;
-}
-
-a { color: inherit; }

@@ -1,29 +1,16 @@
-import { Nav } from "@/components/nav/Nav";
-import { Footer } from "@/components/footer/Footer";
-import { Hero } from "@/components/home/Hero";
-import { TrustBar } from "@/components/home/TrustBar";
-import { ShmoFamily } from "@/components/home/ShmoFamily";
-import { WhyShmocard } from "@/components/home/WhyShmocard";
-import { SubBrandShowcase } from "@/components/home/SubBrandShowcase";
-import { RealResults } from "@/components/home/RealResults";
-import { Testimonials } from "@/components/home/Testimonials";
-import { FAQ } from "@/components/home/FAQ";
-
-export default function HomePage() {
+export default function Home() {
   return (
-    <div className="home">
-      <Nav />
-      <main>
-        <Hero />
-        <TrustBar />
-        <ShmoFamily />
-        <WhyShmocard />
-        <SubBrandShowcase />
-        <RealResults />
-        <Testimonials />
-        <FAQ />
-      </main>
-      <Footer />
-    </div>
+    <main className="bg-snow min-h-screen">
+      <div className="max-w-[1320px] mx-auto px-7 py-24">
+        <span className="t-eyebrow text-ember">Phase 1 — foundation</span>
+        <h1 className="t-h1 mt-3">
+          Shmocard homepage <em className="font-serif italic font-normal text-ember">rebuild</em>
+        </h1>
+        <p className="t-lede mt-4 max-w-2xl">
+          Foundation in place. Design tokens loaded, legacy code removed.
+          Section components arrive in Phase 2.
+        </p>
+      </div>
+    </main>
   );
 }

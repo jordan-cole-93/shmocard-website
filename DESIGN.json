@@ -1,0 +1,331 @@
+{
+  "$schema": "shmocard-design-system@1",
+  "version": "1.0.0",
+  "stack": {
+    "framework": "next.js",
+    "styling": "tailwindcss@4",
+    "config": "css-first (@theme directive in app/globals.css)",
+    "darkMode": false
+  },
+  "color": {
+    "surface": {
+      "cream":      { "value": "#FFF1DC", "var": "--color-cream",      "use": "warm marshmallow base — for highlight strips, eyebrow chips" },
+      "cream-soft": { "value": "#FFFBF1", "var": "--color-cream-soft", "use": "lifted cream — when cards must contrast against a snow page" },
+      "snow":       { "value": "#FFF8EA", "var": "--color-snow",       "use": "DEFAULT page background, default section background" },
+      "paper":      { "value": "#FFFFFF", "var": "--color-paper",      "use": "white card interiors on cream/snow surfaces" },
+      "cocoa-deep": { "value": "#3B1F14", "var": "--color-cocoa-deep", "use": "dark hot sections, footer, contained CTA cards" }
+    },
+    "accent": {
+      "ember":       { "value": "#FF5B1F", "var": "--color-ember",       "use": "primary CTA, italic accent text, focus ring, hover underline" },
+      "ember-deep":  { "value": "#E04210", "var": "--color-ember-deep",  "use": "ember on hover/active, ember text on cream when extra contrast needed" },
+      "ember-soft":  { "value": "#FFD8C2", "var": "--color-ember-soft",  "use": "soft ember tint — chip backgrounds, dividers" },
+      "honey":       { "value": "#FFB833", "var": "--color-honey",       "use": "secondary accent — pop highlights, badges, mini-icons on dark" },
+      "honey-soft":  { "value": "#FFE3B0", "var": "--color-honey-soft",  "use": "honey chip backgrounds" },
+      "honey-deep":  { "value": "#E89A1A", "var": "--color-honey-deep",  "use": "honey on hover/active" }
+    },
+    "ink": {
+      "ink":      { "value": "#3B1F14", "var": "--color-ink",      "use": "primary body text, headings on light surfaces" },
+      "ink-2":    { "value": "#4A2C1E", "var": "--color-ink-2",    "use": "secondary text" },
+      "ink-3":    { "value": "#6B4A37", "var": "--color-ink-3",    "use": "lede paragraphs, descriptive copy" },
+      "muted":    { "value": "#8A6E5A", "var": "--color-muted",    "use": "meta lines, captions, eyebrow text" },
+      "muted-2":  { "value": "#B89A82", "var": "--color-muted-2",  "use": "input placeholders, disabled labels" }
+    },
+    "hairline": {
+      "hair":   { "value": "rgba(59,31,20,0.10)", "var": "--color-hair",   "use": "default border on cards" },
+      "hair-2": { "value": "rgba(59,31,20,0.16)", "var": "--color-hair-2", "use": "stronger border — cards on cream-soft, separators" },
+      "hair-3": { "value": "rgba(59,31,20,0.24)", "var": "--color-hair-3", "use": "input borders, emphasized dividers" }
+    },
+    "semantic": {
+      "success":      { "value": "#2E7D44", "var": "--color-success" },
+      "success-soft": { "value": "#DDF0E2", "var": "--color-success-soft" },
+      "warn":         { "value": "#C8472D", "var": "--color-warn",      "use": "errors, destructive states. Distinct from ember." },
+      "warn-soft":    { "value": "#FBE0D6", "var": "--color-warn-soft" }
+    },
+    "rule": "Never pure black (#000) and never pure gray. Ink is always chocolate. Borders are always translucent ink, never neutral gray."
+  },
+  "typography": {
+    "families": {
+      "sans":    { "stack": "Inter Tight, Inter, system-ui, sans-serif", "var": "--font-sans",    "use": "UI, body, ALL headlines except italic accent words" },
+      "serif":   { "stack": "Fraunces, Source Serif Pro, Georgia, serif", "var": "--font-serif",  "use": "ITALIC ACCENT ONLY — 1-2 words per scene, always ember-colored" }
+    },
+    "scale": {
+      "display":  { "size": "clamp(44px,6.2vw,84px)", "lh": "0.98", "weight": 600, "tracking": "-0.035em", "use": "hero headline only" },
+      "h1":       { "size": "60px", "lh": "64px", "weight": 600, "tracking": "-0.035em", "use": "page title" },
+      "h2":       { "size": "44px", "lh": "46px", "weight": 600, "tracking": "-0.025em", "use": "section title" },
+      "h3":       { "size": "22px", "lh": "26px", "weight": 600, "tracking": "-0.015em", "use": "card title, sub-section" },
+      "lede":     { "size": "17px", "lh": "26px", "weight": 400, "use": "intro paragraph below H1/H2" },
+      "body":     { "size": "14px", "lh": "22px", "weight": 400, "use": "default paragraph, card body" },
+      "meta":     { "size": "13px", "lh": "1.5",  "weight": 400, "use": "captions, small labels" },
+      "eyebrow":  { "size": "11px", "lh": "1.5",  "weight": 600, "tracking": "1.6px", "transform": "uppercase", "use": "section eyebrows above headlines" },
+      "eyebrow-italic": { "size": "15px", "weight": 400, "family": "serif", "style": "italic", "color": "ember", "use": "warm editorial eyebrow as alternative to all-caps eyebrow" }
+    },
+    "italicRule": "Fraunces italic appears max once or twice per scene. Always 1-2 words, never a full sentence. Always colored ember. Use to add warmth to a sans-serif headline. Never set body text in serif. Never italicize multiple consecutive words.",
+    "balanceRule": "All H1/H2/Display use text-wrap: balance. All lede/body paragraphs use text-wrap: pretty."
+  },
+  "spacing": {
+    "scale": {
+      "1": "4px",  "2": "8px",  "3": "12px", "4": "16px",
+      "5": "24px", "6": "32px", "7": "48px", "8": "64px", "9": "96px"
+    },
+    "layout": {
+      "gutter":   { "value": "28px",   "var": "--spacing-gutter",  "use": "horizontal page padding" },
+      "section":  { "value": "88px",   "var": "--spacing-section", "use": "vertical padding between page sections" },
+      "maxw":     { "value": "1320px", "var": "--spacing-maxw",    "use": "page max content width" }
+    },
+    "rule": "Always use the scale (4/8 base). Section vertical rhythm is 88px standard, 56px on mobile. Cards use 24-32px internal padding. Never invent arbitrary px values."
+  },
+  "radius": {
+    "xs":   { "value": "4px",   "var": "--radius-xs",   "use": "input chips, tags" },
+    "sm":   { "value": "6px",   "var": "--radius-sm",   "use": "small buttons, inputs" },
+    "md":   { "value": "10px",  "var": "--radius-md",   "use": "default button, default input" },
+    "lg":   { "value": "14px",  "var": "--radius-lg",   "use": "compact card" },
+    "xl":   { "value": "20px",  "var": "--radius-xl",   "use": "standard card" },
+    "2xl":  { "value": "28px",  "var": "--radius-2xl",  "use": "large card, contained CTA card, hero stage" },
+    "full": { "value": "999px", "var": "--radius-full", "use": "pill buttons, badges, avatars" }
+  },
+  "shadow": {
+    "sm":   { "var": "--shadow-sm",   "use": "subtle lift on cards" },
+    "md":   { "var": "--shadow-md",   "use": "default card shadow" },
+    "lg":   { "var": "--shadow-lg",   "use": "modal, popover, hero element" },
+    "card": { "var": "--shadow-card", "use": "primary product/feature cards" },
+    "rule": "Shadows are ALWAYS chocolate-tinted (rgba(59,31,20,…)), never gray or black. Never combine shadow-lg with a hairline border — pick one."
+  },
+  "motion": {
+    "duration": {
+      "fast":    { "value": "150ms", "use": "hover state, focus" },
+      "normal":  { "value": "220ms", "use": "panel open/close, accordion" },
+      "slow":    { "value": "320ms", "use": "page-level transitions" }
+    },
+    "easing": {
+      "standard": "cubic-bezier(0.2, 0.8, 0.2, 1)",
+      "out":      "cubic-bezier(0.16, 1, 0.3, 1)"
+    }
+  },
+  "sectionRecipes": {
+    "snow": {
+      "use": "Default page section — most marketing content lives here",
+      "background": "var(--color-snow)",
+      "eyebrow": "var(--color-ember)",
+      "heading": "var(--color-ink)",
+      "body": "var(--color-ink-3)",
+      "card": { "bg": "var(--color-paper)", "border": "var(--color-hair)" },
+      "cta": "ember-primary"
+    },
+    "cream-soft": {
+      "use": "Section that needs subtle separation from a snow neighbor — also when cards must read as cards",
+      "background": "var(--color-cream-soft)",
+      "eyebrow": "var(--color-ember)",
+      "heading": "var(--color-ink)",
+      "body": "var(--color-ink-3)",
+      "card": { "bg": "var(--color-paper)", "border": "var(--color-hair-2)" },
+      "cta": "ember-primary"
+    },
+    "cream": {
+      "use": "Warmer section — UGC strip, testimonials, content that benefits from extra warmth",
+      "background": "var(--color-cream)",
+      "eyebrow": "var(--color-ember)",
+      "heading": "var(--color-ink)",
+      "body": "var(--color-ink-3)",
+      "card": { "bg": "var(--color-paper)", "border": "var(--color-hair-2)" },
+      "cta": "ember-primary"
+    },
+    "paper": {
+      "use": "Sparingly — feature explainers, dense info layouts where pure white aids legibility",
+      "background": "var(--color-paper)",
+      "eyebrow": "var(--color-ember)",
+      "heading": "var(--color-ink)",
+      "body": "var(--color-ink-3)",
+      "card": { "bg": "var(--color-snow)", "border": "var(--color-hair)" },
+      "cta": "ember-primary"
+    },
+    "cocoa-hot": {
+      "use": "Showpiece sections — the toolkit reveal, hero promo, contained CTA card. Use 1-2 times per page max.",
+      "background": "var(--color-cocoa-deep)",
+      "backgroundEffect": "radial honey glow at top-center",
+      "eyebrow": "var(--color-honey)",
+      "heading": "#FFFFFF",
+      "italicAccent": "var(--color-honey)",
+      "body": "rgba(255,235,210,0.72)",
+      "card": { "bg": "rgba(255,248,234,0.04)", "border": "rgba(255,235,210,0.14)" },
+      "cta": "ember-primary"
+    },
+    "rule": "A page should mix at most 3 recipes. Always alternate snow ↔ cream-soft for breathing room. Cocoa-hot is the climax — never two in a row."
+  },
+  "components": {
+    "button": {
+      "variants": ["primary", "secondary", "ghost", "link"],
+      "sizes": ["sm", "md", "lg"],
+      "rules": [
+        "Primary = ember bg + paper text. The ONLY ember-filled element in a section.",
+        "Secondary = paper bg + ink text + hair-2 border.",
+        "Ghost = transparent bg + ink text + hair-2 border. Use for second action next to primary.",
+        "Link = ember text + underline on hover. Inline use only.",
+        "Default radius = md (10px). Pill (radius-full) only when explicitly desired.",
+        "Min hit target 44px on mobile.",
+        "Never two primary buttons in the same row of CTAs."
+      ]
+    },
+    "input": {
+      "rules": [
+        "Default bg paper, border hair-3.",
+        "Focus = ember 2px outline at 2px offset. No box-shadow rings.",
+        "Error = warn border + warn-soft bg tint + warn helper text below.",
+        "Placeholder uses muted-2."
+      ]
+    },
+    "card": {
+      "rules": [
+        "Default: paper bg, hair border, radius-xl, shadow-sm. Internal padding 24-32px.",
+        "On cream-soft sections, use hair-2 border for stronger contrast.",
+        "Hover: lift 2-3px and shadow-md.",
+        "Never combine a heavy shadow with a heavy border — pick one."
+      ]
+    },
+    "badge": {
+      "rules": [
+        "Pill (radius-full), 11px text, 600 weight, 1.6px tracking, uppercase.",
+        "AVAILABLE NOW = success-soft bg + success text.",
+        "COMING SOON = ember-soft bg + ember-deep text.",
+        "Pure label = paper bg + hair border + ink text."
+      ]
+    },
+    "accordion": {
+      "rules": [
+        "FAQ pattern. Closed = + icon, ember on hover. Open = × icon in ember filled circle.",
+        "Item separator = hair, not card border.",
+        "Question = 16px ink semibold. Answer = body (14/22) ink-3.",
+        "Single item open at a time."
+      ]
+    },
+    "nav": {
+      "rules": [
+        "Sticky top, paper bg with hair-2 bottom border, blur backdrop.",
+        "Logo left, links center, primary CTA right.",
+        "Active link = ink. Inactive = ink-3. Hover = ink + ember underline."
+      ]
+    },
+    "footer": {
+      "rules": [
+        "cocoa-deep bg with honey eyebrow accents.",
+        "Wordmark + tagline left, link columns right.",
+        "Body text rgba(255,235,210,0.72)."
+      ]
+    },
+    "hero": {
+      "rules": [
+        "Snow or cream-soft background. Eyebrow + display headline + lede + 1 primary CTA + 1 ghost CTA.",
+        "Right side: 3D imagery slot OR product shot if hero is e-commerce.",
+        "Mascot NEVER appears at hero scale. Only as a small icon adjacent to text."
+      ]
+    },
+    "productCard": {
+      "use": "E-commerce — Add to cart tiles. THIS is where product photography appears.",
+      "rules": [
+        "Paper bg, hair-2 border, radius-xl.",
+        "Square product photo on cream-soft backdrop.",
+        "Product name (h3) + price (h3 weight 600) + Add to cart (primary button).",
+        "Never use 3D nano-banana imagery here — must be real product photography."
+      ]
+    },
+    "testimonialCard": {
+      "rules": [
+        "Cream or paper bg, hair border, radius-xl.",
+        "Quote in body (14/22) ink-2.",
+        "Author = name (semibold ink) + role (meta muted)."
+      ]
+    },
+    "imageFrame": {
+      "rules": [
+        "All marketing imagery sits in this frame.",
+        "Border radius-xl, shadow-sm, hair border.",
+        "Aspect-ratio honored — 16/9 hero, 1/1 product, 4/5 portrait."
+      ]
+    },
+    "languageSwitcher": {
+      "placement": "Top-right of nav OR footer corner — pick one per page, never both",
+      "rules": [
+        "EN | FR. No flags (flags = country, language ≠ country).",
+        "Active language ink, inactive muted, divider hair-2."
+      ]
+    }
+  },
+  "iconography": {
+    "stroke": "1.5px",
+    "size": [16, 20, 24],
+    "style": "outline default. Filled only for active/selected states.",
+    "color": "ink by default. ember when accent. paper on cocoa-hot surfaces.",
+    "rule": "All icons share one stroke weight and corner style. Never mix outline icon families with filled icon families in the same module."
+  },
+  "mascot": {
+    "rule": "Mascot only ever appears at ICON scale (16-32px) as a small companion graphic next to text. NEVER as illustration, hero, or photographic-style imagery.",
+    "reason": "Product is real 3D photography (e-commerce) and 3D-rendered nano-banana imagery (marketing). Mascot is a 2D cartoon — mixing scales/styles breaks visual coherence. At icon size, the mascot reads as a system glyph, not a competing illustration.",
+    "allowedSlots": [
+      "Footer wordmark companion (24px)",
+      "Inline next to a label or CTA (16px)",
+      "Empty-state glyph in a card (32px)",
+      "List bullet replacement (16px) — sparingly",
+      "Toast/notification icon (20px)"
+    ],
+    "forbiddenSlots": [
+      "Hero illustrations",
+      "Section dividers / decorative imagery",
+      "Inside primary CTA buttons",
+      "Pricing card decoration",
+      "Anywhere the mascot would compete with product photography"
+    ],
+    "frequency": "Max 2 mascot icons per page. Often zero is correct.",
+    "asset": "Mascot icon assets are generated separately (nano-banana). Available in 16/20/24/32 px PNG with transparent background. Use the inventory list when available."
+  },
+  "imagery": {
+    "twoTrackRule": "There are exactly two image tracks in Shmocard. Never blend them in the same module.",
+    "tracks": {
+      "marketing-3d": {
+        "what": "3D-rendered scenes generated in nano-banana — toolkit shots, ambient props, environmental textures, illustrative compositions.",
+        "where": "All marketing surfaces — hero stages, section illustrations, feature explainers, footer flourishes.",
+        "framing": "Always inside .imageFrame (hair border, shadow-sm, radius-xl).",
+        "backdrop": "Cream, snow, or cocoa-deep — never on paper white."
+      },
+      "product-photography": {
+        "what": "Real studio photography of the physical Shmocard product.",
+        "where": "E-commerce ONLY — product detail pages, Add-to-cart tiles, checkout, order confirmation.",
+        "framing": "Square aspect, cream-soft backdrop, no drop shadow on the photo itself (the card already has subject lighting).",
+        "rule": "Never appears in marketing flow surfaces. Never alongside 3D imagery in the same component."
+      }
+    }
+  },
+  "states": {
+    "default":  "as defined in component rules",
+    "hover":    "subtle lift (translateY -2px or -3px) + shadow-md OR color shift to ember-deep / honey-deep",
+    "focus":    "2px ember outline at 2px offset, radius-sm. No box-shadow rings. Apply via :focus-visible only.",
+    "active":   "press-down: scale(0.98) and shadow-sm",
+    "disabled": "opacity 0.5, cursor not-allowed, no hover effects",
+    "error":    "warn color border + warn-soft bg tint + warn helper text"
+  },
+  "i18n": {
+    "languages": ["en", "fr"],
+    "rule": "French copy runs ~15-25% longer than English. Components must flex.",
+    "guidance": [
+      "Buttons: never fixed-width. Use min-width and let content size.",
+      "Headlines: never assume single-line layout. Allow 2-3 lines and use text-wrap: balance.",
+      "Nav items: allow wrap or compress to a hamburger earlier on smaller breakpoints when in FR.",
+      "Eyebrows: 11px uppercase still works in FR but watch tracking — French often needs slightly tighter (1.4px instead of 1.6px) when the word is long.",
+      "Truncation is forbidden in primary CTAs and pricing labels."
+    ],
+    "switcher": "EN | FR text toggle. No flags. Place once per page (nav OR footer)."
+  },
+  "donts": [
+    "Never use pure black (#000) — ink is always chocolate.",
+    "Never use pure gray for borders — borders are always translucent ink.",
+    "Never use Fraunces serif for body text or for >2 consecutive words.",
+    "Never use ember as a flood color — it is an accent, not a surface.",
+    "Never put two primary buttons next to each other in the same CTA group.",
+    "Never use the mascot at illustration/hero scale.",
+    "Never mix 3D marketing imagery with product photography in the same module.",
+    "Never invent spacing values outside the 4/8 scale.",
+    "Never combine shadow-lg with a heavy hairline border on the same element.",
+    "Never use emojis as decorative accents.",
+    "Never use gradient backgrounds outside the cocoa-hot recipe (where the honey radial glow is approved).",
+    "Never use rounded corners with a left-border accent stripe — that's a SaaS-blog cliché, not Shmocard.",
+    "Never use icons drawn from multiple icon families in one module."
+  ]
+}

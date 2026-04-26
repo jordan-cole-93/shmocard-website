@@ -21,7 +21,12 @@
 # Session artifacts (dev-only, not for repo)
 /.playwright-mcp/
 /screenshots/
+/pictures/screenshots/
 /.claude/agent-memory/
+
+# Personal developer overrides (per-developer, not committed)
+/CLAUDE.local.md
+/.claude/settings.local.json
 
 # TypeScript
 *.tsbuildinfo

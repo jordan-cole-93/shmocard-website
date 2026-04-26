@@ -1,8 +1,6 @@
 import type { Metadata } from "next";
-import { Inter_Tight, Fraunces, JetBrains_Mono } from "next/font/google";
+import { Inter_Tight, Fraunces } from "next/font/google";
 import "./globals.css";
-import "./styles.css";
-import "./home.css";
 
 const interTight = Inter_Tight({
   subsets: ["latin"],
@@ -19,13 +17,6 @@ const fraunces = Fraunces({
   display: "swap",
 });
 
-const jetbrainsMono = JetBrains_Mono({
-  subsets: ["latin"],
-  weight: ["400", "500"],
-  variable: "--font-jetbrains-mono",
-  display: "swap",
-});
-
 export const metadata: Metadata = {
   title: "Shmocard — The toolkit your crew's been missing",
   description:
@@ -38,7 +29,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${interTight.variable} ${fraunces.variable} ${jetbrainsMono.variable}`}
+      className={`${interTight.variable} ${fraunces.variable}`}
     >
       <body>{children}</body>
     </html>
