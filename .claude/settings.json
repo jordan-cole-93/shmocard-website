@@ -43,6 +43,16 @@
             "type": "command",
             "command": ".claude/hooks/inject-design-rules.sh",
             "statusMessage": "Injecting design rules..."
+          },
+          {
+            "type": "command",
+            "command": ".claude/hooks/surface-applied-rules.sh",
+            "statusMessage": "Requiring rule surfacing..."
+          },
+          {
+            "type": "command",
+            "command": ".claude/hooks/inject-caveman-mode.sh",
+            "statusMessage": "Enabling caveman mode..."
           }
         ]
       }
