@@ -1,86 +1,62 @@
 # handoff.md — Session Handoff
 
-**Last session:** 2026-04-26 — meta-context reset and restructuring complete.
+**Last session:** 2026-04-26 — memory inspection, pruned one feedback rule, surfaced auto-memory inside the project via symlink.
 
 ---
 
 ## Project phase
 
-**1. Restructure meta-context (✅ done) → 2. Branding guide (next) → 3. Tools (MCPs / commands / skills / hooks) → 4. Resume website build.**
+**Step 4 — Resume website build (in progress)** per `scope.md`.
 
-Step 2 is gated on Jordan loading the new branding guide. **Don't build features or touch design code until step 2 lands** — the homepage is ~9/10 sections done with placeholder visuals, and finishing it before the new branding would just create rework.
+Steps 1–3 (meta-context, branding, tools) all ✅. Homepage rebuild from Claude Design v2 is the active workstream — 9/10 sections complete from prior sessions. This session was a brief detour into project tooling (memory visibility + cleanup), no homepage code touched.
 
 ---
 
 ## What was done this session
 
-**Reset orientation.** Previous session ended with Jordan deleting agents, commands, skills, hooks, rules, and the old branding guide because he was hitting AI hallucinations and contradictory context. This session was the cleanup to escape that state.
+- **Project agent inventory:** Confirmed `.claude/agents/` is empty (intentional per `file-organization.md`). Discussed candidate agents — top recs noted for future: `design-auditor`, `shopify-wiring-checker`, `section-builder`. None scaffolded yet.
 
-**CLAUDE.md rewritten:**
-- Broken paths repointed (was `.claude/rules/<file>.md`, now root-level)
-- Sub-agents section removed (no agents exist)
-- New "File organization" section added — codifies the layout and locks it
-- Vault-side context files cross-referenced (Obsidian remapped them)
+- **Auto-memory audit:** Reviewed all 17 memory files at `~/.claude/projects/-Users-jordancole-Documents-Developement-Projects-Shmocard-Shmocard-Website/memory/`. Walked Jordan through every layer that injects rules (global CLAUDE.md, repo CLAUDE.md, `.claude/rules/*`, auto-memory, hooks, skills).
 
-**Rule files reviewed:**
-- `scope.md` — rewritten. Reflects real state (homepage 9/10, branding pending) and the new 4-step plan.
-- `backend.md` — kept as-is. Still accurate.
-- `tools.md` — review deferred to step 3. Heavy rewrite expected when MCPs/commands/skills/hooks get set up.
-- `handoff.md` — this file (rewritten now).
-- `faq.md` — deleted. Jordan didn't need it.
+- **Memory rule deleted:** `feedback_not_too_boxy.md` removed at Jordan's request. `MEMORY.md` index updated to drop the line. 16 memory files remain. Rule no longer loads next session.
 
-**Context files moved to vault:**
-- `context.md`, `marketing.md`, `product.md`, and the entire `wireframe/` folder are now vault-only at `/Users/jordancole/Documents/Developement/Jordan's Brain/Projects/Shmocard/Shmocard Website/`.
-- Obsidian updated CLAUDE.md to point at the vault paths.
-
-**Settings cleaned:**
-- `.claude/settings.json` — removed two hooks that pointed at deleted scripts (`auto-design-review.sh`, `inject-design-context.sh`). Kept the two working safety hooks (`.env` protection, Shopify Bash guard) and the `permissions.allow` list.
-- `.claude/settings.local.json` — wiped to empty allow list (was 70+ stale entries).
-
-**VS Code organization (global, not in repo):**
-- File nesting enabled in Jordan's global VS Code user settings.
-- `CLAUDE.md` group — `scope.md`, `backend.md`, `tools.md`, `handoff.md` collapse under `CLAUDE.md`.
-- `package.json` group — lockfile, tsconfig, all `*.config.*` files, `next-env.d.ts`, `.gitignore`, `.gitattributes`, `.mcp.json` collapse under `package.json`.
-- Result: only two visible files at repo root in the Explorer.
+- **Memory surfaced inside repo:** Created symlink `.claude/memory` → memory dir so all auto-memory files appear in VS Code sidebar for direct browse/edit.
+  - `.claude/rules/file-organization.md` updated — added `.claude/memory/` row to layout table so it's not flagged as drift.
+  - `.gitignore` updated — added `/.claude/memory` so the symlink doesn't get committed (memory is per-developer, not shared).
 
 ---
 
 ## What's next
 
-**Step 2 — Load the new branding guide.**
+**Step 4 — Homepage rebuild** per `scope.md`. Resume the Claude Design v2 reference build.
 
-When Jordan provides it:
-1. Create `DESIGN.md` (narrative — palette, typography, named anti-patterns, voice-on-design rules).
-2. Create `DESIGN.json` (machine-readable tokens — colors, font families, spacing scale, radii, shadows).
-3. Update CLAUDE.md to remove the "not yet created — pending new branding guide" markers from the rule-files table.
-4. Audit homepage components — decide per-component: keep, tweak, or rebuild against the new branding.
+Concrete next actions:
+1. Confirm where the homepage build left off — last verified state was "9 of 10 sections" (commit `b691491`) with 4 boxed spotlights awaiting visual verify (commit `03b73d6`).
+2. Run `/dev` to start dev server and verify current homepage state in the browser.
+3. Continue with the remaining section + any unresolved spotlight follow-ups.
+4. Plan reference: `~/.claude/plans/i-want-to-keep-structured-cocoa.md`.
 
-Do NOT create `DESIGN.md` / `DESIGN.json` stubs in advance. Wait for the actual guide.
+Optional side-quest: scaffold the **design-auditor** sub-agent before next homepage section — would auto-catch boxy/generic AI drift on every component finish.
 
 ---
 
 ## Open decisions
 
-- **New branding direction** — blocks step 2. Pending Jordan loading the guide.
-- Final retail pricing per SKU (Shopify currently shows placeholder prices)
-- Bundle pack sizes + per-unit discounts
-- Coming-soon page copy for Shmo Biz / Shmo Link / Shmo Reputation
-- Third video testimonial (Carly + Joey confirmed; third pending)
-- Shopify handle rename: `google-review` → `shmo-review` (post-launch SEO)
+- **Scaffold a project sub-agent?** Top rec is `design-auditor`. Awaiting Jordan's go/no-go.
+- Carry-overs from prior sessions (still open):
+  - Real retail pricing per SKU (Shopify currently placeholder)
+  - Bundle pack sizes + per-unit discounts
+  - Third video testimonial (Carly + Joey confirmed; third pending)
+  - Shopify handle rename: `google-review` → `shmo-review` (post-launch SEO)
+  - Coming-soon page copy for Shmo Biz / Shmo Link / Shmo Reputation
 
 ---
 
 ## How to start next session
 
 1. Read this file.
-2. Read `CLAUDE.md` — the "File organization" section is load-bearing now; don't restructure anything without explicit approval.
-3. Ask Jordan: **"Ready to load the new branding guide, or working on something else?"**
-4. If branding guide is ready → proceed with step 2 (create `DESIGN.md` + `DESIGN.json` from his input).
-5. If branding isn't ready yet → don't push. Ask what he wants to work on.
-6. Don't run `npm run dev` unless Jordan asks — we're not building yet.
-
-**Rules to remember:**
-- All `.claude/` agents/commands/skills/hooks subfolders are intentionally empty until step 3. Don't repopulate ahead of schedule.
-- Two working safety hooks are still active in `.claude/settings.json`: `.env` file edits are blocked; Shopify Bash commands are evaluated for safety.
-- Don't propose creating `faq.md`, `outputs/`, `branding guide/`, `rules/`, `docs/`, or `src/` folders — Jordan removed these intentionally and the layout is locked.
-- Repo has uncommitted changes from this session if Jordan didn't commit before closing — run `git status` first to know the baseline.
+2. Read `CLAUDE.md`.
+3. Ask Jordan: **"Resume Step 4 homepage build, or scaffold the `design-auditor` sub-agent first?"**
+4. If resuming homepage → run `/dev`, verify current state, pick up from the 10th section / spotlight follow-ups.
+5. Don't restructure folders. `.claude/memory` is now a sanctioned symlink — don't delete or relocate it.
+6. Memory file `feedback_not_too_boxy.md` is intentionally gone. Don't recreate it.

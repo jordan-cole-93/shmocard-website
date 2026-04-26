@@ -23,6 +23,8 @@
 /screenshots/
 /pictures/screenshots/
 /.claude/agent-memory/
+/.claude/memory
+/.claude/plans
 
 # Personal developer overrides (per-developer, not committed)
 /CLAUDE.local.md

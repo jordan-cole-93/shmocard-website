@@ -115,8 +115,10 @@ html, body {
 
 /* =============================================================
    Typography utility classes (use directly OR with @apply)
-   These mirror the Shmocard type ramp.
+   These mirror the Shmocard type ramp. Wrapped in @layer components
+   so Tailwind utilities (text-ember, text-ink, etc.) can override.
    ============================================================= */
+@layer components {
 .t-display {
   font-family: var(--font-sans);
   font-weight: 600;
@@ -193,6 +195,7 @@ html, body {
   font-size: 15px;
   color: var(--color-ember);
   letter-spacing: 0.2px;
+}
 }
 
 /* =============================================================

@@ -32,6 +32,8 @@ If you think the structure should change, **ask first**. Don't move folders, ren
 | `.claude/skills/` | Project-specific skills (wrappers + workflows) |
 | `.claude/agents/` | Sub-agents (currently empty — intentional) |
 | `.claude/hooks/` | Lifecycle automation scripts |
+| `.claude/memory/` | Symlink → auto-memory dir (read-only browsing; do not commit symlink target) |
+| `.claude/plans/` | Symlink → `~/.claude/plans/` (per-developer plan files; gitignored) |
 
 ### Code directories
 

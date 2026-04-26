@@ -1,7 +1,4 @@
 {
-  "fileFiltering": {
-    "respectHiddenFiles": false
-  },
   "permissions": {
     "allow": [
       "Bash(npm run dev)",
@@ -9,7 +6,11 @@
       "Bash(npx next dev)",
       "Bash(npx next lint)",
       "Bash(npx next start)",
-      "Bash(npm install:*)"
+      "Bash(npm install:*)",
+      "mcp__browsermcp__browser_press_key",
+      "mcp__plugin_playwright_playwright__browser_evaluate",
+      "Read(//Users/jordancole/Downloads/design-system 2/**)",
+      "Bash(git commit -m ' *)"
     ]
   },
   "hooks": {
@@ -79,5 +80,8 @@
         ]
       }
     ]
+  },
+  "fileFiltering": {
+    "respectHiddenFiles": false
   }
 }
