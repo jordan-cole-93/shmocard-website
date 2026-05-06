@@ -10,9 +10,9 @@ See: .planning/PROJECT.md (updated 2026-05-07)
 ## Current Position
 
 Phase: 2 of 4 (Design system review)
-Plan: 0 of 7 in current phase (Phase 2 not yet planned)
-Status: Ready to plan
-Last activity: 2026-05-07 — Phase 1 docs refresh complete; design system folder dropped at `context/design system/`; project-level `gsd-shmocard` skill created; `.planning/` bootstrapped from existing repo docs.
+Plan: 2 of 7 in current phase (02-01 audit done, 02-02 structural moves done; 02-03 collapsed into 02-02)
+Status: In progress
+Last activity: 2026-05-07 — Phase 2 step 02-02 complete. Folder renamed to `context/design-system/`, design-system rules moved to `.claude/rules/design-system.md`, `SKILL.md` frontmatter stripped, all path refs updated. Three audit findings resolved.
 
 Progress: [██░░░░░░░░] 25%  *(Phase 1 of 4 complete)*
 
@@ -58,7 +58,7 @@ None captured. Open questions live in `## Open Questions` below.
 
 See PROJECT.md Constraints section. Highlights:
 - No git history yet (repo not `git init`'d as of 2026-05-07).
-- All `.shm-*` design-system invariants per `context/design system/CLAUDE.md`.
+- All `.shm-*` design-system invariants per `context/design-system/CLAUDE.md`.
 - File layout locked per `.claude/rules/file-organization.md`.
 
 ## Open Questions
@@ -69,8 +69,9 @@ From `context/general/scope.md` "Open decisions":
 - **GHL webhook URL** for waitlist captures (Shmo Biz / Shmo Link / Shmo Reputation).
 - **Final Shopify pricing tiers / SKU naming**.
 - **Motion library choice** — re-add `framer-motion` or use something lighter.
-- **Folder rename** — `context/design system/` (with space) → `context/design-system/` (kebab)?
-- **`SKILL.md` registration** — the design system folder ships with skill-frontmatter; register as a Claude skill, or strip the frontmatter?
+- ✅ **Folder rename** — resolved 2026-05-07 step 02-02. `context/design system/` → `context/design-system/`.
+- ✅ **`SKILL.md` registration** — resolved 2026-05-07 step 02-02. Frontmatter stripped; auto-loading handled via `.claude/rules/design-system.md`.
+- ✅ **Two CLAUDE.md files** — resolved 2026-05-07 step 02-02. Nested CLAUDE.md collapsed into `.claude/rules/design-system.md`.
 
 ## Next Concrete Action
 

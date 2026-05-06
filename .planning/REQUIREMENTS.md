@@ -94,7 +94,7 @@ Source-of-truth requirements for the Shmocard brand website. Derived from `conte
 
 ### REQ-09 — Design system integration
 
-**Job:** Wire `context/design system/` into the codebase without breaking the system's invariants.
+**Job:** Wire `context/design-system/` into the codebase without breaking the system's invariants.
 
 **Acceptance:**
 - All four bundled fonts (Bricolage Grotesque, Cherry Bomb One, Inter Tight, Shadows Into Light Two) mounted via `app/layout.tsx`.

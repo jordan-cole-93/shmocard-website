@@ -1,7 +1,7 @@
 # Phase 2 / Step 02-01: Design System Folder Audit
 
 **Date:** 2026-05-07
-**Scope:** Every file in `context/design system/` (excluding `.DS_Store`, runtime state JSONs, and individual font binaries).
+**Scope:** Every file in `context/design-system/` (excluding `.DS_Store`, runtime state JSONs, and individual font binaries).
 **Source of truth (per design system's own rules):** `colors_and_type.css` + `components.css` win when docs disagree.
 
 ---
@@ -145,9 +145,9 @@ Confirmed gitignored in `.gitignore`. Good.
 
 ## Issues + recommendations
 
-### 1. Folder name has a space — `context/design system/`
+### 1. Folder name has a space — `context/design-system/`
 
-**Issue:** Breaks bare imports (`@import "context/design system/..."` requires escaping in CSS), awkward in shell, awkward in URLs, awkward in scripts. CSS imports inside the system itself work fine because they use relative paths (`fonts/...`, `../../colors_and_type.css`), but external consumers (Next.js `app/globals.css`) will need the escaped path.
+**Issue:** Breaks bare imports (`@import "context/design-system/..."` requires escaping in CSS), awkward in shell, awkward in URLs, awkward in scripts. CSS imports inside the system itself work fine because they use relative paths (`fonts/...`, `../../colors_and_type.css`), but external consumers (Next.js `app/globals.css`) will need the escaped path.
 
 **Recommendation:** Rename to `context/design-system/` (kebab) at minimum. Better: move it out of `context/` (which is meta-context, not source) entirely.
 
@@ -202,7 +202,7 @@ This makes step 02-05 (translation plan) easier and prevents future contributors
 
 ### 4. Two `CLAUDE.md` files without cross-references
 
-**Issue:** Repo root `CLAUDE.md` and `context/design system/CLAUDE.md` both auto-load when Claude works inside the design-system subtree. They don't reference each other. A future Claude session reading one doesn't know the other exists.
+**Issue:** Repo root `CLAUDE.md` and `context/design-system/CLAUDE.md` both auto-load when Claude works inside the design-system subtree. They don't reference each other. A future Claude session reading one doesn't know the other exists.
 
 **Recommendation:** add cross-references — root CLAUDE.md "Design system" row in the pointer table mentions the nested CLAUDE.md; nested CLAUDE.md gains a "Repo-level rules" section pointing to root. Specify rule precedence:
 - **Design-system rules win** for visual / typography / mascot / section-rotation / icon stroke / utility-class-prefix.
@@ -210,7 +210,7 @@ This makes step 02-05 (translation plan) easier and prevents future contributors
 
 ### 5. `SKILL.md` skill-frontmatter ambiguity
 
-**Issue:** `context/design system/SKILL.md` ships with frontmatter (`name: Shmocard`, `description: Design system for Shmocard...`). This **looks like** a Claude Code skill registration but it's not in `.claude/skills/` and won't be discovered by the skill loader.
+**Issue:** `context/design-system/SKILL.md` ships with frontmatter (`name: Shmocard`, `description: Design system for Shmocard...`). This **looks like** a Claude Code skill registration but it's not in `.claude/skills/` and won't be discovered by the skill loader.
 
 **Two fixes:**
 - **A. Strip the frontmatter** — it's a doc, not a skill. Re-title it "Design System Manual" or similar.
@@ -265,6 +265,74 @@ This makes step 02-05 (translation plan) easier and prevents future contributors
 
 ---
 
+## Proposed Moves (Step 02-02 — executed 2026-05-07)
+
+Jordan reviewed the audit findings and locked the following decisions. All three were applied in a single atomic commit.
+
+### Decision 1 — Folder rename in place
+
+**Locked:** `context/design system/` → `context/design-system/` (kebab-case, stays inside `context/`).
+
+**Why:** the actual problem was the space in the name, not the location. Moving to repo root or `app/` was overthinking. Kebab rename fixes shell escaping, import paths, and URL handling without forcing other folder structure changes.
+
+**Executed:** `git mv "context/design system" context/design-system`. All internal CSS / HTML / font paths use relative references and survived unchanged. All cross-references in `.planning/`, `.claude/`, root `CLAUDE.md`, `gsd-shmocard` skill updated via bulk sed.
+
+### Decision 2 — Move design-system rules into `.claude/rules/`
+
+**Locked:** `context/design system/CLAUDE.md` → `.claude/rules/design-system.md` (reframed as a rule file, not a hierarchical auto-loaded CLAUDE.md).
+
+**Why (Jordan's call, better than my original cross-reference proposal):**
+- Eliminates the "two CLAUDE.md" problem entirely — only root CLAUDE.md exists.
+- Matches how existing engineering rules organize (`live-store-protection.md`, `shopify-data-discipline.md`, `verification.md`, `vault-conventions.md`, `file-organization.md`).
+- Rule applies to ALL UI work in `app/` + `components/`, not only when Claude reads inside the design-system subtree.
+- Source-of-truth docs (`SKILL.md`, `README.md`, `PRIMITIVES.md`, the CSS) stay where they are; the rule file is the orchestrator pointing at them.
+
+**Precedence locked in the new rule file:**
+- Design-system rules WIN on visual / typography / mascot / section-rotation / utility-class-prefix.
+- `live-store-protection`, `shopify-data-discipline`, `file-organization`, `verification` WIN where they apply (live-store safety, product data discipline, repo structure, browser-proof verification).
+- `frontend-design` (Anthropic plugin) anti-slop principles still apply for composition / hierarchy / cognitive load — but design-system rules win on conflicts.
+
+### Decision 3 — Strip skill frontmatter from SKILL.md
+
+**Locked:** `context/design-system/SKILL.md` is a documentation file, not a registered Claude skill.
+
+**Why:**
+- Auto-loading is now handled by `.claude/rules/design-system.md` — registering SKILL.md as a separate skill would create ambiguous precedence with `frontend-design`.
+- Jordan flagged conflict-with-frontend-design risk; cleanest answer is to not register.
+- The SKILL.md content stays the same — just frontmatter removed and a header note added clarifying it's a doc.
+
+### Files changed in this step
+
+| File | Change |
+|---|---|
+| `context/design system/` → `context/design-system/` | folder renamed via `git mv` |
+| `context/design system/CLAUDE.md` | deleted (content moved + reframed) |
+| `.claude/rules/design-system.md` | created — orchestrator rule file |
+| `context/design-system/SKILL.md` | frontmatter stripped, doc header added |
+| `CLAUDE.md` (root) | pointer table updated; design-system status line refreshed; `frontend-design` precedence note added to routing rule |
+| `.claude/rules/file-organization.md` | new row for `context/design-system/` |
+| `.planning/PROJECT.md` | path refs updated |
+| `.planning/REQUIREMENTS.md` | path refs updated |
+| `.planning/ROADMAP.md` | path refs updated |
+| `.planning/STATE.md` | path refs + open-questions cleanup |
+| `.planning/phases/02-design-system-review/CONTEXT.md` | path refs updated |
+| `.planning/phases/02-design-system-review/PLAN.md` | path refs updated |
+| `.claude/skills/gsd-shmocard/SKILL.md` | path refs updated |
+
+### Open audit issues addressed by this step
+
+- ✅ #1 Folder name has space — resolved (renamed)
+- ✅ #4 Two CLAUDE.md files — resolved (collapsed to one + rule file)
+- ✅ #5 SKILL.md frontmatter ambiguity — resolved (stripped)
+
+### Open audit issues still pending (later steps)
+
+- #2 `ui_kits/website/` mixed organization — defer; cosmetic, low-priority. Can be tidied during Phase 3 reference-page translation.
+- #3 Three rendering models for three reference pages — addressed by step 02-05 (translation plan).
+- #6 Buybox.html double-loads fonts — defer; trivial fix, can roll into Phase 3 cleanup.
+- #7 Static Bricolage cuts redundant — open question for Jordan; deferred until step 02-06.
+- #8 Preview numbering gaps — trivial, defer indefinitely.
+
 ## Next step
 
-**02-02:** Translate these findings into concrete proposed moves. Output: append `## Proposed Moves` section to this file with rename / relocate / consolidate operations + open questions for Jordan.
+**02-03 was rolled into 02-02** (the move-CLAUDE.md-into-rules decision collapsed the original "reconcile two CLAUDE.md" task). Skip directly to **02-04** (Tailwind 4 ↔ `.shm-*` coexistence decision) → **02-05** (reference-page translation plan) → **02-06** (remaining open questions: motion library, GHL webhook URL, static font cuts) → **02-07** (lock canonical files / Phase 2 close-out).

@@ -6,11 +6,11 @@
 
 ## Goal
 
-Audit the design system at `context/design system/`, surface structural / naming / consistency issues, decide integration strategy with Next.js + Tailwind 4, resolve open questions with Jordan, and lock the canonical files Phase 3 will consume. **No code changes in this phase** — output is decision artifacts only.
+Audit the design system at `context/design-system/`, surface structural / naming / consistency issues, decide integration strategy with Next.js + Tailwind 4, resolve open questions with Jordan, and lock the canonical files Phase 3 will consume. **No code changes in this phase** — output is decision artifacts only.
 
 ## Success criteria
 
-1. Every file in `context/design system/` accounted for in the audit doc.
+1. Every file in `context/design-system/` accounted for in the audit doc.
 2. Folder/naming/structural issues surfaced with concrete recommendations.
 3. Tailwind 4 ↔ `.shm-*` coexistence locked (token import path decided).
 4. Two `CLAUDE.md` files reconciled — cross-references added, no conflicting rules.
@@ -22,7 +22,7 @@ Audit the design system at `context/design system/`, surface structural / naming
 
 ### 02-01: Folder audit (read every file)
 
-**Goal:** Comprehensive inventory of `context/design system/`. Every file read, every concern flagged.
+**Goal:** Comprehensive inventory of `context/design-system/`. Every file read, every concern flagged.
 
 **Tasks:**
 1. Read top-level docs: `CLAUDE.md`, `SKILL.md`, `README.md`, `PRIMITIVES.md`.
@@ -44,7 +44,7 @@ Audit the design system at `context/design system/`, surface structural / naming
 
 **Tasks:**
 1. **Folder location:** propose final location for the design system folder. Options:
-   - Keep at `context/design system/` (rename to kebab → `context/design-system/`)
+   - Keep at `context/design-system/` (rename to kebab → `context/design-system/`)
    - Move to repo root → `design-system/`
    - Move to `app/(design-system)/` (Next.js route group)
    - Recommendation + tradeoffs.
@@ -64,8 +64,8 @@ Audit the design system at `context/design system/`, surface structural / naming
 **Goal:** Two `CLAUDE.md` files coexist without conflict. Each references the other.
 
 **Tasks:**
-1. Add a section to root `CLAUDE.md` linking to `context/design system/CLAUDE.md` as the design-system-scoped ruleset (when working in that subtree).
-2. Add a section to `context/design system/CLAUDE.md` linking back to root `CLAUDE.md` for repo-level rules (file organization, live-store protection, Shopify data discipline).
+1. Add a section to root `CLAUDE.md` linking to `context/design-system/CLAUDE.md` as the design-system-scoped ruleset (when working in that subtree).
+2. Add a section to `context/design-system/CLAUDE.md` linking back to root `CLAUDE.md` for repo-level rules (file organization, live-store protection, Shopify data discipline).
 3. Cross-check for rule conflicts. Resolve any in favor of:
    - **Design-system rules win** for visual / typography / mascot / section-rotation / icon stroke / utility-class-prefix.
    - **Repo rules win** for file organization, Shopify data discipline, live-store protection, vault conventions.
@@ -85,7 +85,7 @@ Audit the design system at `context/design system/`, surface structural / naming
 1. Read Tailwind 4's `@theme` documentation (via context7 MCP).
 2. Read `colors_and_type.css` to understand existing token shape.
 3. Decide approach. Two real options:
-   - **A: Direct CSS import.** `app/globals.css` does `@import "tailwindcss"; @import "../context/design system/colors_and_type.css"; @import "../context/design system/components.css";`. CSS stays the source of truth. Tailwind 4 utilities used only for layout (grid, flex, padding, gap) — never for color, type, radius, shadow.
+   - **A: Direct CSS import.** `app/globals.css` does `@import "tailwindcss"; @import "../context/design-system/colors_and_type.css"; @import "../context/design-system/components.css";`. CSS stays the source of truth. Tailwind 4 utilities used only for layout (grid, flex, padding, gap) — never for color, type, radius, shadow.
    - **B: Transcribe tokens into Tailwind 4 `@theme`.** All design tokens become Tailwind 4 theme variables. Risk: drift between source CSS and Tailwind config; double-source-of-truth violates the design system's "CSS wins" rule.
 4. Recommend Option A (preserves CSS-as-source-of-truth invariant) with explicit rules: never use Tailwind utilities for design-token concerns; use `.shm-*` classes only.
 5. Document the decision in a new `INTEGRATION.md` inside the phase dir.
@@ -122,7 +122,7 @@ Audit the design system at `context/design system/`, surface structural / naming
 **Goal:** Get Jordan to answer the open questions surfaced in `CONTEXT.md` and STATE.md.
 
 **Questions to resolve:**
-1. Folder rename — keep `context/design system/` (with space) or rename to kebab?
+1. Folder rename — keep `context/design-system/` (with space) or rename to kebab?
 2. Folder location — stay under `context/`, move to repo root, or move to `app/`?
 3. `SKILL.md` — strip frontmatter or register as project-local skill?
 4. Motion library — CSS only, re-add `framer-motion`, or use View Transitions?
@@ -145,7 +145,7 @@ Audit the design system at `context/design system/`, surface structural / naming
 
 **Tasks:**
 1. Update root `CLAUDE.md` "Where to find things" table:
-   - Replace "Design system: _Pending — folder not yet dropped..._" with concrete paths to `context/design system/CLAUDE.md`, `SKILL.md`, `PRIMITIVES.md`, `colors_and_type.css`, `components.css`.
+   - Replace "Design system: _Pending — folder not yet dropped..._" with concrete paths to `context/design-system/CLAUDE.md`, `SKILL.md`, `PRIMITIVES.md`, `colors_and_type.css`, `components.css`.
    - Reference the AUDIT.md, INTEGRATION.md, TRANSLATION.md, DECISIONS.md from this phase.
 2. Update `context/general/scope.md`:
    - Mark Phase 2 plans as `[x]`.
@@ -155,7 +155,7 @@ Audit the design system at `context/design system/`, surface structural / naming
    - Summarize what changed.
 4. Decide on `DESIGN.md` / `PATTERNS.md` at repo root:
    - **Recommendation:** do NOT create root-level `DESIGN.md` / `PATTERNS.md`. The design system folder already provides `CLAUDE.md` + `SKILL.md` + `README.md` + `PRIMITIVES.md` which are equivalent. Adding root-level duplicates creates drift.
-   - If Jordan disagrees, write minimal pointer files at root that say "see `context/design system/CLAUDE.md`".
+   - If Jordan disagrees, write minimal pointer files at root that say "see `context/design-system/CLAUDE.md`".
 
 **Deliverable:** Updated CLAUDE.md, scope.md, handoff.md. Phase 2 complete.
 
@@ -181,7 +181,7 @@ Plans 02-01, 02-04, 02-05 can run in parallel after 02-01 finishes (they read fr
 
 ## Risks
 
-- **Folder rename ripple effect.** If we rename `context/design system/` → `context/design-system/`, every internal CSS path / HTML reference inside the design system itself needs updating (relative `fonts/...` paths, `<link rel="stylesheet" href="...">`, etc.). Mitigation: confirm all internal refs are relative-to-folder-root before renaming; do rename + ref update in a single atomic step.
+- **Folder rename ripple effect.** If we rename `context/design-system/` → `context/design-system/`, every internal CSS path / HTML reference inside the design system itself needs updating (relative `fonts/...` paths, `<link rel="stylesheet" href="...">`, etc.). Mitigation: confirm all internal refs are relative-to-folder-root before renaming; do rename + ref update in a single atomic step.
 - **Two-CLAUDE.md drift.** Adding cross-references between root and design-system CLAUDE.md introduces a new place where rules can drift apart. Mitigation: explicit "rules win" hierarchy in 02-03; periodic re-audit.
 - **Tailwind 4 import quirks.** Tailwind 4's CSS-first config + `@theme` can collide with `@import` order. Mitigation: research before committing in 02-04; provide a small test fixture if uncertain.
 - **Reference page translation underestimate.** The Babel-loaded JSX bundles may have non-trivial state logic that doesn't surface in a glance read. Mitigation: 02-05 reads every `home-*.jsx` end-to-end.

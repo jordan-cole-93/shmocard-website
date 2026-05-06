@@ -7,7 +7,7 @@ Bare Next.js + Tailwind shell → audited design system → rebuilt homepage + S
 ## Phases
 
 - [x] **Phase 1: Docs refresh** — Bring every `.md` file into alignment with the post-wipe reality.
-- [ ] **Phase 2: Design system review** — Audit `context/design system/`, propose clean structure, lock `DESIGN.md` / `PATTERNS.md`, decide wiring strategy.
+- [ ] **Phase 2: Design system review** — Audit `context/design-system/`, propose clean structure, lock `DESIGN.md` / `PATTERNS.md`, decide wiring strategy.
 - [ ] **Phase 3: Rebuild** — Tokens → base layout → homepage → `/shmo-review` → 3 PDPs → cart + Storefront API.
 - [ ] **Phase 4: Launch readiness** — Mobile pass, a11y, Vercel env, DNS cutover.
 
@@ -37,23 +37,23 @@ Plans:
 
 ### Phase 2: Design system review
 
-**Goal**: Audit the design system folder Jordan dropped at `context/design system/`, propose a clean structure, lock the canonical files, and produce a wiring plan for Phase 3.
+**Goal**: Audit the design system folder Jordan dropped at `context/design-system/`, propose a clean structure, lock the canonical files, and produce a wiring plan for Phase 3.
 **Depends on**: Phase 1.
 **Requirements**: REQ-09.
 **Success Criteria** (what must be TRUE):
   1. Folder structure audited — every file accounted for, redundant/unclear files flagged.
   2. Naming issues surfaced (folder name has space; `home-*.jsx` fragmented; mixed loose-vs-nested HTML in `ui_kits/website/`).
   3. Coexistence plan locked — Tailwind 4 ↔ `.shm-*` utilities don't fight; tokens import path decided; CSS-as-source-of-truth preserved.
-  4. Two CLAUDE.md files reconciled — root and `context/design system/CLAUDE.md` reference each other and don't conflict.
+  4. Two CLAUDE.md files reconciled — root and `context/design-system/CLAUDE.md` reference each other and don't conflict.
   5. Reference pages (`Shmocard Homepage.html`, `Buybox.html`, `Cart Drawer.html`) translated into a Phase 3 implementation plan (Babel-loaded JSX → real Next.js components).
   6. `SKILL.md`'s skill-frontmatter status decided (register or remove).
   7. Open questions for Jordan surfaced and answered before Phase 3 begins.
 **Plans**: TBD via `/gsd-plan-phase 2`.
 
 Plans:
-- [ ] 02-01: Folder audit + structural diagnosis (read every file in `context/design system/`)
+- [ ] 02-01: Folder audit + structural diagnosis (read every file in `context/design-system/`)
 - [ ] 02-02: Propose clean folder layout + concrete moves (rename, relocate, consolidate)
-- [ ] 02-03: Reconcile root CLAUDE.md with `context/design system/CLAUDE.md` — cross-references + non-conflict
+- [ ] 02-03: Reconcile root CLAUDE.md with `context/design-system/CLAUDE.md` — cross-references + non-conflict
 - [ ] 02-04: Tailwind 4 ↔ `.shm-*` coexistence decision (token import path)
 - [ ] 02-05: Reference-page translation plan (HTML/JSX → Next.js components)
 - [ ] 02-06: Surface open questions to Jordan (rename folder? where does `SKILL.md` register?)

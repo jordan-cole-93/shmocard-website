@@ -1,9 +1,6 @@
----
-name: Shmocard
-description: Design system for Shmocard — a family of NFC tools for local shop crews. Soft neobrutalism with chocolate ink, cream surfaces, ember accent, pill CTAs, hand-drawn icons, and a cute s'more mascot used as a sticker. Use when building marketing pages, product surfaces, or extensions to shmocard.com.
----
-
 # Shmocard design system — soft neobrutalism
+
+> **This is a documentation file, not a registered Claude skill.** Auto-loading of design-system rules happens via `.claude/rules/design-system.md`. This file is the operator's manual you read when building or extending the system.
 
 **⚠️ Every utility is `shm-` prefixed. No exceptions.** `.shm-bg-cocoa`, `.shm-btn`, `.shm-card`. Drop the prefix and the dark-section text-flips silently fail.
 

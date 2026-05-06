@@ -30,6 +30,7 @@ All long-form project context lives here. Meta-files used to live at repo root a
 | `context/general/marketing.md` | Voice rules, locked headlines, proof points, FAQ |
 | `context/general/product.md` | Product catalog, formats, specs, programming, returns |
 | `context/brainstorming/*.md` | Per-page wireframe drafts (homepage, shmo-review, 3 PDPs) — currently empty pending new design system |
+| `context/design-system/` | Shmocard design system — CSS source of truth (`colors_and_type.css`, `components.css`), fonts, 28 preview cards, 3 canonical reference pages, `SKILL.md` + `README.md` + `PRIMITIVES.md` operator docs. Auto-loaded rules at `.claude/rules/design-system.md`. |
 
 ### `.claude/` directory
 

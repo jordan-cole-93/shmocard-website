@@ -1,6 +1,6 @@
 ---
 name: gsd-shmocard
-description: Use when bootstrapping or refreshing the .planning/ scaffolding for the Shmocard website. Replaces /gsd-ingest-docs for this project — it reads this repo's actual doc layout (context/general/*, .claude/rules/*, context/design system/*) instead of looking for textbook ADR/PRD/SPEC dirs that don't exist here. Triggers on phrases like "bootstrap planning", "set up GSD", "init .planning/", "refresh .planning/".
+description: Use when bootstrapping or refreshing the .planning/ scaffolding for the Shmocard website. Replaces /gsd-ingest-docs for this project — it reads this repo's actual doc layout (context/general/*, .claude/rules/*, context/design-system/*) instead of looking for textbook ADR/PRD/SPEC dirs that don't exist here. Triggers on phrases like "bootstrap planning", "set up GSD", "init .planning/", "refresh .planning/".
 ---
 
 # gsd-shmocard
@@ -14,7 +14,7 @@ Global `/gsd-ingest-docs` auto-discovery scans for `*/adr/*`, `*/prd/*`, `*/spec
 - `CLAUDE.md` (root)
 - `context/general/*.md` (scope, handoff, backend, tools, context, marketing, product)
 - `.claude/rules/*.md` (file-organization, live-store-protection, shopify-data-discipline, verification, vault-conventions)
-- `context/design system/` (CLAUDE.md, SKILL.md, README.md, PRIMITIVES.md, CSS, reference pages)
+- `context/design-system/` (CLAUDE.md, SKILL.md, README.md, PRIMITIVES.md, CSS, reference pages)
 - `CLAUDE.local.md` (gitignored personal preferences)
 
 Running global ingest here finds zero docs and stalls. This skill knows the real layout.
@@ -44,8 +44,8 @@ Read these files (mandatory order):
 8. `.claude/rules/live-store-protection.md` — hard constraint (LOCKED decision)
 9. `.claude/rules/shopify-data-discipline.md` — hard constraint (LOCKED decision)
 10. `.claude/rules/file-organization.md` — folder structure (LOCKED decision)
-11. `context/design system/CLAUDE.md` — design system rules (LOCKED decisions when system is in use)
-12. `context/design system/SKILL.md` — primitive table
+11. `context/design-system/CLAUDE.md` — design system rules (LOCKED decisions when system is in use)
+12. `context/design-system/SKILL.md` — primitive table
 
 If any file is empty or missing, stop and surface that to Jordan. Don't fabricate.
 
@@ -70,7 +70,7 @@ Distill from `context/general/context.md` + `marketing.md` + `backend.md`. Requi
   - Live store at `shop.shmocard.com` is read-only from this repo. Storefront API only.
   - Product data lives in Shopify, presentation in code.
   - File layout per `.claude/rules/file-organization.md`.
-  - Design system per `context/design system/CLAUDE.md` (when wired in).
+  - Design system per `context/design-system/CLAUDE.md` (when wired in).
   - No custom checkout. No Admin API writes. No `.env*` commits.
   - Locked headlines (from `marketing.md`):
     - Homepage hero: "The toolkit your crew's been missing."
@@ -88,7 +88,7 @@ Source from `context/general/context.md` "What each page needs to do" section + 
 Current scope.md phases (as of 2026-05-07):
 
 - Phase 1: Docs refresh — **complete** (mark `[x]`)
-- Phase 2: Design system review — audit `context/design system/`, propose clean structure, lock DESIGN.md / PATTERNS.md
+- Phase 2: Design system review — audit `context/design-system/`, propose clean structure, lock DESIGN.md / PATTERNS.md
 - Phase 3: Rebuild — base layout → homepage → `/shmo-review` → 3 PDPs → cart + Storefront wiring
 - Phase 4: Launch readiness — mobile pass, a11y, Vercel env, DNS cutover
 

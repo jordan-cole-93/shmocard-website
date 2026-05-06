@@ -47,16 +47,17 @@ Bring every `.md` file in line with the post-wipe reality.
 - [ ] Leave `product.md`, `marketing.md`, `context.md` untouched per instruction
 - [ ] Leave `context/brainstorming/*.md` empty until design system lands
 
-### Phase 2 — Design system review
+### Phase 2 — Design system review (in progress)
 
-Jordan drops the new design system folder into the repo. Before any code uses it:
+Design system landed at `context/design-system/` on 2026-05-07. Audit + structural moves done; remaining work below.
 
-- [ ] Audit folder structure for clarity (tokens, type, color, motion, components, examples, docs)
-- [ ] Identify messy / redundant / under-specified parts
-- [ ] Propose a clean target structure and any rename / consolidation moves
-- [ ] Lock `DESIGN.md` + `PATTERNS.md` as the single source of truth
-- [ ] Wire tokens into `app/globals.css` and `tailwind.config` (whatever Tailwind 4 calls it)
-- [ ] Mount fonts in `app/layout.tsx`
+- [x] Audit folder structure for clarity (step 02-01 — see `.planning/phases/02-design-system-review/AUDIT.md`)
+- [x] Identify messy / redundant / under-specified parts (covered in audit)
+- [x] Propose + execute clean structural moves (step 02-02 — folder renamed kebab, design-system rules moved to `.claude/rules/design-system.md`, SKILL.md frontmatter stripped)
+- [ ] Tailwind 4 ↔ `.shm-*` coexistence decision — locked path for `app/globals.css` (step 02-04)
+- [ ] Reference-page translation plan — Babel JSX → Next.js .tsx mapping (step 02-05)
+- [ ] Resolve remaining open questions — motion library, GHL webhook URL, static font cuts (step 02-06)
+- [ ] Lock canonical files + close-out (step 02-07)
 
 ### Phase 3 — Rebuild
 

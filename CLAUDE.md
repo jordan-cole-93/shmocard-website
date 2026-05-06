@@ -4,7 +4,7 @@ Brand website for Shmocard at `shmocard.com`. Retail front door — not an ad fu
 
 **Stack:** Next.js (App Router) + TypeScript · Tailwind CSS 4 · Vercel · Shopify Headless (pending). Full details in `context/general/backend.md`.
 
-> **Status (2026-05-07):** Design wipe complete. Site is a bare Next.js + Tailwind shell. New design system folder is pending from Jordan and will land in the repo for review before any rebuild begins. Do **NOT** rebuild components, mount fonts, or invent design tokens until the new system is in place.
+> **Status (2026-05-07):** Design wipe complete. Site is a bare Next.js + Tailwind shell. **New design system landed at `context/design-system/`** — soft neobrutalism, `.shm-*` utility prefix, 4-color section rotation, 4 bundled fonts, 28 preview cards, 3 reference pages. Auto-loaded rules live at `.claude/rules/design-system.md`. Phase 2 audit complete; Phase 3 rebuild can begin once Phase 2 finishes.
 
 ---
 
@@ -22,8 +22,9 @@ All project meta-context now lives under `context/general/`. Page-level wirefram
 | Voice, copy, headlines, angles | `context/general/marketing.md` |
 | Product catalog, formats, status | `context/general/product.md` |
 | Per-page wireframes (home, shmo-review, PDPs) | `context/brainstorming/*.md` (pending) |
-| Design system | _Pending — folder not yet dropped. No tokens, no components, no `DESIGN.md`._ |
-| Engineering rules (verification, store protection, data discipline, file org, vault) | `.claude/rules/` |
+| Design system source (CSS, fonts, primitives, reference pages) | `context/design-system/` (read `SKILL.md` first) |
+| Design system rules (auto-applied for any UI work) | `.claude/rules/design-system.md` |
+| Engineering rules (verification, store protection, data discipline, file org, vault, design system) | `.claude/rules/` |
 | Personal preferences | `CLAUDE.local.md` (gitignored) |
 
 ## Vault context (Jordan's brain)
@@ -50,7 +51,7 @@ Skills below should fire automatically when their condition matches. If a condit
 | Session lifecycle (capture decisions, edits, bug fixes) | `claude-mem` | Auto by plugin — no manual invocation. |
 | Tool-call output bloat / context preservation | `context-mode` | Auto by plugin — no manual invocation. Check stats with `/context-mode:ctx-stats`. |
 
-**Hard rule:** for any prompt mentioning design / layout / UI / component / hero / section / typography / palette / animation, load `frontend-design` first, then proceed. If the new design system folder has not yet been dropped, do not invent visual decisions — surface that to Jordan and pause.
+**Hard rule:** for any prompt mentioning design / layout / UI / component / hero / section / typography / palette / animation, load `frontend-design` first AND read `.claude/rules/design-system.md` (which points at the source-of-truth docs in `context/design-system/`). Design system rules WIN on visual / typography / mascot / section-rotation / utility-class-prefix conflicts. `frontend-design` anti-slop principles still apply for composition / hierarchy / cognitive load.
 
 ## Current phase
 
