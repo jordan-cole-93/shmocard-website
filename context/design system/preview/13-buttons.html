@@ -1,0 +1,93 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><link rel="stylesheet" href="_card.css">
+<style>
+  .role-row { display: grid; grid-template-columns: 200px 1fr; gap: 18px 20px; align-items: center; }
+  .role-row + .role-row { padding-top: 14px; border-top: 1px dashed var(--color-hair); margin-top: 14px; }
+  .role-name { font-family: var(--font-sans); font-weight: 700; font-size: 13px; color: var(--color-cocoa-deep); }
+  .role-name code { font-weight: 500; font-size: 11.5px; color: var(--color-ember); display: block; margin-top: 3px; }
+  .role-use { font-family: var(--font-sans); font-size: 12px; color: rgba(59,31,20,0.65); margin-top: 4px; line-height: 1.4; }
+  .demo { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; }
+  .size-row { display: flex; gap: 12px; align-items: flex-end; flex-wrap: wrap; }
+  .size-label { font-family: var(--font-sans); font-size: 11px; color: var(--color-muted); text-align: center; min-width: 80px; }
+  .size-cell { display: flex; flex-direction: column; gap: 6px; align-items: center; }
+</style>
+</head>
+<body><div class="card">
+  <div class="col">
+    <span class="shm-eyebrow">Buttons — variants by role</span>
+    <p class="token" style="margin:0 0 6px;">Every button uses <code>.shm-btn</code> + a role variant. Roles are semantic — pick by job, not by color.</p>
+
+    <!-- ROLE: PRIMARY -->
+    <div class="role-row">
+      <div>
+        <div class="role-name">Primary action<code>.shm-btn--primary</code></div>
+        <div class="role-use">The one buy / checkout / sign-up per screen. Ember, the loudest.</div>
+      </div>
+      <div class="demo">
+        <a class="shm-btn shm-btn--primary">Add to cart</a>
+        <a class="shm-btn shm-btn--primary shm-btn--lg">Tap to checkout — $29</a>
+      </div>
+    </div>
+
+    <!-- ROLE: SECONDARY -->
+    <div class="role-row">
+      <div>
+        <div class="role-name">Secondary action<code>.shm-btn--cocoa</code></div>
+        <div class="role-use">Strong but not the buy. View product, learn more on a card, sign in.</div>
+      </div>
+      <div class="demo">
+        <a class="shm-btn shm-btn--cocoa">View product</a>
+        <a class="shm-btn shm-btn--cocoa shm-btn--lg">Explore the family</a>
+      </div>
+    </div>
+
+    <!-- ROLE: TERTIARY / GHOST -->
+    <div class="role-row">
+      <div>
+        <div class="role-name">Tertiary / cancel<code>.shm-btn--ghost</code></div>
+        <div class="role-use">Cancel, dismiss, "no thanks", filter chips, optional steps.</div>
+      </div>
+      <div class="demo">
+        <a class="shm-btn shm-btn--ghost">Cancel</a>
+        <a class="shm-btn shm-btn--ghost">Keep shopping</a>
+      </div>
+    </div>
+
+    <!-- ROLE: ON-DARK -->
+    <div class="role-row">
+      <div>
+        <div class="role-name">On dark surfaces<code>.shm-btn--cream</code> / <code>--honey</code></div>
+        <div class="role-use">Inside cocoa or ember sections, flip the primary to cream or honey for contrast.</div>
+      </div>
+      <div class="demo" style="background:var(--color-cocoa-deep);padding:14px 18px;border-radius:var(--radius-lg);">
+        <a class="shm-btn shm-btn--cream">Buy now</a>
+        <a class="shm-btn shm-btn--honey">Get notified</a>
+      </div>
+    </div>
+
+    <!-- SIZE LADDER -->
+    <div style="border-top:1px dashed var(--color-hair);padding-top:18px;margin-top:6px;">
+      <div class="hex" style="margin-bottom:10px;">Size ladder — pick by context</div>
+      <div class="size-row">
+        <div class="size-cell">
+          <a class="shm-btn shm-btn--primary shm-btn--xl">Hero CTA →</a>
+          <span class="size-label"><code>--xl</code> · hero</span>
+        </div>
+        <div class="size-cell">
+          <a class="shm-btn shm-btn--primary shm-btn--lg">Section CTA</a>
+          <span class="size-label"><code>--lg</code> · section</span>
+        </div>
+        <div class="size-cell">
+          <a class="shm-btn shm-btn--primary">Add to cart</a>
+          <span class="size-label">default · cards</span>
+        </div>
+        <div class="size-cell">
+          <a class="shm-btn shm-btn--primary shm-btn--sm">Remove</a>
+          <span class="size-label"><code>--sm</code> · inline</span>
+        </div>
+      </div>
+    </div>
+
+    <p class="token" style="margin:14px 0 0;"><b>The rule.</b> Max one <code>--primary</code> per visible screen. Stack secondary + ghost as the supporting cast. Never restyle <code>.shm-btn</code> in another component — use a variant or add a new one here.</p>
+  </div>
+</div></body></html>

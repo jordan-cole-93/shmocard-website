@@ -1,0 +1,70 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><link rel="stylesheet" href="_card.css"></head>
+<body><div class="card">
+  <div class="col">
+    <span class="shm-eyebrow">Form patterns — labels, inputs, errors, fieldsets</span>
+
+    <fieldset class="shm-fieldset">
+      <legend>Shipping address</legend>
+
+      <div class="shm-field-row">
+        <div class="shm-field">
+          <label class="shm-field__label" for="fn">First name <span class="req">*</span></label>
+          <input id="fn" class="shm-input" value="Joey">
+        </div>
+        <div class="shm-field">
+          <label class="shm-field__label" for="ln">Last name <span class="req">*</span></label>
+          <input id="ln" class="shm-input" value="Calabrese">
+        </div>
+      </div>
+
+      <div class="shm-field shm-field--ok">
+        <label class="shm-field__label" for="em">Email <span class="req">*</span></label>
+        <input id="em" class="shm-input" type="email" value="joey@ccpawn.com">
+        <p class="shm-field__hint">We'll send your receipt and tracking here.</p>
+      </div>
+
+      <div class="shm-field">
+        <label class="shm-field__label" for="addr">Street address <span class="req">*</span></label>
+        <input id="addr" class="shm-input" placeholder="123 Main St">
+      </div>
+
+      <div class="shm-field-row shm-field-row--3-1">
+        <div class="shm-field">
+          <label class="shm-field__label" for="city">City <span class="req">*</span></label>
+          <input id="city" class="shm-input" placeholder="Brooklyn">
+        </div>
+        <div class="shm-field shm-field--error">
+          <label class="shm-field__label" for="zip">ZIP <span class="req">*</span></label>
+          <input id="zip" class="shm-input" value="112">
+          <p class="shm-field__error">Enter a valid 5-digit ZIP.</p>
+        </div>
+      </div>
+
+      <div class="shm-field">
+        <label class="shm-field__label" for="country">Country <span class="opt">optional</span></label>
+        <select id="country" class="shm-select">
+          <option>United States</option><option>Canada</option><option>Mexico</option>
+        </select>
+      </div>
+
+      <div class="shm-field">
+        <label class="shm-field__label" for="notes">Order notes <span class="opt">optional</span></label>
+        <textarea id="notes" class="shm-input" placeholder="Gift message, delivery instructions…"></textarea>
+      </div>
+
+      <div style="display:grid; gap:10px; padding-top:4px;">
+        <label class="shm-check"><input type="checkbox" checked> Save this address for next time</label>
+        <label class="shm-check"><input type="checkbox"> Email me about new card designs</label>
+      </div>
+
+      <div style="display:grid; gap:10px; padding-top:4px;">
+        <p class="shm-field__label" style="margin:0;">Shipping speed</p>
+        <label class="shm-radio"><input type="radio" name="ship" checked> Standard · 3–5 days · free</label>
+        <label class="shm-radio"><input type="radio" name="ship"> Express · 1–2 days · $12</label>
+      </div>
+    </fieldset>
+
+    <p class="token" style="margin:0;">Field stack: <code>label → input → hint/error</code>. States: default, hover (ink-3 border), focus (cocoa border + ring), <code>.shm-field--error</code> (ember), <code>.shm-field--ok</code> (clover). Required = ember asterisk; optional = ink-4 inline tag. Use <code>.shm-field-row</code> for 50/50 rows, <code>--3-1</code> for City/ZIP.</p>
+  </div>
+</div></body></html>

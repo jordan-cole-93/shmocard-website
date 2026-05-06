@@ -1,0 +1,104 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><link rel="stylesheet" href="_card.css">
+<style>
+  .demo {
+    display: grid;
+    grid-template-columns: 100px 1fr;
+    gap: 16px;
+    align-items: center;
+    padding: 14px 0;
+    border-top: 1px solid var(--color-hair);
+  }
+  .demo:first-of-type { border-top: 0; }
+  .demo__chip {
+    width: 88px; height: 56px;
+    background: var(--color-honey);
+    display: grid; place-items: center;
+    color: var(--color-cocoa-deep);
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 13px;
+    letter-spacing: -0.005em;
+  }
+  .demo__chip--sm   { border-radius: var(--radius-sm); }
+  .demo__chip--md   { border-radius: var(--radius-md); }
+  .demo__chip--lg   { border-radius: var(--radius-lg); }
+  .demo__chip--xl   { border-radius: var(--radius-xl); }
+  .demo__chip--full { border-radius: var(--radius-full); }
+  .demo__copy { display: flex; flex-direction: column; gap: 2px; }
+  .demo__name {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 14px;
+    color: var(--color-cocoa-deep);
+    letter-spacing: -0.005em;
+  }
+  .demo__name code {
+    font-family: ui-monospace, monospace;
+    font-size: 12px;
+    background: var(--color-cream);
+    padding: 1px 6px;
+    border-radius: 4px;
+    margin-left: 6px;
+    color: var(--color-ink-3);
+  }
+  .demo__use { font-size: 12px; color: var(--color-ink-3); line-height: 1.4; }
+  .rule {
+    margin-top: 14px;
+    padding: 10px 14px;
+    background: var(--color-cream);
+    border-radius: var(--radius-md);
+    font-size: 12px;
+    color: var(--color-cocoa-deep);
+    line-height: 1.5;
+  }
+  .rule b { color: var(--color-ember); }
+</style>
+</head>
+<body><div class="card">
+  <div class="col">
+    <span class="shm-eyebrow">Corner radii — five values, decision rules</span>
+
+    <div class="demo">
+      <div class="demo__chip demo__chip--sm">10</div>
+      <div class="demo__copy">
+        <span class="demo__name">sm <code>--radius-sm · 10px</code></span>
+        <span class="demo__use">Pack rows, sub-brand glyph tiles, family tiles, tight icon containers.</span>
+      </div>
+    </div>
+
+    <div class="demo">
+      <div class="demo__chip demo__chip--md">16</div>
+      <div class="demo__copy">
+        <span class="demo__name">md <code>--radius-md · 16px</code></span>
+        <span class="demo__use">Inline interactive surfaces — FAQ items, callout strips, product thumbs.</span>
+      </div>
+    </div>
+
+    <div class="demo">
+      <div class="demo__chip demo__chip--lg">22</div>
+      <div class="demo__copy">
+        <span class="demo__name">lg <code>--radius-lg · 22px</code></span>
+        <span class="demo__use">Default card radius — product cards, soft/hard cards, content panels.</span>
+      </div>
+    </div>
+
+    <div class="demo">
+      <div class="demo__chip demo__chip--xl">28</div>
+      <div class="demo__copy">
+        <span class="demo__name">xl <code>--radius-xl · 28px</code></span>
+        <span class="demo__use">Hero modules, gallery main image, large image frames.</span>
+      </div>
+    </div>
+
+    <div class="demo">
+      <div class="demo__chip demo__chip--full">∞</div>
+      <div class="demo__copy">
+        <span class="demo__name">full <code>--radius-full · 999px</code></span>
+        <span class="demo__use">Anything interactive that should look like a pill — buttons, badges, eyebrows, inputs, qty steppers.</span>
+      </div>
+    </div>
+
+    <p class="rule"><b>Decision rule.</b> Interactive = <b>pill</b>. Inline surface (row, item, strip) = <b>md</b>. Card or panel = <b>lg</b>. Hero or large image = <b>xl</b>. Glyph tile = <b>sm</b>. No <code>xs</code>, no <code>2xl</code>.</p>
+  </div>
+</div></body></html>

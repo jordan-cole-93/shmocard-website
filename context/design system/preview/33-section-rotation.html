@@ -1,0 +1,109 @@
+<!doctype html>
+<html><head><meta charset="utf-8">
+<link rel="stylesheet" href="../colors_and_type.css">
+<link rel="stylesheet" href="../components.css">
+<style>
+  /* This fixture shows the full marsh → graham → marsh → ember → marsh → cocoa
+     rotation with the correct wave divider between every section. It is the
+     system's signature pattern. Treat it as a wireframe — sections are
+     compressed to 90px so the whole rotation fits in one screenshot. */
+  html, body { margin: 0; background: var(--color-cream); color: var(--color-cocoa-deep); font-family: var(--font-sans); }
+  .frame { width: 760px; margin: 24px auto; background: var(--color-cream); padding: 0; border-radius: var(--radius-md); overflow: hidden; }
+  .mini { padding: 24px 28px; min-height: 56px; display: flex; align-items: center; justify-content: space-between; gap: 14px; }
+  .mini h3 { margin: 0; font-family: var(--font-display); font-weight: 700; font-size: 18px; letter-spacing: -0.01em; }
+  .mini code { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 11px; background: rgba(59,31,20,0.08); padding: 2px 8px; border-radius: 999px; }
+  .mini.shm-bg-ember code,
+  .mini.shm-bg-cocoa code { background: rgba(255,251,241,0.18); }
+  .mini__copy { display: flex; flex-direction: column; gap: 4px; }
+  .mini__role { font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--color-ink-3); }
+  .shm-bg-ember .mini__role,
+  .shm-bg-cocoa .mini__role { color: rgba(255,251,241,0.65); }
+
+  /* Cocoa-tall-wave pattern: extra padding on the section ABOVE so the tall
+     wave doesn't eat into content. Mirrors the Reputation section in home.css. */
+  .pre-cocoa { padding-bottom: calc(24px + var(--wave-height-xl)); }
+
+  .legend {
+    width: 760px; margin: 0 auto 24px;
+    font-size: 13px; line-height: 1.55;
+    color: var(--color-ink-3);
+  }
+  .legend code { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 12px; color: var(--color-cocoa-deep); }
+</style></head>
+<body>
+
+<div class="legend" style="padding-top:8px;">
+  <strong style="color:var(--color-cocoa-deep);">Section rotation — the system's signature pattern.</strong><br>
+  Four bgs only: <code>shm-bg-marsh</code> (default ~60%) → <code>shm-bg-graham</code> (~25%) → <code>shm-bg-ember</code> (~10%) → <code>shm-bg-cocoa</code> (~5%).
+  Place a <code>shm-wave shm-wave--{next-bg}</code> between every pair. High-contrast transitions (cocoa↔marsh) require <code>shm-wave--xl</code> and extra <code>padding-bottom</code> on the section above.
+</div>
+
+<div class="frame">
+
+  <!-- 1. MARSH (hero) -->
+  <section class="shm-section shm-bg-marsh mini" data-screen-label="01 Hero">
+    <div class="mini__copy">
+      <span class="mini__role">Section 1 · Hero</span>
+      <h3>Marshmallow — page default</h3>
+    </div>
+    <code>.shm-bg-marsh</code>
+  </section>
+  <div class="shm-wave shm-wave--graham"></div>
+
+  <!-- 2. GRAHAM (audience strip / proof) -->
+  <section class="shm-section shm-bg-graham mini" data-screen-label="02 Graham band">
+    <div class="mini__copy">
+      <span class="mini__role">Section 2 · Audience / proof band</span>
+      <h3>Graham — warm secondary</h3>
+    </div>
+    <code>.shm-bg-graham</code>
+  </section>
+  <div class="shm-wave shm-wave--marsh"></div>
+
+  <!-- 3. MARSH (sub-brand) -->
+  <section class="shm-section shm-bg-marsh mini" data-screen-label="03 Sub-brand">
+    <div class="mini__copy">
+      <span class="mini__role">Section 3 · Sub-brand spotlight</span>
+      <h3>Marshmallow returns</h3>
+    </div>
+    <code>.shm-bg-marsh</code>
+  </section>
+  <div class="shm-wave shm-wave--ember"></div>
+
+  <!-- 4. EMBER (one high-emphasis CTA band) -->
+  <section class="shm-section shm-bg-ember mini" data-screen-label="04 CTA band">
+    <div class="mini__copy">
+      <span class="mini__role">Section 4 · Final CTA · ONE per page</span>
+      <h3>Ember — high-emphasis accent</h3>
+    </div>
+    <code>.shm-bg-ember</code>
+  </section>
+  <div class="shm-wave shm-wave--marsh"></div>
+
+  <!-- 5. MARSH (FAQ) — uses pre-cocoa padding to make room for the tall wave below -->
+  <section class="shm-section shm-bg-marsh mini pre-cocoa" data-screen-label="05 FAQ">
+    <div class="mini__copy">
+      <span class="mini__role">Section 5 · FAQ · pre-cocoa pad</span>
+      <h3>Marshmallow — pre-climax</h3>
+    </div>
+    <code>.shm-bg-marsh</code>
+  </section>
+  <!-- Tall wave for cocoa transition (cocoa↔marsh = high contrast) -->
+  <div class="shm-wave shm-wave--cocoa shm-wave--xl"></div>
+
+  <!-- 6. COCOA (final / footer) -->
+  <section class="shm-section shm-bg-cocoa mini" data-screen-label="06 Footer / climax">
+    <div class="mini__copy">
+      <span class="mini__role">Section 6 · Footer / climax</span>
+      <h3>Cocoa-deep — brand-anchor finale</h3>
+    </div>
+    <code>.shm-bg-cocoa</code>
+  </section>
+
+</div>
+
+<div class="legend" style="padding-bottom:24px;">
+  <strong style="color:var(--color-cocoa-deep);">Rules for the wave.</strong> The wave's color matches the section <em>below</em> it (visually it bleeds the next color upward). For the climax transition (<code>cocoa</code> here), use <code>shm-wave--xl</code> (80px) and add <code>padding-bottom: calc(--section-py-d + --wave-height-xl)</code> to the section above so the wave doesn't eat into content. <code>shm-wave--lg</code> (64px) works for ember↔marsh and other dramatic shifts; the default 18px is fine for marsh↔graham.
+</div>
+
+</body></html>

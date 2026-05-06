@@ -1,0 +1,71 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><link rel="stylesheet" href="_card.css"></head>
+<body><div class="card">
+  <div class="col">
+    <span class="shm-eyebrow">FAQ — soft list (default)</span>
+
+    <ul class="shm-faq-list">
+      <li class="shm-faq-item shm-faq-item--open">
+        <button type="button" class="shm-faq-trigger" aria-expanded="true">
+          <span class="shm-faq-question">What is ShmoCard?</span>
+          <span class="shm-faq-icon"><svg width="14" height="14" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" style="transform:rotate(45deg);"><line x1="10" y1="4" x2="10" y2="16"/><line x1="4" y1="10" x2="16" y2="10"/></svg></span>
+        </button>
+        <p class="shm-faq-answer">A family of four NFC tools built for local crews. One dashboard, one brand, more jobs your crew can do.</p>
+      </li>
+      <li class="shm-faq-item">
+        <button type="button" class="shm-faq-trigger" aria-expanded="false">
+          <span class="shm-faq-question">How many tools are live right now?</span>
+          <span class="shm-faq-icon"><svg width="14" height="14" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><line x1="10" y1="4" x2="10" y2="16"/><line x1="4" y1="10" x2="16" y2="10"/></svg></span>
+        </button>
+      </li>
+      <li class="shm-faq-item">
+        <button type="button" class="shm-faq-trigger" aria-expanded="false">
+          <span class="shm-faq-question">Do customers need an app?</span>
+          <span class="shm-faq-icon"><svg width="14" height="14" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><line x1="10" y1="4" x2="10" y2="16"/><line x1="4" y1="10" x2="16" y2="10"/></svg></span>
+        </button>
+      </li>
+      <li class="shm-faq-item">
+        <button type="button" class="shm-faq-trigger" aria-expanded="false">
+          <span class="shm-faq-question">How long does shipping take?</span>
+          <span class="shm-faq-icon"><svg width="14" height="14" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><line x1="10" y1="4" x2="10" y2="16"/><line x1="4" y1="10" x2="16" y2="10"/></svg></span>
+        </button>
+      </li>
+      <li class="shm-faq-item">
+        <button type="button" class="shm-faq-trigger" aria-expanded="false">
+          <span class="shm-faq-question">Can I add more cards to my account later?</span>
+          <span class="shm-faq-icon"><svg width="14" height="14" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><line x1="10" y1="4" x2="10" y2="16"/><line x1="4" y1="10" x2="16" y2="10"/></svg></span>
+        </button>
+      </li>
+    </ul>
+
+    <p class="token" style="margin: 0;"><strong>Default FAQ pattern.</strong> Quiet hairline rows on the page surface — cocoa-deep questions, ember plus-icon that rotates on open, ink-3 answer below. Scales to long lists, stays quiet next to louder sections. Best for ≥6 questions per group. <code>.shm-faq-list</code> · <code>.shm-faq-item--open</code>.</p>
+
+    <hr style="border:0; border-top:1px solid var(--color-hair); margin:8px 0;">
+
+    <span class="shm-eyebrow">FAQ — featured-card variant</span>
+
+    <ul class="shm-faq-list shm-faq-list--featured-card">
+      <li class="shm-faq-item shm-faq-item--open">
+        <button type="button" class="shm-faq-trigger" aria-expanded="true">
+          <span class="shm-faq-question">Is ShmoCard right for my shop?</span>
+          <span class="shm-faq-icon"><svg width="14" height="14" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" style="transform:rotate(45deg);"><line x1="10" y1="4" x2="10" y2="16"/><line x1="4" y1="10" x2="16" y2="10"/></svg></span>
+        </button>
+        <p class="shm-faq-answer">If you've got a counter, you've got a spot for one. Most crews tap their first card within 24 hours of unboxing.</p>
+      </li>
+      <li class="shm-faq-item">
+        <button type="button" class="shm-faq-trigger" aria-expanded="false">
+          <span class="shm-faq-question">What if my Google listing changes?</span>
+          <span class="shm-faq-icon"><svg width="14" height="14" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><line x1="10" y1="4" x2="10" y2="16"/><line x1="4" y1="10" x2="16" y2="10"/></svg></span>
+        </button>
+      </li>
+      <li class="shm-faq-item">
+        <button type="button" class="shm-faq-trigger" aria-expanded="false">
+          <span class="shm-faq-question">Do you offer bulk pricing?</span>
+          <span class="shm-faq-icon"><svg width="14" height="14" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><line x1="10" y1="4" x2="10" y2="16"/><line x1="4" y1="10" x2="16" y2="10"/></svg></span>
+        </button>
+      </li>
+    </ul>
+
+    <p class="token" style="margin:0;"><strong>Featured-card variant — RARE.</strong> Hard outline + chunky offset shadow framing the entire list as a single block. Use only for dedicated FAQ pages or hero-tier moments where the FAQ is the whole section. Don't reach for this on normal marketing pages — the soft list above is the default. <code>.shm-faq-list--featured-card</code> (also <code>--hard</code> for a related, less-chunky framed variant).</p>
+  </div>
+</div></body></html>

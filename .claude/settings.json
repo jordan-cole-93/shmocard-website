@@ -1,0 +1,89 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(npm run dev)",
+      "Bash(npm run build)",
+      "Bash(npx next dev)",
+      "Bash(npx next lint)",
+      "Bash(npx next start)",
+      "Bash(npm install:*)",
+      "mcp__browsermcp__browser_press_key",
+      "mcp__plugin_playwright_playwright__browser_evaluate",
+      "Read(//Users/jordancole/Downloads/design-system 2/**)",
+      "Bash(git commit -m ' *)",
+      "Bash(git checkout *)",
+      "Bash(git stash *)",
+      "Bash(git reset *)",
+      "Bash(gh pr create --title 'feat: rebuild homepage from Claude Design v2 starter' --body ' *)",
+      "Bash(node \"/Users/jordancole/.claude/skills/impeccable/scripts/load-context.mjs\")",
+      "Bash(curl -s -o /dev/null -w \"%{http_code}\" http://localhost:3000/)",
+      "Bash(curl -s -o /dev/null -w \"HTTP:%{http_code} TIME:%{time_total}s\\\\n\" http://localhost:3000/)",
+      "Bash(echo \"started bg pid=$!\")",
+      "Read(//Users/jordancole/Library/Caches/ms-playwright/**)",
+      "Bash(curl -s -o /dev/null -w \"HTTP:%{http_code}\\\\n\" http://localhost:3000/)",
+      "Read(//private/tmp/**)",
+      "Read(//Users/jordancole/.claude/skills/impeccable/reference/**)",
+      "Edit(/.claude/skills/build-shmocard-component/**)",
+      "Edit(/.claude/skills/impeccable-shmocard/**)"
+    ]
+  },
+  "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "Write|Edit",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "jq -r '.tool_input.file_path // empty' | { read -r f; case \"$f\" in *.env|*.env.*) echo '{\"hookSpecificOutput\":{\"hookEventName\":\"PreToolUse\",\"permissionDecision\":\"deny\",\"permissionDecisionReason\":\".env files are protected. Ask Jordan before editing.\"}}';; *) echo '{}';; esac; }",
+            "statusMessage": "Checking .env protection..."
+          }
+        ]
+      },
+      {
+        "matcher": "Bash",
+        "hooks": [
+          {
+            "type": "prompt",
+            "prompt": "The user is working on the Shmocard Website project which uses a READ-ONLY Shopify Storefront API. The live store at shop.shmocard.com must not be modified. Check this bash command input: $ARGUMENTS — Does it attempt to write to Shopify Admin API, modify Shopify theme files, or run any destructive Shopify CLI command? If yes, deny it. If it's a read-only operation or not Shopify-related, allow it.",
+            "if": "Bash(*shopify*)",
+            "statusMessage": "Checking Shopify safety..."
+          }
+        ]
+      }
+    ],
+    "UserPromptSubmit": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": ".claude/hooks/surface-applied-rules.sh",
+            "statusMessage": "Requiring rule surfacing..."
+          },
+          {
+            "type": "command",
+            "command": ".claude/hooks/inject-caveman-mode.sh",
+            "statusMessage": "Enabling caveman mode..."
+          },
+          {
+            "type": "command",
+            "command": ".claude/hooks/inject-gsd-routing.sh",
+            "statusMessage": "Checking GSD routing..."
+          }
+        ]
+      }
+    ],
+    "Stop": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": ".claude/hooks/sweep-screenshots.sh"
+          }
+        ]
+      }
+    ]
+  },
+  "fileFiltering": {
+    "respectHiddenFiles": false
+  }
+}

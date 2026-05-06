@@ -1,0 +1,92 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><link rel="stylesheet" href="_card.css"></head>
+<body><div class="card">
+  <div class="col">
+    <span class="shm-eyebrow">Section text & accent rules</span>
+
+    <p class="token" style="margin:-6px 0 4px;">Each section color has its own text + accent palette. Use the rules below — never improvise.</p>
+
+    <!-- ───── 1 · Marshmallow ───── -->
+    <div style="display:grid; grid-template-columns:160px 1fr; gap:14px; align-items:stretch;">
+      <div style="background:var(--color-marshmallow); border:var(--outline-soft-2); border-radius:var(--radius-md); padding:14px; display:flex; flex-direction:column; justify-content:space-between;">
+        <span style="font-family:var(--font-display); font-weight:800; font-size:14px; color:var(--color-cocoa-deep);">Marshmallow</span>
+        <span style="font-size:11px; font-family:var(--font-mono, ui-monospace, monospace); color:var(--color-ink-3);">#FFFBF1 · 60%</span>
+      </div>
+      <div style="background:var(--color-marshmallow); border:var(--outline-soft-2); border-radius:var(--radius-md); padding:14px 16px;">
+        <p style="margin:0 0 6px; font-family:var(--font-display); font-weight:800; font-size:20px; line-height:1.1; color:var(--color-cocoa-deep);">Real reviews. Real <span style="color:var(--color-ember);">customers</span>.</p>
+        <p style="margin:0 0 8px; font-size:13px; line-height:1.5; color:var(--color-ink-3);">Body copy reads in ink-3 for a softer hierarchy on light surfaces.</p>
+        <div style="display:flex; gap:6px; flex-wrap:wrap;">
+          <span style="display:inline-flex; align-items:center; padding:4px 10px; background:var(--color-ember); color:#fff; border-radius:999px; font-size:11px; font-weight:700;">CTA · ember</span>
+          <span style="display:inline-flex; align-items:center; padding:4px 10px; background:var(--color-chocolate); color:#fff; border-radius:999px; font-size:11px; font-weight:700;">2nd · chocolate</span>
+          <span style="display:inline-flex; align-items:center; padding:4px 10px; border:1.5px solid var(--color-cocoa-deep); border-radius:999px; font-size:11px; font-weight:700; color:var(--color-cocoa-deep);">ghost · cocoa</span>
+        </div>
+      </div>
+    </div>
+    <ul style="margin:-2px 0 0; padding-left:18px; font-size:12px; line-height:1.65; color:var(--color-ink-3);">
+      <li>Heading <code>cocoa-deep</code> · accent <code>ember</code> · body <code>ink-3</code></li>
+      <li>Buttons: primary ember, secondary chocolate, tertiary cocoa-outline</li>
+    </ul>
+
+    <!-- ───── 2 · Graham soft ───── -->
+    <div style="display:grid; grid-template-columns:160px 1fr; gap:14px; align-items:stretch;">
+      <div style="background:var(--color-graham-soft); border:var(--outline-soft-2); border-radius:var(--radius-md); padding:14px; display:flex; flex-direction:column; justify-content:space-between;">
+        <span style="font-family:var(--font-display); font-weight:800; font-size:14px; color:var(--color-cocoa-deep);">Graham soft</span>
+        <span style="font-size:11px; font-family:var(--font-mono, ui-monospace, monospace); color:var(--color-ink-3);">#FFE0C2 · 25%</span>
+      </div>
+      <div style="background:var(--color-graham-soft); border:var(--outline-soft-2); border-radius:var(--radius-md); padding:14px 16px;">
+        <p style="margin:0 0 6px; font-family:var(--font-display); font-weight:800; font-size:20px; line-height:1.1; color:var(--color-cocoa-deep);">Built for <span style="color:var(--color-ember);">local crews</span>.</p>
+        <p style="margin:0 0 8px; font-size:13px; line-height:1.5; color:var(--color-cocoa-deep); opacity:.78;">Body shifts to cocoa-deep at 78% — graham soft is too warm for ink-3.</p>
+        <div style="display:flex; gap:6px; flex-wrap:wrap;">
+          <span style="display:inline-flex; align-items:center; padding:4px 10px; background:var(--color-ember); color:#fff; border-radius:999px; font-size:11px; font-weight:700;">CTA · ember</span>
+          <span style="display:inline-flex; align-items:center; padding:4px 10px; background:var(--color-chocolate); color:#fff; border-radius:999px; font-size:11px; font-weight:700;">2nd · chocolate</span>
+        </div>
+      </div>
+    </div>
+    <ul style="margin:-2px 0 0; padding-left:18px; font-size:12px; line-height:1.65; color:var(--color-ink-3);">
+      <li>Heading <code>cocoa-deep</code> · accent <code>ember</code> · body <code>cocoa-deep / 78%</code></li>
+      <li>Same button stack as marshmallow — graham reads as a warm marshmallow</li>
+    </ul>
+
+    <!-- ───── 3 · Ember ───── -->
+    <div style="display:grid; grid-template-columns:160px 1fr; gap:14px; align-items:stretch;">
+      <div style="background:var(--color-ember); border-radius:var(--radius-md); padding:14px; display:flex; flex-direction:column; justify-content:space-between;">
+        <span style="font-family:var(--font-display); font-weight:800; font-size:14px; color:#fff;">Ember</span>
+        <span style="font-size:11px; font-family:var(--font-mono, ui-monospace, monospace); color:#fff; opacity:.85;">#FF5B1F · 10%</span>
+      </div>
+      <div style="background:var(--color-ember); border-radius:var(--radius-md); padding:14px 16px;">
+        <p style="margin:0 0 6px; font-family:var(--font-display); font-weight:800; font-size:20px; line-height:1.1; color:#fff;">Loved by <span style="color:var(--color-honey);">300+ shops</span>.</p>
+        <p style="margin:0 0 8px; font-size:13px; line-height:1.5; color:#fff; opacity:.92;">Body is white at 92%. Honey is the only accent — never use ember on ember.</p>
+        <div style="display:flex; gap:6px; flex-wrap:wrap;">
+          <span style="display:inline-flex; align-items:center; padding:4px 10px; background:#fff; color:var(--color-cocoa-deep); border-radius:999px; font-size:11px; font-weight:700;">CTA · cream</span>
+          <span style="display:inline-flex; align-items:center; padding:4px 10px; background:var(--color-honey); color:var(--color-cocoa-deep); border-radius:999px; font-size:11px; font-weight:700;">alt · honey</span>
+        </div>
+      </div>
+    </div>
+    <ul style="margin:-2px 0 0; padding-left:18px; font-size:12px; line-height:1.65; color:var(--color-ink-3);">
+      <li>Heading <code>marshmallow</code> · accent <code>honey</code> · body <code>marshmallow / 92%</code></li>
+      <li>Buttons flip to cream (primary) or honey (alt) — ember on ember disappears</li>
+    </ul>
+
+    <!-- ───── 4 · Cocoa-deep ───── -->
+    <div style="display:grid; grid-template-columns:160px 1fr; gap:14px; align-items:stretch;">
+      <div style="background:var(--color-cocoa-deep); border-radius:var(--radius-md); padding:14px; display:flex; flex-direction:column; justify-content:space-between;">
+        <span style="font-family:var(--font-display); font-weight:800; font-size:14px; color:var(--color-marshmallow);">Cocoa-deep</span>
+        <span style="font-size:11px; font-family:var(--font-mono, ui-monospace, monospace); color:var(--color-marshmallow); opacity:.7;">#3B1F14 · 5%</span>
+      </div>
+      <div style="background:var(--color-cocoa-deep); border-radius:var(--radius-md); padding:14px 16px;">
+        <p style="margin:0 0 6px; font-family:var(--font-display); font-weight:800; font-size:20px; line-height:1.1; color:var(--color-marshmallow);">Tap, post, get <span style="color:var(--color-honey);">5 stars</span>.</p>
+        <p style="margin:0 0 8px; font-size:13px; line-height:1.5; color:var(--color-marshmallow); opacity:.78;">Body is marshmallow at 78%. The closer CTA — confident, final.</p>
+        <div style="display:flex; gap:6px; flex-wrap:wrap;">
+          <span style="display:inline-flex; align-items:center; padding:4px 10px; background:var(--color-ember); color:#fff; border-radius:999px; font-size:11px; font-weight:700;">CTA · ember</span>
+          <span style="display:inline-flex; align-items:center; padding:4px 10px; background:var(--color-honey); color:var(--color-cocoa-deep); border-radius:999px; font-size:11px; font-weight:700;">alt · honey</span>
+        </div>
+      </div>
+    </div>
+    <ul style="margin:-2px 0 0; padding-left:18px; font-size:12px; line-height:1.65; color:var(--color-ink-3);">
+      <li>Heading <code>marshmallow</code> · accent <code>honey</code> · body <code>marshmallow / 78%</code></li>
+      <li>Ember CTA pops on cocoa — primary stays ember here, unlike on ember section</li>
+    </ul>
+
+    <p class="token" style="margin:6px 0 0;"><strong>The auto-flip rule.</strong> The italic accent (now any inline highlight) flips automatically: <code>.shm-bg-cocoa</code> and <code>.shm-bg-chocolate</code> wrap any <code>em</code> or <code>.shm-italic</code> in honey. On marshmallow / graham / ember sections, accents stay ember (or flip to honey on ember itself).</p>
+  </div>
+</div></body></html>

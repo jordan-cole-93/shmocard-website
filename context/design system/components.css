@@ -1,0 +1,1875 @@
+/* ==============================================================
+   SHMOCARD — Component primitives (v2.2 — soft neobrutalism)
+   Import after colors_and_type.css.
+   --------------------------------------------------------------
+   Conventions (mirrors v2/tokens-soft.css):
+     • Cards: soft default · thin outline · NO shadow.
+       Opt into .shm-card--hard for chunky hero modules.
+     • Buttons: pill · ember default · hard outline + offset shadow.
+     • Badges: pill · soft outline · no shadow.
+     • Mascot: 64 / 96 / 140 / 200 px, no outline, can tilt.
+     • NO blobs. NO patterns. NO gradients. NO glow.
+   --------------------------------------------------------------
+   COMPOSITION LAW — read before adding anything to this file.
+
+   This file holds PRIMITIVES. Page-level components (product card,
+   cart drawer, checkout form, hero, etc.) MUST reuse these — they
+   never recreate them under a new name.
+
+   • Need a button? Use .shm-btn (+ variant). Don't write .product__add.
+   • Need a pill / tag / status? Use .shm-badge. Don't write .cart__pill.
+   • Need a surface? Use .shm-card. Don't write .testimonial__box.
+   • Need an input? Use .shm-input. Don't write .checkout__email.
+
+   Element-specific classes (.shm-product__media, .shm-cart__row, etc.)
+   own LAYOUT only — grid, padding, aspect — never appearance.
+
+   New variants of a primitive go in this file, next to the primitive.
+   Never inside a page-component block. (e.g. .shm-btn--cherry lives
+   under .shm-btn, never under .shm-product-card.)
+
+   Smell test: if you're typing .foo__btn / .foo__pill / .foo__card,
+   stop — you're rebuilding a primitive. Use the primitive instead.
+   ============================================================== */
+
+/* ============================================================
+   Buttons — pills, hard outline, chunky offset shadow
+   ============================================================ */
+.shm-btn {
+  display: inline-flex; align-items: center; justify-content: center;
+  gap: 8px;
+  font-family: var(--font-sans); font-weight: 700;
+  font-size: 15px; line-height: 1;
+  padding: 14px 22px;
+  border-radius: var(--radius-full);
+  background: var(--color-ember);
+  color: var(--color-marshmallow);
+  border: var(--outline-hard);
+  box-shadow: var(--shadow-chunk-sm);
+  text-decoration: none;
+  cursor: pointer;
+  white-space: nowrap;
+  min-height: 48px;
+  transition: transform var(--motion-fast) var(--ease-standard),
+              box-shadow var(--motion-fast) var(--ease-standard);
+}
+.shm-btn:hover  { transform: translate(-2px, -2px); box-shadow: var(--shadow-chunk); }
+.shm-btn:active { transform: translate(1px, 1px);   box-shadow: 1px 1px 0 var(--color-cocoa-deep); }
+
+.shm-btn--lg { font-size: 17px; padding: 17px 28px; }
+.shm-btn--xl { font-size: 19px; padding: 20px 34px; box-shadow: var(--shadow-chunk); }
+.shm-btn--sm { font-size: 13px; padding: 10px 16px; min-height: 38px; }
+
+/* Role variants — pick by JOB, not by color.
+   ------------------------------------------------------------
+   --primary  · Ember · THE buy/checkout/sign-up. Max 1 per screen.
+   --cocoa    · Cocoa · Secondary action: view product, learn more, sign in.
+   --honey    · Honey · On-dark primary inside cocoa/ember sections.
+   --cream    · Cream · On-dark secondary inside cocoa/ember sections.
+   --ghost    ·  —    · Tertiary / cancel / dismiss / "no thanks".
+   ------------------------------------------------------------ */
+.shm-btn--primary { background: var(--color-ember);      color: var(--color-marshmallow); }
+.shm-btn--cocoa   { background: var(--color-chocolate);  color: var(--color-marshmallow); }
+.shm-btn--honey   { background: var(--color-honey);      color: var(--color-cocoa-deep); }
+.shm-btn--cream   { background: var(--color-marshmallow); color: var(--color-cocoa-deep); }
+
+/* Per-role hover — lift + chunky shadow + intentional fill change.
+   These layer ON TOP of the global .shm-btn:hover translate, since
+   each role needs its own hover background. */
+.shm-btn--primary:hover { background: var(--color-cherry); color: var(--color-marshmallow); }
+.shm-btn--cocoa:hover   { background: var(--color-ink-2); color: var(--color-marshmallow); }
+.shm-btn--honey:hover   { background: var(--color-graham-gold); color: var(--color-cocoa-deep); }
+.shm-btn--cream:hover   { background: var(--color-cream); color: var(--color-cocoa-deep); }
+
+/* Ghost — tertiary / cancel · soft outline, no shadow, no fill */
+.shm-btn--ghost {
+  background: transparent;
+  color: var(--color-cocoa-deep);
+  border: var(--outline-soft-2);
+  box-shadow: none;
+}
+.shm-btn--ghost:hover {
+  background: var(--color-marshmallow);
+  color: var(--color-cocoa-deep);    /* explicit — inheriting breaks on dark sections */
+  transform: translate(-1px,-1px);
+  box-shadow: none;
+}
+.shm-btn--ghost:active { transform: translate(0); }
+
+/* Ghost on dark surfaces — official variant for cocoa/ember/cherry sections.
+   Add `.on-dark` (or use inside .shm-bg-cocoa/ember/cherry/chocolate —
+   the descendant rule below auto-applies). */
+.shm-btn--ghost.on-dark,
+.shm-bg-cocoa .shm-btn--ghost,
+.shm-bg-chocolate .shm-btn--ghost,
+.shm-bg-ember .shm-btn--ghost,
+.shm-bg-cherry .shm-btn--ghost {
+  color: var(--color-marshmallow);
+  border-color: rgba(255, 251, 241, 0.36);
+}
+.shm-btn--ghost.on-dark:hover,
+.shm-bg-cocoa .shm-btn--ghost:hover,
+.shm-bg-chocolate .shm-btn--ghost:hover,
+.shm-bg-ember .shm-btn--ghost:hover,
+.shm-bg-cherry .shm-btn--ghost:hover {
+  background: rgba(255, 251, 241, 0.12);
+  color: var(--color-marshmallow);
+  border-color: var(--color-marshmallow);
+}
+
+/* ============================================================
+   Cards — soft default · hard module opt-in
+   ============================================================ */
+.shm-card {
+  background: var(--color-marshmallow);
+  border: var(--outline-soft-2);
+  border-radius: var(--radius-lg);
+  padding: 28px;
+  box-shadow: none;
+  position: relative;
+  transition: transform var(--motion-fast) var(--ease-standard);
+}
+.shm-card--hover:hover { transform: translateY(-2px); }
+
+/* Color variants — same softness, just colored fill */
+.shm-card--cream     { background: var(--color-cream); }
+.shm-card--graham    { background: var(--color-graham-soft); }
+.shm-card--honey     { background: var(--color-honey); color: var(--color-cocoa-deep); }
+.shm-card--ember     { background: var(--color-ember); color: var(--color-marshmallow); }
+.shm-card--cherry    { background: var(--color-cherry); color: var(--color-marshmallow); }
+.shm-card--cocoa     { background: var(--color-cocoa-deep); color: var(--color-marshmallow); }
+.shm-card--chocolate { background: var(--color-chocolate); color: var(--color-marshmallow); }
+
+/* Hard module — for hero, pricing, the moments that need to thump */
+.shm-card--hard {
+  border: var(--outline-hard-3);
+  box-shadow: var(--shadow-chunk);
+}
+
+/* ============================================================
+   Badges — pills, soft outline, no shadow
+   ============================================================ */
+.shm-badge {
+  display: inline-flex; align-items: center; gap: 5px;
+  font-family: var(--font-sans); font-weight: 600;
+  font-size: 12px;
+  padding: 6px 12px;
+  border-radius: var(--radius-full);
+  background: var(--color-marshmallow);
+  color: var(--color-cocoa-deep);
+  border: var(--outline-soft-2);
+  white-space: nowrap;
+}
+/* Role variants — pick by JOB, not by color.
+   ------------------------------------------------------------
+   default   · Status (with dot), category, filter chip — recedes.
+   --ember   · Marketing tag (Save 20%, Limited) or value prop on light bg.
+   --honey   · Marketing tag (Bestseller, New) — warm highlight.
+   --cocoa   · Value prop on light bg, on-cocoa surface contrast inversion.
+   --cream   · Use ONLY on dark (cocoa/ember) surfaces — default disappears there.
+   --soft    · Quietest pill — translucent ink hairline, no fill. Caption-strength label.
+   ------------------------------------------------------------ */
+.shm-badge--ember { background: var(--color-ember); color: var(--color-marshmallow); border-color: rgba(0,0,0,0.20); }
+.shm-badge--honey { background: var(--color-honey); color: var(--color-cocoa-deep); }
+.shm-badge--cocoa { background: var(--color-cocoa-deep); color: var(--color-marshmallow); border-color: var(--color-cocoa-deep); }
+.shm-badge--cream { background: var(--color-marshmallow); color: var(--color-cocoa-deep); }
+.shm-badge--soft  { background: transparent; color: var(--color-ink-3); border-color: var(--color-hair-2); }
+
+/* ---- Status badges -----------------------------------------
+   Quiet, informational. Default badge surface (cream pill, hairline
+   outline) with a small colored dot prefix. Use the colour modifier
+   to signal what state we're announcing.
+     --status-clover· In stock, Live, Online, Active
+     --status-ember · Selling fast, Low stock, Hot
+     --status-honey · Pre-order, Coming soon (warning)
+     --status-muted · Sold out, Paused, Offline (inactive)
+   The dot pulses on `--status-clover` and `--status-ember` (live signals).
+   ------------------------------------------------------------ */
+.shm-badge--status::before {
+  content: "";
+  width: 7px; height: 7px; border-radius: 50%;
+  background: var(--color-muted);
+  display: inline-block;
+  margin-right: 2px;
+}
+.shm-badge--status.shm-badge--status-clover::before { background: var(--color-clover); animation: shm-pulse 1.6s ease-in-out infinite; }
+.shm-badge--status.shm-badge--status-ember::before  { background: var(--color-ember);  animation: shm-pulse 1.6s ease-in-out infinite; }
+.shm-badge--status.shm-badge--status-honey::before  { background: var(--color-graham-gold); }
+.shm-badge--status.shm-badge--status-muted::before  { background: var(--color-muted); }
+@keyframes shm-pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.4; }
+}
+
+/* ============================================================
+   Inputs
+   ============================================================ */
+.shm-input {
+  font-family: var(--font-sans);
+  font-size: 15px;
+  background: var(--color-marshmallow);
+  border: var(--outline-soft-2);
+  border-radius: var(--radius-md);
+  padding: 14px 16px;
+  color: var(--color-cocoa-deep);
+  width: 100%;
+  min-height: 48px;
+  transition: border-color var(--motion-fast) ease;
+}
+.shm-input::placeholder { color: var(--color-muted); }
+.shm-input:focus {
+  outline: 2px solid var(--color-ember);
+  outline-offset: 2px;
+  border-color: var(--color-ember);
+}
+
+/* ============================================================
+   Image frame — for product photography
+   Default is SOFT (thin outline, no shadow). Opt into --hard for
+   hero spotlight slots that need to thump.
+   ============================================================ */
+.shm-image-frame {
+  border-radius: var(--radius-xl);
+  border: var(--outline-soft);
+  overflow: hidden;
+  background: var(--color-graham-soft);
+}
+/* Borderless variant — for spotlight/showcase slots where the photo
+   should sit cleanly against the section bg. */
+.shm-image-frame--bare { border: 0; }
+
+.shm-image-frame--hard {
+  border: var(--outline-hard-3);
+  box-shadow: var(--shadow-chunk);
+}
+
+/* ============================================================
+   FAQ accordion — quiet rows (DEFAULT, use ~95% of the time).
+   Soft hairline list. Reach for the featured-card variant only on
+   dedicated FAQ pages where the chunky module pattern dominates.
+   ============================================================ */
+.shm-faq-list { list-style: none; padding: 0; margin: 0; border-top: 1px solid var(--color-hair); }
+.shm-faq-item { border-bottom: 1px solid var(--color-hair); }
+.shm-faq-trigger {
+  width: 100%;
+  display: flex; align-items: center; justify-content: space-between;
+  gap: 24px;
+  padding: 24px 4px;
+  background: transparent; border: 0;
+  cursor: pointer; text-align: left;
+  color: var(--color-cocoa-deep);
+}
+.shm-faq-question { font-family: var(--font-display); font-weight: 700; font-size: 19px; letter-spacing: -0.012em; flex: 1; }
+.shm-faq-icon {
+  width: 36px; height: 36px;
+  border-radius: var(--radius-full);
+  border: var(--outline-soft-2);
+  background: var(--color-marshmallow);
+  display: inline-flex; align-items: center; justify-content: center;
+  color: var(--color-cocoa-deep);
+  flex-shrink: 0;
+  transition: transform var(--motion-fast) var(--ease-standard);
+}
+.shm-faq-trigger[aria-expanded="true"] .shm-faq-icon {
+  background: var(--color-ember);
+  border-color: var(--color-ember);
+  color: var(--color-marshmallow);
+  transform: rotate(45deg);
+}
+.shm-faq-answer {
+  font-size: 16px; line-height: 1.6;
+  color: var(--color-ink-3);
+  margin: 0 60px 24px 4px;
+  text-wrap: pretty; max-width: 70ch;
+}
+
+/* FEATURED-CARD VARIANT — RARE. Use only on dedicated FAQ pages where
+   chunky module patterns already dominate the layout. White pill cards,
+   cocoa-deep outline + chunky shadow, ember accent on open.
+
+   The legacy alias `.shm-faq-list--hard` is kept for backward compat
+   but the canonical name is `.shm-faq-list--featured-card`. */
+.shm-faq-list--featured-card,
+.shm-faq-list--hard {
+  border-top: 0;
+  display: flex; flex-direction: column;
+  gap: 12px;
+}
+.shm-faq-list--featured-card .shm-faq-item,
+.shm-faq-list--hard .shm-faq-item {
+  background: var(--color-white);
+  border: 2px solid var(--color-cocoa-deep);
+  border-radius: var(--radius-lg);
+  box-shadow: 4px 4px 0 var(--color-cocoa-deep);
+  padding: 0;
+  transition: border-color var(--motion-fast) var(--ease-standard),
+              box-shadow var(--motion-fast) var(--ease-standard);
+}
+.shm-faq-list--featured-card .shm-faq-item--open,
+.shm-faq-list--featured-card .shm-faq-item:has([aria-expanded="true"]),
+.shm-faq-list--hard .shm-faq-item--open,
+.shm-faq-list--hard .shm-faq-item:has([aria-expanded="true"]) {
+  border-color: var(--color-ember);
+  box-shadow: 4px 4px 0 var(--color-ember);
+}
+.shm-faq-list--featured-card .shm-faq-trigger,
+.shm-faq-list--hard .shm-faq-trigger {
+  padding: 16px 22px;
+}
+.shm-faq-list--featured-card .shm-faq-question,
+.shm-faq-list--hard .shm-faq-question {
+  font-size: 17px;
+}
+.shm-faq-list--featured-card .shm-faq-icon,
+.shm-faq-list--hard .shm-faq-icon {
+  width: 30px; height: 30px;
+}
+.shm-faq-list--featured-card .shm-faq-answer,
+.shm-faq-list--hard .shm-faq-answer {
+  margin: 0; padding: 0 22px 18px 22px;
+  max-width: none;
+}
+
+/* ============================================================
+   Mascot scale utilities
+
+   Sizing uses --mascot-fit-ratio (default 1) so callers can compensate
+   for inconsistent transparent padding in mascot PNGs. The megaphone
+   mascot, for example, has a wider transparent bbox and visually reads
+   ~30% smaller than the phone mascot at the same width — override
+   --mascot-fit-ratio: 1.3 on that one image to match optical scale.
+
+       <img src="mascot/megaphone.png" class="shm-mascot shm-mascot--accent"
+            style="--mascot-fit-ratio: 1.3;">
+
+   Long-term fix: re-export PNGs with consistent tight bboxes, or ship
+   as SVG. Until then, use the override per-mascot.
+   ============================================================ */
+.shm-mascot {
+  display: inline-block;
+  --mascot-fit-ratio: 1;
+}
+.shm-mascot--decoration { width: calc(64px  * var(--mascot-fit-ratio)); }   /* tilted accent */
+.shm-mascot--accent     { width: calc(96px  * var(--mascot-fit-ratio)); }   /* in-card or eyebrow neighbor */
+.shm-mascot--supporting { width: calc(140px * var(--mascot-fit-ratio)); }   /* card hero — the cap for normal pages */
+.shm-mascot--hero       { width: calc(200px * var(--mascot-fit-ratio)); }   /* SHOWCASE ONLY — homepage sub-brand spotlights. Not for normal marketing pages. */
+
+/* Decorative tilts */
+.shm-tilt-l    { transform: rotate(-6deg); }
+.shm-tilt-r    { transform: rotate(7deg); }
+.shm-tilt-sm-l { transform: rotate(-3deg); }
+.shm-tilt-sm-r { transform: rotate(4deg); }
+
+/* ============================================================
+   Sticker — small mascot accent with drop-shadow + tilt-friendly.
+   Use as a punctuation mark beside a heading or in a section corner.
+
+   Sizes (smaller than the mascot ramp on purpose — stickers are
+   accents, not focal points):
+     --xs  44px · margin notes, near a chip
+     --sm  56px · beside an eyebrow / near a quote
+     --md  76px · beside a section heading (default)
+
+   Pairs with .shm-tilt-* utilities. Already includes the cocoa
+   drop-shadow that gives the sticker its lifted look.
+
+   Doc rule: max 3 stickers per page, never on every heading.
+
+   Use:
+     <img src="mascot/heart-hands.png"
+          class="shm-sticker shm-sticker--md shm-tilt-sm-r" alt="">
+   ============================================================ */
+.shm-sticker {
+  display: inline-block;
+  width: 76px;
+  height: auto;
+  filter: drop-shadow(2px 4px 0 rgba(59, 31, 20, 0.18));
+  --mascot-fit-ratio: 1;
+}
+.shm-sticker--xs { width: calc(44px * var(--mascot-fit-ratio)); }
+.shm-sticker--sm { width: calc(56px * var(--mascot-fit-ratio)); }
+.shm-sticker--md { width: calc(76px * var(--mascot-fit-ratio)); }
+
+/* ============================================================
+   Section heading — eyebrow + headline + sub, centered.
+   ============================================================ */
+.shm-section-head {
+  text-align: center;
+  margin: 0 auto 40px;
+  max-width: 56ch;
+}
+.shm-section-head--left { text-align: left; margin-left: 0; margin-right: 0; }
+.shm-section-head .shm-eyebrow { margin-bottom: 16px; }
+.shm-section-head .shm-h2 { margin: 0 0 10px; }
+.shm-section-head .shm-lede { margin: 0; }
+
+/* ============================================================
+   Press strip — thin band of customer logos
+   ============================================================ */
+.shm-press-strip {
+  display: flex; align-items: center; justify-content: center;
+  gap: 56px; flex-wrap: wrap;
+  padding: 32px 0;
+  opacity: 0.85;
+}
+.shm-press-strip img { height: 28px; width: auto; opacity: 0.7; filter: grayscale(1); }
+
+/* ============================================================
+   Sticky nav
+   ============================================================ */
+.shm-nav {
+  position: sticky; top: 0; z-index: 50;
+  background: rgba(255,251,241,0.85);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid var(--color-hair);
+}
+.shm-nav__inner {
+  display: flex; align-items: center; justify-content: space-between;
+  gap: 24px;
+  padding: 14px 0;
+}
+
+
+/* ============================================================
+   Cart drawer — slides in from the right.
+   Use:
+     <button class="shm-cart-trigger" aria-controls="cart" aria-expanded="false">…</button>
+     <div class="shm-scrim" data-cart-scrim hidden></div>
+     <aside class="shm-cart" id="cart" aria-hidden="true" aria-label="Shopping cart">…</aside>
+   ============================================================ */
+
+/* Scrim */
+.shm-scrim {
+  position: fixed; inset: 0; z-index: 90;
+  background: rgba(36,24,18,0.32);
+  opacity: 0; pointer-events: none;
+  transition: opacity var(--motion-base) var(--ease-standard);
+}
+.shm-scrim.is-open {
+  opacity: 1; pointer-events: auto;
+}
+
+/* Drawer shell */
+.shm-cart {
+  position: fixed; top: 0; right: 0; bottom: 0; z-index: 100;
+  width: min(440px, 100vw);
+  background: var(--color-marshmallow);
+  border-left: var(--border-thick) solid var(--color-cocoa-deep);
+  box-shadow: var(--shadow-overlay);
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  transform: translateX(100%);
+  transition: transform var(--motion-slow) var(--ease-standard);
+}
+.shm-cart.is-open { transform: translateX(0); }
+@media (prefers-reduced-motion: reduce) {
+  .shm-cart { transition: none; }
+}
+
+/* Cart header */
+.shm-cart__head {
+  display: flex; align-items: center; justify-content: space-between;
+  gap: 16px;
+  padding: 20px 24px;
+  border-bottom: 1px solid var(--color-hair);
+  background: var(--color-cream);
+}
+.shm-cart__title {
+  font-family: var(--font-display);
+  font-size: 26px; line-height: 1.1;
+  font-weight: 700;
+  color: var(--color-cocoa-deep);
+  letter-spacing: -0.01em;
+  margin: 0;
+  display: inline-flex; align-items: baseline; gap: 10px;
+}
+.shm-cart__count {
+  font-family: var(--font-body);
+  font-size: 14px; font-weight: 500;
+  color: var(--color-ink-3);
+  letter-spacing: 0;
+}
+.shm-cart__close {
+  width: 40px; height: 40px;
+  border-radius: 999px;
+  border: 1px solid var(--color-hair);
+  background: var(--color-marshmallow);
+  color: var(--color-cocoa-deep);
+  display: inline-flex; align-items: center; justify-content: center;
+  cursor: pointer;
+  transition: background var(--motion-fast) var(--ease-standard);
+}
+.shm-cart__close:hover { background: var(--color-cream); }
+
+/* Free-ship progress band */
+.shm-cart__ship {
+  padding: 14px 24px 16px;
+  background: var(--color-cream);
+  border-bottom: 1px solid var(--color-hair);
+}
+.shm-cart__ship-msg {
+  font-size: 13px; line-height: 1.4;
+  color: var(--color-cocoa-deep);
+  margin: 0 0 8px;
+}
+.shm-cart__ship-msg b { font-weight: 700; color: var(--color-ember); }
+.shm-cart__bar {
+  height: 8px;
+  background: var(--color-marshmallow);
+  border: 1px solid var(--color-hair);
+  border-radius: 999px;
+  overflow: hidden;
+}
+.shm-cart__bar-fill {
+  height: 100%;
+  background: var(--color-ember);
+  border-radius: 999px;
+  transition: width var(--motion-slow) var(--ease-standard);
+}
+.shm-cart__ship--unlocked .shm-cart__bar-fill { background: var(--color-honey); }
+
+/* Body / scroll area */
+.shm-cart__body {
+  overflow-y: auto;
+  padding: 8px 0;
+}
+
+/* Line item */
+.shm-cart-item {
+  display: grid;
+  grid-template-columns: 76px 1fr;
+  gap: 14px;
+  padding: 16px 24px;
+  border-bottom: 1px solid var(--color-hair);
+  position: relative;
+}
+.shm-cart-item__thumb {
+  width: 76px; height: 76px;
+  border-radius: var(--radius-card);
+  border: 1px solid var(--color-hair);
+  background: var(--color-cream);
+  overflow: hidden;
+  display: grid; place-items: center;
+}
+.shm-cart-item__thumb img {
+  width: 100%; height: 100%; object-fit: cover; display: block;
+}
+.shm-cart-item__main {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 4px 12px;
+  align-items: start;
+}
+.shm-cart-item__name {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 17px; line-height: 1.25;
+  color: var(--color-cocoa-deep);
+  margin: 0;
+  letter-spacing: -0.01em;
+}
+.shm-cart-item__price {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 17px;
+  color: var(--color-cocoa-deep);
+  white-space: nowrap;
+}
+.shm-cart-item__meta {
+  grid-column: 1 / -1;
+  font-size: 13px;
+  color: var(--color-ink-3);
+  margin: 2px 0 8px;
+  display: flex; flex-wrap: wrap; gap: 6px 10px;
+}
+.shm-cart-item__meta b { font-weight: 600; color: var(--color-cocoa-deep); }
+.shm-cart-item__row {
+  grid-column: 1 / -1;
+  display: flex; align-items: center; justify-content: space-between;
+  gap: 12px;
+}
+.shm-cart-item__remove {
+  background: none; border: 0; cursor: pointer;
+  font-family: var(--font-body);
+  font-size: 13px;
+  color: var(--color-ink-3);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  padding: 4px 0;
+}
+.shm-cart-item__remove:hover { color: var(--color-ember); }
+
+/* Quantity stepper */
+.shm-qty {
+  display: inline-flex; align-items: center;
+  border: 1px solid var(--color-hair);
+  border-radius: 999px;
+  background: var(--color-marshmallow);
+  overflow: hidden;
+}
+.shm-qty__btn {
+  width: 32px; height: 32px;
+  border: 0; background: transparent;
+  cursor: pointer;
+  display: inline-flex; align-items: center; justify-content: center;
+  color: var(--color-cocoa-deep);
+  transition: background var(--motion-fast) var(--ease-standard);
+}
+.shm-qty__btn:hover { background: var(--color-cream); }
+.shm-qty__btn:disabled { color: var(--color-ink-4); cursor: not-allowed; }
+.shm-qty__val {
+  min-width: 28px; text-align: center;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 15px;
+  color: var(--color-cocoa-deep);
+}
+
+/* Loading state shimmer on item */
+.shm-cart-item.is-loading {
+  opacity: 0.55;
+  pointer-events: none;
+  position: relative;
+}
+.shm-cart-item.is-loading::after {
+  content: "";
+  position: absolute; inset: 0;
+  background: linear-gradient(90deg, transparent 0%, rgba(217,103,69,0.08) 50%, transparent 100%);
+  animation: shm-cart-shimmer 1.2s linear infinite;
+}
+@keyframes shm-cart-shimmer {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(100%); }
+}
+
+/* Bundle savings line */
+.shm-cart-bundle {
+  margin: 8px 24px;
+  padding: 10px 14px;
+  border: 1px dashed var(--color-ember);
+  border-radius: var(--radius-card);
+  background: rgba(217,103,69,0.06);
+  display: flex; align-items: center; justify-content: space-between;
+  gap: 10px;
+  font-size: 13px;
+  color: var(--color-cocoa-deep);
+}
+.shm-cart-bundle b { color: var(--color-ember); font-weight: 700; }
+
+/* ── Reminder banner — pinned message above the cart body ──── */
+.shm-cart-reminder {
+  background: var(--color-ember);
+  color: var(--color-marshmallow);
+  padding: 10px 24px;
+  font-size: 12px; line-height: 1.4;
+  text-align: center;
+  border-bottom: 1px solid var(--color-cocoa-deep);
+}
+.shm-cart-reminder b { font-weight: 700; }
+
+/* ── Free / gifted item styling on a line item ─────────────── */
+.shm-cart-item__price-was {
+  text-decoration: line-through;
+  color: var(--color-ink-4);
+  font-weight: 500;
+  font-size: 14px;
+  margin-right: 6px;
+}
+.shm-cart-item__save {
+  grid-column: 1 / -1;
+  margin: 2px 0 0;
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--color-clover);  /* success green — used only for savings copy */
+  letter-spacing: -0.005em;
+}
+
+/* ── Upsell — one-product-per-cell horizontal grid ─────────── */
+.shm-cart-upsell {
+  padding: 16px 24px 4px;
+  border-top: 1px solid var(--color-hair);
+  background: var(--color-cream);
+}
+.shm-cart-upsell__title {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 15px;
+  color: var(--color-cocoa-deep);
+  margin: 0 0 10px;
+  letter-spacing: -0.01em;
+}
+.shm-cart-upsell__grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 10px;
+  padding-bottom: 12px;
+}
+.shm-cart-upsell__card {
+  display: grid;
+  grid-template-columns: 56px 1fr auto;
+  align-items: center;
+  gap: 14px;
+  padding: 12px 14px;
+  background: var(--color-marshmallow);
+  border: 1px solid var(--color-hair);
+  border-radius: var(--radius-card);
+  text-align: left;
+  cursor: pointer;
+  font: inherit; color: inherit;
+  transition: border-color var(--motion-fast) var(--ease-standard);
+}
+.shm-cart-upsell__card:hover { border-color: var(--color-cocoa-deep); }
+.shm-cart-upsell__thumb {
+  width: 56px; height: 56px;
+  border-radius: 12px;
+  background: var(--color-cream);
+  overflow: hidden;
+}
+.shm-cart-upsell__thumb img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.shm-cart-upsell__body {
+  display: grid; gap: 2px;
+  min-width: 0;
+}
+.shm-cart-upsell__name {
+  font-family: var(--font-display);
+  font-weight: 700; font-size: 15px; line-height: 1.25;
+  color: var(--color-cocoa-deep);
+  letter-spacing: -0.005em;
+  margin: 0;
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+.shm-cart-upsell__price {
+  font-size: 13px; color: var(--color-ink-3);
+}
+.shm-cart-upsell__plus {
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 36px; height: 36px;
+  border-radius: 999px;
+  background: var(--color-marshmallow);
+  border: 1px solid var(--color-hair);
+  color: var(--color-cocoa-deep);
+  cursor: pointer;
+  font-weight: 700; font-size: 18px;
+  transition: all var(--motion-fast) var(--ease-standard);
+}
+.shm-cart-upsell__card:hover .shm-cart-upsell__plus {
+  background: var(--color-ember);
+  border-color: var(--color-ember);
+  color: var(--color-marshmallow);
+}
+
+/* ── Milestones row — visual journey toward unlock ─────────── */
+.shm-cart-milestones {
+  padding: 14px 16px 18px;
+  background: var(--color-cream);
+  border-bottom: 1px solid var(--color-hair);
+}
+.shm-cart-milestones__copy {
+  font-size: 13px; line-height: 1.4;
+  color: var(--color-cocoa-deep);
+  text-align: center;
+  margin: 0 0 14px;
+  padding: 0 8px;
+}
+.shm-cart-milestones__copy b { font-weight: 700; color: var(--color-ember); }
+.shm-cart-milestones__track {
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 0;
+  align-items: start;
+}
+.shm-cart-milestones__line {
+  position: absolute;
+  top: 18px; left: 12.5%; right: 12.5%;
+  height: 3px;
+  background: var(--color-hair);
+  border-radius: 999px;
+  z-index: 0;
+}
+.shm-cart-milestones__line-fill {
+  height: 100%;
+  background: var(--color-ember);
+  border-radius: 999px;
+  transition: width var(--motion-slow) var(--ease-standard);
+}
+.shm-cart-ms {
+  position: relative;
+  display: grid;
+  justify-items: center;
+  gap: 6px;
+  z-index: 1;
+}
+.shm-cart-ms__dot {
+  width: 36px; height: 36px;
+  border-radius: 999px;
+  background: var(--color-marshmallow);
+  border: 2px solid var(--color-hair);
+  display: grid; place-items: center;
+  color: var(--color-ink-3);
+  transition: all var(--motion-normal) var(--ease-standard);
+}
+.shm-cart-ms__dot svg { width: 16px; height: 16px; }
+.shm-cart-ms.is-active .shm-cart-ms__dot {
+  background: var(--color-ember);
+  border-color: var(--color-ember);
+  color: var(--color-marshmallow);
+}
+.shm-cart-ms__label {
+  font-size: 11px; line-height: 1.2;
+  color: var(--color-ink-3);
+  text-align: center;
+  font-weight: 600;
+  max-width: 72px;
+}
+.shm-cart-ms.is-active .shm-cart-ms__label { color: var(--color-cocoa-deep); }
+
+/* ── Reductions row inside the summary block ───────────────── */
+.shm-cart-summary__row--reduction span:last-child { color: var(--color-clover); font-weight: 700; }
+.shm-cart-summary__row--reduction .shm-badge { margin-left: 8px; }
+
+/* ── Payment-methods strip at the very bottom ──────────────── */
+.shm-cart-payments {
+  display: flex; flex-wrap: wrap; gap: 6px;
+  padding-top: 12px;
+  justify-content: center;
+}
+.shm-cart-payments__chip {
+  height: 24px; min-width: 38px;
+  padding: 0 8px;
+  display: inline-flex; align-items: center; justify-content: center;
+  border-radius: 6px;
+  background: var(--color-marshmallow);
+  border: 1px solid var(--color-hair);
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 10px;
+  letter-spacing: 0.04em;
+  color: var(--color-cocoa-deep);
+  text-transform: uppercase;
+}
+
+/* Footer / summary */
+.shm-cart__foot {
+  border-top: var(--border-thick) solid var(--color-cocoa-deep);
+  background: var(--color-marshmallow);
+  padding: 16px 24px 18px;
+  display: grid; gap: 12px;
+}
+
+/* Discount code */
+.shm-cart-discount summary {
+  list-style: none;
+  cursor: pointer;
+  font-size: 13px; font-weight: 600;
+  color: var(--color-cocoa-deep);
+  padding: 6px 0;
+  display: inline-flex; align-items: center; gap: 6px;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+.shm-cart-discount summary::-webkit-details-marker { display: none; }
+.shm-cart-discount[open] summary { color: var(--color-ember); }
+.shm-cart-discount__row {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 8px;
+  margin-top: 8px;
+}
+.shm-cart-discount__row input {
+  height: 40px;
+  border-radius: 999px;
+  border: 1px solid var(--color-hair);
+  background: var(--color-marshmallow);
+  padding: 0 16px;
+  font: inherit;
+  color: var(--color-cocoa-deep);
+}
+.shm-cart-discount__row input:focus {
+  outline: none;
+  border-color: var(--color-cocoa-deep);
+}
+.shm-cart-discount__row button {
+  height: 40px;
+  padding: 0 16px;
+  border-radius: 999px;
+  border: 1px solid var(--color-cocoa-deep);
+  background: var(--color-marshmallow);
+  color: var(--color-cocoa-deep);
+  font-weight: 700;
+  cursor: pointer;
+}
+
+/* Summary lines */
+.shm-cart-summary {
+  display: grid; gap: 6px;
+  padding-top: 6px;
+  border-top: 1px solid var(--color-hair);
+}
+.shm-cart-summary__row {
+  display: flex; justify-content: space-between;
+  font-size: 14px;
+  color: var(--color-ink-3);
+}
+.shm-cart-summary__row--total {
+  font-family: var(--font-display);
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--color-cocoa-deep);
+  letter-spacing: -0.01em;
+  margin-top: 4px;
+}
+.shm-cart-summary__row em {
+  font-style: normal;
+  color: var(--color-ember);
+  font-weight: 600;
+}
+
+/* Trust micro-row */
+.shm-cart-trust {
+  display: flex; align-items: center; flex-wrap: wrap;
+  gap: 6px 10px;
+  font-size: 12px;
+  color: var(--color-ink-3);
+  margin: 2px 0 -2px;
+}
+.shm-cart-trust span { display: inline-flex; align-items: center; gap: 4px; }
+.shm-cart-trust .dot {
+  width: 3px; height: 3px; border-radius: 999px;
+  background: var(--color-ink-4);
+  display: inline-block;
+}
+
+/* Checkout CTA — primary chunky button with mascot */
+.shm-cart-cta {
+  position: relative;
+  display: inline-flex; align-items: center; justify-content: center;
+  gap: 10px;
+  width: 100%;
+  height: 56px;
+  border-radius: 999px;
+  background: var(--color-ember);
+  color: var(--color-marshmallow);
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 17px;
+  letter-spacing: -0.005em;
+  border: 0;
+  cursor: pointer;
+  box-shadow: 4px 4px 0 0 var(--color-cocoa-deep);
+  transition: transform var(--motion-fast) var(--ease-standard),
+              box-shadow var(--motion-fast) var(--ease-standard);
+}
+.shm-cart-cta:hover {
+  transform: translate(-2px, -2px);
+  box-shadow: 6px 6px 0 0 var(--color-cocoa-deep);
+}
+.shm-cart-cta__mascot {
+  position: absolute; right: 14px; top: 50%;
+  transform: translateY(-50%) rotate(8deg);
+  width: 44px; height: auto;
+  pointer-events: none;
+}
+
+/* Empty state */
+.shm-cart-empty {
+  text-align: center;
+  padding: 56px 24px;
+  display: grid; gap: 14px; justify-items: center;
+}
+.shm-cart-empty img { width: 160px; height: auto; }
+.shm-cart-empty h3 {
+  font-family: var(--font-display);
+  font-size: 22px; margin: 0;
+  color: var(--color-cocoa-deep);
+  letter-spacing: -0.01em;
+}
+.shm-cart-empty p {
+  font-size: 15px; color: var(--color-ink-3);
+  max-width: 28ch; margin: 0;
+}
+
+
+/* ============================================================
+   Product card — for grids, upsells, "you might also like"
+   Use:
+     <article class="shm-product">
+       <a class="shm-product__media" href="#">
+         <img src="..." alt="">
+         <span class="shm-product__tag">New</span>          (optional)
+       </a>
+       <div class="shm-product__body">
+         <h3 class="shm-product__name">Review · CR80 Cream</h3>
+         <p class="shm-product__sub">NFC review card · single</p>
+         <div class="shm-product__row">
+           <span class="shm-product__price">$24</span>
+           <button class="shm-product__add">Add to cart</button>
+         </div>
+       </div>
+     </article>
+   ============================================================ */
+.shm-product {
+  display: grid;
+  grid-template-rows: auto 1fr;
+  background: var(--color-marshmallow);
+  border: var(--outline-soft-2);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  transition: transform var(--motion-fast) var(--ease-standard),
+              border-color var(--motion-fast) var(--ease-standard);
+}
+.shm-product:hover {
+  transform: translateY(-2px);
+  border-color: var(--color-cocoa-deep);
+}
+
+/* Media frame — square, never crops product */
+.shm-product__media {
+  position: relative;
+  aspect-ratio: 1 / 1;
+  background: var(--color-cream);
+  display: grid; place-items: center;
+  overflow: hidden;
+}
+.shm-product__media img {
+  width: 100%; height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* Tag slot — pin a .shm-badge top-left of the media frame */
+.shm-product__tag {
+  position: absolute; top: 12px; left: 12px;
+}
+
+/* Body — title, sub, price + CTA */
+.shm-product__body {
+  padding: 14px 16px 16px;
+  display: grid; gap: 6px;
+}
+.shm-product__name {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 17px; line-height: 1.25;
+  color: var(--color-cocoa-deep);
+  letter-spacing: -0.01em;
+  margin: 0;
+}
+.shm-product__sub {
+  font-family: var(--font-body);
+  font-size: 13px; line-height: 1.4;
+  color: var(--color-ink-3);
+  margin: 0 0 6px;
+}
+.shm-product__row {
+  display: flex; align-items: center; justify-content: space-between;
+  gap: 10px;
+  margin-top: 4px;
+}
+.shm-product__price {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 19px;
+  color: var(--color-cocoa-deep);
+  letter-spacing: -0.01em;
+}
+.shm-product__price del {
+  margin-right: 6px;
+  font-size: 15px;
+  color: var(--color-ink-4);
+  font-weight: 500;
+  text-decoration-thickness: 1.5px;
+}
+
+/* Compact variant — for cart upsells (smaller media, inline) */
+.shm-product--compact {
+  grid-template-columns: 96px 1fr;
+  grid-template-rows: auto;
+  align-items: stretch;
+}
+.shm-product--compact .shm-product__media {
+  aspect-ratio: 1 / 1;
+  width: 96px;
+  height: 96px;
+  align-self: center;
+  margin: 8px;
+  border-radius: var(--radius-md);
+  overflow: hidden;
+}
+.shm-product--compact .shm-product__media img {
+  width: 100%; height: 100%; object-fit: cover;
+}
+.shm-product--compact .shm-product__body { padding: 12px 14px; gap: 4px; }
+.shm-product--compact .shm-product__name { font-size: 15px; }
+.shm-product--compact .shm-product__sub { font-size: 12px; }
+.shm-product--compact .shm-product__price { font-size: 16px; }
+
+/* Out-of-stock state */
+.shm-product.is-oos { opacity: 0.6; }
+.shm-product.is-oos .shm-btn { pointer-events: none; }
+
+
+/* ============================================================
+   Form patterns — labels, inputs, errors, fieldsets
+   Use:
+     <div class="shm-field">
+       <label class="shm-field__label" for="email">Email</label>
+       <input id="email" class="shm-input" type="email" />
+       <p class="shm-field__hint">We'll send your receipt here.</p>
+     </div>
+
+     <div class="shm-field shm-field--error">
+       <label class="shm-field__label" for="zip">ZIP</label>
+       <input id="zip" class="shm-input" />
+       <p class="shm-field__error">Enter a valid 5-digit ZIP.</p>
+     </div>
+   ============================================================ */
+
+/* Field wrapper — owns the vertical rhythm */
+.shm-field {
+  display: grid;
+  gap: 6px;
+  font-family: var(--font-body);
+}
+
+/* Label */
+.shm-field__label {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 13px;
+  color: var(--color-cocoa-deep);
+  letter-spacing: -0.005em;
+  display: inline-flex; align-items: center; gap: 6px;
+}
+.shm-field__label .req { color: var(--color-ember); }
+.shm-field__label .opt {
+  font-family: var(--font-body);
+  font-weight: 400;
+  font-size: 12px;
+  color: var(--color-ink-4);
+  letter-spacing: 0;
+}
+
+/* Hint and error helper text */
+.shm-field__hint,
+.shm-field__error {
+  font-size: 12px;
+  line-height: 1.4;
+  margin: 0;
+}
+.shm-field__hint  { color: var(--color-ink-3); }
+.shm-field__error {
+  color: var(--color-ember);
+  font-weight: 600;
+  display: inline-flex; align-items: center; gap: 6px;
+}
+
+/* Input — extends the existing .shm-input but adds states */
+.shm-input {
+  height: 44px;
+  padding: 0 16px;
+  background: var(--color-marshmallow);
+  border: var(--outline-soft);
+  border-radius: var(--radius-md);
+  font-family: var(--font-body);
+  font-size: 15px;
+  color: var(--color-cocoa-deep);
+  width: 100%;
+  transition: border-color var(--motion-fast) var(--ease-standard),
+              box-shadow var(--motion-fast) var(--ease-standard);
+}
+.shm-input::placeholder { color: var(--color-ink-4); }
+.shm-input:hover { border-color: var(--color-ink-3); }
+.shm-input:focus {
+  outline: none;
+  border-color: var(--color-cocoa-deep);
+  box-shadow: 0 0 0 3px rgba(63,42,32,0.12);
+}
+
+/* Error state — wraps the field, lights the input + helper */
+.shm-field--error .shm-input {
+  border-color: var(--color-ember);
+  background: rgba(217,103,69,0.04);
+}
+.shm-field--error .shm-input:focus {
+  box-shadow: 0 0 0 3px rgba(217,103,69,0.18);
+}
+
+/* Success state */
+.shm-field--ok .shm-input {
+  border-color: var(--color-clover);
+  background: rgba(31,138,91,0.04);
+}
+
+/* Disabled */
+.shm-input:disabled,
+.shm-input[readonly] {
+  background: var(--color-cream);
+  color: var(--color-ink-3);
+  cursor: not-allowed;
+}
+
+/* Textarea — same skin, taller */
+textarea.shm-input {
+  height: auto;
+  min-height: 96px;
+  padding: 12px 16px;
+  resize: vertical;
+  line-height: 1.5;
+}
+
+/* Select — native, restyled with caret SVG */
+.shm-select {
+  height: 44px;
+  padding: 0 40px 0 16px;
+  background: var(--color-marshmallow) url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8' fill='none'><path d='M1 1.5L6 6.5L11 1.5' stroke='%233F2A20' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/></svg>") no-repeat right 16px center;
+  border: var(--outline-soft);
+  border-radius: var(--radius-md);
+  font-family: var(--font-body);
+  font-size: 15px;
+  color: var(--color-cocoa-deep);
+  appearance: none;
+  width: 100%;
+  cursor: pointer;
+}
+.shm-select:focus {
+  outline: none;
+  border-color: var(--color-cocoa-deep);
+  box-shadow: 0 0 0 3px rgba(63,42,32,0.12);
+}
+
+/* Checkbox & radio — chunky, brand-tinted */
+.shm-check,
+.shm-radio {
+  display: inline-flex; align-items: center; gap: 10px;
+  font-family: var(--font-body);
+  font-size: 14px;
+  color: var(--color-cocoa-deep);
+  cursor: pointer;
+  user-select: none;
+  line-height: 1.4;
+}
+.shm-check input,
+.shm-radio input {
+  appearance: none;
+  width: 20px; height: 20px;
+  flex-shrink: 0;
+  border: 2px solid var(--color-cocoa-deep);
+  background: var(--color-marshmallow);
+  cursor: pointer;
+  position: relative;
+  transition: background var(--motion-fast) var(--ease-standard);
+}
+.shm-check input { border-radius: 6px; }
+.shm-radio input { border-radius: 999px; }
+
+.shm-check input:checked,
+.shm-radio input:checked {
+  background: var(--color-ember);
+  border-color: var(--color-ember);
+}
+.shm-check input:checked::after {
+  content: "";
+  position: absolute;
+  inset: 2px;
+  background: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='none'><path d='M3 8.5L6.5 12L13 4.5' stroke='%23FFFBF1' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'/></svg>") no-repeat center / 90%;
+}
+.shm-radio input:checked::after {
+  content: "";
+  position: absolute;
+  inset: 4px;
+  background: var(--color-marshmallow);
+  border-radius: 999px;
+}
+.shm-check input:focus-visible,
+.shm-radio input:focus-visible {
+  outline: 3px solid rgba(63,42,32,0.18);
+  outline-offset: 2px;
+}
+
+/* Field row — for two-column rows like First / Last name, City / ZIP */
+.shm-field-row {
+  display: grid;
+  gap: 14px;
+  grid-template-columns: 1fr 1fr;
+}
+.shm-field-row--3-1 { grid-template-columns: 3fr 1fr; }
+@media (max-width: 520px) {
+  .shm-field-row,
+  .shm-field-row--3-1 { grid-template-columns: 1fr; }
+}
+
+/* Fieldset — checkout sections like "Shipping address" */
+.shm-fieldset {
+  border: 0;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 14px;
+}
+.shm-fieldset legend {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 19px;
+  color: var(--color-cocoa-deep);
+  letter-spacing: -0.01em;
+  margin-bottom: 4px;
+  padding: 0;
+}
+
+
+/* ==============================================================
+   PRODUCT DETAIL PAGE (PDP) — primitives
+   ============================================================== */
+
+/* ── Pack selector — radio-card group ───────────────────── */
+.shm-pack {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 10px;
+}
+.shm-pack__opt {
+  position: relative;
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  gap: 4px;
+  padding: 14px 8px 12px;
+  background: var(--color-marshmallow);
+  border: var(--outline-soft-2);
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  transition: transform var(--motion-fast) var(--ease-standard),
+              border-color var(--motion-fast) var(--ease-standard),
+              background var(--motion-fast) var(--ease-standard);
+  text-align: center;
+}
+.shm-pack__opt input { position: absolute; opacity: 0; pointer-events: none; }
+.shm-pack__opt:hover { transform: translateY(-1px); }
+.shm-pack__opt[data-selected="true"],
+.shm-pack__opt:has(input:checked) {
+  border-color: var(--color-ember);
+  background: var(--color-cream);
+  box-shadow: 0 0 0 2px var(--color-ember) inset;
+}
+.shm-pack__qty {
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: 22px;
+  letter-spacing: -0.02em;
+  color: var(--color-cocoa-deep);
+  line-height: 1;
+}
+.shm-pack__label {
+  font-size: 11px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--color-ink-3);
+  font-weight: 600;
+}
+.shm-pack__save {
+  position: absolute;
+  top: -8px;
+  right: -6px;
+  background: var(--color-ember);
+  color: var(--color-marshmallow);
+  font-size: 10px; font-weight: 700;
+  letter-spacing: 0.04em;
+  padding: 3px 7px;
+  border-radius: var(--radius-full);
+  line-height: 1;
+}
+
+/* ── Google business input (configure block) ───────────── */
+.shm-google {
+  display: flex; align-items: center; gap: 12px;
+  padding: 12px 14px;
+  background: var(--color-marshmallow);
+  border: var(--outline-soft-2);
+  border-radius: var(--radius-md);
+  transition: border-color var(--motion-fast) var(--ease-standard);
+}
+.shm-google:focus-within { border-color: var(--color-ember); }
+.shm-google__icon {
+  width: 24px; height: 24px;
+  flex-shrink: 0;
+  display: grid; place-items: center;
+}
+.shm-google__input {
+  flex: 1;
+  border: 0; outline: 0; background: transparent;
+  font: inherit;
+  color: var(--color-cocoa-deep);
+}
+.shm-google__input::placeholder { color: var(--color-ink-3); }
+.shm-google__hint {
+  font-size: 12px;
+  color: var(--color-ink-3);
+  margin-top: 6px;
+  display: flex; align-items: center; gap: 6px;
+}
+
+/* ── Rating row — stars + count atom ───────────────────── */
+.shm-rating {
+  display: inline-flex; align-items: center; gap: 8px;
+  font-size: 14px;
+  color: var(--color-ink-2);
+}
+.shm-rating__stars {
+  display: inline-flex; gap: 2px;
+  color: var(--color-honey);
+}
+.shm-rating__stars svg { width: 16px; height: 16px; fill: currentColor; }
+.shm-rating__num { font-weight: 700; color: var(--color-cocoa-deep); }
+.shm-rating__count { color: var(--color-ink-3); }
+
+/* ── Trust strip — icon + text row ─────────────────────── */
+.shm-trust-strip {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 24px;
+  padding: 20px 0;
+  border-top: 1px solid var(--color-hair);
+  border-bottom: 1px solid var(--color-hair);
+}
+.shm-trust-strip__item {
+  display: flex; align-items: center; gap: 12px;
+  font-size: 14px;
+  color: var(--color-ink-2);
+}
+.shm-trust-strip__icon {
+  width: 32px; height: 32px;
+  flex-shrink: 0;
+  display: grid; place-items: center;
+  background: var(--color-cream);
+  border-radius: var(--radius-full);
+  color: var(--color-cocoa-deep);
+}
+.shm-trust-strip__icon svg { width: 18px; height: 18px; }
+.shm-trust-strip__label {
+  font-weight: 600;
+  color: var(--color-cocoa-deep);
+  display: block;
+}
+.shm-trust-strip__sub {
+  font-size: 12px;
+  color: var(--color-ink-3);
+  display: block;
+  margin-top: 1px;
+}
+
+/* ── Sticky buybox bar (slides down on scroll) ─────────── */
+.shm-buybox-sticky {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  background: var(--color-marshmallow);
+  border-bottom: 2px solid var(--color-cocoa-deep);
+  padding: 12px 0;
+  transform: translateY(-100%);
+  transition: transform var(--motion-base) var(--ease-standard);
+  z-index: 50;
+}
+.shm-buybox-sticky[data-visible="true"] {
+  transform: translateY(0);
+}
+.shm-buybox-sticky__inner {
+  display: flex; align-items: center; gap: 20px;
+}
+.shm-buybox-sticky__thumb {
+  width: 48px; height: 48px;
+  border-radius: var(--radius-md);
+  background: var(--color-cream);
+  border: 1px solid var(--color-hair);
+  overflow: hidden;
+  flex-shrink: 0;
+}
+.shm-buybox-sticky__thumb img { width: 100%; height: 100%; object-fit: cover; }
+.shm-buybox-sticky__title {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 16px;
+  color: var(--color-cocoa-deep);
+  letter-spacing: -0.01em;
+}
+.shm-buybox-sticky__meta {
+  font-size: 13px;
+  color: var(--color-ink-3);
+}
+.shm-buybox-sticky__cta { margin-left: auto; }
+
+/* ── Step card — numbered "how it works" tile ──────────── */
+.shm-step {
+  display: flex; flex-direction: column; gap: 14px;
+  padding: 24px;
+  background: var(--color-marshmallow);
+  border: var(--outline-soft-2);
+  border-radius: var(--radius-lg);
+  position: relative;
+}
+.shm-step__num {
+  width: 40px; height: 40px;
+  display: grid; place-items: center;
+  background: var(--color-ember);
+  color: var(--color-marshmallow);
+  border-radius: var(--radius-full);
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: 18px;
+  border: 2px solid var(--color-cocoa-deep);
+}
+.shm-step__title {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 18px;
+  letter-spacing: -0.01em;
+  color: var(--color-cocoa-deep);
+}
+.shm-step__body {
+  font-size: 14px;
+  line-height: 1.55;
+  color: var(--color-ink-2);
+}
+
+/* ── Review card ───────────────────────────────────────── */
+.shm-review {
+  display: flex; flex-direction: column; gap: 12px;
+  padding: 20px;
+  background: var(--color-marshmallow);
+  border: var(--outline-soft-2);
+  border-radius: var(--radius-lg);
+}
+.shm-review__head {
+  display: flex; align-items: center; gap: 12px;
+}
+.shm-review__avatar {
+  width: 36px; height: 36px;
+  border-radius: var(--radius-full);
+  background: var(--color-honey);
+  color: var(--color-cocoa-deep);
+  display: grid; place-items: center;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 14px;
+}
+.shm-review__author {
+  font-weight: 700;
+  color: var(--color-cocoa-deep);
+  font-size: 14px;
+}
+.shm-review__verified {
+  font-size: 11px;
+  color: var(--color-ink-3);
+  display: flex; align-items: center; gap: 4px;
+  margin-top: 1px;
+}
+.shm-review__body {
+  font-size: 14px;
+  line-height: 1.55;
+  color: var(--color-ink-2);
+}
+.shm-review__date { font-size: 12px; color: var(--color-ink-3); }
+
+/* ── Reviews summary block ─────────────────────────────── */
+.shm-reviews-summary {
+  display: grid;
+  grid-template-columns: 240px 1fr;
+  gap: 40px;
+  padding: 28px;
+  background: var(--color-cream);
+  border-radius: var(--radius-lg);
+}
+.shm-reviews-summary__big {
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: 56px;
+  letter-spacing: -0.03em;
+  color: var(--color-cocoa-deep);
+  line-height: 1;
+}
+.shm-reviews-summary__bars {
+  display: flex; flex-direction: column; gap: 6px;
+}
+.shm-reviews-bar {
+  display: grid;
+  grid-template-columns: 28px 1fr 36px;
+  gap: 10px;
+  align-items: center;
+  font-size: 12px;
+  color: var(--color-ink-3);
+}
+.shm-reviews-bar__track {
+  height: 8px;
+  background: var(--color-hair);
+  border-radius: var(--radius-full);
+  overflow: hidden;
+}
+.shm-reviews-bar__fill {
+  height: 100%;
+  background: var(--color-honey);
+  border-radius: var(--radius-full);
+}
+
+/* ── Breadcrumb ────────────────────────────────────────── */
+.shm-breadcrumb {
+  display: flex; align-items: center; gap: 8px;
+  font-size: 13px;
+  color: var(--color-ink-3);
+  padding: 16px 0;
+}
+.shm-breadcrumb a { color: var(--color-ink-3); text-decoration: none; }
+.shm-breadcrumb a:hover { color: var(--color-cocoa-deep); }
+.shm-breadcrumb__sep { color: var(--color-ink-3); opacity: 0.5; }
+.shm-breadcrumb__current { color: var(--color-cocoa-deep); font-weight: 600; }
+
+/* ── PDP gallery ───────────────────────────────────────── */
+.shm-gallery {
+  display: grid;
+  grid-template-columns: 80px 1fr;
+  gap: 16px;
+}
+.shm-gallery__main {
+  aspect-ratio: 1 / 1;
+  background: var(--color-cream);
+  border: var(--outline-soft-2);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  display: grid; place-items: center;
+}
+.shm-gallery__main img { width: 100%; height: 100%; object-fit: cover; }
+.shm-gallery__thumbs {
+  display: flex; flex-direction: column; gap: 10px;
+}
+.shm-gallery__thumb {
+  aspect-ratio: 1 / 1;
+  background: var(--color-cream);
+  border: 1.5px solid var(--color-hair);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  cursor: pointer;
+  transition: border-color var(--motion-fast) var(--ease-standard);
+}
+.shm-gallery__thumb img { width: 100%; height: 100%; object-fit: cover; }
+.shm-gallery__thumb[data-active="true"] { border-color: var(--color-cocoa-deep); border-width: 2px; }
+.shm-gallery__thumb:hover { border-color: var(--color-cocoa-deep); }
+
+
+/* ============================================================
+   Checklist — bullet list with brand-tinted check icons
+   Use:
+     <ul class="shm-checklist">                  ← compact (default)
+       <li>60 day satisfaction guarantee</li>
+     </ul>
+     <ul class="shm-checklist shm-checklist--featured">  ← circled badge
+       <li>Hand-printed in Minneapolis on premium PVC stock</li>
+     </ul>
+   Sizes:
+     compact   — 16px inline hand-drawn check, no badge.
+                 Use for dense lists, fine print, secondary benefits.
+     featured  — 24px dashed-circle cream badge, cocoa check inside.
+                 Use for primary product benefits (~3-5 items max).
+   Variants: .shm-checklist--clover (success green checks)
+   ============================================================ */
+.shm-checklist {
+  list-style: none;
+  padding: 0; margin: 0;
+  display: flex; flex-direction: column;
+  gap: 8px;
+  font-family: var(--font-body);
+}
+.shm-checklist li {
+  display: grid;
+  grid-template-columns: 16px 1fr;
+  gap: 10px;
+  align-items: start;
+  font-size: 14px;
+  line-height: 1.5;
+  color: var(--color-ink);
+}
+.shm-checklist li::before {
+  content: "";
+  width: 16px; height: 16px;
+  margin-top: 4px;
+  background: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 28 28' fill='none' stroke='%232A1A0F' stroke-width='3.6' stroke-linecap='round' stroke-linejoin='round'><path d='M6 14.6 Q9.2 18.6 11.5 20.5 Q14.8 16 18.4 11 Q20.8 7.6 23 5.6'/></svg>") no-repeat center / contain;
+}
+
+/* Featured — circled cream badge with dashed cocoa border */
+.shm-checklist--featured { gap: 12px; }
+.shm-checklist--featured li {
+  grid-template-columns: 24px 1fr;
+  gap: 12px;
+  align-items: center;
+  font-size: 15px;
+}
+.shm-checklist--featured li::before {
+  width: 24px; height: 24px;
+  margin-top: 0;
+  border-radius: 50%;
+  background-color: var(--color-graham-soft);
+  background-size: 14px 14px;
+  border: 1.5px dashed var(--color-cocoa-deep);
+}
+
+/* Clover variant — green check */
+.shm-checklist--clover li::before {
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 28 28' fill='none' stroke='%232A7F3E' stroke-width='3.6' stroke-linecap='round' stroke-linejoin='round'><path d='M6 14.6 Q9.2 18.6 11.5 20.5 Q14.8 16 18.4 11 Q20.8 7.6 23 5.6'/></svg>");
+}
+.shm-checklist--featured.shm-checklist--clover li::before {
+  border-color: var(--color-clover, #2A7F3E);
+}
+
+/* ============================================================
+   Pack selector — row variant
+   Use:
+     <fieldset class="shm-pack-rows">
+       <legend class="shm-pack-rows__label">Choose your pack</legend>
+       <label class="shm-pack-row">
+         <span class="shm-pack-row__thumb"><img src="..." alt=""></span>
+         <span class="shm-pack-row__main">
+           <span class="shm-pack-row__name">5 Cards
+             <span class="shm-badge shm-badge--honey">SAVE 20%</span>
+           </span>
+           <span class="shm-pack-row__note">Free shipping included</span>
+         </span>
+         <span class="shm-pack-row__price">
+           <span class="shm-pack-row__price-now">$119.99</span>
+           <span class="shm-pack-row__price-meta">$24.00 / card · <s>$149.95</s></span>
+         </span>
+         <input type="radio" name="pack" hidden>
+         <span class="shm-pack-row__pop shm-badge shm-badge--ember">Most popular</span> (optional)
+       </label>
+     </fieldset>
+   ============================================================ */
+.shm-pack-rows {
+  border: 0; padding: 0; margin: 0;
+  display: flex; flex-direction: column;
+  gap: 10px;
+}
+.shm-pack-rows__label {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 15px;
+  color: var(--color-cocoa-deep);
+  letter-spacing: -0.01em;
+  margin: 0 0 2px;
+  padding: 0;
+}
+.shm-pack-row {
+  position: relative;
+  display: grid;
+  grid-template-columns: 56px 1fr auto;
+  align-items: center;
+  gap: 14px;
+  padding: 14px 18px;
+  background: var(--color-marshmallow);
+  border: 2px solid var(--color-hair);
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition: border-color var(--motion-fast) var(--ease-standard),
+              background var(--motion-fast) var(--ease-standard);
+}
+.shm-pack-row input { position: absolute; opacity: 0; pointer-events: none; }
+.shm-pack-row:hover { border-color: var(--color-cocoa-deep); }
+.shm-pack-row[data-selected="true"],
+.shm-pack-row:has(input:checked) {
+  border-color: var(--color-ember);
+  background: var(--color-ember-tint);
+}
+.shm-pack-row__thumb {
+  width: 40px; height: 40px;
+  border-radius: 8px;
+  background: var(--color-cream);
+  overflow: hidden;
+  border: 1px solid var(--color-hair);
+  display: grid; place-items: center;
+}
+.shm-pack-row__thumb img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.shm-pack-row__main {
+  display: flex; flex-direction: column;
+  gap: 4px;
+  min-width: 0;
+}
+.shm-pack-row__name {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 17px;
+  color: var(--color-cocoa-deep);
+  letter-spacing: -0.012em;
+  display: inline-flex; align-items: center; gap: 10px;
+  flex-wrap: wrap;
+}
+.shm-pack-row__note {
+  display: inline-flex; align-items: center; gap: 6px;
+  font-size: 12px;
+  color: var(--color-clover);
+  font-weight: 600;
+}
+.shm-pack-row__note svg { width: 14px; height: 14px; }
+.shm-pack-row__price {
+  text-align: right;
+  display: flex; flex-direction: column;
+  gap: 2px;
+}
+.shm-pack-row__price-now {
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: 22px;
+  color: var(--color-cocoa-deep);
+  letter-spacing: -0.015em;
+}
+.shm-pack-row__price-meta {
+  font-size: 12px;
+  color: var(--color-ink-3);
+  display: inline-flex; gap: 6px;
+  justify-content: flex-end;
+}
+.shm-pack-row__price-meta s { color: var(--color-muted); }
+.shm-pack-row__pop {
+  position: absolute;
+  top: -10px;
+  right: 18px;
+}
+
+/* ============================================================
+   Callout — small icon + headline + sub strip.
+   Use for free-shipping bands, success notices, gift unlocks.
+     <div class="shm-callout shm-callout--success">
+       <span class="shm-callout__icon"><svg>...</svg></span>
+       <span>
+         <span class="shm-callout__title">Free shipping included</span>
+         <span class="shm-callout__sub">On all orders over $55.00</span>
+       </span>
+     </div>
+   Variants: --success (clover), --ember, --honey
+   ============================================================ */
+.shm-callout {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  background: transparent;
+  padding: 6px 0;
+  color: var(--color-cocoa-deep);
+}
+.shm-callout__icon {
+  width: 22px; height: 22px;
+  display: inline-flex; align-items: center; justify-content: center;
+  color: var(--color-cocoa-deep);
+  flex-shrink: 0;
+}
+.shm-callout__icon svg { width: 22px; height: 22px; }
+.shm-callout--success .shm-callout__icon { color: var(--color-clover); }
+.shm-callout--ember   .shm-callout__icon { color: var(--color-ember); }
+.shm-callout--honey   .shm-callout__icon { color: var(--color-graham-gold); }
+.shm-callout__title {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 14px;
+  color: var(--color-cocoa-deep);
+  letter-spacing: -0.005em;
+  line-height: 1.2;
+  display: block;
+}
+.shm-callout__sub {
+  font-size: 12px;
+  color: var(--color-ink-3);
+  line-height: 1.3;
+  display: block;
+  margin-top: 1px;
+}
