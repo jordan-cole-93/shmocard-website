@@ -47,3 +47,14 @@ Each entry: source plan, discovery, recommended owner.
 **Recommended fix:** Rename / consolidate to canonical slugs (`cr80-trio.png`, `cr80-fan.png`, `lsign-counter.png`, `plate-disc.png`) in a future asset-cleanup plan. Touch the 5 occurrences across `home-data.ts`, `Hero.tsx`, and any PDP/category components landing in 03-04 + 03-05+.
 **Owner:** Phase 3 asset cleanup (defer until all PDPs are wired so we know which images to keep) or a Phase 4 asset-pass.
 **Severity:** cosmetic (URLs leak generator filenames; no functional bug)
+
+---
+
+## DI-05 — `.shm-meta` not flipped for dark-section text contrast
+
+**Surfaced during:** 03-04 Task 2 (browser verify, proof section on `.shm-bg-cocoa`)
+**Issue:** `colors_and_type.css` flips `.shm-display`, `.shm-h1/2/3`, `.shm-lede`, `.shm-body`, `.shm-eyebrow`, hairlines, and `em` color on `.shm-bg-{ember|cherry|chocolate|cocoa}` — but NOT `.shm-meta`. `.shm-meta` stays at `var(--color-muted) = #8A6E5A`, which renders dark-on-cocoa with poor contrast. Owner names in the Shmo Review proof block were nearly invisible until I added a local override.
+**Workaround in 03-04:** Added a 2-rule layout-file exception in `components/category/category.css` flipping `.shm-meta` to `rgba(255, 251, 241, 0.66)` inside `.shm-bg-cocoa .cat-proof__*`. Token-based (no hex). Tagged as a design-system gap.
+**Recommended fix:** Add `.shm-bg-{ember|cherry|chocolate|cocoa} .shm-meta { color: rgba(255, 251, 241, 0.66) }` (or equivalent translucent marshmallow) to the dark-section rules block in `colors_and_type.css`. After that lands, remove the local override in `category.css`.
+**Owner:** Design system pass.
+**Severity:** a11y (low contrast on dark sections — readable but well below WCAG)

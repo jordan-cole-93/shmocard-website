@@ -241,6 +241,16 @@
   padding: 24px;
 }
 
+/* Dark-section .shm-meta flip — design-system gap (see DI-05).
+ * --color-muted is too dark to read on cocoa-bg sections; the dark
+ * cascade in colors_and_type.css covers display/h1/h2/h3/lede/body/
+ * eyebrow but skips meta. Local layout-file override until the
+ * design-system pass adds it globally. Tokens only — no hex. */
+.shm-bg-cocoa .cat-proof__row .shm-meta,
+.shm-bg-cocoa .cat-proof__quote .shm-meta {
+  color: rgba(255, 251, 241, 0.66);
+}
+
 /* ---------- CategoryFaq ---------- */
 .cat-faq__head {
   display: flex;

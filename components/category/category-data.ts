@@ -199,7 +199,9 @@ export const HOW_IT_WORKS_SHORT: HowStep[] = [
 ];
 
 // Proof block — real client results from marketing.md.
-// HARD RULE: shop names + metrics only. Never the words "Pawn Leads" or "PawnLeads".
+// HARD RULE: shop names + metrics only. The agency that supplied this data
+// must NEVER be named anywhere on the Shmocard site (HTML, alt text,
+// filenames, comments). See CONTEXT.md "Brand separation".
 export type ProofRow = { owner: string; shop: string; increase: string };
 
 export const PROOF_RESULTS: ProofRow[] = [
