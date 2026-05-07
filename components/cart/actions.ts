@@ -84,33 +84,66 @@ function bubbleUserErrors(errors: ShopifyUserError[] | undefined): void {
 
 /**
  * Validate a Shopify checkoutUrl before navigating the client to it.
- * Allows only *.myshopify.com or the configured SHOPIFY_STORE_DOMAIN.
- * Throws on mismatch — never silently passes a foreign URL.
  *
- * Mitigates T-03-12-02.
+ * Allowlist:
+ *   - https://*.myshopify.com
+ *   - https://<SHOPIFY_STORE_DOMAIN>     (configured custom domain)
+ *   - https://shop.<SHOPIFY_STORE_DOMAIN> (Shopify subdomain pattern)
+ *
+ * Rejects (each is a thrown Error — never silently passes through):
+ *   - empty / malformed URL
+ *   - non-https scheme (e.g. javascript:, data:, http:)
+ *   - URLs with embedded credentials (https://user:pass@host/...)
+ *   - hosts not on the allowlist
+ *
+ * Mitigates T-03-09-01 (open-redirect via cart.checkoutUrl) and
+ * T-03-09-02 (phishing link injection).
+ *
+ * Implementation note: parses with WHATWG `URL`, checks `protocol`,
+ * `username`/`password`, then matches `hostname` (host without port)
+ * against the allowlist. String matching on the full URL is unsafe
+ * because attackers can encode tricks into pathnames.
  */
 export async function assertCheckoutUrl(url: string): Promise<string> {
-  if (!url) throw new Error("assertCheckoutUrl: empty url");
-  let host: string;
+  if (!url || typeof url !== "string") {
+    throw new Error("assertCheckoutUrl: empty url");
+  }
+
+  let parsed: URL;
   try {
-    host = new URL(url).host.toLowerCase();
+    parsed = new URL(url);
   } catch {
     throw new Error("assertCheckoutUrl: invalid url");
   }
 
+  if (parsed.protocol !== "https:") {
+    throw new Error(
+      `assertCheckoutUrl: non-https scheme '${parsed.protocol}'`,
+    );
+  }
+
+  if (parsed.username || parsed.password) {
+    throw new Error("assertCheckoutUrl: embedded credentials not allowed");
+  }
+
+  const hostname = parsed.hostname.toLowerCase();
   const configuredDomain = (process.env.SHOPIFY_STORE_DOMAIN ?? "")
     .replace(/^https?:\/\//, "")
     .replace(/\/$/, "")
     .toLowerCase();
 
-  const isMyShopify = host.endsWith(".myshopify.com");
-  const isConfigured = configuredDomain.length > 0 && host === configuredDomain;
+  const isMyShopify = hostname.endsWith(".myshopify.com");
+  const isConfigured =
+    configuredDomain.length > 0 &&
+    (hostname === configuredDomain ||
+      hostname === `shop.${configuredDomain}`);
 
   if (!isMyShopify && !isConfigured) {
     throw new Error(
-      `assertCheckoutUrl: host '${host}' is not on the allow-list`,
+      `assertCheckoutUrl: host '${hostname}' is not on the allow-list`,
     );
   }
+
   return url;
 }
 
