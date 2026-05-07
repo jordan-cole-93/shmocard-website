@@ -11,8 +11,11 @@
    ============================================================ */
 
 /* ---------- Hero ---------- */
-.home-hero {
-  text-align: center;
+/* Grid bg + hero-specific padding live on the section element so the
+   pattern bleeds full viewport width (canonical pattern — see
+   .claude/skills/shmocard-design-system/ui_kits/website/homepage/home-bundle.jsx:649).
+   The shm-container inside still constrains content max-width. */
+.home-hero-section {
   padding-top: 64px;
   padding-bottom: 24px;
   background-image:
@@ -20,6 +23,9 @@
     linear-gradient(90deg, rgba(59,31,20,0.055) 1px, transparent 1px);
   background-size: 32px 32px, 32px 32px;
   background-position: -1px -1px;
+}
+.home-hero {
+  text-align: center;
 }
 .home-hero__eyebrow { margin-bottom: 22px; display: inline-flex; }
 

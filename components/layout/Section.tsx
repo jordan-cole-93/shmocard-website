@@ -22,6 +22,7 @@ export type SectionProps = {
   bg: SectionBg;
   nextBg?: SectionBg;
   waveSize?: SectionWaveSize;
+  className?: string;
   containerClassName?: string;
   children: ReactNode;
   id?: string;
@@ -40,12 +41,13 @@ export function Section({
   bg,
   nextBg,
   waveSize = "md",
+  className,
   containerClassName,
   children,
   id,
   ariaLabel,
 }: SectionProps) {
-  const sectionCls = `shm-section shm-bg-${bg}`;
+  const sectionCls = `shm-section shm-bg-${bg}${className ? ` ${className}` : ""}`;
   const containerCls = `shm-container ${containerClassName ?? ""}`.trim();
   const sizeCls = waveSizeClass(waveSize);
   const waveCls = `shm-wave shm-wave--${nextBg}${sizeCls ? ` ${sizeCls}` : ""}`;

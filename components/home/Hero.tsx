@@ -16,7 +16,7 @@ const TILE_ART: Record<string, { src: string; status: "live" | "soon"; modifier?
 
 export default function Hero() {
   return (
-    <Section bg="marsh" nextBg="graham" ariaLabel="Shmocard hero — the toolkit">
+    <Section bg="marsh" nextBg="graham" className="home-hero-section" ariaLabel="Shmocard hero — the toolkit">
       <div className="home-hero">
         <span className="shm-eyebrow home-hero__eyebrow">A toolkit, not a card</span>
         <h1 className="shm-display">
