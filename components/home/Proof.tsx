@@ -10,10 +10,10 @@ import { QUOTES, SHOPS } from "./home-data";
 export default function Proof() {
   return (
     <Section bg="marsh" nextBg="marsh" ariaLabel="Proof — what shops say">
-      <div className="shm-section-head" style={{ textAlign: "center", marginBottom: 36 }}>
+      <div className="shm-section-head">
         <span className="shm-eyebrow">Real shops, real numbers</span>
         <h2 className="shm-h2">Built for crews. Priced for <em>bulk</em>.</h2>
-        <p className="shm-lede" style={{ maxWidth: "56ch", margin: "0 auto" }}>
+        <p className="shm-lede">
           One card behind the counter captures ~2 reviews a week. One per employee captures ~15.
           Single units don&apos;t move the needle. Crews do.
         </p>
