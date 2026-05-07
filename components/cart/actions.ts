@@ -85,10 +85,19 @@ function bubbleUserErrors(errors: ShopifyUserError[] | undefined): void {
 /**
  * Validate a Shopify checkoutUrl before navigating the client to it.
  *
- * Allowlist:
+ * Allowlist (each entry checked against `URL.hostname` only — never
+ * the path/query):
  *   - https://*.myshopify.com
- *   - https://<SHOPIFY_STORE_DOMAIN>     (configured custom domain)
- *   - https://shop.<SHOPIFY_STORE_DOMAIN> (Shopify subdomain pattern)
+ *   - https://<SHOPIFY_STORE_DOMAIN>      (the *.myshopify.com store name)
+ *   - https://shop.<SHOPIFY_STORE_DOMAIN>
+ *   - https://<SHOPIFY_PRIMARY_DOMAIN>    (merchant primary domain, e.g. shmocard.com)
+ *   - https://shop.<SHOPIFY_PRIMARY_DOMAIN>
+ *
+ * Why both env vars: Shopify's `cart.checkoutUrl` typically resolves to
+ * `https://shop.<primary>/cart/c/...` once a primary domain is configured
+ * in the Shopify admin. The store's *.myshopify.com identity remains the
+ * back-end, but customers checkout under the merchant brand. We allow
+ * both so the guard works in dev (myshopify) and prod (primary).
  *
  * Rejects (each is a thrown Error — never silently passes through):
  *   - empty / malformed URL
@@ -104,6 +113,13 @@ function bubbleUserErrors(errors: ShopifyUserError[] | undefined): void {
  * against the allowlist. String matching on the full URL is unsafe
  * because attackers can encode tricks into pathnames.
  */
+function normalizeDomain(raw: string | undefined): string {
+  return (raw ?? "")
+    .replace(/^https?:\/\//, "")
+    .replace(/\/$/, "")
+    .toLowerCase();
+}
+
 export async function assertCheckoutUrl(url: string): Promise<string> {
   if (!url || typeof url !== "string") {
     throw new Error("assertCheckoutUrl: empty url");
@@ -127,18 +143,18 @@ export async function assertCheckoutUrl(url: string): Promise<string> {
   }
 
   const hostname = parsed.hostname.toLowerCase();
-  const configuredDomain = (process.env.SHOPIFY_STORE_DOMAIN ?? "")
-    .replace(/^https?:\/\//, "")
-    .replace(/\/$/, "")
-    .toLowerCase();
+  const storeDomain = normalizeDomain(process.env.SHOPIFY_STORE_DOMAIN);
+  const primaryDomain = normalizeDomain(process.env.SHOPIFY_PRIMARY_DOMAIN);
 
   const isMyShopify = hostname.endsWith(".myshopify.com");
-  const isConfigured =
-    configuredDomain.length > 0 &&
-    (hostname === configuredDomain ||
-      hostname === `shop.${configuredDomain}`);
 
-  if (!isMyShopify && !isConfigured) {
+  const matchesDomain = (d: string): boolean =>
+    d.length > 0 && (hostname === d || hostname === `shop.${d}`);
+
+  const isAllowed =
+    isMyShopify || matchesDomain(storeDomain) || matchesDomain(primaryDomain);
+
+  if (!isAllowed) {
     throw new Error(
       `assertCheckoutUrl: host '${hostname}' is not on the allow-list`,
     );
