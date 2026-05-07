@@ -16,9 +16,9 @@ Manual only. Jordan invokes via `/caveman`, or via phrases like "less tokens", "
 1. **Invoke the user-level `/caveman`** skill for the actual ultra-compressed output mode.
 
 2. **Stay strict on Shmocard rules even in compressed mode:**
-   - Still use Tailwind utilities (`bg-snow`, `text-ink`, `rounded-2xl`) — never legacy `--shmo-*` or `--graham`.
-   - Still use `<Placeholder>` for imagery — never hardcoded `/mascot/` or `/products/` paths.
-   - Still respect DESIGN.md token system, section recipes, mascot rule, italic accent rule.
+   - Still use `.shm-*` design system classes (`shm-bg-cocoa`, `shm-btn--primary`, `shm-card`) — never raw Tailwind utilities for visual concerns. Tailwind utilities are layout-only.
+   - Image paths use the agreed convention (mascot in `public/mascot/`, products in `public/products/`).
+   - Still respect every rule in `.claude/rules/design-system.md` — section rotation, mascot sticker rule, ember accent rule, soft-by-default cards, hand-drawn iconography, no gradients, no exclamation marks.
    - Compression applies to **comms output to Jordan**, not to **code quality** or **design discipline**.
 
 ## What NOT to compress
@@ -28,4 +28,5 @@ Manual only. Jordan invokes via `/caveman`, or via phrases like "less tokens", "
 
 ## References
 
-- `DESIGN.md` (full ruleset still applies)
+- `.claude/rules/design-system.md` (full design system ruleset still applies in compressed mode)
+- `context/design-system/SKILL.md` (operator's manual — primitive table + rules)

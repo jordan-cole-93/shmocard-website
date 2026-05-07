@@ -19,7 +19,7 @@ What still exists:
 
 What does **not** exist yet:
 - No `components/`, no `lib/`, no `public/`
-- No design system folder, no `DESIGN.md`, no `PATTERNS.md`, no design tokens
+- No project-level `app/`, `components/`, `lib/`, `public/` yet — those land in Phase 3
 - No mascot or illustration assets
 - No `framer-motion`, `lucide-react`, or `react-icons` in `package.json`
 - No Shopify Storefront wiring
@@ -47,17 +47,16 @@ Bring every `.md` file in line with the post-wipe reality.
 - [ ] Leave `product.md`, `marketing.md`, `context.md` untouched per instruction
 - [ ] Leave `context/brainstorming/*.md` empty until design system lands
 
-### Phase 2 — Design system review (in progress)
+### Phase 2 — Design system review (✅ complete 2026-05-07)
 
-Design system landed at `context/design-system/` on 2026-05-07. Audit + structural moves done; remaining work below.
+Design system landed at `context/design-system/` on 2026-05-07. Full audit + integration plan + translation plan + locked decisions.
 
-- [x] Audit folder structure for clarity (step 02-01 — see `.planning/phases/02-design-system-review/AUDIT.md`)
-- [x] Identify messy / redundant / under-specified parts (covered in audit)
-- [x] Propose + execute clean structural moves (step 02-02 — folder renamed kebab, design-system rules moved to `.claude/rules/design-system.md`, SKILL.md frontmatter stripped)
-- [ ] Tailwind 4 ↔ `.shm-*` coexistence decision — locked path for `app/globals.css` (step 02-04)
-- [ ] Reference-page translation plan — Babel JSX → Next.js .tsx mapping (step 02-05)
-- [ ] Resolve remaining open questions — motion library, GHL webhook URL, static font cuts (step 02-06)
-- [ ] Lock canonical files + close-out (step 02-07)
+- [x] Audit folder structure (step 02-01 — see `.planning/phases/02-design-system-review/AUDIT.md` — 8 issues surfaced)
+- [x] Structural moves executed (step 02-02 — folder renamed kebab; design-system rules moved to `.claude/rules/design-system.md`; SKILL.md frontmatter stripped; 02-03 collapsed in)
+- [x] Tailwind 4 ↔ `.shm-*` coexistence locked (step 02-04 — `INTEGRATION.md` — Option A direct CSS import; Tailwind for layout only; `.shm-*` for everything visual)
+- [x] Reference-page translation plan locked (step 02-05 — `TRANSLATION.md` — homepage/PDP/cart drawer mapped to ~54 .tsx files; server-component-first; framer-motion usage map)
+- [x] 5 decisions locked (step 02-06 — `DECISIONS.md` — Zustand cart, framer-motion, public/ assets, GHL deferred, 83 static font cuts deleted)
+- [x] Phase 2 close-out (step 02-07 — this commit)
 
 ### Phase 3 — Rebuild
 

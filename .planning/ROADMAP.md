@@ -7,7 +7,7 @@ Bare Next.js + Tailwind shell → audited design system → rebuilt homepage + S
 ## Phases
 
 - [x] **Phase 1: Docs refresh** — Bring every `.md` file into alignment with the post-wipe reality.
-- [ ] **Phase 2: Design system review** — Audit `context/design-system/`, propose clean structure, lock `DESIGN.md` / `PATTERNS.md`, decide wiring strategy.
+- [x] **Phase 2: Design system review** — Audited `context/design-system/`, locked structural moves, locked Tailwind 4 ↔ `.shm-*` integration, locked reference-page translation map, locked 5 open decisions. Complete 2026-05-07.
 - [ ] **Phase 3: Rebuild** — Tokens → base layout → homepage → `/shmo-review` → 3 PDPs → cart + Storefront API.
 - [ ] **Phase 4: Launch readiness** — Mobile pass, a11y, Vercel env, DNS cutover.
 
@@ -48,15 +48,16 @@ Plans:
   5. Reference pages (`Shmocard Homepage.html`, `Buybox.html`, `Cart Drawer.html`) translated into a Phase 3 implementation plan (Babel-loaded JSX → real Next.js components).
   6. `SKILL.md`'s skill-frontmatter status decided (register or remove).
   7. Open questions for Jordan surfaced and answered before Phase 3 begins.
-**Plans**: TBD via `/gsd-plan-phase 2`.
+**Plans**: 6 of 7 atomic commits, 02-03 collapsed into 02-02. Complete 2026-05-07.
 
 Plans:
-- [ ] 02-01: Folder audit + structural diagnosis (read every file in `context/design-system/`)
-- [ ] 02-02: Propose clean folder layout + concrete moves (rename, relocate, consolidate)
-- [ ] 02-03: Reconcile root CLAUDE.md with `context/design-system/CLAUDE.md` — cross-references + non-conflict
-- [ ] 02-04: Tailwind 4 ↔ `.shm-*` coexistence decision (token import path)
-- [ ] 02-05: Reference-page translation plan (HTML/JSX → Next.js components)
-- [ ] 02-06: Surface open questions to Jordan (rename folder? where does `SKILL.md` register?)
+- [x] 02-01: Folder audit (`AUDIT.md` — every file inventoried, 8 issues surfaced)
+- [x] 02-02: Structural moves — folder renamed `context/design system/` → `context/design-system/`; design-system rules moved to `.claude/rules/design-system.md`; `SKILL.md` frontmatter stripped; all path refs updated
+- [x] 02-03: COLLAPSED INTO 02-02 (the move-CLAUDE.md-into-rules decision made the original "reconcile two CLAUDE.md" task unnecessary)
+- [x] 02-04: Tailwind 4 ↔ `.shm-*` coexistence locked (`INTEGRATION.md` — Option A direct CSS import, no `@theme` parallel copy)
+- [x] 02-05: Reference-page translation plan locked (`TRANSLATION.md` — section-by-section map for homepage, PDP, cart drawer; ~54 component file count; server-component-first split; framer-motion usage map)
+- [x] 02-06: 5 decisions locked (`DECISIONS.md` — D-01 Zustand cart, D-02 framer-motion, D-03 public/ assets, D-04 GHL deferred, D-05 83 static font cuts deleted)
+- [x] 02-07: Phase 2 close-out — this commit
 - [ ] 02-07: Lock decisions in `DESIGN.md` + `PATTERNS.md` (or design-system-equivalent)
 
 ### Phase 3: Rebuild

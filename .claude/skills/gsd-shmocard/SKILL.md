@@ -44,8 +44,9 @@ Read these files (mandatory order):
 8. `.claude/rules/live-store-protection.md` — hard constraint (LOCKED decision)
 9. `.claude/rules/shopify-data-discipline.md` — hard constraint (LOCKED decision)
 10. `.claude/rules/file-organization.md` — folder structure (LOCKED decision)
-11. `context/design-system/CLAUDE.md` — design system rules (LOCKED decisions when system is in use)
-12. `context/design-system/SKILL.md` — primitive table
+11. `.claude/rules/design-system.md` — design-system orchestrator rule (auto-applies for UI work; LOCKED)
+12. `context/design-system/SKILL.md` — operator's manual + primitive table
+13. `context/design-system/PRIMITIVES.md` — canonical primitive index
 
 If any file is empty or missing, stop and surface that to Jordan. Don't fabricate.
 
@@ -70,7 +71,7 @@ Distill from `context/general/context.md` + `marketing.md` + `backend.md`. Requi
   - Live store at `shop.shmocard.com` is read-only from this repo. Storefront API only.
   - Product data lives in Shopify, presentation in code.
   - File layout per `.claude/rules/file-organization.md`.
-  - Design system per `context/design-system/CLAUDE.md` (when wired in).
+  - Design system per `.claude/rules/design-system.md` (rule file orchestrator) + `context/design-system/SKILL.md` + `PRIMITIVES.md` + `colors_and_type.css` + `components.css` (source of truth).
   - No custom checkout. No Admin API writes. No `.env*` commits.
   - Locked headlines (from `marketing.md`):
     - Homepage hero: "The toolkit your crew's been missing."
@@ -88,7 +89,7 @@ Source from `context/general/context.md` "What each page needs to do" section + 
 Current scope.md phases (as of 2026-05-07):
 
 - Phase 1: Docs refresh — **complete** (mark `[x]`)
-- Phase 2: Design system review — audit `context/design-system/`, propose clean structure, lock DESIGN.md / PATTERNS.md
+- Phase 2: Design system review — audit `context/design-system/`, propose clean structure, lock canonical doc files (the design system folder ships its own `SKILL.md` + `README.md` + `PRIMITIVES.md` + CSS as source of truth; no separate root-level `DESIGN.md` / `PATTERNS.md` needed)
 - Phase 3: Rebuild — base layout → homepage → `/shmo-review` → 3 PDPs → cart + Storefront wiring
 - Phase 4: Launch readiness — mobile pass, a11y, Vercel env, DNS cutover
 

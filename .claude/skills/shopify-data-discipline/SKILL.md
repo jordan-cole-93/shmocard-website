@@ -20,7 +20,8 @@ Triggers on prompts mentioning: product / price / SKU / variant / inventory / st
 | Product name, price, image URL | Shopify Admin | Storefront API |
 | Variants (size, finish) | Shopify Admin | Storefront API |
 | Inventory / stock | Shopify Admin | Storefront API |
-| Layout, typography, colors | Code | Tailwind utilities + DESIGN.md tokens |
+| Layout | Code | Tailwind utilities (layout/spacing only) |
+| Typography, colors, radii, shadows, motion | Code | `.shm-*` classes + tokens from `context/design-system/colors_and_type.css` (per `.claude/rules/design-system.md`) |
 | Marketing copy (hero headlines, CTAs) | Code | hardcoded in JSX |
 | FAQ answers | Code | hardcoded in component |
 

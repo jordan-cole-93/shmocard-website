@@ -67,6 +67,14 @@ A first-time visitor leaves understanding the parent brand and either buys (Shmo
 | Project-level `gsd-shmocard` skill over global `/gsd-ingest-docs` | Repo doesn't use ADR/PRD/SPEC convention; global skill returned 0 docs and stalled | ✓ Good — locked 2026-05-07 |
 | Live store stays read-only from this repo | Production safety; mistakes break paying customers | ✓ Good — LOCKED |
 | Product data in Shopify, presentation in code | Single source of truth; pricing changes don't require deploys; multi-currency safe | ✓ Good — LOCKED |
+| Folder rename `context/design system/` → `context/design-system/` | Kebab-case fixes shell escaping + import paths; stays inside `context/` | ✓ Good — locked 2026-05-07 (Phase 2 / 02-02) |
+| Design-system rules → `.claude/rules/design-system.md` (single CLAUDE.md hierarchy) | Eliminates two-CLAUDE.md drift; matches existing rule pattern; rule applies to all UI work | ✓ Good — locked 2026-05-07 (Phase 2 / 02-02) |
+| Tailwind 4 ↔ `.shm-*` coexistence: direct CSS `@import`, no `@theme` copy | Preserves CSS-as-source-of-truth invariant; zero drift risk; design system's `.shm-bg-*` flip machinery preserved | ✓ Good — locked 2026-05-07 (Phase 2 / 02-04) |
+| Cart state via Zustand + localStorage middleware | Standard headless-commerce pattern; persists for free; small bundle; less boilerplate | ✓ Good — locked 2026-05-07 (Phase 2 / D-01) |
+| `framer-motion` for section reveals + drawer / modal entrances; CSS for hover | Premium feel; design-system motion constraints (subtle/fast/non-bouncy) preserved | ✓ Good — locked 2026-05-07 (Phase 2 / D-02) |
+| Assets in `public/` (Next.js convention), not in design-system folder | Design system stays code-only; clean source vs runtime asset separation | ✓ Good — locked 2026-05-07 (Phase 2 / D-03) |
+| Delete 83 redundant static Bricolage font cuts | Variable font covers same range (200–800, 12–96pt opsz); ~25 MB repo savings | ✓ Good — locked 2026-05-07 (Phase 2 / D-05) |
+| GHL webhook URL for waitlist | Deferred; Jordan provides mid-Phase 3 when forms wire up | — Pending (Phase 2 / D-04) |
 
 ---
-*Last updated: 2026-05-07 after .planning/ bootstrap from existing repo docs.*
+*Last updated: 2026-05-07 after Phase 2 close-out (commit landing this update).*

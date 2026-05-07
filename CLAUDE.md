@@ -4,7 +4,7 @@ Brand website for Shmocard at `shmocard.com`. Retail front door — not an ad fu
 
 **Stack:** Next.js (App Router) + TypeScript · Tailwind CSS 4 · Vercel · Shopify Headless (pending). Full details in `context/general/backend.md`.
 
-> **Status (2026-05-07):** Design wipe complete. Site is a bare Next.js + Tailwind shell. **New design system landed at `context/design-system/`** — soft neobrutalism, `.shm-*` utility prefix, 4-color section rotation, 4 bundled fonts, 28 preview cards, 3 reference pages. Auto-loaded rules live at `.claude/rules/design-system.md`. Phase 2 audit complete; Phase 3 rebuild can begin once Phase 2 finishes.
+> **Status (2026-05-07):** Phase 1 + Phase 2 complete. Site is a bare Next.js + Tailwind shell with the design system audited and integration locked. **Design system at `context/design-system/`** — soft neobrutalism, `.shm-*` utility prefix, 4-color section rotation, 4 bundled fonts (variable Bricolage + Cherry Bomb + Inter Tight upright/italic + Shadows Into Light Two — 83 redundant static cuts deleted), 28 preview cards, 3 reference pages. Auto-loaded rules at `.claude/rules/design-system.md`. **Ready for Phase 3 rebuild** — see `.planning/phases/02-design-system-review/INTEGRATION.md` (token import strategy), `TRANSLATION.md` (section → `.tsx` map), and `DECISIONS.md` (Zustand + framer-motion + `public/` + GHL deferred).
 
 ---
 
@@ -55,8 +55,9 @@ Skills below should fire automatically when their condition matches. If a condit
 
 ## Current phase
 
-1. **Phase 1 — Docs refresh (in progress).** Bring all `.md` files into alignment with the post-wipe reality.
-2. **Phase 2 — Design system review.** Jordan drops the new design system folder; we audit it for clarity and structure before any code uses it.
-3. **Phase 3 — Rebuild.** Tokens → layout → homepage → `/shmo-review` → 3 PDPs → Shopify Storefront wiring.
+1. ✅ **Phase 1 — Docs refresh.** All `.md` files aligned with post-wipe reality.
+2. ✅ **Phase 2 — Design system review.** Audit + integration plan + translation plan + 5 locked decisions. Complete 2026-05-07.
+3. **Phase 3 — Rebuild (next).** Tokens → base layout → homepage → `/shmo-review` → 3 PDPs → cart + Storefront API. Detailed plan in `.planning/phases/02-design-system-review/TRANSLATION.md`. Run `/gsd-plan-phase 3` to formalize.
+4. **Phase 4 — Launch readiness.** Mobile pass, a11y, Vercel env, DNS cutover.
 
-See `context/general/scope.md` for the current punch list.
+See `context/general/scope.md` for the live punch list and `.planning/ROADMAP.md` for atomic-commit history.

@@ -5,16 +5,16 @@
 See: .planning/PROJECT.md (updated 2026-05-07)
 
 **Core value:** First-time visitor leaves understanding the parent brand and either buys (Shmo Review) or joins a waitlist (other three) — without ever feeling pitched to.
-**Current focus:** Phase 2 — Design system review
+**Current focus:** Phase 2 ✅ complete; Phase 3 rebuild is next.
 
 ## Current Position
 
-Phase: 2 of 4 (Design system review)
-Plan: 5 of 7 in current phase (02-01, 02-02 [02-03 collapsed], 02-04, 02-05, 02-06 done; 02-07 pending close-out)
-Status: In progress (close-out pending)
-Last activity: 2026-05-07 — Phase 2 step 02-06 complete. Five locked decisions recorded in DECISIONS.md (Zustand cart, framer-motion locked, public/ assets, GHL deferred, 83 static font cuts deleted). TRANSLATION.md amended for framer-motion override. backend.md Animation row locked. Awaiting 02-07 close-out.
+Phase: 2 of 4 ✅ COMPLETE
+Plan: 7 of 7 (02-01, 02-02 [02-03 collapsed], 02-04, 02-05, 02-06, 02-07 all done)
+Status: Phase 2 complete — ready for Phase 3 plan
+Last activity: 2026-05-07 — Phase 2 closed out. All decisions locked, all docs aligned, working tree clean (except Jordan's pending hook tweak). Next: `/gsd-plan-phase 3` to formalize the rebuild plan from `.planning/phases/02-design-system-review/TRANSLATION.md`.
 
-Progress: [██░░░░░░░░] 25%  *(Phase 1 of 4 complete)*
+Progress: [█████░░░░░] 50%  *(2 of 4 phases complete)*
 
 ## Performance Metrics
 
