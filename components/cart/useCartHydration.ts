@@ -49,6 +49,18 @@ export function useCartHydration(): void {
     if (ranRef.current) return;
     ranRef.current = true;
 
+    // Wipe any localStorage entries from a previous version of the
+    // store that DID persist cart data (Cart Persistence Trap defense
+    // in depth — even though current store no longer uses persist).
+    try {
+      if (typeof localStorage !== "undefined") {
+        localStorage.removeItem("shm-cart");
+        localStorage.removeItem("shm-cart-ui");
+      }
+    } catch {
+      /* ignore */
+    }
+
     let cancelled = false;
 
     (async () => {

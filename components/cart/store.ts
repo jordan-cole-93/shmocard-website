@@ -9,22 +9,21 @@
 // THIS STORE:
 //   - Presentational mirror of `lines` (so the drawer can render
 //     optimistically without round-tripping every interaction).
-//   - UI state: `isOpen` (drawer drawer animation), nothing else worth
-//     persisting across reloads.
+//   - UI state: `isOpen` (drawer animation), reset on every page load.
 //
 // CART PERSISTENCE TRAP MITIGATION (RESEARCH.md Pitfall 6):
-//   - `partialize` returns ONLY `{ isOpen }` — never `lines`, never
-//     `cartId`, never `checkoutUrl`. Stale display data rehydrating
-//     before the cookie hydration fires would silently leak prices /
-//     variants that no longer match Shopify reality.
-//   - `cartId` and `checkoutUrl` live in-memory only — they get
-//     populated by `useCartHydration` on first client mount via the
-//     server cart query, and replaced on every cart mutation.
+//   The `persist` middleware is INTENTIONALLY OMITTED. Persisting any
+//   cart data in localStorage causes the trap — stale `lines` /
+//   `cartId` rehydrate before the cookie hydration fires, leaking
+//   prices / variants / cart IDs that may no longer match Shopify.
+//   The httpOnly cookie + `useCartHydration` are the only persistence
+//   mechanism for cart identity + contents. UI state (`isOpen`) also
+//   resets on reload — drawer always opens fresh, not the way the
+//   user left it.
 //
 // Reference: RESEARCH.md Pitfall 6, plan 03-08 task 1.
 
 import { create } from "zustand";
-import { persist, createJSONStorage } from "zustand/middleware";
 import type { CartLine } from "./types";
 
 /** Free-shipping unlock threshold in USD. Configurable in one place. */
@@ -37,7 +36,7 @@ type CartState = {
   checkoutUrl: string | null;
   /** Cart line items. Hydrated from server on mount; not persisted. */
   lines: CartLine[];
-  /** Drawer open/closed. Persisted across reloads. */
+  /** Drawer open/closed. Resets on reload. */
   isOpen: boolean;
 };
 
@@ -70,71 +69,56 @@ const INITIAL_STATE: CartState = {
   isOpen: false,
 };
 
-export const useCartStore = create<CartStore>()(
-  persist(
-    (set) => ({
-      ...INITIAL_STATE,
+export const useCartStore = create<CartStore>()((set) => ({
+  ...INITIAL_STATE,
 
-      setCart: (cartId, checkoutUrl, lines) =>
-        set((state) => ({
-          cartId,
-          checkoutUrl,
-          lines: lines ?? state.lines,
-        })),
+  setCart: (cartId, checkoutUrl, lines) =>
+    set((state) => ({
+      cartId,
+      checkoutUrl,
+      lines: lines ?? state.lines,
+    })),
 
-      replaceLines: (lines) => set({ lines }),
+  replaceLines: (lines) => set({ lines }),
 
-      addLine: (line) =>
-        set((state) => {
-          const existing = state.lines.find(
-            (l) => l.merchandiseId === line.merchandiseId,
-          );
-          if (existing) {
-            return {
-              lines: state.lines.map((l) =>
-                l.id === existing.id
-                  ? { ...l, quantity: l.quantity + line.quantity }
-                  : l,
-              ),
-            };
-          }
-          return { lines: [...state.lines, line] };
-        }),
-
-      updateQuantity: (lineId, quantity) =>
-        set((state) => ({
-          lines:
-            quantity <= 0
-              ? state.lines.filter((l) => l.id !== lineId)
-              : state.lines.map((l) =>
-                  l.id === lineId ? { ...l, quantity } : l,
-                ),
-        })),
-
-      removeLine: (lineId) =>
-        set((state) => ({
-          lines: state.lines.filter((l) => l.id !== lineId),
-        })),
-
-      open: () => set({ isOpen: true }),
-      close: () => set({ isOpen: false }),
-      toggle: () => set((state) => ({ isOpen: !state.isOpen })),
-
-      clear: () => set(INITIAL_STATE),
+  addLine: (line) =>
+    set((state) => {
+      const existing = state.lines.find(
+        (l) => l.merchandiseId === line.merchandiseId,
+      );
+      if (existing) {
+        return {
+          lines: state.lines.map((l) =>
+            l.id === existing.id
+              ? { ...l, quantity: l.quantity + line.quantity }
+              : l,
+          ),
+        };
+      }
+      return { lines: [...state.lines, line] };
     }),
-    {
-      name: "shm-cart-ui",
-      storage: createJSONStorage(() => localStorage),
-      version: 2,
-      // ⚠ Cart Persistence Trap mitigation:
-      //   ONLY UI state survives reloads. cartId/checkoutUrl/lines come
-      //   from the server (cookie + Storefront) on every fresh mount.
-      partialize: (state) => ({
-        isOpen: state.isOpen,
-      }),
-    },
-  ),
-);
+
+  updateQuantity: (lineId, quantity) =>
+    set((state) => ({
+      lines:
+        quantity <= 0
+          ? state.lines.filter((l) => l.id !== lineId)
+          : state.lines.map((l) =>
+              l.id === lineId ? { ...l, quantity } : l,
+            ),
+    })),
+
+  removeLine: (lineId) =>
+    set((state) => ({
+      lines: state.lines.filter((l) => l.id !== lineId),
+    })),
+
+  open: () => set({ isOpen: true }),
+  close: () => set({ isOpen: false }),
+  toggle: () => set((state) => ({ isOpen: !state.isOpen })),
+
+  clear: () => set(INITIAL_STATE),
+}));
 
 // Convenience hooks — components should subscribe to the slice they need.
 export const useCart = useCartStore;

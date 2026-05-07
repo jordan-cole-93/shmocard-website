@@ -58,3 +58,24 @@ Each entry: source plan, discovery, recommended owner.
 **Recommended fix:** Add `.shm-bg-{ember|cherry|chocolate|cocoa} .shm-meta { color: rgba(255, 251, 241, 0.66) }` (or equivalent translucent marshmallow) to the dark-section rules block in `colors_and_type.css`. After that lands, remove the local override in `category.css`.
 **Owner:** Design system pass.
 **Severity:** a11y (low contrast on dark sections — readable but well below WCAG)
+
+---
+
+## DI-06 — `app/cart-smoke/` smoke harness route is a temporary 03-08 artifact
+
+**Surfaced during:** 03-08 Task 2 (browser verify)
+**Issue:** Plan 03-08 needed an end-to-end cart-add demonstration BEFORE plan 03-05 (CR-80 PDP) had wired the canonical `/shmo-review/[handle]` page (the two ran in parallel as Wave 3 siblings per the plan-checker output). Built `app/cart-smoke/page.tsx` + `app/cart-smoke/SmokeAddButton.tsx` to fetch two real products by handle and exercise `addLineToCart` against the live Storefront cart. All cart-flow screenshots + reload-hydration verification ran against this route.
+**Recommended cleanup:** Once 03-05 ships and the canonical PDP add-to-cart works, delete `app/cart-smoke/` (both files). Cart drawer is unaffected — it mounts globally and is independent of the smoke route.
+**Owner:** Whichever Wave-3 plan finishes second can delete the directory in its closing commit; or open a tiny standalone cleanup plan once 03-05 lands.
+**Severity:** cosmetic (extra route shipped to production; harmless but uses one Storefront roundtrip on first hit)
+
+---
+
+## DI-07 — Verification scripts checked in at repo root
+
+**Surfaced during:** 03-08 Task 2
+**Issue:** Wrote `cart-flow-verify.mjs` + `cart-debug.mjs` + `cart-debug2.mjs` + `cart-debug3.mjs` at repo root for Playwright-driven cart-flow verification. They're not auto-loaded by `next build` (Next ignores `.mjs` files outside `app/` / `pages/`) but they pollute the repo root.
+**Recommended cleanup:** Either move into a `tests/` or `scripts/` subdirectory (would require `file-organization.md` approval per project rules) OR delete after 03-08 lands. The screenshots in `pictures/screenshots/` are the lasting verification artifact; the scripts were one-shot.
+**Owner:** Phase 4 test infrastructure pass — Phase 3 explicitly defers tests; if/when test scaffolding lands, fold the cart smoke flow into it as a real Playwright e2e spec.
+**Severity:** cosmetic
+
