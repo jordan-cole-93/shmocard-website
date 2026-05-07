@@ -73,21 +73,21 @@ Plans:
   5. Webhook revalidation route live; product edits in Shopify Admin propagate in ~5s.
   6. Waitlist forms capture to GHL webhook (URL pending).
   7. No `.shm-*`-prefix violations. No hardcoded product data. No Admin API references.
-**Plans**: TBD via `/gsd-plan-phase 3` (planned after Phase 2 lands).
+**Plans**: 12 plans across 4 waves. Wave 1 = audit foundations (03-01, 03-02). Wave 2 = pages + Storefront lib (03-03, 03-04, 03-12). Wave 3 = PDPs + cart drawer (03-05/06/07, 03-08). Wave 4 = checkout redirect + waitlist + webhook (03-09, 03-10, 03-11). Finalized 2026-05-07 via `/gsd-plan-phase 3`.
 
 Plans:
-- [ ] 03-01: Tokens + fonts wired into `app/globals.css` + `app/layout.tsx`
-- [ ] 03-02: Base layout shell (nav, footer, container, section primitive)
-- [ ] 03-03: Homepage build
-- [ ] 03-04: `/shmo-review` category page
-- [ ] 03-05: CR-80 PDP
-- [ ] 03-06: L-Sign PDP
-- [ ] 03-07: Square Card PDP
-- [ ] 03-08: Cart UI + Shopify Cart API wiring
-- [ ] 03-09: Checkout redirect via `cart.checkoutUrl`
-- [ ] 03-10: Waitlist GHL webhook integration
-- [ ] 03-11: Webhook revalidation route (`app/api/revalidate/route.ts`)
-- [ ] 03-12: Storefront API queries finalized for all PDPs and category page
+- [ ] 03-01-PLAN.md — AUDIT-ONLY: verify tokens + fonts wired in app/globals.css + app/layout.tsx (foundations 3-A1)
+- [ ] 03-02-PLAN.md — AUDIT shipped Nav/Footer/Mascot/Sticker + ADD Container + Section layout primitives (type-level 4-color rotation)
+- [ ] 03-03-PLAN.md — Homepage: 11 sections per Shmocard Homepage.html (Hero with em type-cycle, Audience marquee, Proof, 4× SubBrandSpotlight, CrewStrip, HowItWorks, VideoTestimonials, Compatibility, HomeFaq, FinalCta)
+- [ ] 03-04-PLAN.md — /shmo-review category: locked headline + tagline, bulk math, 3 format cards linking to PDPs, 6-question FAQ
+- [ ] 03-05-PLAN.md — CR-80 PDP at app/shmo-review/[handle]/page.tsx (dynamic route + 12-component PDP tree, .shm-buybox-sticky slides DOWN; SHARED tree consumed by 03-06/07)
+- [ ] 03-06-PLAN.md — L-Sign PDP: extend pdp-copy.ts; reuse PDP tree from 03-05
+- [ ] 03-07-PLAN.md — Square Card PDP: extend pdp-copy.ts; reuse PDP tree from 03-05
+- [ ] 03-08-PLAN.md — Cart drawer (.shm-cart-* primitives) + Zustand store + cookie hydration + Server Actions wired
+- [ ] 03-09-PLAN.md — Hardened checkout redirect: assertCheckoutUrl allowlist (*.myshopify.com / configured store domain) + try/catch + isNavigating guard
+- [ ] 03-10-PLAN.md — Waitlist modal + VideoLightbox + Server Action POST to GHL with honeypot + email/product validation + graceful fallback when URL unset (D-04)
+- [ ] 03-11-PLAN.md — app/api/revalidate/route.ts: HMAC SHA-256 + timingSafeEqual + revalidateTag for product handle + collection
+- [ ] 03-12-PLAN.md — lib/shopify/* (shopifyFetch, queries, mutations, types) + components/cart/actions.ts (Server Actions, httpOnly cookie, open-redirect guard)
 
 ### Phase 4: Launch readiness
 
