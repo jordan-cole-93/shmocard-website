@@ -59,7 +59,7 @@ If you're about to type one of these, **the primitive already exists.** Use it i
 - `--color-hair-3` `rgba(59, 31, 20, 0.24)`
 
 ### Type families
-- `--font-wordmark` Cherry Bomb One — **logo only**, never headlines
+- `--font-wordmark` Cherry Bomb One — **parent logo + sub-brand wordmarks** (Shmo Review/Biz/Link/Reputation), never headlines
 - `--font-display` Bricolage Grotesque — display & headings
 - `--font-sans` Inter Tight — body & UI
 - `--font-hand` Shadows Into Light Two — hand accent only

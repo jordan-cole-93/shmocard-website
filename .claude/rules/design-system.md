@@ -45,7 +45,7 @@ If a request maps to one of those reference pages, **start by copying the refere
 
 ## Type stack (locked)
 
-- **Wordmark** = Cherry Bomb One (`--font-wordmark`). **Logo only.**
+- **Wordmark** = Cherry Bomb One (`--font-wordmark`). **Parent logo + sub-brand wordmarks** (`Shmo Review`, `Shmo Biz`, `Shmo Link`, `Shmo Reputation`). Never headlines or body.
 - **Display & headings** = Bricolage Grotesque 700/800 (`--font-display`).
 - **Body & UI** = Inter Tight 400–700 (`--font-body`).
 - **Hand accent** = Shadows Into Light Two (`--font-hand`).

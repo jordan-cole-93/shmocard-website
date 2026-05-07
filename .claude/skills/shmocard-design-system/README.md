@@ -50,7 +50,8 @@ The CSS is the system. The previews show the system. The docs describe the syste
 The logo is the **mascot + wordmark "ShmoCard"** locked together, mascot on the left.
 
 - **Wordmark font** — Cherry Bomb One (token: `--font-wordmark`). Locked. Never substituted.
-- **Two-tone** — `Shmo` in cocoa-deep, `Card` in ember. On dark surfaces, `Shmo` flips to marshmallow, `Card` stays ember (or flips to honey when ember would clash).
+- **Two-tone** — `Shmo` in cocoa-deep + descriptor (`Card` for the parent, or `Review` / `Biz` / `Link` / `Reputation` for sub-brands) in ember. On dark surfaces, `Shmo` flips to marshmallow; the ember descriptor stays (or flips to honey when ember would clash).
+- **Sub-brand wordmarks share the parent's treatment.** Each sub-brand has its own logo: same Cherry Bomb font, same single-concatenated-word shape, same two-tone color split — only the descriptor changes (`ShmoReview`, `ShmoBiz`, `ShmoLink`, `ShmoReputation`).
 - **Single word, no space** — "ShmoCard", not "Shmo Card".
 - **Sizes** — hero 56 / nav 36 / compact 22 (px). Mascot height matches wordmark cap-height ±10%.
 
@@ -130,7 +131,7 @@ Default page rotation: **Marsh → Graham → Marsh → Ember → Marsh → Coco
 **Vertical rhythm.** Sections use `--section-py-d` (compact ecommerce density). No giant white space. Sections separated by `.shm-wave--{next-color}` — wave is colored to match the *next* section so it eats into the boundary.
 
 **Type stack.**
-- **Wordmark** = **Cherry Bomb One** (`--font-wordmark`). Logo only.
+- **Wordmark** = **Cherry Bomb One** (`--font-wordmark`). Parent logo + sub-brand wordmarks (`Shmo Review`, `Shmo Biz`, `Shmo Link`, `Shmo Reputation`). Never headlines or body.
 - **Display & headings** = **Bricolage Grotesque** 700/800 (variable, optical-size 96).
 - **Body & UI** = **Inter Tight** 400–700.
 - **Hand accent** = **Shadows Into Light Two**.
@@ -145,7 +146,7 @@ All four brand fonts ship with the system as local `.ttf` files in `fonts/`. `co
 
 | Family | Token | File(s) | Role |
 |---|---|---|---|
-| **Cherry Bomb One** | `--font-wordmark` | `CherryBombOne-Regular.ttf` | Logo only — never headlines or body. |
+| **Cherry Bomb One** | `--font-wordmark` | `CherryBombOne-Regular.ttf` | Parent logo + sub-brand wordmarks. Never headlines or body. |
 | **Bricolage Grotesque** | `--font-display` | `BricolageGrotesque-VariableFont_opsz_wdth_wght.ttf` (variable; weights 200–800, optical sizes 12–96pt). Static cuts also bundled. | Display & headings. |
 | **Inter Tight** | `--font-sans` | `InterTight-VariableFont_wght.ttf` + `InterTight-Italic-VariableFont_wght.ttf` (variable; weights 100–900, upright + italic) | Body & UI. |
 | **Shadows Into Light Two** | `--font-hand` | `ShadowsIntoLightTwo-Regular.ttf` | Hand accent — `.shm-hand` only. |

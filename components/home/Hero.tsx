@@ -40,11 +40,22 @@ export default function Hero() {
           </a>
         </div>
         <div className="home-hero__meta">
-          <span>Pre-programmed before shipping</span>
+          <span className="home-hero__hand-note">
+            <svg
+              viewBox="0 0 32 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinecap="round"
+              aria-hidden="true"
+            >
+              <path d="M2 12 Q 8 4, 16 12 T 30 8" />
+              <path d="M26 4 L30 8 L26 12" />
+            </svg>
+            Live now — Shmo Review
+          </span>
           <span className="home-hero__dot" aria-hidden="true" />
-          <span>Reprogrammable for life</span>
-          <span className="home-hero__dot" aria-hidden="true" />
-          <span>30-day returns</span>
+          <span>3 more tools coming this year</span>
         </div>
 
         <div className="home-hero__stage">
@@ -68,7 +79,20 @@ export default function Hero() {
                   <div className={`home-hero__tile-art ${tile.modifier ?? ""}`}>
                     <img src={tile.src} alt="" />
                   </div>
-                  <h3 className="home-hero__tile-name">{sb.eyebrow}</h3>
+                  <h3 className="home-hero__tile-name">
+                    {(() => {
+                      const idx = sb.eyebrow.indexOf(" ");
+                      if (idx === -1) return sb.eyebrow;
+                      const shmo = sb.eyebrow.slice(0, idx);
+                      const suffix = sb.eyebrow.slice(idx + 1).replace(/\s+/g, "");
+                      return (
+                        <>
+                          {shmo}
+                          <span className="home-hero__tile-name-suffix">{suffix}</span>
+                        </>
+                      );
+                    })()}
+                  </h3>
                   <p className="home-hero__tile-sub">{sb.tileSub}</p>
                 </a>
               );

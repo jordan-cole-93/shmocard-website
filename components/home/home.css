@@ -53,6 +53,16 @@
   width: 3px; height: 3px; border-radius: 999px;
   background: var(--color-ink-3); display: inline-block; opacity: 0.6;
 }
+.home-hero__hand-note {
+  display: inline-flex; align-items: center; gap: 8px;
+  font-family: var(--font-hand);
+  color: var(--color-ember);
+  font-size: 22px; line-height: 1;
+}
+.home-hero__hand-note svg {
+  color: var(--color-ember);
+  width: 26px; height: auto;
+}
 
 /* Type cycle min-width is reserved by JS (longest alt). The element
    itself is laid out inline-flex baseline so the caret aligns. */
@@ -138,10 +148,15 @@
 .home-hero__tile-name {
   position: relative;
   z-index: 2;
-  font-family: var(--font-display); font-weight: 800;
-  font-size: 22px; letter-spacing: -0.012em;
+  /* Sub-brand wordmark — same wordmark font + two-tone treatment as the parent logo.
+     Shmo cocoa-deep, descriptor ember (see .home-hero__tile-name-suffix). */
+  font-family: var(--font-wordmark);
+  font-size: 22px; letter-spacing: 0;
   color: var(--color-cocoa-deep);
   margin: 0;
+}
+.home-hero__tile-name-suffix {
+  color: var(--color-ember);
 }
 .home-hero__tile-sub {
   position: relative;
@@ -184,6 +199,11 @@
 }
 .audience-strip:hover .audience-strip__track { animation-play-state: paused; }
 .audience-strip__track > * { flex-shrink: 0; }
+.audience-strip__group {
+  display: inline-flex;
+  align-items: center;
+  gap: 44px;
+}
 .audience-strip__dot {
   width: 5px; height: 5px; border-radius: 999px;
   background: var(--color-ember);
@@ -434,10 +454,12 @@
 
 /* ---------- How it works ---------- */
 .how-grid {
+  list-style: none;
+  padding: 0;
+  margin: 0;
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 16px;
-  margin-top: 28px;
 }
 .how-step {
   position: relative;

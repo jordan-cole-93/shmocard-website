@@ -4,7 +4,7 @@ Local copies of the four brand fonts. `../colors_and_type.css` references these 
 
 | File | Family | Token | Role |
 |---|---|---|---|
-| `CherryBombOne-Regular.ttf` | Cherry Bomb One | `--font-wordmark` | Logo only |
+| `CherryBombOne-Regular.ttf` | Cherry Bomb One | `--font-wordmark` | Parent logo + sub-brand wordmarks |
 | `BricolageGrotesque-VariableFont_opsz_wdth_wght.ttf` | Bricolage Grotesque | `--font-display` | Display & headings (variable: weights 200–800, optical sizes 12–96pt, widths 75–100%) |
 | `BricolageGrotesque_*.ttf` (static cuts) | Bricolage Grotesque | — | Static fallbacks for renderers that don't support `truetype-variations`. Not referenced by the CSS. |
 | `InterTight-VariableFont_wght.ttf` | Inter Tight | `--font-sans` | Body / UI upright (variable: weights 100–900) |
