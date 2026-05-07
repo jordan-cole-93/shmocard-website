@@ -1,0 +1,252 @@
+// Cart Server Actions — wire Storefront cart mutations to the
+// httpOnly `shm-cart-id` cookie.
+//
+// Hard rules (T-03-12-01..06):
+// - All inputs validated against Shopify GID prefixes; quantity int 1..99.
+// - Cookie httpOnly + secure + sameSite='lax' + 14-day max-age.
+// - assertCheckoutUrl is the open-redirect guard; only *.myshopify.com
+//   or the configured SHOPIFY_STORE_DOMAIN host pass.
+// - userErrors from Shopify bubble as Errors — never silently swallowed.
+//
+// Reference: RESEARCH.md Pattern 3 (Server Action with await cookies()).
+
+"use server";
+
+import { cookies } from "next/headers";
+
+import { shopifyFetch } from "@/lib/shopify";
+import {
+  CART_CREATE_MUTATION,
+  CART_LINES_ADD_MUTATION,
+  CART_LINES_REMOVE_MUTATION,
+  CART_LINES_UPDATE_MUTATION,
+} from "@/lib/shopify/mutations";
+import { CART_QUERY } from "@/lib/shopify/queries";
+import type {
+  CartCreatePayload,
+  CartLinesAddPayload,
+  CartLinesRemovePayload,
+  CartLinesUpdatePayload,
+  ShopifyCart,
+  ShopifyUserError,
+} from "@/lib/shopify/types";
+
+// ---------- Constants ----------
+
+const CART_COOKIE = "shm-cart-id";
+const CART_COOKIE_MAX_AGE = 60 * 60 * 24 * 14; // 14 days
+
+const VARIANT_GID_PREFIX = "gid://shopify/ProductVariant/";
+const CART_LINE_GID_PREFIX = "gid://shopify/CartLine/";
+const CART_GID_PREFIX = "gid://shopify/Cart/";
+
+// ---------- Validation helpers ----------
+
+function assertVariantId(merchandiseId: string): void {
+  if (!merchandiseId || !merchandiseId.startsWith(VARIANT_GID_PREFIX)) {
+    throw new Error("Invalid merchandiseId — expected ProductVariant GID");
+  }
+}
+
+function assertLineId(lineId: string): void {
+  if (!lineId || !lineId.startsWith(CART_LINE_GID_PREFIX)) {
+    throw new Error("Invalid lineId — expected CartLine GID");
+  }
+}
+
+function assertQuantity(quantity: number): void {
+  if (
+    !Number.isInteger(quantity) ||
+    quantity < 1 ||
+    quantity > 99
+  ) {
+    throw new Error("Invalid quantity — expected integer 1..99");
+  }
+}
+
+function assertCartId(cartId: string): void {
+  if (!cartId || !cartId.startsWith(CART_GID_PREFIX)) {
+    throw new Error("Invalid cartId — expected Cart GID");
+  }
+}
+
+function bubbleUserErrors(errors: ShopifyUserError[] | undefined): void {
+  if (errors && errors.length > 0) {
+    throw new Error(
+      `Shopify cart userErrors: ${errors
+        .map((e) => `${e.field?.join(".") ?? "?"}: ${e.message}`)
+        .join("; ")}`,
+    );
+  }
+}
+
+// ---------- Open-redirect guard ----------
+
+/**
+ * Validate a Shopify checkoutUrl before navigating the client to it.
+ * Allows only *.myshopify.com or the configured SHOPIFY_STORE_DOMAIN.
+ * Throws on mismatch — never silently passes a foreign URL.
+ *
+ * Mitigates T-03-12-02.
+ */
+export async function assertCheckoutUrl(url: string): Promise<string> {
+  if (!url) throw new Error("assertCheckoutUrl: empty url");
+  let host: string;
+  try {
+    host = new URL(url).host.toLowerCase();
+  } catch {
+    throw new Error("assertCheckoutUrl: invalid url");
+  }
+
+  const configuredDomain = (process.env.SHOPIFY_STORE_DOMAIN ?? "")
+    .replace(/^https?:\/\//, "")
+    .replace(/\/$/, "")
+    .toLowerCase();
+
+  const isMyShopify = host.endsWith(".myshopify.com");
+  const isConfigured = configuredDomain.length > 0 && host === configuredDomain;
+
+  if (!isMyShopify && !isConfigured) {
+    throw new Error(
+      `assertCheckoutUrl: host '${host}' is not on the allow-list`,
+    );
+  }
+  return url;
+}
+
+// ---------- Cookie helpers ----------
+
+async function readCartCookie(): Promise<string | null> {
+  const store = await cookies();
+  return store.get(CART_COOKIE)?.value ?? null;
+}
+
+async function writeCartCookie(cartId: string): Promise<void> {
+  assertCartId(cartId);
+  const store = await cookies();
+  store.set(CART_COOKIE, cartId, {
+    httpOnly: true,
+    secure: true,
+    sameSite: "lax",
+    maxAge: CART_COOKIE_MAX_AGE,
+    path: "/",
+  });
+}
+
+// ---------- Server Actions ----------
+
+/**
+ * Reads the cart cookie and fetches the live Shopify cart.
+ * Returns null when no cookie exists OR the cart was expired/cleared
+ * server-side (Shopify returns null `cart`).
+ *
+ * Bypasses cache — cart state is always fresh.
+ */
+export async function getCartFromCookie(): Promise<ShopifyCart | null> {
+  const cartId = await readCartCookie();
+  if (!cartId) return null;
+  if (!cartId.startsWith(CART_GID_PREFIX)) return null;
+
+  const { data } = await shopifyFetch<{ cart: ShopifyCart | null }>({
+    query: CART_QUERY,
+    variables: { cartId },
+    cache: "no-store",
+  });
+  return data.cart;
+}
+
+/**
+ * Adds a variant to the cart. Creates a new cart on first add.
+ * Returns the updated ShopifyCart so the caller can sync local state.
+ */
+export async function addLineToCart(
+  merchandiseId: string,
+  quantity: number,
+): Promise<ShopifyCart> {
+  assertVariantId(merchandiseId);
+  assertQuantity(quantity);
+
+  const cartId = await readCartCookie();
+
+  if (!cartId) {
+    const { data } = await shopifyFetch<CartCreatePayload>({
+      query: CART_CREATE_MUTATION,
+      variables: {
+        input: { lines: [{ merchandiseId, quantity }] },
+      },
+      cache: "no-store",
+    });
+    bubbleUserErrors(data.cartCreate.userErrors);
+    const cart = data.cartCreate.cart;
+    if (!cart) throw new Error("cartCreate returned null cart");
+    await writeCartCookie(cart.id);
+    return cart;
+  }
+
+  const { data } = await shopifyFetch<CartLinesAddPayload>({
+    query: CART_LINES_ADD_MUTATION,
+    variables: {
+      cartId,
+      lines: [{ merchandiseId, quantity }],
+    },
+    cache: "no-store",
+  });
+  bubbleUserErrors(data.cartLinesAdd.userErrors);
+  const cart = data.cartLinesAdd.cart;
+  if (!cart) throw new Error("cartLinesAdd returned null cart");
+  return cart;
+}
+
+/**
+ * Updates the quantity of an existing cart line.
+ * Quantity must be integer 1..99 — to remove, call removeCartLine.
+ */
+export async function updateCartLine(
+  lineId: string,
+  quantity: number,
+): Promise<ShopifyCart> {
+  assertLineId(lineId);
+  assertQuantity(quantity);
+
+  const cartId = await readCartCookie();
+  if (!cartId) throw new Error("updateCartLine: no cart cookie");
+  assertCartId(cartId);
+
+  const { data } = await shopifyFetch<CartLinesUpdatePayload>({
+    query: CART_LINES_UPDATE_MUTATION,
+    variables: {
+      cartId,
+      lines: [{ id: lineId, quantity }],
+    },
+    cache: "no-store",
+  });
+  bubbleUserErrors(data.cartLinesUpdate.userErrors);
+  const cart = data.cartLinesUpdate.cart;
+  if (!cart) throw new Error("cartLinesUpdate returned null cart");
+  return cart;
+}
+
+/**
+ * Removes a line from the cart. If the resulting cart is empty,
+ * Shopify keeps the cart alive — the cookie stays set.
+ */
+export async function removeCartLine(lineId: string): Promise<ShopifyCart> {
+  assertLineId(lineId);
+
+  const cartId = await readCartCookie();
+  if (!cartId) throw new Error("removeCartLine: no cart cookie");
+  assertCartId(cartId);
+
+  const { data } = await shopifyFetch<CartLinesRemovePayload>({
+    query: CART_LINES_REMOVE_MUTATION,
+    variables: {
+      cartId,
+      lineIds: [lineId],
+    },
+    cache: "no-store",
+  });
+  bubbleUserErrors(data.cartLinesRemove.userErrors);
+  const cart = data.cartLinesRemove.cart;
+  if (!cart) throw new Error("cartLinesRemove returned null cart");
+  return cart;
+}
