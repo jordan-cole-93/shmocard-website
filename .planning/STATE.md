@@ -27,7 +27,7 @@ See: .planning/PROJECT.md (updated 2026-05-07)
 Phase: 3 of 4 (Rebuild — in progress)
 Stage: Wave 3 complete (03-05 CR-80 + 03-06 L-Sign + 03-07 Square Card + 03-08 cart drawer). Wave 4 (03-09 / 03-10 / 03-11) is next.
 Status: In progress
-Last activity: 2026-05-07 - Completed quick task 260507-d4g: Trim CLAUDE.md to ~50 lines and move wrapper-dispatch + hard-rule paragraphs into a new .claude/rules/subagent-dispatch.md
+Last activity: 2026-05-07 - Completed quick task 260507-ddj: Crystallize three project-local agents in new .claude/agents/ folder: design-system-auditor (Sonnet), shopify-data-checker (Haiku), live-store-guard (Haiku)
 
 Progress: [██████████] 100%
 
@@ -63,6 +63,7 @@ Progress: [██████████] 100%
 | # | Description | Date | Commit | Directory |
 |---|-------------|------|--------|-----------|
 | 260507-d4g | Trim CLAUDE.md to ~50 lines and move wrapper-dispatch + hard-rule paragraphs into a new .claude/rules/subagent-dispatch.md | 2026-05-07 | 38b645d | [260507-d4g-trim-claude-md-to-50-lines-and-move-wrap](./quick/260507-d4g-trim-claude-md-to-50-lines-and-move-wrap/) |
+| 260507-ddj | Crystallize three project-local agents in new .claude/agents/ folder: design-system-auditor (Sonnet), shopify-data-checker (Haiku), live-store-guard (Haiku) | 2026-05-07 | 05c86bf | [260507-ddj-crystallize-three-project-local-agents-i](./quick/260507-ddj-crystallize-three-project-local-agents-i/) |
 
 ## Accumulated Context
 
