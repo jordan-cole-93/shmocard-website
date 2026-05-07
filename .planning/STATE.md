@@ -10,9 +10,9 @@ See: .planning/PROJECT.md (updated 2026-05-07)
 ## Current Position
 
 Phase: 2 of 4 (Design system review)
-Plan: 2 of 7 in current phase (02-01 audit done, 02-02 structural moves done; 02-03 collapsed into 02-02)
-Status: In progress
-Last activity: 2026-05-07 — Phase 2 step 02-02 complete. Folder renamed to `context/design-system/`, design-system rules moved to `.claude/rules/design-system.md`, `SKILL.md` frontmatter stripped, all path refs updated. Three audit findings resolved.
+Plan: 5 of 7 in current phase (02-01, 02-02 [02-03 collapsed], 02-04, 02-05, 02-06 done; 02-07 pending close-out)
+Status: In progress (close-out pending)
+Last activity: 2026-05-07 — Phase 2 step 02-06 complete. Five locked decisions recorded in DECISIONS.md (Zustand cart, framer-motion locked, public/ assets, GHL deferred, 83 static font cuts deleted). TRANSLATION.md amended for framer-motion override. backend.md Animation row locked. Awaiting 02-07 close-out.
 
 Progress: [██░░░░░░░░] 25%  *(Phase 1 of 4 complete)*
 
@@ -63,15 +63,22 @@ See PROJECT.md Constraints section. Highlights:
 
 ## Open Questions
 
-From `context/general/scope.md` "Open decisions":
+Resolved during Phase 2 (see `.planning/phases/02-design-system-review/DECISIONS.md`):
 
-- **Design system audit outcomes** — Phase 2 deliverable.
-- **GHL webhook URL** for waitlist captures (Shmo Biz / Shmo Link / Shmo Reputation).
-- **Final Shopify pricing tiers / SKU naming**.
-- **Motion library choice** — re-add `framer-motion` or use something lighter.
-- ✅ **Folder rename** — resolved 2026-05-07 step 02-02. `context/design system/` → `context/design-system/`.
-- ✅ **`SKILL.md` registration** — resolved 2026-05-07 step 02-02. Frontmatter stripped; auto-loading handled via `.claude/rules/design-system.md`.
-- ✅ **Two CLAUDE.md files** — resolved 2026-05-07 step 02-02. Nested CLAUDE.md collapsed into `.claude/rules/design-system.md`.
+- ✅ **Folder rename** — `context/design system/` → `context/design-system/` (step 02-02)
+- ✅ **`SKILL.md` registration** — frontmatter stripped, auto-loading via rule file (step 02-02)
+- ✅ **Two CLAUDE.md files** — collapsed to one + `.claude/rules/design-system.md` (step 02-02)
+- ✅ **Tailwind 4 ↔ `.shm-*` coexistence** — direct CSS import, no `@theme` parallel copy (step 02-04, INTEGRATION.md)
+- ✅ **Reference-page translation strategy** — locked (step 02-05, TRANSLATION.md)
+- ✅ **Cart state** — Zustand + localStorage (D-01)
+- ✅ **Animation library** — `framer-motion` for sections / drawers / modals; CSS for hover (D-02)
+- ✅ **Asset location** — `public/` not in design system folder (D-03)
+- ✅ **Static font cuts** — 83 redundant Bricolage cuts deleted (D-05)
+
+Still open:
+
+- **GHL webhook URL** for waitlist captures (D-04 — deferred to mid-Phase 3 when forms get wired).
+- **Final Shopify pricing tiers / SKU naming** — Jordan handles in Shopify Admin during Phase 3.
 
 ## Next Concrete Action
 

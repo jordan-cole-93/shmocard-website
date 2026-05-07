@@ -87,10 +87,13 @@ Build out the site from the new design system, in order of leverage:
 
 ## Open decisions
 
-- Whole new design system — **everything** visual is pending the folder Jordan is preparing.
-- GHL webhook URL for waitlist captures.
-- Final Shopify pricing tiers / SKU naming.
-- Whether to bring back `framer-motion` or use a different motion approach.
+- ✅ Design system — landed 2026-05-07; Phase 2 audit + integration + translation plans complete.
+- ✅ Motion library — `framer-motion` locked 2026-05-07 (Phase 2 D-02).
+- ✅ Cart state — Zustand + localStorage locked 2026-05-07 (Phase 2 D-01).
+- ✅ Asset location — `public/` locked 2026-05-07 (Phase 2 D-03).
+- ✅ Static font cuts — deleted 2026-05-07 (Phase 2 D-05). Variable font covers same range.
+- GHL webhook URL — deferred to mid-Phase 3 (when waitlist forms get wired).
+- Final Shopify pricing tiers / SKU naming — Jordan handles in Shopify Admin during Phase 3.
 
 ---
 

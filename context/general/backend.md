@@ -6,7 +6,7 @@
 |---|---|
 | Framework | Next.js (App Router) + TypeScript |
 | Styling | Tailwind CSS 4 |
-| Animation | _Pending — `framer-motion` was removed during the 2026-05-06 design wipe; library choice will be locked when the new design system lands._ |
+| Animation | `framer-motion` for section reveals + drawer / modal entrances; CSS transitions for per-element hover (already in design-system `components.css`). Locked 2026-05-07 per `.planning/phases/02-design-system-review/DECISIONS.md` D-02. Constraints: subtle/fast/non-bouncy, match `--motion-*` tokens. |
 | Hosting | Vercel |
 | Backend | Shopify via Headless sales channel |
 | Checkout | Shopify-hosted (redirect via `cart.checkoutUrl`) |

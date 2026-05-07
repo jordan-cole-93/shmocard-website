@@ -254,9 +254,26 @@ The design system motion tokens are:
 | FAQ chevron rotation | CSS `transition: transform` + `[aria-expanded="true"]` selector. Already in `components.css`. |
 | Page-level entrance | None for v1. Add View Transitions API later if Jordan wants polish (zero-cost in Next.js 15). |
 
-**No `framer-motion` for v1.** It was removed during the wipe and isn't needed for this set of animations. **If Phase 3 surfaces a specific case the design system can't handle (complex stagger sequences, gesture-driven drawer drag), reconsider then.** Default is "ship without it."
+**`framer-motion` is locked in for v1** (per step 02-06 / `DECISIONS.md` D-02 — Jordan's call). Use it for **section-level reveals, drawer / modal entrances, page transitions, sub-brand spotlight reveals** — the polish surfaces. Keep CSS-only for **per-element hover transitions** (button lift, card hover, FAQ chevron, audience marquee scroll) — those are already built into `components.css` and shouldn't be re-implemented in JS.
 
-**Open question for Jordan (resolved in step 02-06):** confirm CSS-only is acceptable, or pre-approve `framer-motion` for the cases listed above.
+**Constraints when using `framer-motion`** (from design system):
+- Subtle, fast, never bouncy. Use `tween` + `ease: [0.2, 0.8, 0.2, 1]` (matches `--ease-standard`), NOT `spring` with high stiffness.
+- Match design system timing tokens: `0.15s` (`--motion-fast`) for hover-adjacent, `0.22s` (`--motion-base`) for panels/drawers, `0.32s` (`--motion-slow`) for major transitions.
+- Don't replace CSS hover transitions — those stay in `components.css`.
+
+**Suggested usage map:**
+
+| Surface | Approach |
+|---|---|
+| Button hover lift + shadow upgrade | CSS only (already in `components.css`) |
+| Cart drawer slide-in | `framer-motion` `<motion.div>` with `x: -100% → 0`, 0.32s ease-standard |
+| Sticky buybox slide-DOWN | `framer-motion` `<motion.div>` driven by `useScroll` + Intersection Observer, 0.22s |
+| Sub-brand spotlight reveal | `framer-motion` `<motion.div>` with `opacity + y: 16 → 0`, 0.22s, triggered when section enters viewport |
+| Hero `<em>` type-cycle | Small client component using `useState` + `setInterval`. `framer-motion` not needed unless we want crossfade — if so, `<AnimatePresence>` + 0.15s fade. |
+| Audience marquee scroll | Pure CSS keyframes (already in `components.css`) — `framer-motion` overkill |
+| FAQ chevron rotation | CSS `transition: transform` (already in `components.css`) |
+| Video lightbox open | `framer-motion` `<AnimatePresence>` + scale 0.95 → 1 + opacity, 0.22s |
+| Page-level transitions (route changes) | Defer to Phase 4; revisit View Transitions API if Next.js 15 supports natively. |
 
 ---
 
@@ -327,7 +344,7 @@ Reference pages use these paths (relative to `ui_kits/website/`):
 6. **Wave dividers between sections** — `.shm-wave shm-wave--{next-bg}`. Tall waves (`--lg` / `--xl`) on high-contrast transitions.
 7. **Server-component-first** — `'use client'` only where required.
 8. **Storefront API for all product data** — never hardcode product attributes.
-9. **No `framer-motion` for v1** — CSS transitions only, unless 02-06 reverses this.
+9. **`framer-motion` locked in for section-level / drawer / modal motion** (per 02-06 D-02). Per-element hover transitions stay CSS only. Subtle/fast/non-bouncy constraints apply.
 10. **No emoji as decoration. No exclamation marks. No gradients. No drop-shadow blurs. No left-border accent stripes.**
 
 ---
