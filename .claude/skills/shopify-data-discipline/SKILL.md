@@ -21,7 +21,7 @@ Triggers on prompts mentioning: product / price / SKU / variant / inventory / st
 | Variants (size, finish) | Shopify Admin | Storefront API |
 | Inventory / stock | Shopify Admin | Storefront API |
 | Layout | Code | Tailwind utilities (layout/spacing only) |
-| Typography, colors, radii, shadows, motion | Code | `.shm-*` classes + tokens from `context/design-system/colors_and_type.css` (per `.claude/rules/design-system.md`) |
+| Typography, colors, radii, shadows, motion | Code | `.shm-*` classes + tokens from `.claude/skills/shmocard-design-system/colors_and_type.css` (per `.claude/rules/design-system.md`) |
 | Marketing copy (hero headlines, CTAs) | Code | hardcoded in JSX |
 | FAQ answers | Code | hardcoded in component |
 

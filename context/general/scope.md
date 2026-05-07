@@ -49,7 +49,7 @@ Bring every `.md` file in line with the post-wipe reality.
 
 ### Phase 2 — Design system review (✅ complete 2026-05-07)
 
-Design system landed at `context/design-system/` on 2026-05-07. Full audit + integration plan + translation plan + locked decisions.
+Design system landed on 2026-05-07 (later relocated to `.claude/skills/shmocard-design-system/`). Full audit + integration plan + translation plan + locked decisions.
 
 - [x] Audit folder structure (step 02-01 — see `.planning/phases/02-design-system-review/AUDIT.md` — 8 issues surfaced)
 - [x] Structural moves executed (step 02-02 — folder renamed kebab; design-system rules moved to `.claude/rules/design-system.md`; SKILL.md frontmatter stripped; 02-03 collapsed in)

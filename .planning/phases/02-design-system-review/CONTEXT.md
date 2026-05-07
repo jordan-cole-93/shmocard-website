@@ -7,12 +7,12 @@
 <domain>
 ## Phase Boundary
 
-Phase 2 audits the design system folder Jordan dropped at `context/design-system/` on 2026-05-07, surfaces structural / naming / consistency issues, decides how the system integrates with the Next.js + Tailwind 4 codebase, and locks the canonical files (`DESIGN.md` / `PATTERNS.md` or design-system-equivalent) before any rebuild begins.
+Phase 2 audits the design system folder Jordan dropped at `.claude/skills/shmocard-design-system/` on 2026-05-07, surfaces structural / naming / consistency issues, decides how the system integrates with the Next.js + Tailwind 4 codebase, and locks the canonical files (`DESIGN.md` / `PATTERNS.md` or design-system-equivalent) before any rebuild begins.
 
 **In scope:**
-- Auditing every file in `context/design-system/` (top-level docs, CSS, fonts, previews, ui_kits)
+- Auditing every file in `.claude/skills/shmocard-design-system/` (top-level docs, CSS, fonts, previews, ui_kits)
 - Surfacing folder/naming/structural issues (folder name has space; `home-*.jsx` fragmented; mixed loose-vs-nested HTML in `ui_kits/website/`)
-- Reconciling the two CLAUDE.md files (root + `context/design-system/CLAUDE.md`) so they don't conflict
+- Reconciling the two CLAUDE.md files (root + `.claude/skills/shmocard-design-system/CLAUDE.md`) so they don't conflict
 - Deciding Tailwind 4 ↔ `.shm-*` utility coexistence (token import path)
 - Translating the Babel-loaded JSX reference pages into a Phase 3 implementation plan
 - Resolving open decisions (folder rename? `SKILL.md` registration?)
@@ -20,7 +20,7 @@ Phase 2 audits the design system folder Jordan dropped at `context/design-system
 
 **Out of scope:**
 - Building any production page, component, or route (that's Phase 3)
-- Modifying the design system's actual visual rules — those are locked by Jordan in `context/design-system/CLAUDE.md` and `SKILL.md`
+- Modifying the design system's actual visual rules — those are locked by Jordan in `.claude/skills/shmocard-design-system/CLAUDE.md` and `SKILL.md`
 - Adding new primitives, fonts, colors, or motion choices to the system
 - Wiring Shopify Storefront API
 - Mobile/a11y passes (that's Phase 4)
@@ -33,7 +33,7 @@ Phase 2 audits the design system folder Jordan dropped at `context/design-system
 
 ### Source of truth (LOCKED)
 
-- **The CSS files are the canonical truth** when docs disagree (`colors_and_type.css`, `components.css`). Per `context/design-system/CLAUDE.md`.
+- **The CSS files are the canonical truth** when docs disagree (`colors_and_type.css`, `components.css`). Per `.claude/skills/shmocard-design-system/CLAUDE.md`.
 - **Reference pages are not optional reading** — `ui_kits/website/homepage/Shmocard Homepage.html`, `Buybox.html`, `Cart Drawer.html` define section structure, primitive composition, sticky bar behavior. Audit must respect these as authoritative.
 - **`PRIMITIVES.md` is the canonical primitive index.** SKILL.md table is a quick reference.
 
@@ -58,11 +58,11 @@ Phase 2 audits the design system folder Jordan dropped at `context/design-system
 
 ### Naming / structural issues (TO RESOLVE in Phase 2)
 
-- **Folder name has a space**: `context/design-system/`. Breaks bare imports, awkward in shell. Should it become `context/design-system/`? Or move to `design-system/` at repo root? Or stay because the folder ships as a self-contained system Jordan can copy elsewhere?
+- **Folder name has a space**: `.claude/skills/shmocard-design-system/`. Breaks bare imports, awkward in shell. Should it become `.claude/skills/shmocard-design-system/`? Or move to `design-system/` at repo root? Or stay because the folder ships as a self-contained system Jordan can copy elsewhere?
 - **Loose HTML at `ui_kits/website/` root**: `Buybox.html` and `Cart Drawer.html` (note space) sit at the top while `homepage/` is nested. Inconsistent.
 - **`home-*.jsx` fragmentation**: 5 files (`home-app`, `home-bundle`, `home-parts`, `home-modals`, `home-data`). Babel-loaded inline. Won't survive a Next.js port unchanged.
 - **`SKILL.md` has skill frontmatter**. Meant to be registered as a Claude skill? If yes, where does it install to (project? global?) and what triggers it? If no, strip the frontmatter to avoid confusion.
-- **Two `CLAUDE.md` files**: root `CLAUDE.md` and `context/design-system/CLAUDE.md`. Hierarchical loading means both activate when working inside the design system subtree. Need to confirm they don't conflict and reference each other appropriately.
+- **Two `CLAUDE.md` files**: root `CLAUDE.md` and `.claude/skills/shmocard-design-system/CLAUDE.md`. Hierarchical loading means both activate when working inside the design system subtree. Need to confirm they don't conflict and reference each other appropriately.
 
 ### Locked decisions for Phase 3 (output of this phase)
 
@@ -70,7 +70,7 @@ Phase 2 audits the design system folder Jordan dropped at `context/design-system
 - Token import strategy (direct CSS import vs Tailwind 4 transcription)
 - React component structure for cart drawer, buy-box sticky bar, nav, FAQ, mascot, sticker, image frame, section primitives
 - Translation approach for the three reference pages (`Shmocard Homepage.html`, `Buybox.html`, `Cart Drawer.html`)
-- `DESIGN.md` and `PATTERNS.md` — written or replaced by `context/design-system/CLAUDE.md` + `SKILL.md` + `README.md` + `PRIMITIVES.md` (the design system already provides equivalents)
+- `DESIGN.md` and `PATTERNS.md` — written or replaced by `.claude/skills/shmocard-design-system/CLAUDE.md` + `SKILL.md` + `README.md` + `PRIMITIVES.md` (the design system already provides equivalents)
 
 ### Claude's Discretion
 
@@ -107,18 +107,18 @@ Phase 2 audits the design system folder Jordan dropped at `context/design-system
 
 ### Design system (THE SUBJECT OF THIS PHASE)
 
-- `context/design-system/CLAUDE.md` — design system rules (LOCKED)
-- `context/design-system/SKILL.md` — operator's manual + primitive table
-- `context/design-system/README.md` — brand context + visual foundations
-- `context/design-system/PRIMITIVES.md` — canonical primitive index
-- `context/design-system/colors_and_type.css` — every token + type ramp (LOCKED)
-- `context/design-system/components.css` — every primitive (LOCKED)
-- `context/design-system/ui_kits/website/homepage/Shmocard Homepage.html` — canonical marketing page
-- `context/design-system/ui_kits/website/homepage/home.css` — page-level CSS pattern
-- `context/design-system/ui_kits/website/Buybox.html` — canonical PDP + sticky bar
-- `context/design-system/ui_kits/website/Cart Drawer.html` — canonical cart drawer
-- `context/design-system/preview/*.html` — visual cards / QA fixtures (28 files)
-- `context/design-system/fonts/` — 4 brand fonts (Bricolage Grotesque variants, Cherry Bomb One)
+- `.claude/skills/shmocard-design-system/CLAUDE.md` — design system rules (LOCKED)
+- `.claude/skills/shmocard-design-system/SKILL.md` — operator's manual + primitive table
+- `.claude/skills/shmocard-design-system/README.md` — brand context + visual foundations
+- `.claude/skills/shmocard-design-system/PRIMITIVES.md` — canonical primitive index
+- `.claude/skills/shmocard-design-system/colors_and_type.css` — every token + type ramp (LOCKED)
+- `.claude/skills/shmocard-design-system/components.css` — every primitive (LOCKED)
+- `.claude/skills/shmocard-design-system/ui_kits/website/homepage/Shmocard Homepage.html` — canonical marketing page
+- `.claude/skills/shmocard-design-system/ui_kits/website/homepage/home.css` — page-level CSS pattern
+- `.claude/skills/shmocard-design-system/ui_kits/website/Buybox.html` — canonical PDP + sticky bar
+- `.claude/skills/shmocard-design-system/ui_kits/website/Cart Drawer.html` — canonical cart drawer
+- `.claude/skills/shmocard-design-system/preview/*.html` — visual cards / QA fixtures (28 files)
+- `.claude/skills/shmocard-design-system/fonts/` — 4 brand fonts (Bricolage Grotesque variants, Cherry Bomb One)
 
 ### GSD planning artifacts
 
@@ -133,7 +133,7 @@ Phase 2 audits the design system folder Jordan dropped at `context/design-system
 
 - **No code changes in Phase 2.** Output is decision artifacts (audit doc + recommendations + locked decisions) that Phase 3 consumes. Jordan reviews and approves before Phase 3 begins.
 - **Idempotency:** if Phase 2 is re-run after Jordan tweaks the design system folder, the audit must re-run cleanly without leftover state.
-- **Anti-scope-creep guard:** if a finding suggests a *visual* change to the design system (color, type, primitive structure), surface it to Jordan but do NOT lock it in Phase 2 — those decisions live in `context/design-system/CLAUDE.md` and Jordan owns them.
+- **Anti-scope-creep guard:** if a finding suggests a *visual* change to the design system (color, type, primitive structure), surface it to Jordan but do NOT lock it in Phase 2 — those decisions live in `.claude/skills/shmocard-design-system/CLAUDE.md` and Jordan owns them.
 - **Verification standard:** Phase 2 outputs are reviewable docs only. No browser screenshots needed for this phase. Verification = Jordan reads, agrees, signs off.
 - **Cross-phase impact:** every Phase 2 decision flows directly into Phase 3 plans. A wrong call here costs days. Better to surface ambiguity than guess.
 </specifics>

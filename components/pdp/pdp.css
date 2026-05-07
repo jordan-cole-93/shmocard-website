@@ -4,7 +4,7 @@
  * type, radii, shadows, motion) lives in components.css under the
  * .shm-* primitives — never restyled here.
  *
- * Reference: context/design-system/ui_kits/website/Buybox.html
+ * Reference: .claude/skills/shmocard-design-system/ui_kits/website/Buybox.html
  *   - .pdp-buybox  -> 2-column grid (gallery / buybox column)
  *   - .pdp-gal     -> main image + thumb strip
  *   - .pdp-bb      -> column rhythm (gap between primitives)

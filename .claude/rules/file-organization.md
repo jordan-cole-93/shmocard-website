@@ -30,7 +30,6 @@ All long-form project context lives here. Meta-files used to live at repo root a
 | `context/general/marketing.md` | Voice rules, locked headlines, proof points, FAQ |
 | `context/general/product.md` | Product catalog, formats, specs, programming, returns |
 | `context/brainstorming/*.md` | Per-page wireframe drafts (homepage, shmo-review, 3 PDPs) — currently empty pending new design system |
-| `context/design-system/` | Shmocard design system — CSS source of truth (`colors_and_type.css`, `components.css`), fonts, 28 preview cards, 3 canonical reference pages, `SKILL.md` + `README.md` + `PRIMITIVES.md` operator docs. Auto-loaded rules at `.claude/rules/design-system.md`. |
 
 ### `.claude/` directory
 
@@ -41,6 +40,7 @@ All long-form project context lives here. Meta-files used to live at repo root a
 | `.claude/rules/` | Engineering rule files (this folder) |
 | `.claude/commands/` | Custom slash commands |
 | `.claude/skills/` | Project-specific skills (wrappers + workflows) |
+| `.claude/skills/shmocard-design-system/` | Shmocard design system — auto-loaded skill (CSS source of truth, fonts, primitives, preview cards, reference pages, operator docs). Relocated from the former `context/` subtree on 2026-05-07. |
 | `.claude/agents/` | Project-local subagent definitions (Claude Code primitive). One markdown file per agent: YAML frontmatter (name, description, model, tools, color) + system prompt body. Subagents cannot load skills, so each agent enumerates its rules inline. Currently: `design-system-auditor` (Sonnet), `shopify-data-checker` (Haiku), `live-store-guard` (Haiku). |
 | `.claude/hooks/` | Lifecycle automation scripts |
 | `.claude/launch.json` | Editor launch config |
@@ -65,6 +65,7 @@ Currently the repo is a bare Next.js + Tailwind shell. `app/`, `components/`, `l
 - **Don't move code folders.** When `app/`, `components/`, `lib/`, `public/` come back, they must stay at root (Next.js conventions).
 - **Don't move `.claude/settings.json` or `.claude/settings.local.json`.** Claude Code requires them inside `.claude/`.
 - **Vault notes stay in the vault.** Don't copy `Jordan's Brain/` notes into the repo. Reference by full path when needed.
+- **Approved exception (2026-05-07):** Design system relocated to `.claude/skills/shmocard-design-system/` (formerly under `context/`) to make it auto-discoverable as a Claude skill. Future moves still require Jordan's approval.
 
 ## When the structure changes
 

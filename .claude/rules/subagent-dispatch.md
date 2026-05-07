@@ -21,7 +21,7 @@ There is no UI wrapper skill anymore. When the parent dispatches a UI subagent, 
 1. **Read `.claude/rules/design-system.md` first** (parent agent — subagent can't load it).
 2. **Inline its hard rules into the Agent prompt verbatim** — `.shm-*` prefix, no primitive restyles, tokens not hex, section rotation, mascot 140px, no emoji/gradients/blur, hand-drawn icons, locked type stack.
 3. **Inline the LAYOUT IS LOCKED paragraph (below) when the task is polish-flavored.**
-4. **Reference the canonical source-of-truth files** so the subagent knows where to read: `context/design-system/SKILL.md`, `colors_and_type.css`, `components.css`, `PRIMITIVES.md`, and the relevant `ui_kits/` reference page.
+4. **Reference the canonical source-of-truth files** so the subagent knows where to read: `.claude/skills/shmocard-design-system/SKILL.md`, `colors_and_type.css`, `components.css`, `PRIMITIVES.md`, and the relevant `ui_kits/` reference page.
 
 If the parent skips any of these steps, the subagent will produce off-system output that gets rejected.
 

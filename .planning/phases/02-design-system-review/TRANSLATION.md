@@ -12,9 +12,9 @@ Translate three reference surfaces from their current rendering models into Next
 
 | Surface | Source | Target |
 |---|---|---|
-| Homepage | `context/design-system/ui_kits/website/homepage/Shmocard Homepage.html` (Babel-loaded React 18 + 5 `home-*.jsx` bundles + `home.css`) | `app/page.tsx` + `components/home/*.tsx` + `components/home/home.css` |
-| PDP / Buybox | `context/design-system/ui_kits/website/Buybox.html` (vanilla HTML + inline `<style>`) | `app/shmo-review/[handle]/page.tsx` + `components/pdp/*.tsx` + `components/pdp/pdp.css` |
-| Cart drawer | `context/design-system/ui_kits/website/Cart Drawer.html` (vanilla HTML + multi-state artboard preview) | `components/cart/CartDrawer.tsx` + `components/cart/CartLine.tsx` etc. (mounted globally in `app/layout.tsx`) |
+| Homepage | `.claude/skills/shmocard-design-system/ui_kits/website/homepage/Shmocard Homepage.html` (Babel-loaded React 18 + 5 `home-*.jsx` bundles + `home.css`) | `app/page.tsx` + `components/home/*.tsx` + `components/home/home.css` |
+| PDP / Buybox | `.claude/skills/shmocard-design-system/ui_kits/website/Buybox.html` (vanilla HTML + inline `<style>`) | `app/shmo-review/[handle]/page.tsx` + `components/pdp/*.tsx` + `components/pdp/pdp.css` |
+| Cart drawer | `.claude/skills/shmocard-design-system/ui_kits/website/Cart Drawer.html` (vanilla HTML + multi-state artboard preview) | `components/cart/CartDrawer.tsx` + `components/cart/CartLine.tsx` etc. (mounted globally in `app/layout.tsx`) |
 
 Layout in `.tsx` uses Tailwind 4 utilities (per `INTEGRATION.md`). Visual classes are `.shm-*` from the imported design system. State management = React server components where possible + minimal client state for cart, mobile nav, modals.
 
@@ -23,7 +23,7 @@ Layout in `.tsx` uses Tailwind 4 utilities (per `INTEGRATION.md`). Visual classe
 ## Source state inventory
 
 ```
-context/design-system/ui_kits/website/
+.claude/skills/shmocard-design-system/ui_kits/website/
 ├── homepage/
 │   ├── Shmocard Homepage.html      (20-line shell — loads React, ReactDOM, Babel from CDN, mounts to <div id="app">)
 │   ├── home.css                    (980 lines — page layout + section comments at top)
@@ -322,11 +322,11 @@ Reference pages use these paths (relative to `ui_kits/website/`):
 - `../../assets/lifestyle/lifestyle-1.jpg` through `4`
 - `assets/mascot/holding-card.png`, `heart-hands.png`, `megaphone.png` (and 13 mascot emotions per README)
 
-**Currently `context/design-system/assets/` does not exist** (verified 2026-05-07 via `[ -d assets ]`).
+**Currently `.claude/skills/shmocard-design-system/assets/` does not exist** (verified 2026-05-07 via `[ -d assets ]`).
 
 **Phase 3 plan for assets:**
 1. Jordan provides product photos + mascot PNGs + lifestyle images.
-2. They land at **`public/`** (Next.js convention) — not `context/design-system/assets/`. The design system folder stays code-only; the `public/` folder serves runtime media.
+2. They land at **`public/`** (Next.js convention) — not `.claude/skills/shmocard-design-system/assets/`. The design system folder stays code-only; the `public/` folder serves runtime media.
 3. Reference paths in `.tsx` use `/products/cr80-trio.png` (absolute from `public/`).
 4. Update `home-data.jsx` mock paths during translation: `assets/products/...` → `/products/...`.
 
@@ -387,7 +387,7 @@ This translation plan passes when:
 
 1. **Cart state management** — Zustand (recommended) vs Context+Reducer vs other.
 2. **Animation library** — confirm CSS-only acceptable, or pre-approve `framer-motion` for specific cases.
-3. **Asset location** — confirm `public/` (Next.js convention) over `context/design-system/assets/`.
+3. **Asset location** — confirm `public/` (Next.js convention) over `.claude/skills/shmocard-design-system/assets/`.
 4. **GHL webhook URL** — needed for waitlist Server Action.
 5. **Static Bricolage font cuts** — keep ~30 redundant cuts or delete (frees ~10MB)?
 

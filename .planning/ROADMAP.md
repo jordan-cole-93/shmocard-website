@@ -7,7 +7,7 @@ Bare Next.js + Tailwind shell → audited design system → rebuilt homepage + S
 ## Phases
 
 - [x] **Phase 1: Docs refresh** — Bring every `.md` file into alignment with the post-wipe reality.
-- [x] **Phase 2: Design system review** — Audited `context/design-system/`, locked structural moves, locked Tailwind 4 ↔ `.shm-*` integration, locked reference-page translation map, locked 5 open decisions. Complete 2026-05-07.
+- [x] **Phase 2: Design system review** — Audited `.claude/skills/shmocard-design-system/`, locked structural moves, locked Tailwind 4 ↔ `.shm-*` integration, locked reference-page translation map, locked 5 open decisions. Complete 2026-05-07.
 - [ ] **Phase 3: Rebuild** — Tokens → base layout → homepage → `/shmo-review` → 3 PDPs → cart + Storefront API.
 - [ ] **Phase 4: Launch readiness** — Mobile pass, a11y, Vercel env, DNS cutover.
 
@@ -37,14 +37,14 @@ Plans:
 
 ### Phase 2: Design system review
 
-**Goal**: Audit the design system folder Jordan dropped at `context/design-system/`, propose a clean structure, lock the canonical files, and produce a wiring plan for Phase 3.
+**Goal**: Audit the design system folder Jordan dropped at `.claude/skills/shmocard-design-system/`, propose a clean structure, lock the canonical files, and produce a wiring plan for Phase 3.
 **Depends on**: Phase 1.
 **Requirements**: REQ-09.
 **Success Criteria** (what must be TRUE):
   1. Folder structure audited — every file accounted for, redundant/unclear files flagged.
   2. Naming issues surfaced (folder name has space; `home-*.jsx` fragmented; mixed loose-vs-nested HTML in `ui_kits/website/`).
   3. Coexistence plan locked — Tailwind 4 ↔ `.shm-*` utilities don't fight; tokens import path decided; CSS-as-source-of-truth preserved.
-  4. Two CLAUDE.md files reconciled — root and `context/design-system/CLAUDE.md` reference each other and don't conflict.
+  4. Two CLAUDE.md files reconciled — root and `.claude/skills/shmocard-design-system/CLAUDE.md` reference each other and don't conflict.
   5. Reference pages (`Shmocard Homepage.html`, `Buybox.html`, `Cart Drawer.html`) translated into a Phase 3 implementation plan (Babel-loaded JSX → real Next.js components).
   6. `SKILL.md`'s skill-frontmatter status decided (register or remove).
   7. Open questions for Jordan surfaced and answered before Phase 3 begins.
@@ -52,7 +52,7 @@ Plans:
 
 Plans:
 - [x] 02-01: Folder audit (`AUDIT.md` — every file inventoried, 8 issues surfaced)
-- [x] 02-02: Structural moves — folder renamed `context/design system/` → `context/design-system/`; design-system rules moved to `.claude/rules/design-system.md`; `SKILL.md` frontmatter stripped; all path refs updated
+- [x] 02-02: Structural moves — folder renamed `context/design system/` → `.claude/skills/shmocard-design-system/`; design-system rules moved to `.claude/rules/design-system.md`; `SKILL.md` frontmatter stripped; all path refs updated
 - [x] 02-03: COLLAPSED INTO 02-02 (the move-CLAUDE.md-into-rules decision made the original "reconcile two CLAUDE.md" task unnecessary)
 - [x] 02-04: Tailwind 4 ↔ `.shm-*` coexistence locked (`INTEGRATION.md` — Option A direct CSS import, no `@theme` parallel copy)
 - [x] 02-05: Reference-page translation plan locked (`TRANSLATION.md` — section-by-section map for homepage, PDP, cart drawer; ~54 component file count; server-component-first split; framer-motion usage map)

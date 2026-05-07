@@ -19,7 +19,7 @@ Skills below should fire automatically when their condition matches. If a condit
 
 ## Hard rule for design / UI prompts
 
-For any prompt mentioning design / layout / UI / component / hero / section / typography / palette / animation, load `frontend-design` first AND read `.claude/rules/design-system.md` (which points at the source-of-truth docs in `context/design-system/`). Design system rules WIN on visual / typography / mascot / section-rotation / utility-class-prefix conflicts. `frontend-design` anti-slop principles still apply for composition / hierarchy / cognitive load.
+For any prompt mentioning design / layout / UI / component / hero / section / typography / palette / animation, load `frontend-design` first AND read `.claude/rules/design-system.md` (which points at the source-of-truth docs in `.claude/skills/shmocard-design-system/`). Design system rules WIN on visual / typography / mascot / section-rotation / utility-class-prefix conflicts. `frontend-design` anti-slop principles still apply for composition / hierarchy / cognitive load.
 
 ## Project-local sub-agents
 

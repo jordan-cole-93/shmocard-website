@@ -1,6 +1,6 @@
 /* cart-drawer.css — LAYOUT only.
  *
- * Appearance lives in `context/design-system/components.css` under the
+ * Appearance lives in `.claude/skills/shmocard-design-system/components.css` under the
  * `.shm-cart-*` / `.shm-scrim` / `.shm-qty` primitive families. This file
  * owns layout decisions specific to mounting the drawer in our app shell:
  *

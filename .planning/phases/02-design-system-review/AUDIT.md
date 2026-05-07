@@ -1,7 +1,7 @@
 # Phase 2 / Step 02-01: Design System Folder Audit
 
 **Date:** 2026-05-07
-**Scope:** Every file in `context/design-system/` (excluding `.DS_Store`, runtime state JSONs, and individual font binaries).
+**Scope:** Every file in `.claude/skills/shmocard-design-system/` (excluding `.DS_Store`, runtime state JSONs, and individual font binaries).
 **Source of truth (per design system's own rules):** `colors_and_type.css` + `components.css` win when docs disagree.
 
 ---
@@ -145,17 +145,17 @@ Confirmed gitignored in `.gitignore`. Good.
 
 ## Issues + recommendations
 
-### 1. Folder name has a space — `context/design-system/`
+### 1. Folder name has a space — `.claude/skills/shmocard-design-system/`
 
-**Issue:** Breaks bare imports (`@import "context/design-system/..."` requires escaping in CSS), awkward in shell, awkward in URLs, awkward in scripts. CSS imports inside the system itself work fine because they use relative paths (`fonts/...`, `../../colors_and_type.css`), but external consumers (Next.js `app/globals.css`) will need the escaped path.
+**Issue:** Breaks bare imports (`@import ".claude/skills/shmocard-design-system/..."` requires escaping in CSS), awkward in shell, awkward in URLs, awkward in scripts. CSS imports inside the system itself work fine because they use relative paths (`fonts/...`, `../../colors_and_type.css`), but external consumers (Next.js `app/globals.css`) will need the escaped path.
 
-**Recommendation:** Rename to `context/design-system/` (kebab) at minimum. Better: move it out of `context/` (which is meta-context, not source) entirely.
+**Recommendation:** Rename to `.claude/skills/shmocard-design-system/` (kebab) at minimum. Better: move it out of `context/` (which is meta-context, not source) entirely.
 
 **Three options for final location:**
 
 | Option | Path | Pros | Cons |
 |---|---|---|---|
-| A | `context/design-system/` (rename only) | Smallest change; preserves "context/" grouping | Still inside meta-context folder; system isn't really "context" |
+| A | `.claude/skills/shmocard-design-system/` (rename only) | Smallest change; preserves "context/" grouping | Still inside meta-context folder; system isn't really "context" |
 | B | `design-system/` (move to repo root) | Clearer architectural intent — it's a co-equal source artifact | One more top-level folder to maintain (file-organization rule says "no new top-level folders without approval") |
 | C | `app/(design-system)/` (Next.js route group) | Co-located with consumers; Next.js handles paths cleanly | Mixes design-system source with route definitions; creates ambiguity about whether previews ship to production |
 
@@ -202,7 +202,7 @@ This makes step 02-05 (translation plan) easier and prevents future contributors
 
 ### 4. Two `CLAUDE.md` files without cross-references
 
-**Issue:** Repo root `CLAUDE.md` and `context/design-system/CLAUDE.md` both auto-load when Claude works inside the design-system subtree. They don't reference each other. A future Claude session reading one doesn't know the other exists.
+**Issue:** Repo root `CLAUDE.md` and `.claude/skills/shmocard-design-system/CLAUDE.md` both auto-load when Claude works inside the design-system subtree. They don't reference each other. A future Claude session reading one doesn't know the other exists.
 
 **Recommendation:** add cross-references — root CLAUDE.md "Design system" row in the pointer table mentions the nested CLAUDE.md; nested CLAUDE.md gains a "Repo-level rules" section pointing to root. Specify rule precedence:
 - **Design-system rules win** for visual / typography / mascot / section-rotation / icon stroke / utility-class-prefix.
@@ -210,7 +210,7 @@ This makes step 02-05 (translation plan) easier and prevents future contributors
 
 ### 5. `SKILL.md` skill-frontmatter ambiguity
 
-**Issue:** `context/design-system/SKILL.md` ships with frontmatter (`name: Shmocard`, `description: Design system for Shmocard...`). This **looks like** a Claude Code skill registration but it's not in `.claude/skills/` and won't be discovered by the skill loader.
+**Issue:** `.claude/skills/shmocard-design-system/SKILL.md` ships with frontmatter (`name: Shmocard`, `description: Design system for Shmocard...`). This **looks like** a Claude Code skill registration but it's not in `.claude/skills/` and won't be discovered by the skill loader.
 
 **Two fixes:**
 - **A. Strip the frontmatter** — it's a doc, not a skill. Re-title it "Design System Manual" or similar.
@@ -271,11 +271,11 @@ Jordan reviewed the audit findings and locked the following decisions. All three
 
 ### Decision 1 — Folder rename in place
 
-**Locked:** `context/design system/` → `context/design-system/` (kebab-case, stays inside `context/`).
+**Locked:** `context/design system/` → `.claude/skills/shmocard-design-system/` (kebab-case, stays inside `context/`).
 
 **Why:** the actual problem was the space in the name, not the location. Moving to repo root or `app/` was overthinking. Kebab rename fixes shell escaping, import paths, and URL handling without forcing other folder structure changes.
 
-**Executed:** `git mv "context/design system" context/design-system`. All internal CSS / HTML / font paths use relative references and survived unchanged. All cross-references in `.planning/`, `.claude/`, root `CLAUDE.md`, `gsd-shmocard` skill updated via bulk sed.
+**Executed:** `git mv "context/design system" .claude/skills/shmocard-design-system`. All internal CSS / HTML / font paths use relative references and survived unchanged. All cross-references in `.planning/`, `.claude/`, root `CLAUDE.md`, `gsd-shmocard` skill updated via bulk sed.
 
 ### Decision 2 — Move design-system rules into `.claude/rules/`
 
@@ -294,7 +294,7 @@ Jordan reviewed the audit findings and locked the following decisions. All three
 
 ### Decision 3 — Strip skill frontmatter from SKILL.md
 
-**Locked:** `context/design-system/SKILL.md` is a documentation file, not a registered Claude skill.
+**Locked:** `.claude/skills/shmocard-design-system/SKILL.md` is a documentation file, not a registered Claude skill.
 
 **Why:**
 - Auto-loading is now handled by `.claude/rules/design-system.md` — registering SKILL.md as a separate skill would create ambiguous precedence with `frontend-design`.
@@ -305,12 +305,12 @@ Jordan reviewed the audit findings and locked the following decisions. All three
 
 | File | Change |
 |---|---|
-| `context/design system/` → `context/design-system/` | folder renamed via `git mv` |
+| `context/design system/` → `.claude/skills/shmocard-design-system/` | folder renamed via `git mv` |
 | `context/design system/CLAUDE.md` | deleted (content moved + reframed) |
 | `.claude/rules/design-system.md` | created — orchestrator rule file |
-| `context/design-system/SKILL.md` | frontmatter stripped, doc header added |
+| `.claude/skills/shmocard-design-system/SKILL.md` | frontmatter stripped, doc header added |
 | `CLAUDE.md` (root) | pointer table updated; design-system status line refreshed; `frontend-design` precedence note added to routing rule |
-| `.claude/rules/file-organization.md` | new row for `context/design-system/` |
+| `.claude/rules/file-organization.md` | new row for `.claude/skills/shmocard-design-system/` |
 | `.planning/PROJECT.md` | path refs updated |
 | `.planning/REQUIREMENTS.md` | path refs updated |
 | `.planning/ROADMAP.md` | path refs updated |

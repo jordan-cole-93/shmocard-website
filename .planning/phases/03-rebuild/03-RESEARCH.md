@@ -8,11 +8,11 @@
 
 ## Summary
 
-Phase 3 rebuilds the Shmocard marketing site by composing the locked design system (`context/design-system/`) into Next.js 15 App Router pages. The Foundations stage is already shipped (3-A1..3-A6) — `app/globals.css` imports the design system, `Nav` + `Footer` mount globally, `Mascot` + `Sticker` typed wrappers exist, and a Zustand cart store skeleton is in place. The remaining work is content-and-data-heavy: 11 home sections, a `/shmo-review` category page, 3 PDPs that fetch from Shopify Storefront API, a cart drawer wired to Cart API mutations, a webhook revalidation route, and a deferred GHL waitlist webhook stub.
+Phase 3 rebuilds the Shmocard marketing site by composing the locked design system (`.claude/skills/shmocard-design-system/`) into Next.js 15 App Router pages. The Foundations stage is already shipped (3-A1..3-A6) — `app/globals.css` imports the design system, `Nav` + `Footer` mount globally, `Mascot` + `Sticker` typed wrappers exist, and a Zustand cart store skeleton is in place. The remaining work is content-and-data-heavy: 11 home sections, a `/shmo-review` category page, 3 PDPs that fetch from Shopify Storefront API, a cart drawer wired to Cart API mutations, a webhook revalidation route, and a deferred GHL waitlist webhook stub.
 
 The decisions that shape every plan stub are already locked in `CONTEXT.md` and `DECISIONS.md`: Zustand for cart, framer-motion for section/drawer/modal motion (CSS for hover), Storefront API only (zero Admin API), Server-Component-first with `'use client'` only for interactive surfaces, `.shm-*` utility prefix mandatory, and the four-color section rotation enforced.
 
-**Primary recommendation:** Treat plans 03-01 and 03-02 as **delta audits** (verify what 3-A1..3-A6 already shipped — don't rebuild), then drive plans 03-03 onward with a thin `lib/shopify/` GraphQL fetch wrapper using Next.js fetch caching with tag-based revalidation. Section composition reads directly from `context/design-system/ui_kits/website/homepage/Shmocard Homepage.html` + `home.css` + `home-data.jsx` — these are the canonical layouts; do not invent.
+**Primary recommendation:** Treat plans 03-01 and 03-02 as **delta audits** (verify what 3-A1..3-A6 already shipped — don't rebuild), then drive plans 03-03 onward with a thin `lib/shopify/` GraphQL fetch wrapper using Next.js fetch caching with tag-based revalidation. Section composition reads directly from `.claude/skills/shmocard-design-system/ui_kits/website/homepage/Shmocard Homepage.html` + `home.css` + `home-data.jsx` — these are the canonical layouts; do not invent.
 
 ---
 
@@ -905,10 +905,10 @@ See Pattern 4 above.
 - `.planning/phases/02-design-system-review/TRANSLATION.md` — section-by-section component map; ~54 file count; server/client default split [VERIFIED in repo]
 - `.planning/phases/02-design-system-review/DECISIONS.md` — D-01..D-05 locked decisions [VERIFIED in repo]
 - `context/general/backend.md` — Shopify integration, env vars, webhook revalidation [VERIFIED in repo]
-- `context/design-system/SKILL.md` + `components.css` + `colors_and_type.css` — primitive source of truth [VERIFIED in repo]
-- `context/design-system/ui_kits/website/homepage/Shmocard Homepage.html` + `home.css` + `home-data.jsx` — canonical homepage layout [VERIFIED in repo]
-- `context/design-system/ui_kits/website/Buybox.html` — canonical PDP [VERIFIED in repo]
-- `context/design-system/ui_kits/website/Cart Drawer.html` — canonical cart drawer [VERIFIED in repo]
+- `.claude/skills/shmocard-design-system/SKILL.md` + `components.css` + `colors_and_type.css` — primitive source of truth [VERIFIED in repo]
+- `.claude/skills/shmocard-design-system/ui_kits/website/homepage/Shmocard Homepage.html` + `home.css` + `home-data.jsx` — canonical homepage layout [VERIFIED in repo]
+- `.claude/skills/shmocard-design-system/ui_kits/website/Buybox.html` — canonical PDP [VERIFIED in repo]
+- `.claude/skills/shmocard-design-system/ui_kits/website/Cart Drawer.html` — canonical cart drawer [VERIFIED in repo]
 - [Shopify Storefront API reference](https://shopify.dev/docs/api/storefront/latest) — Cart, cartCreate, cartLinesAdd, cartLinesUpdate, cartLinesRemove [CITED]
 - [Next.js revalidateTag](https://nextjs.org/docs/app/api-reference/functions/revalidateTag) [CITED]
 - [Next.js cookies()](https://nextjs.org/docs/app/api-reference/functions/cookies) — async in Next.js 15 [CITED]

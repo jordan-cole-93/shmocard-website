@@ -15,10 +15,10 @@
 
 /* Design system foundation: tokens, type ramp, section bg flips,
    wave dividers, all 4 brand fonts via @font-face. */
-@import "../context/design-system/colors_and_type.css";
+@import "../.claude/skills/shmocard-design-system/colors_and_type.css";
 
 /* Design system primitives: every .shm-* component class. */
-@import "../context/design-system/components.css";
+@import "../.claude/skills/shmocard-design-system/components.css";
 
 /* Project-specific overrides go BELOW design-system imports so
    source-order specificity preserves the design system's invariants.

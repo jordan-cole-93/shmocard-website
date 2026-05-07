@@ -7,7 +7,7 @@
 <domain>
 ## Phase Boundary
 
-Phase 3 is the **rebuild** — wire the design system at `context/design-system/` into a working Next.js 15 App Router site. Build the foundations (globals, fonts, nav, footer, base layout primitive) first; then homepage; then `/shmo-review` category page; then 3 PDPs (CR-80, L-Sign, Square Card); then cart UI + Shopify Storefront API + checkout redirect + waitlist webhook.
+Phase 3 is the **rebuild** — wire the design system at `.claude/skills/shmocard-design-system/` into a working Next.js 15 App Router site. Build the foundations (globals, fonts, nav, footer, base layout primitive) first; then homepage; then `/shmo-review` category page; then 3 PDPs (CR-80, L-Sign, Square Card); then cart UI + Shopify Storefront API + checkout redirect + waitlist webhook.
 
 Output: a deployable site at `shmocard.com` (DNS cutover happens in Phase 4).
 
@@ -167,14 +167,14 @@ Implementation details Jordan does NOT need to weigh in on (per discuss-phase gu
 
 ### Design system source-of-truth
 
-- `context/design-system/SKILL.md` — operator's manual + primitive table
-- `context/design-system/PRIMITIVES.md` — canonical primitive index
-- `context/design-system/colors_and_type.css` — every token + type ramp + section bg flips
-- `context/design-system/components.css` — every primitive
-- `context/design-system/ui_kits/website/homepage/Shmocard Homepage.html` + `home.css` — canonical marketing page
-- `context/design-system/ui_kits/website/Buybox.html` — canonical PDP + sticky bar
-- `context/design-system/ui_kits/website/Cart Drawer.html` — canonical cart drawer
-- `context/design-system/ui_kits/website/homepage/home-data.jsx` — mock content shape (used as REFERENCE; final copy gets rewritten in Phase 3)
+- `.claude/skills/shmocard-design-system/SKILL.md` — operator's manual + primitive table
+- `.claude/skills/shmocard-design-system/PRIMITIVES.md` — canonical primitive index
+- `.claude/skills/shmocard-design-system/colors_and_type.css` — every token + type ramp + section bg flips
+- `.claude/skills/shmocard-design-system/components.css` — every primitive
+- `.claude/skills/shmocard-design-system/ui_kits/website/homepage/Shmocard Homepage.html` + `home.css` — canonical marketing page
+- `.claude/skills/shmocard-design-system/ui_kits/website/Buybox.html` — canonical PDP + sticky bar
+- `.claude/skills/shmocard-design-system/ui_kits/website/Cart Drawer.html` — canonical cart drawer
+- `.claude/skills/shmocard-design-system/ui_kits/website/homepage/home-data.jsx` — mock content shape (used as REFERENCE; final copy gets rewritten in Phase 3)
 
 ### Asset source
 
