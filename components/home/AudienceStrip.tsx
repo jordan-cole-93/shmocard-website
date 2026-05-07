@@ -1,9 +1,14 @@
 // components/home/AudienceStrip.tsx
-// Server component. Single-line marquee on graham bg.
-// 38s scroll-left, paused on hover (CONTEXT.md B2).
+// Server component. Single-line full-bleed marquee on graham bg.
+// 38s scroll-left, paused on hover.
+//
+// Bypasses the <Section> wrapper deliberately: marquees need to run
+// edge-to-edge with no .shm-section padding and no .shm-container
+// max-width clipping. Matches the canonical homepage pattern
+// (home-bundle.jsx:703-707). Renders the trailing wave divider as
+// a sibling so the next section (marsh) butts up against the strip.
 
 import "./home.css";
-import Section from "@/components/layout/Section";
 import { AUDIENCES } from "./home-data";
 
 export default function AudienceStrip() {
@@ -11,17 +16,20 @@ export default function AudienceStrip() {
   const items = [...AUDIENCES, ...AUDIENCES];
 
   return (
-    <Section bg="graham" nextBg="marsh" ariaLabel="Audiences served">
-      <div className="audience-strip" aria-hidden="false">
-        <div className="audience-strip__track">
-          {items.map((a, i) => (
-            <span key={i} style={{ display: "inline-flex", alignItems: "center", gap: 44 }}>
-              <span>{a}</span>
-              <span className="audience-strip__dot" aria-hidden="true" />
-            </span>
-          ))}
+    <>
+      <section className="shm-bg-graham" aria-label="Audiences served">
+        <div className="audience-strip" aria-hidden="true">
+          <div className="audience-strip__track">
+            {items.map((a, i) => (
+              <span key={i} className="audience-strip__group">
+                <span>{a}</span>
+                <span className="audience-strip__dot" aria-hidden="true" />
+              </span>
+            ))}
+          </div>
         </div>
-      </div>
-    </Section>
+      </section>
+      <div className="shm-wave shm-wave--marsh" aria-hidden="true" />
+    </>
   );
 }

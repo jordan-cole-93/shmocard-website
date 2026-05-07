@@ -1,8 +1,12 @@
 // components/home/Compatibility.tsx
-// Server component. Single-row band on graham bg. Hand-drawn ember icons.
+// Server component. Single-row full-bleed band on graham bg. Hand-drawn ember icons.
+//
+// Bypasses the <Section> wrapper deliberately: this is a thin info band
+// that runs edge-to-edge, like the audience strip. Matches the canonical
+// homepage pattern (home-bundle.jsx:772). Renders the trailing wave as
+// a sibling so the next section (marsh) butts up against the band.
 
 import "./home.css";
-import Section from "@/components/layout/Section";
 
 function PhoneIcon() {
   return (
@@ -59,21 +63,24 @@ function QrIcon() {
 
 export default function Compatibility() {
   return (
-    <Section bg="graham" nextBg="marsh" ariaLabel="Phone compatibility">
-      <div className="compat">
-        <span className="compat__item">
-          <PhoneIcon />
-          Works on <b>iPhone XS+</b> (2018 and newer)
-        </span>
-        <span className="compat__item">
-          <AndroidIcon />
-          And <b>Android 5+</b> (Lollipop and up)
-        </span>
-        <span className="compat__item">
-          <QrIcon />
-          QR code on every card for older phones
-        </span>
-      </div>
-    </Section>
+    <>
+      <section className="shm-bg-graham" aria-label="Phone compatibility">
+        <div className="compat">
+          <span className="compat__item">
+            <PhoneIcon />
+            Works on <b>iPhone XS+</b> (2018 and newer)
+          </span>
+          <span className="compat__item">
+            <AndroidIcon />
+            And <b>Android 5+</b> (Lollipop and up)
+          </span>
+          <span className="compat__item">
+            <QrIcon />
+            QR code on every card for older phones
+          </span>
+        </div>
+      </section>
+      <div className="shm-wave shm-wave--marsh" aria-hidden="true" />
+    </>
   );
 }
