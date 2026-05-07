@@ -3,14 +3,14 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: executing
-last_updated: "2026-05-07T04:13:52.797Z"
+last_updated: "2026-05-07T04:23:47.769Z"
 last_activity: "2026-05-07 06:15 — 03-08 cart drawer complete. 12 .shm-cart-* components + global CartDrawer mount + useCartHydration hook (cookie-driven). Zustand persist DROPPED (Cart Persistence Trap mitigation). assertCheckoutUrl open-redirect guard wired. Smoke harness verified add-to-cart → qty → remove → reload-hydration end-to-end. Commits d01fca7 + 27aae54. REQ-06 + REQ-09 satisfied for cart surface."
 progress:
   total_phases: 4
   completed_phases: 0
   total_plans: 12
-  completed_plans: 8
-  percent: 67
+  completed_plans: 9
+  percent: 75
 ---
 
 # Project State
@@ -29,7 +29,7 @@ Stage: Waves 1+2 complete; Wave 3 03-08 complete. Sibling 03-05 (CR-80 PDP) runn
 Status: In progress
 Last activity: 2026-05-07 06:15 — 03-08 cart drawer complete. 12 .shm-cart-* components + global CartDrawer mount + useCartHydration hook (cookie-driven). Zustand persist DROPPED (Cart Persistence Trap mitigation). assertCheckoutUrl open-redirect guard wired. Smoke harness verified add-to-cart → qty → remove → reload-hydration end-to-end. Commits d01fca7 + 27aae54. REQ-06 + REQ-09 satisfied for cart surface.
 
-Progress: [███████░░░] 67%
+Progress: [████████░░] 75%
 
 ## Performance Metrics
 
@@ -54,6 +54,7 @@ Progress: [███████░░░] 67%
 - Trend: Healthy — no blockers, clear next step
 
 | Phase 03 P05 | 16m | 2 tasks | 18 files |
+| Phase 03 P07 | 5m | 2 tasks | 3 files |
 
 ## Accumulated Context
 
@@ -73,6 +74,8 @@ Recent decisions affecting current work:
 - [Phase ?]: PdpBuyboxContext over Zustand for shared client state — single-page scope, keeps cart store clean per Cart Persistence Trap
 - [Phase ?]: Removed position:sticky from .pdp-gal so IntersectionObserver fires when gallery exits viewport
 - [Phase ?]: Extended addLineToCart with optional attributes? param — used for google_review_url cart-line attribute
+- [Phase 03]: Square Card PDP wired by extending pdp-copy.ts only — zero new components, full reuse of 03-05 PDP tree — REQ-05 satisfied; PDP component tree from 03-05 consumes the slug as designed
+- [Phase 03]: Verified PDP against 'next start' (production build) — 'next dev' has a pre-existing framer-motion vendor-chunk HMR crash — Production server is the operational reality; deferred dev HMR fix to Phase 4
 
 ### Pending Todos
 

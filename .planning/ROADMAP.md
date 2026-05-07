@@ -82,7 +82,7 @@ Plans:
 - [x] 03-04-PLAN.md — /shmo-review category: locked headline + tagline, bulk math, 3 format cards linking to PDPs, 6-question FAQ ✅ 2026-05-07 (commits 27cb2d5 + 9849306, summary `.planning/phases/03-rebuild/03-04-SUMMARY.md`)
 - [x] 03-05-PLAN.md — CR-80 PDP at app/shmo-review/[handle]/page.tsx (dynamic route + 12-component PDP tree, .shm-buybox-sticky slides DOWN; SHARED tree consumed by 03-06/07)
 - [ ] 03-06-PLAN.md — L-Sign PDP: extend pdp-copy.ts; reuse PDP tree from 03-05
-- [ ] 03-07-PLAN.md — Square Card PDP: extend pdp-copy.ts; reuse PDP tree from 03-05
+- [x] 03-07-PLAN.md — Square Card PDP: extend pdp-copy.ts; reuse PDP tree from 03-05
 - [x] 03-08-PLAN.md — Cart drawer (.shm-cart-* primitives) + Zustand store + cookie hydration + Server Actions wired
 - [ ] 03-09-PLAN.md — Hardened checkout redirect: assertCheckoutUrl allowlist (*.myshopify.com / configured store domain) + try/catch + isNavigating guard
 - [ ] 03-10-PLAN.md — Waitlist modal + VideoLightbox + Server Action POST to GHL with honeypot + email/product validation + graceful fallback when URL unset (D-04)
