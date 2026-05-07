@@ -10,7 +10,7 @@ export default function HowItWorks() {
     <Section bg="marsh" nextBg="marsh" id="how" ariaLabel="How it works">
       <div className="shm-section-head" style={{ textAlign: "center" }}>
         <span className="shm-eyebrow">How it works</span>
-        <h2 className="shm-h2">Six steps. No app. No login.</h2>
+        <h2 className="shm-h2">Six steps. No app. <em>No login</em>.</h2>
         <p className="shm-lede" style={{ maxWidth: "56ch", margin: "0 auto" }}>
           Every card ships pre-programmed. Customers tap, the review page opens, they leave a review.
         </p>

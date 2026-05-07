@@ -14,7 +14,7 @@ export default function VideoTestimonials() {
       {/* Rotation: marsh→graham; Compatibility picks up on graham. */}
       <div className="video-testimonials__head">
         <span className="video-testimonials__eyebrow">Crews on camera</span>
-        <h2 className="shm-h2">Watch shops talk about the bulk math.</h2>
+        <h2 className="shm-h2">Watch shops talk about the <em>bulk math</em>.</h2>
         <p className="video-testimonials__lede">
           Real owners, real shops, no scripts. Watch what changed when every crew member had a card
           in their pocket.

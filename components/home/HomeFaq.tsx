@@ -14,7 +14,7 @@ export default function HomeFaq() {
       <div className="home-faq__wrap">
         <div className="home-faq__head">
           <span className="shm-eyebrow">Common questions</span>
-          <h2 className="shm-h2">Quick answers, no fluff.</h2>
+          <h2 className="shm-h2">Quick answers, <em>no fluff</em>.</h2>
           <Sticker
             pose="thinking"
             size="md"

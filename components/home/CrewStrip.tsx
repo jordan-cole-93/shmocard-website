@@ -19,7 +19,7 @@ export default function CrewStrip() {
     <Section bg="marsh" nextBg="graham" ariaLabel="Crew strip — the people who use Shmo Review">
       <div className="crew-strip__head">
         <span className="crew-strip__hash">For the people on the floor</span>
-        <h2 className="shm-h2">Card per crew member, not card per shop.</h2>
+        <h2 className="shm-h2">Card per <em>crew member</em>, not card per shop.</h2>
         <p className="crew-strip__lede">
           The card has to live with the person handing the customer their coffee, keys, or receipt
           — <b>not on the counter</b>. That&apos;s where the math comes from.

@@ -10,7 +10,7 @@ export default function FinalCta() {
     <Section bg="ember" ariaLabel="Final call to action">
       <div className="final-cta">
         <span className="shm-eyebrow">Ready to ship</span>
-        <h2 className="shm-h2">Pick a card, pick a kit, or build your own.</h2>
+        <h2 className="shm-h2">Pick a card, pick a kit, or build <em>your own</em>.</h2>
         <p className="final-cta__lede">
           Orders placed by Tuesday ship Friday — your crew taps for five-stars by next Monday.
         </p>
