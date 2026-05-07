@@ -73,7 +73,7 @@ Plans:
   5. Webhook revalidation route live; product edits in Shopify Admin propagate in ~5s.
   6. Waitlist forms capture to GHL webhook (URL pending).
   7. No `.shm-*`-prefix violations. No hardcoded product data. No Admin API references.
-**Plans**: 12 plans across 4 waves. Wave 1 = audit foundations (03-01, 03-02). Wave 2 = pages + Storefront lib (03-03, 03-04, 03-12). Wave 3 = PDPs + cart drawer (03-05/06/07, 03-08). Wave 4 = checkout redirect + waitlist + webhook (03-09, 03-10, 03-11). Finalized 2026-05-07 via `/gsd-plan-phase 3`.
+**Plans**: 12 plans across 4 waves. Wave 1 = audit foundations (03-01, 03-02). Wave 2 = pages + Storefront lib + revalidate route (03-03, 03-04, 03-11, 03-12). Wave 3 = PDPs + cart drawer (03-05/06/07, 03-08). Wave 4 = checkout redirect + waitlist (03-09, 03-10). Finalized 2026-05-07 via `/gsd-plan-phase 3`; revisions 2026-05-07 to address plan-checker warnings.
 
 Plans:
 - [ ] 03-01-PLAN.md — AUDIT-ONLY: verify tokens + fonts wired in app/globals.css + app/layout.tsx (foundations 3-A1)
