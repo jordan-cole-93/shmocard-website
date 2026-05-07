@@ -1,67 +1,83 @@
 # handoff.md — Session Handoff
 
-**Last session:** 2026-05-07 — Polished the homepage 4-up sub-brand tile block (Hero `home-hero__toolkit`). Five atomic commits landed: tile name alignment, mascot↔title breathing room, deterministic art sizing, Review-tile mascot swap, and a 140 px sticker bump. No new phase work.
+**Last session:** 2026-05-07 — Replaced the hero headline crossfade with a typewriter animation, locked the line break, then compared the build against the canonical reference and Jordan chose to keep the current 2-line layout over the canonical 3-line layout.
 
 ---
 
 ## Project phase
 
-Phase 3 (Rebuild) reads as **complete** in the SDK init (12/12 plans). STATE.md last-activity is stale (predates 03-07/08/09/10 commits) but `gsd-sdk query init.progress` confirms `completed_count: 3`, `next_phase: launch-readiness`.
+Phase 3 (Rebuild) still reads complete (12/12 plans) per `gsd-sdk query init.progress`. STATE.md still stale relative to git. No formal Phase 4 directory exists yet — open routing question (A polish / B formalize visual-redesign / C launch-readiness) is still unresolved and was carried straight through this session in polish mode.
 
-Today's session was **polish only** on the Hero block. No formal Phase 4 directory exists. ROADMAP still calls Phase 4 "launch-readiness." Earlier-in-day memory notes a user reframe to "visual-redesign" but that work was rolled back to commit `b33a0aa` before this session opened, so the reframe is not yet reflected in `.planning/`.
-
-Open routing question carried over from the start of this session (user said "I'm gonna load my own skills, do nothing" then went directly to the polish task without resolving):
-
-- A) keep doing freeform polish on the homepage
-- B) formalize Phase 4 = visual-redesign in ROADMAP and run `/gsd-plan-phase 4`
-- C) skip polish, move to launch-readiness (mobile / a11y / Vercel env)
+This session was polish-only on the Hero headline animation + a structured comparison against the canonical homepage in `.claude/skills/shmocard-design-system/ui_kits/website/homepage/`.
 
 ---
 
 ## What was done this session
 
-- **Critique pass on `home-hero__toolkit`** (impeccable critique). Compared live `components/home/home.css` against canonical `.claude/skills/shmocard-design-system/ui_kits/website/homepage/home.css`. Identified four canonical-rule deltas + several composition issues (titles not aligned, mascot collisions with badge, sub-text length variance, art mismatch).
-- **Title baseline alignment fix** (commit `f4db003`). Added `tileSub` field on `SubBrand` in `components/home/home-data.ts` with tuned ~60-char copy per sub-brand. Updated `components/home/Hero.tsx` to render `sb.tileSub` instead of slicing `lede`. Locked `.home-hero__tile-sub` to `min-height: 2lh` + `line-clamp: 2` so all sub blocks render uniform 38 px tall. Names now share name_top = 209 px (was 169 / 188 / 208 / 188).
-- **Mascot ↔ title gap** (commit `a9a8ee4`). Reserved bottom 36 % of tile for text via `inset` on `.home-hero__tile-art`. Removed the canonical `translateY(-12 %)` hack since the inset already pinned art to the upper region. Gaps moved from -12…+8 px to 33-48 px.
-- **Deterministic art sizing** (commit `93c7a55`). Discovered `max-height: 100%` was not binding inside the grid art container — image was respecting only `max-width`, so tall mascots ballooned to natural-aspect height and crashed into the corner badge. Switched art container to `top: 56px; height: 120px` (fixed pixels) and clamped image to `max-height: 110px`. Predictable across all four tiles regardless of natural aspect.
-- **Review tile asset swap** (commit `68cd229`). Replaced the CR-80 product photo (`/products/cr80/transparent/magnific_2884306972.png`) with `/mascot/mascot-tap-moment.png` so all four tiles share one mascot sticker treatment. Asset already existed in `public/mascot/`, no copy step needed. Tile 1 no longer reads as a different visual category.
-- **Mascot scale bump** (commit `b31d803`). Jordan flagged the 110 px sticker as "way too small." Pushed art container to `height: 150px` starting `top: 50px`, image `max-height: 140px` (design-system sticker cap), `max-width: 86%` (megaphone modifier `100%`). All four mascots now uniform 140 px tall, widths varying 149-183 px by natural aspect. `gap_badge_to_img = 5 px`, `gap_img_to_name = 14 px`.
-- **No structural changes.** Polish only — grid columns, tile ordering, aspect-ratio, and HTML structure all locked per `feedback_layout_is_locked`.
+- **Hero headline structure:** added `<br />` after "your" in `components/home/Hero.tsx` so the headline renders as two lines — line 1 "The toolkit your" / line 2 "crew's been [cycling word].". Bumped `.home-hero h1 max-width` from `18ch → 26ch` in `components/home/home.css` so line 1 stays unwrapped.
+
+- **Typewriter animation in `components/home/HeroTypeCycle.tsx`:** removed the framer-motion `AnimatePresence` opacity crossfade and replaced it with a typing state machine (`typing → pausing → deleting → next word`). Settings: `typeSpeedMs: 70`, `deleteSpeedMs: 40`, `pauseAtFullMs: 1600`. `useReducedMotion` fallback shows the full word and swaps on a slower interval with no caret blink.
+
+- **Period placement (3 iterations, ended inside the cycle):** first attempt left the period outside the `<em>` — produced a visible gap between the caret and the period whenever the typed word was shorter than the longest reserved width. Second attempt removed `min-width` reservation entirely so the line breathed with content — but caused "crew's been" to jitter horizontally as the cycle word grew/shrank (because the centered line shifted). Final shape: period moved inside the cycle as a sibling span (`.home-hero__cycle-period`) with `font-style: normal` + `color: var(--color-cocoa-deep)` overrides so it breaks out of the `<em>` styling. `min-width` reservation restored, longest word + 22px buffer for caret + period.
+
+- **Caret:** rendered as a CSS span (2px wide, 0.85em tall, `currentColor`, `align-self: center`) with a soft 1.05s ease-in-out fade blink keyframe (`shm-caret-blink`). Animation is suppressed under `prefers-reduced-motion`.
+
+- **CSS rules added in `components/home/home.css`:** `.home-hero__cycle-measure`, `.home-hero__cycle-text`, `.home-hero__cycle-caret`, `.home-hero__cycle-period`, `@keyframes shm-caret-blink`, and a `prefers-reduced-motion` override.
+
+- **Canonical comparison.** Spun up a temporary `python3 -m http.server` on port 6789 against `.claude/skills/shmocard-design-system/`, rendered the canonical `Shmocard Homepage.html` in headless Chromium at 1440×900, captured `pictures/screenshots/canonical-hero-full.png` + `canonical-hero-section.png`, captured our build at `our-hero-full.png`, and diffed. Findings:
+  - **Bg + grid are byte-identical** between canonical and our build (`#FFFBF1` marshmallow + 32px grid in `rgba(59,31,20,0.055)` cocoa-deep, padding 64px / 24px). The "feels different" was not the bg.
+  - **Headline scale is the actual delta.** Canonical renders a 3-line headline ("The toolkit your" / "crew's been" / "[cycle].") because `<br />` lives after "been" + `max-width: 18ch` causes `text-wrap: balance` to wrap "The toolkit your crew's been" onto 2 lines, with the cycle alone on line 3 in 79px Bricolage. Ours renders 2 lines because we moved the `<br />` to after "your" and bumped `max-width` to 26ch.
+  - **Caret style differs** — canonical = literal `|` glyph in `var(--color-ember)` with hard square-wave blink (`steps(1, end)`, 0–50% opaque / 51–100% transparent). Ours = 2px CSS bar, `currentColor`, soft fade.
+  - **Timings differ** — canonical 140/80/2200/900 (type/delete/hold/end-hold). Ours 70/40/1600/0.
+  - **Period in canonical is outside `<em>`. NBSP fallback (`shown || " "`) keeps line height stable when fully deleted between words.**
+  - Other (non-header) deltas not addressed: eyebrow copy ("A toolkit, not a card" vs canonical "A toolkit for local crews"), lede copy, hero meta strip ("Pre-programmed before shipping…" vs canonical hand-note "Live now — Shmo Review · 3 more tools coming this year" with hand-drawn arrow SVG), second CTA label.
+
+- **Decision:** Jordan reviewed the side-by-side and explicitly chose to KEEP the current 2-line implementation. No revert to canonical. The current shape is locked.
 
 ### Files modified
 
-- `components/home/home.css` — `.home-hero__tile-art` + `.home-hero__tile-art img` rules, `.home-hero__tile-art--megaphone img` modifier, `.home-hero__tile-sub` line-clamp + min-height
-- `components/home/home-data.ts` — added `tileSub` field on `SubBrand`, populated for all 4 entries
-- `components/home/Hero.tsx` — uses `sb.tileSub`; `TILE_ART.review.src` → `/mascot/mascot-tap-moment.png`
+- `components/home/Hero.tsx` — `<br />` after "your", removed trailing literal "."
+- `components/home/HeroTypeCycle.tsx` — full rewrite, typewriter engine
+- `components/home/home.css` — `max-width: 26ch`, caret + period + measure rules, blink keyframe, reduced-motion override
 
-### Decisions left explicitly deferred
+### Screenshots produced (in `pictures/screenshots/`)
 
-- Tile envelope direction — keep floating with more `gap`, or add hairline border? (P2 from critique, not picked up)
-- Em-accent on tile name (`.hero-toolkit__name em { color: ember }` from canonical — not implemented; needs which words to emphasize)
-- CR-80 transparent PNG asset content offset — moot now that Review uses the mascot art
-- "Soon" badge for Shmo Link sits next to the heart-hands hearts. Visible touch but not strictly an overlap. Untouched this session.
+- `hero-typing-asking-for.png`, `hero-typing-missing.png` — first-pass (period outside cycle, big gap visible — superseded)
+- `hero-typing-line2-asking-for.png`, `hero-typing-line2-missing.png` — final state (period glued to caret, current locked design)
+- `canonical-hero-full.png`, `canonical-hero-section.png` — canonical reference rendered from kit
+- `our-hero-full.png` — build rendered at 1440×900 for the canonical comparison
+
+### Things explicitly NOT changed this session
+
+- Section.tsx structure — wave divider already lives as a sibling (committed prior session 99ad03c).
+- Hero CTA row, meta strip, sub-brand toolkit tiles — untouched.
+- Eyebrow copy, lede copy, hand-note absence — flagged in canonical comparison, not actioned per Jordan's lock-in.
+- ROADMAP / Phase 4 reframe — still untouched.
 
 ---
 
 ## What's next
 
-**Decision needed first** (open routing question above). Then one of:
+Path A (homepage polish) per the routing question Jordan opened in the prior session. Likely next targets, in priority order:
 
-1. **If staying in polish mode (A):** continue page-by-page on the homepage. Next obvious targets per memory `S86`: hero CTAs / meta strip spacing, Proof section primitives, SubBrand spotlights (memory `296` flagged spotlight mascot sizing as design-system non-compliant). When dispatching a subagent, hand-author layout-lock + design-system guardrails into the Agent prompt directly (read `.claude/rules/design-system.md` first).
-2. **If formalizing Phase 4 (B):** run `/gsd-phase` to rename Phase 4 in `ROADMAP.md` from "launch-readiness" → "visual-redesign" and push launch-readiness to Phase 5. Then `/gsd-plan-phase 4` to write a clean polish plan. STATE.md will need a `last_updated` refresh either way.
-3. **If skipping to launch-readiness (C):** start the Phase 4 directory with `/gsd-plan-phase 4` against the existing ROADMAP entry. Mobile pass / a11y / Vercel env / DNS — but only AFTER Jordan signs off on the current visual state.
+1. **Hero CTA row / meta strip** — spacing pass; meta strip doesn't currently match canonical's hand-note pattern but Jordan didn't ask to align.
+2. **Proof section primitives** — confirm cards use `.shm-card` not custom rules.
+3. **SubBrand spotlights** — memory observation 296 flagged spotlight mascot sizing as design-system non-compliant (200 px hero variant is showcase-only — needs review).
+4. **FAQ block** — confirm it uses `.shm-faq-list` (soft) and not the rare `--featured-card` variant.
+5. **Final CTA / footer wave** — confirm `--xl` wave + extra padding-bottom calc per design-system rule.
 
-Independent of the routing call: STATE.md `last_activity` and `progress` block are stale relative to git. Should refresh once the next phase begins.
+Independent of section choice: STATE.md `last_activity` and `progress` block remain stale relative to git. Refresh whenever the next phase begins.
 
 ---
 
 ## Open decisions
 
-- **Routing question** — A vs B vs C above.
-- **Tile envelope** — bordered vs floating? (Affects all 4-up grids on the site, not just hero.)
-- **Em-accent on tile names** — does Jordan want any tile name to use the canonical ember `em` color? If so, which word per tile?
-- **Heart-hands badge nudge** — "Soon" badge on Shmo Link still touches the heart props on the mascot. Acceptable or move badge / shrink that mascot specifically?
-- **Phase 4 reframe** — memory observations 287-294 + S80 reflect a user reframe to visual-redesign that never made it into ROADMAP.md or `.planning/phases/`. Confirm the reframe is still wanted before formalizing.
+- **Phase 4 routing** — A vs B vs C still unresolved (carried from prior handoff). This session committed to A in practice but never updated ROADMAP.md.
+- **Canonical alignment scope** — Jordan kept the 2-line headline. But the eyebrow copy ("A toolkit, not a card" vs canonical "A toolkit for local crews"), lede copy, second CTA label ("See the toolkit" vs canonical "Browse the toolkit"), and meta strip (utility line vs canonical hand-note) all diverge from canonical. Confirm whether these are intentional Shmocard copy choices or also need alignment.
+- **Caret style** — current is soft CSS fade. Canonical is literal `|` glyph with hard blink in ember. Jordan picked solid bar earlier and approved current; flag this as a future polish-pass option only if he raises it.
+- **Tile envelope** — bordered vs floating, still deferred from prior session.
+- **Em-accent on tile names** — still deferred.
+- **Heart-hands badge nudge** — still deferred.
 
 ---
 
@@ -69,6 +85,7 @@ Independent of the routing call: STATE.md `last_activity` and `progress` block a
 
 1. Read this file.
 2. Read `CLAUDE.md`.
-3. Ask Jordan: **"Polish more sections (A), formalize Phase 4 = visual-redesign in ROADMAP (B), or move on to launch-readiness (C)?"**
-4. Whichever path: BEFORE dispatching any subagent, hand-author the relevant guardrails (layout-lock + design-system + live-store-protection where applicable) into the Agent prompt directly. Subagents structurally cannot access the Skill tool, so guardrails must travel as text inside the prompt. For Shopify backend dispatch, `shmocard-shopify-work` is still available as a project-local wrapper skill that returns a verbatim guardrail block. UI dispatch has no wrapper — read `.claude/rules/design-system.md` first and inline its hard rules. Skipping guardrails is what produced the rolled-back 04-01 commits earlier today.
-5. Run `/gsd-progress` to see the up-to-date roadmap state before committing to a path.
+3. Ask Jordan: **"Continuing homepage polish — which section next? Hero CTA row, Proof, SubBrand spotlights, FAQ, or final CTA?"**
+4. Before dispatching any UI subagent, read `.claude/rules/design-system.md` first and inline its hard rules + the LAYOUT IS LOCKED paragraph into the Agent prompt verbatim. There is no UI wrapper skill — guardrails travel as text inside the prompt.
+5. If Jordan revisits the canonical comparison, the deltas table is captured under "Canonical comparison" above — start there rather than re-running the diff.
+6. Run `/gsd-progress` to see roadmap state before committing to a path.
