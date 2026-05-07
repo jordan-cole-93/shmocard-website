@@ -8,7 +8,7 @@ import HeroTypeCycle from "./HeroTypeCycle";
 import { SUB_BRANDS } from "./home-data";
 
 const TILE_ART: Record<string, { src: string; status: "live" | "soon"; modifier?: string }> = {
-  review: { src: "/products/cr80/transparent/magnific_2884306972.png", status: "live" },
+  review: { src: "/mascot/mascot-tap-moment.png", status: "live" },
   biz: { src: "/mascot/mascot-holding-card.png", status: "soon" },
   link: { src: "/mascot/mascot-heart-hands.png", status: "soon" },
   reputation: { src: "/mascot/mascot-megaphone.png", status: "soon", modifier: "home-hero__tile-art--megaphone" },
