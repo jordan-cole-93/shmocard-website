@@ -20,3 +20,17 @@ Skills below should fire automatically when their condition matches. If a condit
 ## Hard rule for design / UI prompts
 
 For any prompt mentioning design / layout / UI / component / hero / section / typography / palette / animation, load `frontend-design` first AND read `.claude/rules/design-system.md` (which points at the source-of-truth docs in `context/design-system/`). Design system rules WIN on visual / typography / mascot / section-rotation / utility-class-prefix conflicts. `frontend-design` anti-slop principles still apply for composition / hierarchy / cognitive load.
+
+## Project-local sub-agents
+
+Three project-local agents live at `.claude/agents/*.md`. They are spawned via the Agent / Task tool by the parent orchestrator (NOT loaded as skills — subagents structurally cannot access the Skill tool). Each is self-contained: rules are enumerated inline in the system prompt.
+
+| Trigger condition | Agent to dispatch | Model | When |
+|---|---|---|---|
+| Finished a UI change (`.tsx` / `.css`) and want design-system compliance verified before commit | `design-system-auditor` | Sonnet | Post-edit, pre-commit. Read-only audit. |
+| About to commit Shopify-touching code (`.tsx`/`.ts` referencing products, prices, cart) | `shopify-data-checker` | Haiku | Pre-commit. Scans for hardcoded product data. |
+| About to commit ANY Shopify-flagged change | `live-store-guard` | Haiku | Pre-commit. Defensive net for Admin API / theme / `.env` writes. |
+
+**Dispatch order on a Shopify UI commit:** `design-system-auditor` → `shopify-data-checker` → `live-store-guard`. All three must return PASS / SAFE before commit.
+
+**Hard rule:** never write subagent prompts freehand for these three concerns. Always dispatch the matching agent file. If the agent's enumerated rules are wrong, fix the agent file — don't bypass it with a freehand prompt.

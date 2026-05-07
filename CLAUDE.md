@@ -22,6 +22,7 @@ Brand website for Shmocard at `shmocard.com`. Retail front door — not an ad fu
 | Per-page wireframes | `context/brainstorming/*.md` (pending) |
 | Design system source | `context/design-system/` (read `SKILL.md` first) |
 | Personal preferences | `CLAUDE.local.md` (gitignored) |
+| Project-local subagents (auditors, safety gates) | `.claude/agents/` (3 files: `design-system-auditor`, `shopify-data-checker`, `live-store-guard`) |
 
 ## Engineering rules (`.claude/rules/`)
 

@@ -41,6 +41,7 @@ All long-form project context lives here. Meta-files used to live at repo root a
 | `.claude/rules/` | Engineering rule files (this folder) |
 | `.claude/commands/` | Custom slash commands |
 | `.claude/skills/` | Project-specific skills (wrappers + workflows) |
+| `.claude/agents/` | Project-local subagent definitions (Claude Code primitive). One markdown file per agent: YAML frontmatter (name, description, model, tools, color) + system prompt body. Subagents cannot load skills, so each agent enumerates its rules inline. Currently: `design-system-auditor` (Sonnet), `shopify-data-checker` (Haiku), `live-store-guard` (Haiku). |
 | `.claude/hooks/` | Lifecycle automation scripts |
 | `.claude/launch.json` | Editor launch config |
 
