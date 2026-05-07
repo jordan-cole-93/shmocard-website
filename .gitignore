@@ -37,3 +37,6 @@ CLAUDE.local.md
 # Playwright MCP runtime artifacts
 .playwright-mcp/
 tsconfig.tsbuildinfo
+
+# GSD subagent worktree workspace (created/cleaned per Agent run)
+.claude/worktrees/
