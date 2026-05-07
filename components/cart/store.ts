@@ -1,34 +1,63 @@
-// Cart store — Zustand + localStorage persist (D-01).
+// Cart store — Zustand for presentational + UI state ONLY (D-01 + Pitfall 6).
 //
-// Local source of truth for the cart drawer. Holds line items and the
-// Shopify cart GID once a cart has been created via Storefront API
-// (set in the 3-Shopify stage). All mutations are optimistic —
-// the cart drawer reads from this store, then a separate sync layer
-// (TBD in 3-Shopify) reconciles to the Shopify cart.
+// SOURCE OF TRUTH:
+//   - `cartId` lives in the httpOnly `shm-cart-id` cookie set by Server
+//     Actions in `components/cart/actions.ts`. The browser never sees it.
+//   - `lines` come from the Storefront `cart` query on every fresh mount
+//     via `useCartHydration` → `getCartFromCookie`.
 //
-// SSR note: Next.js App Router renders server-side first. The persist
-// middleware reads localStorage on mount, so consumers must guard
-// against hydration mismatch. Use a `useHydrated()` hook (added with
-// the cart drawer) or `useStore.persist.hasHydrated()` before reading
-// `lines` in render.
+// THIS STORE:
+//   - Presentational mirror of `lines` (so the drawer can render
+//     optimistically without round-tripping every interaction).
+//   - UI state: `isOpen` (drawer drawer animation), nothing else worth
+//     persisting across reloads.
+//
+// CART PERSISTENCE TRAP MITIGATION (RESEARCH.md Pitfall 6):
+//   - `partialize` returns ONLY `{ isOpen }` — never `lines`, never
+//     `cartId`, never `checkoutUrl`. Stale display data rehydrating
+//     before the cookie hydration fires would silently leak prices /
+//     variants that no longer match Shopify reality.
+//   - `cartId` and `checkoutUrl` live in-memory only — they get
+//     populated by `useCartHydration` on first client mount via the
+//     server cart query, and replaced on every cart mutation.
+//
+// Reference: RESEARCH.md Pitfall 6, plan 03-08 task 1.
 
 import { create } from "zustand";
 import { persist, createJSONStorage } from "zustand/middleware";
 import type { CartLine } from "./types";
 
+/** Free-shipping unlock threshold in USD. Configurable in one place. */
+export const FREE_SHIP_THRESHOLD_USD = 50;
+
 type CartState = {
-  /** Shopify cart GID. Null until the first line is added. */
+  /** Shopify cart GID. Hydrated from server on mount; not persisted. */
   cartId: string | null;
-  /** Shopify-hosted checkout URL. Null until cart is created. */
+  /** Shopify-hosted checkout URL. Hydrated from server on mount; not persisted. */
   checkoutUrl: string | null;
+  /** Cart line items. Hydrated from server on mount; not persisted. */
   lines: CartLine[];
+  /** Drawer open/closed. Persisted across reloads. */
+  isOpen: boolean;
 };
 
 type CartActions = {
-  setCart: (cartId: string, checkoutUrl: string) => void;
+  /** Replace cart identity + lines wholesale (post-mutation reconcile). */
+  setCart: (
+    cartId: string | null,
+    checkoutUrl: string | null,
+    lines?: CartLine[],
+  ) => void;
+  /** Replace just the line list — used by hydration + after mutations. */
+  replaceLines: (lines: CartLine[]) => void;
   addLine: (line: CartLine) => void;
   updateQuantity: (lineId: string, quantity: number) => void;
   removeLine: (lineId: string) => void;
+  /** Drawer controls. */
+  open: () => void;
+  close: () => void;
+  toggle: () => void;
+  /** Wipe everything — used when cookie disappears server-side. */
   clear: () => void;
 };
 
@@ -38,6 +67,7 @@ const INITIAL_STATE: CartState = {
   cartId: null,
   checkoutUrl: null,
   lines: [],
+  isOpen: false,
 };
 
 export const useCartStore = create<CartStore>()(
@@ -45,7 +75,14 @@ export const useCartStore = create<CartStore>()(
     (set) => ({
       ...INITIAL_STATE,
 
-      setCart: (cartId, checkoutUrl) => set({ cartId, checkoutUrl }),
+      setCart: (cartId, checkoutUrl, lines) =>
+        set((state) => ({
+          cartId,
+          checkoutUrl,
+          lines: lines ?? state.lines,
+        })),
+
+      replaceLines: (lines) => set({ lines }),
 
       addLine: (line) =>
         set((state) => {
@@ -79,20 +116,28 @@ export const useCartStore = create<CartStore>()(
           lines: state.lines.filter((l) => l.id !== lineId),
         })),
 
+      open: () => set({ isOpen: true }),
+      close: () => set({ isOpen: false }),
+      toggle: () => set((state) => ({ isOpen: !state.isOpen })),
+
       clear: () => set(INITIAL_STATE),
     }),
     {
-      name: "shm-cart",
+      name: "shm-cart-ui",
       storage: createJSONStorage(() => localStorage),
-      version: 1,
+      version: 2,
+      // ⚠ Cart Persistence Trap mitigation:
+      //   ONLY UI state survives reloads. cartId/checkoutUrl/lines come
+      //   from the server (cookie + Storefront) on every fresh mount.
       partialize: (state) => ({
-        cartId: state.cartId,
-        checkoutUrl: state.checkoutUrl,
-        lines: state.lines,
+        isOpen: state.isOpen,
       }),
     },
   ),
 );
+
+// Convenience hooks — components should subscribe to the slice they need.
+export const useCart = useCartStore;
 
 // Selectors — keep render-time reads cheap by subscribing to a slice.
 export const selectLineCount = (s: CartStore): number =>
@@ -100,3 +145,5 @@ export const selectLineCount = (s: CartStore): number =>
 
 export const selectSubtotal = (s: CartStore): number =>
   s.lines.reduce((n, l) => n + Number(l.price) * l.quantity, 0);
+
+export const selectIsOpen = (s: CartStore): boolean => s.isOpen;

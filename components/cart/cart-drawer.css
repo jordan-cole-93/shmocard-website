@@ -1,0 +1,45 @@
+/* cart-drawer.css — LAYOUT only.
+ *
+ * Appearance lives in `context/design-system/components.css` under the
+ * `.shm-cart-*` / `.shm-scrim` / `.shm-qty` primitive families. This file
+ * owns layout decisions specific to mounting the drawer in our app shell:
+ *
+ *   - z-index stack (scrim < drawer)
+ *   - portal root reset (avoid stacking-context bugs from html / body)
+ *   - line-item grid breakpoint behavior
+ *
+ * No primitive restyles. No colors / fonts / shadows. */
+
+/* Portal mount root — reset to ensure absolutely-positioned children
+   are not constrained by an ancestor transform / filter. */
+.shm-cart-portal {
+  position: fixed;
+  inset: 0;
+  width: 0;
+  height: 0;
+  pointer-events: none;
+  z-index: 90;
+}
+
+/* Scrim + drawer must accept pointer events when open even though the
+   portal root is `pointer-events: none` for the rest of the page. */
+.shm-cart-portal .shm-scrim,
+.shm-cart-portal .shm-cart {
+  pointer-events: auto;
+}
+
+/* Lock body scroll while drawer is open (toggled by CartDrawer.tsx) */
+html.shm-cart-locked,
+body.shm-cart-locked {
+  overflow: hidden;
+}
+
+/* Trust strip layout — sit between checkout button and payments strip */
+.shm-cart-trust {
+  justify-content: center;
+}
+
+/* Cart trigger button (Nav cart icon). Layout-only — visual styling for
+   the button shell lives in Nav.module.css today. The trigger here is
+   the click-target wrapper exposed by `.shm-cart-trigger` aria semantics
+   (see components.css comment block). We don't add any visual rules. */
