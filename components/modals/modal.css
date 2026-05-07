@@ -1,0 +1,149 @@
+/* components/modals/modal.css — LAYOUT only.
+ *
+ * Per `.claude/rules/design-system.md`: page-level CSS owns LAYOUT
+ * (positioning, sizing, grid, flex). Visual properties (colors, radii,
+ * shadows, fonts) come from `.shm-*` primitives in design-system/components.css
+ * via tokens.
+ *
+ * DEFERRED ITEM: components.css does not yet have `.shm-modal-*` primitives.
+ * This file uses `.shm-card` + `.shm-scrim` (both exist) for visual surface,
+ * and adds layout-only positioning here. When `.shm-modal-*` primitives
+ * land in components.css, refactor to use those + delete most of this file.
+ */
+
+.shm-modal-root {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  display: grid;
+  place-items: center;
+  padding: 24px;
+  /* Pointer events live on the scrim child; root stays clickable through */
+  pointer-events: none;
+}
+
+.shm-modal-root > * {
+  pointer-events: auto;
+}
+
+/* The dialog surface itself — sits on top of `.shm-scrim`.
+ * Inherits surface from `.shm-card`; this only owns positioning + size. */
+.shm-modal {
+  position: relative;
+  width: 100%;
+  max-width: 420px;
+  /* `.shm-card` provides padding 24px by default; we override for modal density */
+  padding: 32px;
+  z-index: 1;
+}
+
+.shm-modal--video {
+  max-width: 960px;
+  padding: 0;
+  background: var(--color-cocoa-deep);
+  color: var(--color-marshmallow);
+}
+
+.shm-modal__close {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  width: 32px;
+  height: 32px;
+  display: grid;
+  place-items: center;
+  border: none;
+  background: transparent;
+  color: inherit;
+  cursor: pointer;
+  border-radius: var(--radius-pill);
+}
+
+.shm-modal__close:hover {
+  background: rgba(0, 0, 0, 0.06);
+}
+
+.shm-modal--video .shm-modal__close:hover {
+  background: rgba(255, 255, 255, 0.12);
+}
+
+.shm-modal__close svg {
+  width: 20px;
+  height: 20px;
+  stroke: currentColor;
+  stroke-width: 2.4;
+  stroke-linecap: round;
+  fill: none;
+}
+
+.shm-modal__head {
+  margin: 0 0 8px;
+}
+
+.shm-modal__eyebrow {
+  display: inline-block;
+  margin-bottom: 6px;
+}
+
+.shm-modal__h {
+  margin: 0 0 12px;
+}
+
+.shm-modal__lede {
+  margin: 0 0 20px;
+}
+
+.shm-modal__form {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+/* Honeypot — visually hidden, semantically present. */
+.shm-modal__honeypot {
+  position: absolute;
+  left: -9999px;
+  width: 1px;
+  height: 1px;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.shm-modal__error {
+  margin: 4px 0 0;
+  font-size: 14px;
+  color: var(--color-cherry);
+}
+
+.shm-modal__success {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+/* Video lightbox layout */
+.shm-modal__video-frame {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  background: #000;
+  overflow: hidden;
+  border-radius: var(--radius-card);
+}
+
+.shm-modal__video-frame video {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.shm-modal__video-pending {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  text-align: center;
+  padding: 24px;
+}
