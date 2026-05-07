@@ -83,19 +83,19 @@
 .home-hero__tile:hover { transform: translate(-2px, -2px); }
 .home-hero__tile-art {
   position: absolute;
-  top: 56px; left: 0; right: 0;
-  height: 120px;
+  top: 50px; left: 0; right: 0;
+  height: 150px;
   display: grid; place-items: center;
   pointer-events: none;
   z-index: 0;
 }
 .home-hero__tile-art img {
-  max-width: 78%;
-  max-height: 110px;
+  max-width: 86%;
+  max-height: 140px;
   object-fit: contain;
 }
 .home-hero__tile-art--megaphone img {
-  max-width: 96%;
+  max-width: 100%;
 }
 .home-hero__tile-name {
   position: relative;
