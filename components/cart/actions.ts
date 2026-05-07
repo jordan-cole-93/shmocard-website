@@ -156,15 +156,50 @@ export async function getCartFromCookie(): Promise<ShopifyCart | null> {
 }
 
 /**
+ * Optional cart line attributes. Used by the PDP to attach a buyer's
+ * Google review URL to the line so fulfillment can program the card
+ * before shipping. Keys are lowercase snake_case; values are plain
+ * strings (no HTML rendering — surfaced only in Shopify Admin order
+ * details + email).
+ */
+export type CartLineAttribute = { key: string; value: string };
+
+const ATTRIBUTE_KEY_RE = /^[a-z][a-z0-9_]{0,63}$/;
+const ATTRIBUTE_VALUE_MAX = 1024;
+
+function sanitizeAttributes(
+  attrs: CartLineAttribute[] | undefined,
+): CartLineAttribute[] | undefined {
+  if (!attrs || attrs.length === 0) return undefined;
+  const out: CartLineAttribute[] = [];
+  for (const a of attrs) {
+    if (!a || typeof a.key !== "string" || typeof a.value !== "string") continue;
+    if (!ATTRIBUTE_KEY_RE.test(a.key)) continue;
+    const value = a.value.slice(0, ATTRIBUTE_VALUE_MAX);
+    if (value.length === 0) continue;
+    out.push({ key: a.key, value });
+  }
+  return out.length > 0 ? out : undefined;
+}
+
+/**
  * Adds a variant to the cart. Creates a new cart on first add.
  * Returns the updated ShopifyCart so the caller can sync local state.
+ *
+ * Optional `attributes` are forwarded as Storefront `CartLineInput.attributes`.
+ * Used by the PDP to capture the buyer's Google review URL.
  */
 export async function addLineToCart(
   merchandiseId: string,
   quantity: number,
+  attributes?: CartLineAttribute[],
 ): Promise<ShopifyCart> {
   assertVariantId(merchandiseId);
   assertQuantity(quantity);
+
+  const safeAttrs = sanitizeAttributes(attributes);
+  const lineInput: Record<string, unknown> = { merchandiseId, quantity };
+  if (safeAttrs) lineInput.attributes = safeAttrs;
 
   const cartId = await readCartCookie();
 
@@ -172,7 +207,7 @@ export async function addLineToCart(
     const { data } = await shopifyFetch<CartCreatePayload>({
       query: CART_CREATE_MUTATION,
       variables: {
-        input: { lines: [{ merchandiseId, quantity }] },
+        input: { lines: [lineInput] },
       },
       cache: "no-store",
     });
@@ -187,7 +222,7 @@ export async function addLineToCart(
     query: CART_LINES_ADD_MUTATION,
     variables: {
       cartId,
-      lines: [{ merchandiseId, quantity }],
+      lines: [lineInput],
     },
     cache: "no-store",
   });
