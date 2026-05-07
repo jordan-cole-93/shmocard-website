@@ -33,9 +33,9 @@ export function subline(slug: PdpSlug): string {
     case "cr-80":
       return "The wallet card your crew hands over after every transaction.";
     case "l-sign":
-      return "The countertop tap that turns happy customers into five-star reviews.";
+      return "The counter standee that does the asking — no staff prompt, no countertop hardware.";
     case "square-card":
-      return "The disc that sticks anywhere — door, window, dashboard, service van.";
+      return "The adhesive disc for shops that don't have a counter to put a sign on.";
   }
 }
 
@@ -56,14 +56,18 @@ export function bullets(slug: PdpSlug): string[] {
       ];
     case "l-sign":
       return [
-        "Acrylic 4×6 tabletop standee — lives next to the register",
-        "Customers tap on their way out without anyone prompting them",
+        "Acrylic 4×6 tabletop standee — sits at the register, hard to ignore on the way out",
+        "No countertop hardware — drop it on the counter and it's working, no mounting required",
+        "Light enough to swap between stations — one standee per active register, move it during shifts",
+        "Customers tap with their phone — the review page opens directly, no staff prompt needed",
         ...common,
       ];
     case "square-card":
       return [
-        "2.25-inch adhesive disc — sticks to a door, window, dashboard, or service van",
-        "Built for mobile crews and shops that don't have a counter to put a sign on",
+        "2.25-inch adhesive disc — sticks to glass, metal, plastic, or painted drywall",
+        "Mounts on a door, window, dashboard, service van, or piece of equipment",
+        "Built for mobile crews and shops where customers walk past, not up to a counter",
+        "QR code printed on the face for any phone older than the 2018 NFC cutoff",
         ...common,
       ];
   }
@@ -152,7 +156,15 @@ const slugFaq: Record<PdpSlug, PdpFaqItem[]> = {
   "square-card": [
     {
       q: "What surfaces does the disc stick to?",
-      a: "Glass, painted metal, plastic, laminated wood. Doors, windows, dashboards, service-van panels. The adhesive is residue-free when removed cleanly.",
+      a: "Glass, painted metal, plastic, laminated wood, painted drywall. Doors, windows, dashboards, service-van panels, equipment housings.",
+    },
+    {
+      q: "How do I remove it without leaving residue?",
+      a: "Peel a corner with a fingernail and lift slowly. Adhesive comes off clean on glass and painted metal. On porous surfaces (untreated wood, raw drywall), a dab of isopropyl alcohol clears anything left behind.",
+    },
+    {
+      q: "Can I put it outside?",
+      a: "Yes — on a door, window, or service-van panel. The face is laminated and the adhesive holds through rain and direct sun. Avoid sub-freezing surfaces during install (wait for a warm day) and you'll get years out of it.",
     },
     {
       q: "Why pick the disc over a CR-80 card or L-Sign?",
