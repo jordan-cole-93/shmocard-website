@@ -1,0 +1,26 @@
+/* app/globals.css
+   ---------------------------------------------------------------
+   Loads Tailwind 4 (for layout/spacing utilities only) plus the
+   Shmocard design system (tokens, type ramp, primitives).
+
+   Rule per .planning/phases/02-design-system-review/INTEGRATION.md:
+     • Tailwind utilities → layout / spacing / sizing only
+       (grid, flex, gap, p-*, max-w-*, hover layout state, etc.)
+     • Design system .shm-* classes → everything visual
+       (color, type, radius, shadow, motion, mascot, primitives)
+     • Tokens always via var(--*) — never hex
+   --------------------------------------------------------------- */
+
+@import "tailwindcss";
+
+/* Design system foundation: tokens, type ramp, section bg flips,
+   wave dividers, all 4 brand fonts via @font-face. */
+@import "../context/design-system/colors_and_type.css";
+
+/* Design system primitives: every .shm-* component class. */
+@import "../context/design-system/components.css";
+
+/* Project-specific overrides go BELOW design-system imports so
+   source-order specificity preserves the design system's invariants.
+   Page-level layout CSS lives in components/<area>/<area>.css —
+   not here. */

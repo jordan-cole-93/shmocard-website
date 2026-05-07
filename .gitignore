@@ -33,3 +33,6 @@ CLAUDE.local.md
 .idea/
 .vscode/*
 !.vscode/extensions.json
+
+# Playwright MCP runtime artifacts
+.playwright-mcp/
