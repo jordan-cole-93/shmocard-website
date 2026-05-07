@@ -1,5 +1,5 @@
-// Homepage placeholder.
-// Real homepage gets built in Phase 3 stage 3-Homepage following the section
+// Homepage placeholder — Phase 3-A3 scaffold.
+// Real homepage gets built in stage 3-Homepage following the section
 // map in .planning/phases/02-design-system-review/TRANSLATION.md.
 
 export default function HomePage() {
@@ -11,16 +11,8 @@ export default function HomePage() {
           The toolkit your crew&apos;s been <em>missing</em>.
         </h1>
         <p className="shm-lede">
-          Project shell is alive. Asset pipeline online — the mascot below loads
-          from <code>public/mascot/</code>. <em>3-A2</em> migration complete.
+          Nav and footer wired. Homepage sections come next in stage 3-Homepage.
         </p>
-
-        {/* Mascot smoke test — confirms public/ → URL routing works. */}
-        <img
-          src="/mascot/mascot-holding-card.png"
-          alt="Shmocard mascot holding a card"
-          className="shm-mascot shm-mascot--supporting"
-        />
       </div>
     </main>
   );
