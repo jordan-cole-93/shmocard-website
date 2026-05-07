@@ -1,84 +1,66 @@
 # handoff.md — Session Handoff
 
-**Last session:** 2026-05-07 — Claude Code infrastructure overhaul: trimmed CLAUDE.md to a router, crystallized three project sub-agents, relocated the design system into the auto-discoverable skills folder, wired two lifecycle hooks, and added two `$ARGUMENTS`-driven slash commands.
+**Last session:** 2026-05-07 — Homepage polish pass + structural fix to the `Section` wrapper that ends the wave-vs-spacing seesaw across all built pages.
 
 ---
 
 ## Project phase
 
-**Phase 3 (Rebuild) is already complete** per project memory (12/12 plans executed earlier). Phase 4 is unconfirmed — the open question between (A) freeform polish, (B) formalize Phase 4 = visual-redesign, or (C) jump to launch-readiness has been carried forward across multiple sessions and is still unresolved.
-
-**This session did not advance the build.** It hardened the Claude Code setup itself, based on three videos Jordan watched (Mark Kashef's "10%", Charlie Automates' "3 Concepts", and the project-structure short). Net effect: the next build session will run cleaner, with fewer chances for Claude to drift on design rules or skip verification.
-
-`scope.md` itself is stale — it still says "Phase 1 in progress." Worth fixing before next session.
+`scope.md` Phase 3 (Rebuild) reads as complete (12/12 plans). Today's work was polish, not new phase work. Phase 4 (Launch readiness) routing decision still deferred — three options remain (A polish, B formalize visual-redesign, C launch-readiness). The Phase 4 decision is unchanged from the 2026-05-07 morning handoff but no longer blocking, since the structural Section fix is the kind of foundation work that had to land before any of the three paths could proceed without dragging the seesaw forward.
 
 ---
 
 ## What was done this session
 
-- **CLAUDE.md trimmed to router shape (78 → 56 lines).** Wrapper-dispatch rationale, hard rules, and the parent-agent skill routing table moved into two new rule files: [.claude/rules/subagent-dispatch.md](.claude/rules/subagent-dispatch.md) and [.claude/rules/skill-routing.md](.claude/rules/skill-routing.md). Commits `e0ec393`, `5c8d4df`, `38b645d`, `88f8637`.
+- **Homepage audit (Explore subagent).** Result: homepage is ~92% faithful to canonical reference (`.claude/skills/shmocard-design-system/ui_kits/website/homepage/Shmocard Homepage.html`). All 15 sections present, on-system, mascot count compliant. Reframed the request from "rebuild" to "polish three concrete issues."
 
-- **Removed dead UI wrapper skills.** `shmocard-polish-section`, `shmocard-build-page`, `shmocard-design-review`, `gsd-shmocard`, `caveman-shmocard` deleted from [.claude/skills/](.claude/skills/) — they were redundant after Jordan deleted the corresponding hooks. Stale references cleaned from CLAUDE.md, settings.json, handoff.md, and the remaining shmocard-shopify-work SKILL.md. Commit `32e6cac`.
+- **Plan written and approved.** Saved at `~/.claude/plans/i-would-like-to-jolly-umbrella.md`. Three atomic polish commits with screenshot proof + design-system-auditor gate per commit.
 
-- **Removed orphan hook scripts.** `inject-caveman-mode.sh` and `inject-gsd-routing.sh` deleted; `surface-applied-rules.sh` kept and updated to drop stale skill names from its example list. UserPromptSubmit hook in [.claude/settings.json](.claude/settings.json) now only runs the rule-surfacing script.
+- **Commit 1 — section spacing rhythm** (`c7816d8`). `components/layout/Section.tsx` was missing the `.shm-section` class on the wrapper element, so the canonical `--section-py-d` (40px) padding never applied — every section had zero top/bottom padding. Added the class plus the canonical tall-wave bottom-padding pairing (`calc(var(--section-py-d) + var(--wave-height-{lg|xl}))`) for `lg`/`xl` waves. Affects `Reputation` spotlight + `HomeFaq`. design-system-auditor PASS.
 
-- **Three project sub-agents crystallized.** New [.claude/agents/](.claude/agents/) folder with:
-  - [.claude/agents/design-system-auditor.md](.claude/agents/design-system-auditor.md) — Sonnet, audits a `.tsx`/`.css` file against the design system, returns PASS/WARN/FAIL with rule citations.
-  - [.claude/agents/shopify-data-checker.md](.claude/agents/shopify-data-checker.md) — Haiku, scans diffs for hardcoded prices/SKUs/product names/image paths.
-  - [.claude/agents/live-store-guard.md](.claude/agents/live-store-guard.md) — Haiku, blocks Admin API mutations / theme edits / `.env*` writes before commit.
-  Registered in `.claude/rules/file-organization.md` and `.claude/rules/skill-routing.md`. Commits `33f35b1`, `b4ca23c`, `05c86bf`, `7559609`.
+- **Commit 2 — em accents on every homepage h2** (`6ce0e6f`). Six h2's were rendering as flat-color text. Added 1–2 word ember emphasis per the design-system rule, ember auto-flips to honey on the FinalCta ember bg. Files: `Proof.tsx`, `CrewStrip.tsx`, `HowItWorks.tsx`, `VideoTestimonials.tsx`, `HomeFaq.tsx`, `FinalCta.tsx`. The locked headline "Built for crews. Priced for bulk." kept verbatim — only `<em>` wrapping added.
 
-- **Design system relocated to `.claude/skills/shmocard-design-system/`.** Moved via `git mv` (history preserved across 84 files). Replaced SKILL.md with the frontmatter-bearing version from Jordan's `~/Downloads/Design System/` so the skill auto-discovers in Claude Code's registry. Updated 30+ path references across [CLAUDE.md](CLAUDE.md), four `.claude/rules/*.md` files, [app/globals.css](app/globals.css), seven `components/**/*.css`/`*.tsx` files, [next.config.ts](next.config.ts), [tsconfig.json](tsconfig.json), and the entire `.planning/phases/0[23]-*/` tree. Commits `0a361ff`, `c73ab0e`, `b7818b3`. Skill now appears in registry as `shmocard-design-system` and triggers on "marketing pages, product surfaces, extensions to shmocard.com."
+- **Commit 3 — hero grid bg full-bleed** (`27f4871`). The dotted grid bg lived on `.home-hero` (inner div inside `.shm-container` max-width), so it was cut on left/right at every breakpoint. Hoisted bg + hero-specific padding to `.home-hero-section` on the section element, matching canonical `home-bundle.jsx:649`. Added optional `className?: string` prop on `Section.tsx`. Files: `components/layout/Section.tsx`, `components/home/Hero.tsx`, `components/home/home.css`. Verified at 1440 + 768 — grid pattern reaches both viewport edges, no horizontal scroll.
 
-- **Two lifecycle hooks installed.** Both non-blocking, advisory-only, per [.claude/rules/verification.md](.claude/rules/verification.md):
-  - [.claude/hooks/typecheck-on-stop.sh](.claude/hooks/typecheck-on-stop.sh) — Stop hook that runs `npx tsc --noEmit` and warns if errors exist (skips cleanly if no `tsconfig.json` or no `node_modules/typescript`).
-  - [.claude/hooks/screenshot-reminder.sh](.claude/hooks/screenshot-reminder.sh) — PostToolUse hook on Write/Edit that emits a screenshot-proof reminder when a `.tsx`/`.css` file is modified.
-  Commit `ea4bdc4`.
+- **Commit 4 — wave divider structural fix** (`99ad03c`). **The 5h-debug root cause Jordan kept hitting.** The wave was a CHILD of the section, sitting after `.shm-section`'s `padding-bottom: 40px` — so a 40px sliver of empty bg appeared between content and wave no matter how spacing was tuned. Tightening section padding closed the gap → made sections cramped; loosening → re-opened the gap. Fix: `Section.tsx` now wraps section + wave in a Fragment, emitting the wave as a SIBLING after `</section>`. DOM-verified: hero ends at y=981, wave starts at y=981 (gap = 0), wave bleeds -1px into next section. Spacing and wave-position are now independent variables. **Applies automatically to every page using `<Section>`** — `/shmo-review`, the 3 PDPs, cart drawer — no per-page changes required (verified zero direct `.shm-wave` usage outside `Section.tsx`).
 
-- **Two `$ARGUMENTS`-driven slash commands.** Both follow the existing `/preview` convention (natural-language arg description rather than literal `$ARGUMENTS` token):
-  - [.claude/commands/screenshot.md](.claude/commands/screenshot.md) — `/screenshot <name> [path]` captures `localhost:3000` and saves to `pictures/screenshots/<name>.png` via the Playwright MCP.
-  - [.claude/commands/check-design.md](.claude/commands/check-design.md) — `/check-design <file...>` dispatches the `design-system-auditor` sub-agent against the given files.
-  Commit `e8a4a3e`.
+- **Rule + memory locked in** (`7bd0e8e`). Added the wave-is-a-sibling rule to `.claude/rules/design-system.md` with the canonical structure example AND the symptom signature ("~40px empty gap before the wave"), so future Claude can diagnose the bug from the visual instead of re-deriving the structure. Persistent auto-memory at `~/.claude/projects/.../memory/feedback_wave_divider_is_sibling.md` plus index entry in `MEMORY.md` so the rule survives across sessions.
 
-- **`.gitignore` hardened.** Added `.claude/worktrees/` so future GSD subagent workspace residue can't accidentally commit. Commit `37468c8`.
-
-- **Honest course-correction.** Used `/gsd-quick` for everything early in the session, which dragged the design-system relocation into a 10-minute subagent dance for what was effectively a `git mv` + 30 `Edit` calls. Acknowledged this to Jordan and corrected the tool-ladder going forward: direct execution for mechanical work, `/gsd-quick` only when something can break the build, `/gsd-quick --validate` only for risky multi-file refactors.
+- **Screenshots captured for proof.** `pictures/screenshots/`: `homepage-baseline-1440.png`, `homepage-baseline-hero-viewport.png`, `homepage-spacing-final.png`, `homepage-accent-after.png`, `hero-fullbleed-after-{1440,768}.png`, `homepage-after-1440.png`, `wave-sibling-1440.png`.
 
 ---
 
 ## What's next
 
-**Open question carried over from the last session:** Phase 4 routing.
+**Step — visual review of the other built pages** to confirm the wave-sibling fix landed cleanly site-wide (since `Section` is shared, it should — but visual verification per the `verification.md` rule).
 
-Recommended order at start of next session:
+Concrete next actions in order:
 
-1. **Resolve the Phase 4 question.** Pick A / B / C (see "Open decisions" below). Don't start work until this is locked.
-2. **Refresh `scope.md`.** It still claims Phase 1 is in progress. Reality: Phases 1, 2, 3 complete; Phase 4 unconfirmed. One quick edit pass.
-3. **Refresh `.planning/STATE.md`.** Currently has the Phase 3 L-Sign PDP as "last activity." Should reflect the infrastructure work this session and the chosen Phase 4 routing.
-4. **Run `/gsd-progress`** to see roadmap state grounded in reality before any new dispatch.
-
-If Jordan picks polish (A): the Hero, SubBrand spotlight, video-testimonial sections were polished in earlier sessions; the obvious next polish targets per memory `S86` are the Proof section, hero meta strip, and sub-brand mascot sizing flagged in memory `296`.
-
-If Jordan picks formalize Phase 4 (B): run `/gsd-phase` to rename Phase 4 in `.planning/ROADMAP.md` from "launch-readiness" → "visual-redesign," push launch-readiness to Phase 5, then `/gsd-plan-phase 4`.
-
-If Jordan picks launch-readiness (C): `/gsd-plan-phase 4` against the existing ROADMAP entry — mobile pass, a11y, Vercel env, DNS cutover. Per memory rule, no Vercel deploy or DNS cutover until every page is approved in localhost dev.
+1. Open `/shmo-review` in dev server, scroll end-to-end, screenshot at 1440 + 768. Check: does any section→wave transition look gapped or cramped now that the structural fix is in?
+2. Open each of the 3 PDPs (`/shmo-review/cr-80`, `/shmo-review/l-sign`, `/shmo-review/square-card`). Same visual sweep.
+3. Open the cart drawer at `/cart-smoke` (or whatever route exposes it). Same sweep.
+4. If any page needs a polish-style follow-up, capture the issue list before touching code — produce a per-page punch list rather than firing one-off fixes.
+5. Phase 4 routing decision is still open — see Open decisions below. The structural Section fix is the kind of foundation work that had to land first; with it in, any of A/B/C is unblocked.
 
 ---
 
 ## Open decisions
 
-- **Phase 4 routing — A / B / C** (carried from prior 4 sessions). Polish more sections, formalize as visual-redesign, or move to launch-readiness?
-- **Stale `scope.md`** — should be updated to reflect Phase 3 complete + Phase 4 chosen direction once the routing question lands.
-- **Phase 4 reframe** — memory observations 287-294 + S80 reflect a user reframe to visual-redesign that never made it into ROADMAP.md or `.planning/phases/`. Confirm before formalizing.
-- **`.claude/skills/shmocard-design-system/CLAUDE.md`** — the moved bundle has its own internal CLAUDE.md (5 KB). Probably fine, but worth confirming it doesn't conflict with the project root CLAUDE.md.
+- **Phase 4 routing — A/B/C** (carried from earlier 2026-05-07 handoff, unresolved):
+  - A: keep doing freeform polish page-by-page (start with `/shmo-review` next).
+  - B: formalize Phase 4 = visual-redesign in `ROADMAP.md`, run `/gsd-plan-phase 4`.
+  - C: skip polish, move to launch-readiness (mobile / a11y / Vercel env / DNS).
+- **Tile envelope** — bordered vs floating (affects all 4-up grids, not just hero — defer until other pages have been visually swept).
+- **Em-accent on tile names** — does Jordan want any sub-brand tile name to use canonical ember `em` color? If so, which word per tile?
+- **Heart-hands badge nudge** — "Soon" badge on Shmo Link still touches the heart props on the mascot.
+- **Pre-existing latent issues flagged by design-system-auditor on commit 3** (not introduced this session, but worth a future cleanup pass): raw `rgba(59,31,20,0.055)` literals in the hero grid bg, `linear-gradient(...)` for the grid pattern, and `var(--font-sans)` usage instead of the canonical `--font-body` — all carry-overs from the canonical reference file. Logged here so future cleanup can address them in one sweep.
 
 ---
 
 ## How to start next session
 
 1. Read this file.
-2. Read [CLAUDE.md](CLAUDE.md) (it's now a 56-line router — fast read).
-3. Ask Jordan: **"Phase 4 — polish more sections (A), formalize as visual-redesign (B), or move to launch-readiness (C)? Same question as last session."**
-4. Refresh `scope.md` and `.planning/STATE.md` to reflect reality before any new work.
-5. Use the right tool for the job — direct execution for mechanical edits, `/gsd-fast` for trivial 1-3 file fixes, `/gsd-quick` only when something can break the build, `/gsd-quick --validate` for risky multi-file refactors. Don't default to `/gsd-quick` for everything (the lesson from this session).
-6. Skills are now richer — `shmocard-design-system` triggers on design keywords automatically; `design-system-auditor` / `shopify-data-checker` / `live-store-guard` are crystallized for dispatch. Use `/check-design <file>` after any UI edit before committing. Use `/screenshot <name>` for visual proof per [.claude/rules/verification.md](.claude/rules/verification.md).
+2. Read `CLAUDE.md`.
+3. Ask Jordan: **"Visual sweep `/shmo-review` next to confirm the Section fix landed clean across other pages, or formalize Phase 4 routing (A/B/C) first?"**
+4. If sweeping pages: open dev server (it was running on :3000 at session close — verify with `lsof -ti:3000 -sTCP:LISTEN`), navigate to each built page, capture screenshot, look for any wave-vs-spacing oddity. The `feedback_wave_divider_is_sibling` memory now describes the symptom signature — use it.
+5. Before any subagent dispatch on UI work, hand-author the layout-lock + design-system guardrails into the Agent prompt directly (per `.claude/rules/subagent-dispatch.md`). Subagents can't load skills, so the guardrails must travel as text inside the prompt.
