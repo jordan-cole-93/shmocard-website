@@ -27,7 +27,14 @@ If a request maps to one of those reference pages, **start by copying the refere
 - **No primitive restyles in page CSS.** Page-level files (`home.css`, etc.) own LAYOUT only — grid, padding, aspect ratio. Appearance lives in `components.css`. If you find yourself styling `.shm-btn` from a page file, the variant belongs in `components.css`.
 - **Tokens, not hex.** `var(--color-ember)`, never `#FF5B1F`. Same for radii, shadows, motion.
 - **Soft by default, hard when it counts.** Cards, FAQ lists, and image frames default to soft hairlines. Hard chunky outline + 4px shadow is opt-in (`.shm-card--hard`, `.shm-faq-list--featured-card`, `.shm-image-frame--hard`). Reach for hard sparingly.
-- **Section rotation = four bgs only.** `marsh` (default ~60%) → `graham` (~25%) → `ember` (~10%) → `cocoa` (~5%). Class names are `.shm-bg-marsh / -graham / -ember / -cocoa` (the token is `--color-cocoa-deep`; the class drops the suffix). Put `.shm-wave shm-wave--{next-bg}` between sections.
+- **Section rotation = four bgs only.** `marsh` (default ~60%) → `graham` (~25%) → `ember` (~10%) → `cocoa` (~5%). Class names are `.shm-bg-marsh / -graham / -ember / -cocoa` (the token is `--color-cocoa-deep`; the class drops the suffix). Put `.shm-wave shm-wave--{next-bg}` **between** sections (sibling, not child — see next rule).
+- **Wave divider is a SIBLING of the section, not a child.** The wave occupies its own height *between* two sections. Putting the wave inside the previous section's `</section>` is wrong — `.shm-section`'s `padding-bottom: var(--section-py-d)` (40px) opens an empty sliver between content and wave, and the wave's `margin-bottom: -1px` can't bleed into the next section. Canonical structure (see `home-bundle.jsx:700-707`):
+  ```html
+  <section class="shm-section shm-bg-marsh">…</section>
+  <div class="shm-wave shm-wave--graham"></div>   <!-- sibling, NOT inside -->
+  <section class="shm-section shm-bg-graham">…</section>
+  ```
+  In this repo use `<Section bg="…" nextBg="…">` from `components/layout/Section.tsx` — it renders the wave as a Fragment sibling automatically. **Never** hand-author `<div className="shm-wave …">` inside another component's JSX. **Symptom that this rule was broken:** content ends, then a ~40px empty gap, then the wave floats below — instead of the wave biting into the boundary. If you see that gap, the wave's parent is wrong.
 - **Mascot is a sticker, max 140px, max 2 per page.** Often zero is correct. Never a hero image. The 200px `.shm-mascot--hero` variant exists for the homepage sub-brand spotlights only — don't reach for it on normal marketing pages.
 - **No exclamation marks. No emoji as decoration. No gradients. No drop-shadow blurs. No left-border accent stripes.**
 - **Iconography is hand-drawn cocoa-deep, 2.4–2.6px stroke, round caps. No Lucide / Heroicons / 1.5px stroke icons. No emoji as decoration.**
