@@ -3,14 +3,14 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: executing
-last_updated: "2026-05-07T06:15:00.000Z"
-last_activity: "2026-05-07 06:15 — 03-08 cart drawer complete. 12 .shm-cart-* primitive components + useCartHydration hook + global CartDrawer mount via app/layout.tsx. Zustand persist middleware DROPPED entirely (Cart Persistence Trap mitigation, RESEARCH.md Pitfall 6) — httpOnly cookie + Storefront query are sole source of truth for cartId/lines; UI state resets on reload. CartCheckoutButton calls assertCheckoutUrl Server Action before window.location.href (T-03-08-01 open-redirect guard). Built temp app/cart-smoke/ harness to verify add-to-cart end-to-end while sibling 03-05 PDP runs in parallel (DI-06 cleanup deferred). Browser-verified flow: cart create → add 2 products → qty +1 → remove → reload → hydrate from cookie. Screenshots 03-08-cart-empty.png + 03-08-cart-with-lines.png. Commits d01fca7 + 27aae54. REQ-06 cart UX surface satisfied. REQ-09 design system discipline holds. Wave 3 03-08 done."
+last_updated: "2026-05-07T04:13:52.797Z"
+last_activity: "2026-05-07 06:15 — 03-08 cart drawer complete. 12 .shm-cart-* components + global CartDrawer mount + useCartHydration hook (cookie-driven). Zustand persist DROPPED (Cart Persistence Trap mitigation). assertCheckoutUrl open-redirect guard wired. Smoke harness verified add-to-cart → qty → remove → reload-hydration end-to-end. Commits d01fca7 + 27aae54. REQ-06 + REQ-09 satisfied for cart surface."
 progress:
   total_phases: 4
   completed_phases: 0
   total_plans: 12
-  completed_plans: 7
-  percent: 58
+  completed_plans: 8
+  percent: 67
 ---
 
 # Project State
@@ -29,7 +29,7 @@ Stage: Waves 1+2 complete; Wave 3 03-08 complete. Sibling 03-05 (CR-80 PDP) runn
 Status: In progress
 Last activity: 2026-05-07 06:15 — 03-08 cart drawer complete. 12 .shm-cart-* components + global CartDrawer mount + useCartHydration hook (cookie-driven). Zustand persist DROPPED (Cart Persistence Trap mitigation). assertCheckoutUrl open-redirect guard wired. Smoke harness verified add-to-cart → qty → remove → reload-hydration end-to-end. Commits d01fca7 + 27aae54. REQ-06 + REQ-09 satisfied for cart surface.
 
-Progress: [██████░░░░] 58%
+Progress: [███████░░░] 67%
 
 ## Performance Metrics
 
@@ -53,6 +53,8 @@ Progress: [██████░░░░] 58%
 - Last activity: Phase 1 docs refresh + bootstrap
 - Trend: Healthy — no blockers, clear next step
 
+| Phase 03 P05 | 16m | 2 tasks | 18 files |
+
 ## Accumulated Context
 
 ### Decisions
@@ -68,6 +70,9 @@ Recent decisions affecting current work:
 - LOCKED: Locked headlines per `context/general/marketing.md`.
 - [Phase 3 / 03-02]: 2026-05-07: Section primitive enforces 4-color rotation (REQ-09) at the type level via `SectionBg = 'marsh'|'graham'|'ember'|'cocoa'`. Container polymorphic via `as` prop. Wave size mapping: `lg`/`xl` emit CSS modifiers; `sm`/`md` fall back to default thin wave (no `--sm`/`--md` exist).
 - [Phase 3 / 03-04]: 2026-05-07: /shmo-review proof block on cocoa-bg renders rows without `.shm-card` wrapper to avoid white-on-white `.shm-h3` cascade. Bulk-math grid shows 4 tiers (1/3/5/10) with illustrative volume only — pricing fetched in PDPs (Shopify Storefront API). HowItWorks-short and Proof inlined inside `app/shmo-review/page.tsx`; only reusable category primitives factored into `components/category/*`.
+- [Phase ?]: PdpBuyboxContext over Zustand for shared client state — single-page scope, keeps cart store clean per Cart Persistence Trap
+- [Phase ?]: Removed position:sticky from .pdp-gal so IntersectionObserver fires when gallery exits viewport
+- [Phase ?]: Extended addLineToCart with optional attributes? param — used for google_review_url cart-line attribute
 
 ### Pending Todos
 

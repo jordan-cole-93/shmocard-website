@@ -78,16 +78,16 @@ Plans:
 Plans:
 - [x] 03-01-PLAN.md — AUDIT-ONLY: verify tokens + fonts wired in app/globals.css + app/layout.tsx (foundations 3-A1) ✅ 2026-05-07 (commit 14be4e5)
 - [x] 03-02-PLAN.md — AUDIT shipped Nav/Footer/Mascot/Sticker + ADD Container + Section layout primitives (type-level 4-color rotation) ✅ 2026-05-07 (commits 76b22c9, cfc8611)
-- [ ] 03-03-PLAN.md — Homepage: 11 sections per Shmocard Homepage.html (Hero with em type-cycle, Audience marquee, Proof, 4× SubBrandSpotlight, CrewStrip, HowItWorks, VideoTestimonials, Compatibility, HomeFaq, FinalCta)
+- [x] 03-03-PLAN.md — Homepage: 11 sections per Shmocard Homepage.html (Hero with em type-cycle, Audience marquee, Proof, 4× SubBrandSpotlight, CrewStrip, HowItWorks, VideoTestimonials, Compatibility, HomeFaq, FinalCta)
 - [x] 03-04-PLAN.md — /shmo-review category: locked headline + tagline, bulk math, 3 format cards linking to PDPs, 6-question FAQ ✅ 2026-05-07 (commits 27cb2d5 + 9849306, summary `.planning/phases/03-rebuild/03-04-SUMMARY.md`)
-- [ ] 03-05-PLAN.md — CR-80 PDP at app/shmo-review/[handle]/page.tsx (dynamic route + 12-component PDP tree, .shm-buybox-sticky slides DOWN; SHARED tree consumed by 03-06/07)
+- [x] 03-05-PLAN.md — CR-80 PDP at app/shmo-review/[handle]/page.tsx (dynamic route + 12-component PDP tree, .shm-buybox-sticky slides DOWN; SHARED tree consumed by 03-06/07)
 - [ ] 03-06-PLAN.md — L-Sign PDP: extend pdp-copy.ts; reuse PDP tree from 03-05
 - [ ] 03-07-PLAN.md — Square Card PDP: extend pdp-copy.ts; reuse PDP tree from 03-05
-- [ ] 03-08-PLAN.md — Cart drawer (.shm-cart-* primitives) + Zustand store + cookie hydration + Server Actions wired
+- [x] 03-08-PLAN.md — Cart drawer (.shm-cart-* primitives) + Zustand store + cookie hydration + Server Actions wired
 - [ ] 03-09-PLAN.md — Hardened checkout redirect: assertCheckoutUrl allowlist (*.myshopify.com / configured store domain) + try/catch + isNavigating guard
 - [ ] 03-10-PLAN.md — Waitlist modal + VideoLightbox + Server Action POST to GHL with honeypot + email/product validation + graceful fallback when URL unset (D-04)
 - [x] 03-11-PLAN.md — app/api/revalidate/route.ts: HMAC SHA-256 + timingSafeEqual + revalidateTag for product handle + collection ✅ 2026-05-07 (commit ce7c52d, summary `.planning/phases/03-rebuild/03-11-SUMMARY.md`)
-- [ ] 03-12-PLAN.md — lib/shopify/* (shopifyFetch, queries, mutations, types) + components/cart/actions.ts (Server Actions, httpOnly cookie, open-redirect guard)
+- [x] 03-12-PLAN.md — lib/shopify/* (shopifyFetch, queries, mutations, types) + components/cart/actions.ts (Server Actions, httpOnly cookie, open-redirect guard)
 
 ### Phase 4: Launch readiness
 
