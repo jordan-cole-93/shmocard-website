@@ -11,9 +11,16 @@ export default function HomePage() {
           The toolkit your crew&apos;s been <em>missing</em>.
         </h1>
         <p className="shm-lede">
-          Project shell is alive. Full homepage build follows the
-          translation map. <em>3-A1</em> scaffold complete.
+          Project shell is alive. Asset pipeline online — the mascot below loads
+          from <code>public/mascot/</code>. <em>3-A2</em> migration complete.
         </p>
+
+        {/* Mascot smoke test — confirms public/ → URL routing works. */}
+        <img
+          src="/mascot/mascot-holding-card.png"
+          alt="Shmocard mascot holding a card"
+          className="shm-mascot shm-mascot--supporting"
+        />
       </div>
     </main>
   );
