@@ -27,7 +27,7 @@ See: .planning/PROJECT.md (updated 2026-05-07)
 Phase: 3 of 4 (Rebuild — in progress)
 Stage: Wave 3 complete (03-05 CR-80 + 03-06 L-Sign + 03-07 Square Card + 03-08 cart drawer). Wave 4 (03-09 / 03-10 / 03-11) is next.
 Status: In progress
-Last activity: 2026-05-07 06:30 — 03-06 L-Sign PDP complete. pdp-copy.ts extended with L-Sign subline + 4 value-prop bullets + 3 FAQ entries. Browser-verified real Shopify product (8 variants, $29.99-$219.99), cart-add Server Action POST 200, drawer opens, 0 console errors. Zero new components — full reuse of 03-05 PDP tree. REQ-04 satisfied. Commits b8ec441 + 365854a.
+Last activity: 2026-05-07 - Completed quick task 260507-d4g: Trim CLAUDE.md to ~50 lines and move wrapper-dispatch + hard-rule paragraphs into a new .claude/rules/subagent-dispatch.md
 
 Progress: [██████████] 100%
 
@@ -57,6 +57,12 @@ Progress: [██████████] 100%
 | Phase 03 P07 | 5m | 2 tasks | 3 files |
 | Phase 03 P06 | 25m | 2 tasks | 2 files |
 | Phase 03 P09 | 13 | 2 tasks | 5 files |
+
+### Quick Tasks Completed
+
+| # | Description | Date | Commit | Directory |
+|---|-------------|------|--------|-----------|
+| 260507-d4g | Trim CLAUDE.md to ~50 lines and move wrapper-dispatch + hard-rule paragraphs into a new .claude/rules/subagent-dispatch.md | 2026-05-07 | 38b645d | [260507-d4g-trim-claude-md-to-50-lines-and-move-wrap](./quick/260507-d4g-trim-claude-md-to-50-lines-and-move-wrap/) |
 
 ## Accumulated Context
 
