@@ -31,7 +31,7 @@
 
 .home-hero h1 {
   margin: 0 auto 22px;
-  max-width: 18ch;
+  max-width: 26ch;
 }
 .home-hero__lede {
   max-width: 54ch;
@@ -60,6 +60,38 @@
   display: inline-flex;
   align-items: baseline;
   white-space: nowrap;
+}
+.home-hero__cycle-measure {
+  visibility: hidden;
+  position: absolute;
+  white-space: nowrap;
+  pointer-events: none;
+  left: 0;
+  top: 0;
+}
+.home-hero__cycle-text {
+  white-space: pre;
+}
+.home-hero__cycle-caret {
+  display: inline-block;
+  width: 2px;
+  height: 0.85em;
+  margin-left: 6px;
+  background: currentColor;
+  align-self: center;
+  animation: shm-caret-blink 1.05s ease-in-out infinite;
+}
+.home-hero__cycle-period {
+  color: var(--color-cocoa-deep);
+  font-style: normal;
+  margin-left: 1px;
+}
+@keyframes shm-caret-blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .home-hero__cycle-caret { animation: none; }
 }
 
 /* Hero toolkit grid (4 sub-brand tiles below the fold) */

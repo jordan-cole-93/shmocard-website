@@ -20,11 +20,12 @@ export default function Hero() {
       <div className="home-hero">
         <span className="shm-eyebrow home-hero__eyebrow">A toolkit, not a card</span>
         <h1 className="shm-display">
-          The toolkit your crew&apos;s been{" "}
+          The toolkit your
+          <br />
+          crew&apos;s been{" "}
           <em>
             <HeroTypeCycle words={["missing", "asking for"]} />
           </em>
-          .
         </h1>
         <p className="shm-lede home-hero__lede">
           NFC tools built for local shop crews. One tap from a customer&apos;s phone — review,
