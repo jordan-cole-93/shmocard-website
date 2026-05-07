@@ -77,6 +77,7 @@ All four are bundled locally in `context/design-system/fonts/` — copy the fold
 | If conflict with… | Winner |
 |---|---|
 | `frontend-design` skill (Anthropic plugin) | **Design system rules win** for visual / typography / mascot / section-rotation / icon stroke / utility-class-prefix. `frontend-design` anti-slop principles still apply for composition / hierarchy / cognitive load. |
+| `subagent-dispatch.md` | **`subagent-dispatch.md` wins** for which wrapper to invoke and how to inline guardrails into Agent prompts. Design-system rules still govern the *content* of the UI guardrails. |
 | `live-store-protection.md` | **`live-store-protection.md` wins.** Live store safety supersedes everything. |
 | `shopify-data-discipline.md` | **`shopify-data-discipline.md` wins.** Product data lives in Shopify; design system controls presentation only. |
 | `file-organization.md` | **`file-organization.md` wins** for repo structure. Design system rules apply only to design-system folder + UI work. |
