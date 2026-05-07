@@ -82,13 +82,16 @@
 }
 .home-hero__tile:hover { transform: translate(-2px, -2px); }
 .home-hero__tile-art {
-  position: absolute; inset: 0 0 36% 0;
+  position: absolute;
+  top: 56px; left: 0; right: 0;
+  height: 120px;
   display: grid; place-items: center;
   pointer-events: none;
   z-index: 0;
 }
 .home-hero__tile-art img {
-  max-width: 78%; max-height: 80%;
+  max-width: 78%;
+  max-height: 110px;
   object-fit: contain;
 }
 .home-hero__tile-art--megaphone img {
