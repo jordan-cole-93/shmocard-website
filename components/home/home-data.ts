@@ -17,6 +17,7 @@ export type SubBrand = {
   headlineLead: string;
   headlineEm: string;
   headlineTrail: string;
+  tileSub: string;
   lede: string;
   bullets: string[];
   ctaPrimary: { label: string; href?: string; modal?: "waitlist" };
@@ -40,6 +41,8 @@ export const SUB_BRANDS: SubBrand[] = [
     headlineLead: "One tap. One five-star ",
     headlineEm: "review",
     headlineTrail: ".",
+    tileSub:
+      "NFC card, sign or disc. Opens your Google review page on tap.",
     lede:
       "An NFC card, sign or disc that, when tapped by a customer's phone, opens your Google review page directly. No app, no login, no QR-code gymnastics.",
     bullets: [
@@ -73,6 +76,8 @@ export const SUB_BRANDS: SubBrand[] = [
     headlineLead: "Your business card. ",
     headlineEm: "Always",
     headlineTrail: " up to date.",
+    tileSub:
+      "NFC business card tied to a profile you can edit any time.",
     lede:
       "An NFC business card that taps into a contact profile you can edit any time. Change your number, role or socials — every card you've ever handed out updates automatically.",
     bullets: [
@@ -97,6 +102,8 @@ export const SUB_BRANDS: SubBrand[] = [
     headlineLead: "One link. ",
     headlineEm: "All",
     headlineTrail: " the things you do.",
+    tileSub:
+      "A branded link-in-bio page tuned for local shop crews.",
     lede:
       "A branded link-in-bio for local shops. Booking, menu, location, hiring, current promotion — every important link a customer might need, on one tap-friendly page.",
     bullets: [
@@ -120,6 +127,8 @@ export const SUB_BRANDS: SubBrand[] = [
     headlineLead: "Every review, ",
     headlineEm: "answered",
     headlineTrail: ".",
+    tileSub:
+      "Auto-reply to every Google review in your shop's voice.",
     lede:
       "Auto-respond to every Google review — positive and negative — in your shop's voice. Replying is a known ranking factor and a trust signal. Stop letting reviews sit.",
     bullets: [

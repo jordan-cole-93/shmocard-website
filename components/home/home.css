@@ -82,17 +82,18 @@
 }
 .home-hero__tile:hover { transform: translate(-2px, -2px); }
 .home-hero__tile-art {
-  position: absolute; inset: 0 0 38% 0;
+  position: absolute; inset: 0;
   display: grid; place-items: center;
   pointer-events: none;
   z-index: 0;
 }
 .home-hero__tile-art img {
-  max-width: 78%; max-height: 100%;
+  max-width: 78%; max-height: 60%;
   object-fit: contain;
+  transform: translateY(-12%);
 }
 .home-hero__tile-art--megaphone img {
-  max-width: 96%;
+  max-width: 96%; max-height: 78%;
 }
 .home-hero__tile-name {
   position: relative;
@@ -106,8 +107,14 @@
   position: relative;
   z-index: 2;
   font-family: var(--font-sans);
-  font-size: 13px; color: var(--color-ink-3);
+  font-size: 13px; line-height: 1.45;
+  color: var(--color-ink-3);
   margin: 4px 0 0;
+  min-height: calc(2 * 1.45em);
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
 }
 .home-hero__tile-status {
   position: absolute;

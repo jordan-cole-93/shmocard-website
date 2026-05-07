@@ -68,7 +68,7 @@ export default function Hero() {
                     <img src={tile.src} alt="" />
                   </div>
                   <h3 className="home-hero__tile-name">{sb.eyebrow}</h3>
-                  <p className="home-hero__tile-sub">{sb.lede.split(".")[0]}.</p>
+                  <p className="home-hero__tile-sub">{sb.tileSub}</p>
                 </a>
               );
             })}
