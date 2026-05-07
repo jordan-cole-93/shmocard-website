@@ -3,14 +3,14 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: executing
-last_updated: "2026-05-07T04:30:00.000Z"
-last_activity: "2026-05-07 06:30 — 03-06 L-Sign PDP complete. pdp-copy.ts extended with L-Sign subline + 4 value-prop bullets (counter visibility / no countertop hardware / shift-swap / customers tap) + 3 FAQ entries (incl. new shift-swap entry). Browser-verified at /shmo-review/l-sign: real Shopify product, 8 variants ($29.99-$219.99), 0 console errors, cart-add Server Action confirmed POST 200, drawer opens. Zero new components — full reuse of 03-05 PDP tree. REQ-04 satisfied. Commits b8ec441 + 365854a (subline+bullets landed in 03-07 commit e882f98 due to parallel-execution working-tree race; copy is correct, attribution split documented in 03-06-SUMMARY)."
+last_updated: "2026-05-07T06:45:00.000Z"
+last_activity: "2026-05-07 06:45 — 03-10 Waitlist + Video lightbox complete. Server Action with honeypot + email regex + product allowlist + graceful fallback when GHL_WAITLIST_WEBHOOK_URL unset (D-04). Zustand modal store + ModalRoot portal mount. SubBrandSpotlight (biz/link/reputation) + VideoTestimonials wired via thin client leaves (NotifyButton, VideoTile) — sections stay server-rendered. Browser-verified all 6 hard rules pass. REQ-08 satisfied. Commits debc060 + bab9212 + 2c9cbe4."
 progress:
   total_phases: 4
   completed_phases: 0
   total_plans: 12
-  completed_plans: 11
-  percent: 92
+  completed_plans: 12
+  percent: 100
 ---
 
 # Project State
