@@ -3,11 +3,11 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: executing
-last_updated: "2026-05-07T06:45:00.000Z"
-last_activity: "2026-05-07 06:45 — 03-10 Waitlist + Video lightbox complete. Server Action with honeypot + email regex + product allowlist + graceful fallback when GHL_WAITLIST_WEBHOOK_URL unset (D-04). Zustand modal store + ModalRoot portal mount. SubBrandSpotlight (biz/link/reputation) + VideoTestimonials wired via thin client leaves (NotifyButton, VideoTile) — sections stay server-rendered. Browser-verified all 6 hard rules pass. REQ-08 satisfied. Commits debc060 + bab9212 + 2c9cbe4."
+last_updated: "2026-05-07T04:42:13.278Z"
+last_activity: "2026-05-07 06:30 — 03-06 L-Sign PDP complete. pdp-copy.ts extended with L-Sign subline + 4 value-prop bullets + 3 FAQ entries. Browser-verified real Shopify product (8 variants, $29.99-$219.99), cart-add Server Action POST 200, drawer opens, 0 console errors. Zero new components — full reuse of 03-05 PDP tree. REQ-04 satisfied. Commits b8ec441 + 365854a."
 progress:
   total_phases: 4
-  completed_phases: 0
+  completed_phases: 1
   total_plans: 12
   completed_plans: 12
   percent: 100
@@ -29,7 +29,7 @@ Stage: Wave 3 complete (03-05 CR-80 + 03-06 L-Sign + 03-07 Square Card + 03-08 c
 Status: In progress
 Last activity: 2026-05-07 06:30 — 03-06 L-Sign PDP complete. pdp-copy.ts extended with L-Sign subline + 4 value-prop bullets + 3 FAQ entries. Browser-verified real Shopify product (8 variants, $29.99-$219.99), cart-add Server Action POST 200, drawer opens, 0 console errors. Zero new components — full reuse of 03-05 PDP tree. REQ-04 satisfied. Commits b8ec441 + 365854a.
 
-Progress: [█████████░] 92%
+Progress: [██████████] 100%
 
 ## Performance Metrics
 
@@ -56,6 +56,7 @@ Progress: [█████████░] 92%
 | Phase 03 P05 | 16m | 2 tasks | 18 files |
 | Phase 03 P07 | 5m | 2 tasks | 3 files |
 | Phase 03 P06 | 25m | 2 tasks | 2 files |
+| Phase 03 P09 | 13 | 2 tasks | 5 files |
 
 ## Accumulated Context
 
@@ -79,6 +80,7 @@ Recent decisions affecting current work:
 - [Phase 03 / 03-06]: 2026-05-07: L-Sign PDP wired by extending pdp-copy.ts only (subline + 4 bullets + 3rd FAQ on shift-swap) — zero new components, full reuse of 03-05 PDP tree — REQ-04 satisfied; cart-add Server Action POST 200 confirmed; lowest variant $29.99 from Shopify Storefront
 - [Phase 03 / 03-06]: 2026-05-07: Documented parallel-execution working-tree race (sibling 03-07 swept 03-06's L-Sign subline + bullets edits into commit e882f98). Mitigation for future parallel waves: serialize plans that touch the same file, OR atomic edit-then-stage instead of batched staging
 - [Phase 03]: Verified PDP against 'next start' (production build) — 'next dev' has a pre-existing framer-motion vendor-chunk HMR crash — Production server is the operational reality; deferred dev HMR fix to Phase 4
+- [Phase ?]: 03-09 — Allowlist accepts SHOPIFY_PRIMARY_DOMAIN (and shop.<primary>) in addition to *.myshopify.com; required because Shopify resolves cart.checkoutUrl to the merchant primary host once configured
 
 ### Pending Todos
 

@@ -84,7 +84,7 @@ Plans:
 - [x] 03-06-PLAN.md — L-Sign PDP: extend pdp-copy.ts; reuse PDP tree from 03-05 ✅ 2026-05-07 (commits b8ec441 + 365854a, summary `.planning/phases/03-rebuild/03-06-SUMMARY.md`)
 - [x] 03-07-PLAN.md — Square Card PDP: extend pdp-copy.ts; reuse PDP tree from 03-05
 - [x] 03-08-PLAN.md — Cart drawer (.shm-cart-* primitives) + Zustand store + cookie hydration + Server Actions wired
-- [ ] 03-09-PLAN.md — Hardened checkout redirect: assertCheckoutUrl allowlist (*.myshopify.com / configured store domain) + try/catch + isNavigating guard
+- [x] 03-09-PLAN.md — Hardened checkout redirect: assertCheckoutUrl allowlist (*.myshopify.com / configured store domain) + try/catch + isNavigating guard
 - [x] 03-10-PLAN.md — Waitlist modal + VideoLightbox + Server Action POST to GHL with honeypot + email/product validation + graceful fallback when URL unset (D-04) ✅ 2026-05-07 (commits debc060 + bab9212 + 2c9cbe4, summary `.planning/phases/03-rebuild/03-10-SUMMARY.md`)
 - [x] 03-11-PLAN.md — app/api/revalidate/route.ts: HMAC SHA-256 + timingSafeEqual + revalidateTag for product handle + collection ✅ 2026-05-07 (commit ce7c52d, summary `.planning/phases/03-rebuild/03-11-SUMMARY.md`)
 - [x] 03-12-PLAN.md — lib/shopify/* (shopifyFetch, queries, mutations, types) + components/cart/actions.ts (Server Actions, httpOnly cookie, open-redirect guard)
