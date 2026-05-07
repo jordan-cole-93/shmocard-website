@@ -18,6 +18,7 @@ function PlayIcon() {
 export default function VideoTestimonials() {
   return (
     <Section bg="marsh" nextBg="graham" ariaLabel="Video testimonials">
+      {/* Rotation: marsh→graham; Compatibility picks up on graham. */}
       <div className="video-testimonials__head">
         <span className="video-testimonials__eyebrow">Crews on camera</span>
         <h2 className="shm-h2">Watch shops talk about the bulk math.</h2>

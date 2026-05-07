@@ -7,7 +7,7 @@ import { HOW_STEPS } from "./home-data";
 
 export default function HowItWorks() {
   return (
-    <Section bg="marsh" nextBg="graham" id="how" ariaLabel="How it works">
+    <Section bg="marsh" nextBg="marsh" id="how" ariaLabel="How it works">
       <div className="shm-section-head" style={{ textAlign: "center" }}>
         <span className="shm-eyebrow">How it works</span>
         <h2 className="shm-h2">Six steps. No app. No login.</h2>

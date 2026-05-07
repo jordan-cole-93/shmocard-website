@@ -53,7 +53,7 @@ export const SUB_BRANDS: SubBrand[] = [
     bg: "marsh",
     art: {
       kind: "photo",
-      src: "/products/cr80/transparent/cr80-trio.png",
+      src: "/products/cr80/transparent/magnific_2884306972.png",
       chip: { label: "Wallet-size · PVC", pill: "CR-80" },
     },
     formats: [
