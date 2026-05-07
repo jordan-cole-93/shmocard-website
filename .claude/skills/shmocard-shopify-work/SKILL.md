@@ -13,7 +13,7 @@ description: Use BEFORE spawning a subagent to do Shopify Storefront API work, c
 3. Splices into Agent prompt at the TOP, before the task brief.
 4. Spawns subagent (typically `gsd-executor`) with the augmented prompt.
 
-**This skill is for Shopify backend / data-layer work.** UI for Shopify-rendered surfaces (PDPs, cart drawer) uses `shmocard-build-page` or `shmocard-polish-section` instead, with this skill embedded alongside.
+**This skill is for Shopify backend / data-layer work.** For UI of Shopify-rendered surfaces (PDPs, cart drawer), the orchestrator hand-authors design-system guardrails into the Agent prompt directly and can embed this skill's `<embed>` block alongside.
 
 ---
 

@@ -47,8 +47,8 @@ Open routing question carried over from the start of this session (user said "I'
 
 **Decision needed first** (open routing question above). Then one of:
 
-1. **If staying in polish mode (A):** continue page-by-page on the homepage. Next obvious targets per memory `S86`: hero CTAs / meta strip spacing, Proof section primitives, SubBrand spotlights (memory `296` flagged spotlight mascot sizing as design-system non-compliant). Always invoke `shmocard-polish-section` first when dispatching a subagent — wrapper carries the layout-lock guardrail block.
-2. **If formalizing Phase 4 (B):** run `/gsd-phase` to rename Phase 4 in `ROADMAP.md` from "launch-readiness" → "visual-redesign" and push launch-readiness to Phase 5. Then `/gsd-plan-phase 4` to write a clean polish plan that wires `shmocard-polish-section` from the start. STATE.md will need a `last_updated` refresh either way.
+1. **If staying in polish mode (A):** continue page-by-page on the homepage. Next obvious targets per memory `S86`: hero CTAs / meta strip spacing, Proof section primitives, SubBrand spotlights (memory `296` flagged spotlight mascot sizing as design-system non-compliant). When dispatching a subagent, hand-author layout-lock + design-system guardrails into the Agent prompt directly (read `.claude/rules/design-system.md` first).
+2. **If formalizing Phase 4 (B):** run `/gsd-phase` to rename Phase 4 in `ROADMAP.md` from "launch-readiness" → "visual-redesign" and push launch-readiness to Phase 5. Then `/gsd-plan-phase 4` to write a clean polish plan. STATE.md will need a `last_updated` refresh either way.
 3. **If skipping to launch-readiness (C):** start the Phase 4 directory with `/gsd-plan-phase 4` against the existing ROADMAP entry. Mobile pass / a11y / Vercel env / DNS — but only AFTER Jordan signs off on the current visual state.
 
 Independent of the routing call: STATE.md `last_activity` and `progress` block are stale relative to git. Should refresh once the next phase begins.
@@ -70,5 +70,5 @@ Independent of the routing call: STATE.md `last_activity` and `progress` block a
 1. Read this file.
 2. Read `CLAUDE.md`.
 3. Ask Jordan: **"Polish more sections (A), formalize Phase 4 = visual-redesign in ROADMAP (B), or move on to launch-readiness (C)?"**
-4. Whichever path: BEFORE dispatching any UI subagent, invoke the matching project-local wrapper skill (`shmocard-polish-section` for refinement, `shmocard-build-page` for new pages, `shmocard-design-review` for review subagents, `shmocard-shopify-work` for cart/Storefront/Server-Action work). Subagents structurally cannot access the Skill tool, so the wrapper's verbatim guardrail block is the only way layout-lock + design-system rules reach them. Skipping the wrapper is what produced the rolled-back 04-01 commits earlier today.
+4. Whichever path: BEFORE dispatching any subagent, hand-author the relevant guardrails (layout-lock + design-system + live-store-protection where applicable) into the Agent prompt directly. Subagents structurally cannot access the Skill tool, so guardrails must travel as text inside the prompt. For Shopify backend dispatch, `shmocard-shopify-work` is still available as a project-local wrapper skill that returns a verbatim guardrail block. UI dispatch has no wrapper — read `.claude/rules/design-system.md` first and inline its hard rules. Skipping guardrails is what produced the rolled-back 04-01 commits earlier today.
 5. Run `/gsd-progress` to see the up-to-date roadmap state before committing to a path.

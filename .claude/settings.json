@@ -22,9 +22,7 @@
       "Read(//Users/jordancole/Library/Caches/ms-playwright/**)",
       "Bash(curl -s -o /dev/null -w \"HTTP:%{http_code}\\\\n\" http://localhost:3000/)",
       "Read(//private/tmp/**)",
-      "Read(//Users/jordancole/.claude/skills/impeccable/reference/**)",
-      "Edit(/.claude/skills/build-shmocard-component/**)",
-      "Edit(/.claude/skills/impeccable-shmocard/**)"
+      "Read(//Users/jordancole/.claude/skills/impeccable/reference/**)"
     ]
   },
   "hooks": {
@@ -58,16 +56,6 @@
             "type": "command",
             "command": ".claude/hooks/surface-applied-rules.sh",
             "statusMessage": "Requiring rule surfacing..."
-          },
-          {
-            "type": "command",
-            "command": ".claude/hooks/inject-caveman-mode.sh",
-            "statusMessage": "Enabling caveman mode..."
-          },
-          {
-            "type": "command",
-            "command": ".claude/hooks/inject-gsd-routing.sh",
-            "statusMessage": "Checking GSD routing..."
           }
         ]
       }
