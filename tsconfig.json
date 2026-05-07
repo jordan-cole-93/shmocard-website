@@ -19,5 +19,5 @@
     }
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],
-  "exclude": ["node_modules", "context/design-system/ui_kits/**/*.jsx"]
+  "exclude": ["node_modules", ".claude/skills/shmocard-design-system/ui_kits/**/*.jsx"]
 }

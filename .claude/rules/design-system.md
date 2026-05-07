@@ -2,18 +2,18 @@
 
 **Auto-applies whenever Claude works on UI / visual / design / component / layout / page tasks in this repo.**
 
-The Shmocard design system lives at `context/design-system/`. The CSS inside that folder is the **source of truth** when docs disagree. This rule file is the orchestrator that points at the source-of-truth docs and surfaces the hard rules Claude must respect every time it touches a `.tsx`, `.css`, or visual asset.
+The Shmocard design system lives at `.claude/skills/shmocard-design-system/`. The CSS inside that folder is the **source of truth** when docs disagree. This rule file is the orchestrator that points at the source-of-truth docs and surfaces the hard rules Claude must respect every time it touches a `.tsx`, `.css`, or visual asset.
 
 ---
 
 ## Read these before any UI work (mandatory order)
 
-1. **`context/design-system/SKILL.md`** — operator's manual. Has the primitive table, hard rules, canonical reference pages.
-2. **`context/design-system/README.md`** — brand voice, content rules, visual foundations.
-3. **`context/design-system/colors_and_type.css`** + **`context/design-system/components.css`** — the source of truth. **The CSS wins** when docs disagree.
-4. **`context/design-system/PRIMITIVES.md`** — canonical primitive index (token list, type ramp, every component family with every variant).
-5. **`context/design-system/ui_kits/website/homepage/Shmocard Homepage.html`** (+ `home.css` header) — canonical marketing page reference. Section rotation, hero, sub-brand spotlight, FAQ, footer all live here.
-6. **`context/design-system/ui_kits/website/Buybox.html`** and **`Cart Drawer.html`** — canonical PDP and cart references.
+1. **`.claude/skills/shmocard-design-system/SKILL.md`** — operator's manual. Has the primitive table, hard rules, canonical reference pages.
+2. **`.claude/skills/shmocard-design-system/README.md`** — brand voice, content rules, visual foundations.
+3. **`.claude/skills/shmocard-design-system/colors_and_type.css`** + **`.claude/skills/shmocard-design-system/components.css`** — the source of truth. **The CSS wins** when docs disagree.
+4. **`.claude/skills/shmocard-design-system/PRIMITIVES.md`** — canonical primitive index (token list, type ramp, every component family with every variant).
+5. **`.claude/skills/shmocard-design-system/ui_kits/website/homepage/Shmocard Homepage.html`** (+ `home.css` header) — canonical marketing page reference. Section rotation, hero, sub-brand spotlight, FAQ, footer all live here.
+6. **`.claude/skills/shmocard-design-system/ui_kits/website/Buybox.html`** and **`Cart Drawer.html`** — canonical PDP and cart references.
 
 If a request maps to one of those reference pages, **start by copying the reference**. Do not invent a layout from scratch.
 
@@ -43,7 +43,7 @@ If a request maps to one of those reference pages, **start by copying the refere
 - **Body & UI** = Inter Tight 400–700 (`--font-body`).
 - **Hand accent** = Shadows Into Light Two (`--font-hand`).
 
-All four are bundled locally in `context/design-system/fonts/` — copy the folder when adopting the system. CSS declares each via `@font-face` first; Google Fonts `@import` is a fallback.
+All four are bundled locally in `.claude/skills/shmocard-design-system/fonts/` — copy the folder when adopting the system. CSS declares each via `@font-face` first; Google Fonts `@import` is a fallback.
 
 **No system-ui, no plain Inter, no Roboto, no Fraunces, no other fonts.**
 
@@ -51,7 +51,7 @@ All four are bundled locally in `context/design-system/fonts/` — copy the fold
 
 ## When adding to the system
 
-- A new component goes in `context/design-system/components.css`, with a preview card in `context/design-system/preview/`. Both, or it's incomplete.
+- A new component goes in `.claude/skills/shmocard-design-system/components.css`, with a preview card in `.claude/skills/shmocard-design-system/preview/`. Both, or it's incomplete.
 - A new variant of an existing primitive goes next to the primitive in `components.css`, never inside a page-level file.
 - If you change a token, update every preview that demonstrates it. The previews are the QA fixtures.
 - Update `SKILL.md` and `README.md` when the system gains or loses a primitive.
@@ -65,7 +65,7 @@ All four are bundled locally in `context/design-system/fonts/` — copy the fold
 ## Don't
 
 - Don't add filler content, dummy stats, or decorative iconography to fill space. Every element earns its place.
-- Don't introduce new fonts. The four bundled in `context/design-system/fonts/` are the whole stack.
+- Don't introduce new fonts. The four bundled in `.claude/skills/shmocard-design-system/fonts/` are the whole stack.
 - Don't write `position: fixed; bottom: 0` with product copy inside. That's `.shm-buybox-sticky` (which actually slides from the top — read the reference).
 - Don't ship a marketing-page section that bypasses the rotation. If it doesn't fit `marsh / graham / ember / cocoa`, the section is wrong, not the palette. (The homepage showcase is the only page that takes liberties here — see the showcase exception above.)
 - Don't fight the design system with Tailwind 4 utilities. Tailwind utilities are allowed for **layout only** (grid, flex, padding, gap). Color, type, radius, shadow, motion = always `.shm-*` classes or design system tokens.
@@ -85,14 +85,14 @@ All four are bundled locally in `context/design-system/fonts/` — copy the fold
 
 ## Canonical source-of-truth files (don't duplicate)
 
-These files are authored and maintained inside `context/design-system/`. **Don't duplicate their content here.** Always read the source:
+These files are authored and maintained inside `.claude/skills/shmocard-design-system/`. **Don't duplicate their content here.** Always read the source:
 
-- `context/design-system/SKILL.md` — operator's manual + primitive quick reference
-- `context/design-system/README.md` — brand context, voice, visual foundations, fonts
-- `context/design-system/PRIMITIVES.md` — canonical primitive index
-- `context/design-system/colors_and_type.css` — every token + type ramp
-- `context/design-system/components.css` — every primitive
-- `context/design-system/preview/*.html` — visual QA fixtures (one per token group / primitive)
-- `context/design-system/ui_kits/website/` — canonical reference pages
+- `.claude/skills/shmocard-design-system/SKILL.md` — operator's manual + primitive quick reference
+- `.claude/skills/shmocard-design-system/README.md` — brand context, voice, visual foundations, fonts
+- `.claude/skills/shmocard-design-system/PRIMITIVES.md` — canonical primitive index
+- `.claude/skills/shmocard-design-system/colors_and_type.css` — every token + type ramp
+- `.claude/skills/shmocard-design-system/components.css` — every primitive
+- `.claude/skills/shmocard-design-system/preview/*.html` — visual QA fixtures (one per token group / primitive)
+- `.claude/skills/shmocard-design-system/ui_kits/website/` — canonical reference pages
 
 This rule file's role is to **point at those docs and enforce that they get read** — not to mirror their content. If this rule and a source-of-truth doc disagree, the source-of-truth doc wins.

@@ -3,7 +3,7 @@
 // at the type level. Pure server component.
 //
 // Visual classes (.shm-bg-{bg}, .shm-wave, .shm-wave--{color}) live in
-// context/design-system/colors_and_type.css. This component composes
+// .claude/skills/shmocard-design-system/colors_and_type.css. This component composes
 // them — it does not restyle them.
 //
 // Wave size note: the design system ships only `.shm-wave--lg` (64px) and

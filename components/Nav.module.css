@@ -1,6 +1,6 @@
 /* Nav.module.css — layout only. Appearance lives in design-system primitives
    (.shm-nav, .shm-btn, .shm-badge). Ported from
-   context/design-system/ui_kits/website/homepage/home.css `.nav-*` block. */
+   .claude/skills/shmocard-design-system/ui_kits/website/homepage/home.css `.nav-*` block. */
 
 .inner {
   display: flex;

@@ -1,6 +1,6 @@
 /* Footer.module.css — layout only. Cocoa-deep surface comes from
    var(--color-cocoa-deep). Ported from
-   context/design-system/ui_kits/website/homepage/home.css `.footer*` block. */
+   .claude/skills/shmocard-design-system/ui_kits/website/homepage/home.css `.footer*` block. */
 
 .footer {
   background: var(--color-cocoa-deep);

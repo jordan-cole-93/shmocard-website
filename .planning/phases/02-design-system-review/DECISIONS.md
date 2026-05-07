@@ -55,7 +55,7 @@ This file captures the open questions surfaced during the Phase 2 audit + transl
 
 **Rationale:**
 - Standard Next.js pattern — files served at `/products/cr80-trio.png` from the deployed origin.
-- Keeps `context/design-system/` as code-only (CSS, docs, fonts).
+- Keeps `.claude/skills/shmocard-design-system/` as code-only (CSS, docs, fonts).
 - Clean separation: design system = source code; `public/` = runtime media.
 - Vercel deploys `public/` automatically.
 

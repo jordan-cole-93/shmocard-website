@@ -1,7 +1,7 @@
 // components/layout/Container.tsx
 // Reusable .shm-container wrapper. Pure server component.
 // Source-of-truth for the design system's `.shm-container` (max-width 1200,
-// 28px gutter — see context/design-system/colors_and_type.css line 271).
+// 28px gutter — see .claude/skills/shmocard-design-system/colors_and_type.css line 271).
 //
 // Polymorphic: render as 'div' (default), 'section', 'header', 'footer',
 // or 'main' via the `as` prop. This stays minimal — it's the bare wrapper.

@@ -5,12 +5,12 @@ Each entry: source plan, discovery, recommended owner.
 
 ---
 
-## DI-01 — `@import url(...)` in `context/design-system/colors_and_type.css` violates CSS @import-first rule
+## DI-01 — `@import url(...)` in `.claude/skills/shmocard-design-system/colors_and_type.css` violates CSS @import-first rule
 
 **Surfaced during:** 03-01 audit (Task 2 — `npm run build`)
 **Impact:** Non-fatal build warning. Bundled `@font-face` declarations on lines 21-65 win at runtime so brand fonts render correctly (verified via screenshot). The Google Fonts `@import` on line 76 is purely a fallback that the bundler ignores.
 **Recommended fix:** Move the `@import url("https://fonts.googleapis.com/...")` line above the `@font-face` blocks (or remove it entirely — the bundled fonts cover all four families).
-**Owner:** Design system (not Phase 3 wiring). File this against `context/design-system/` whenever the design-system review reopens. Editing source-of-truth CSS during a Phase 3 audit-only plan is out of scope.
+**Owner:** Design system (not Phase 3 wiring). File this against `.claude/skills/shmocard-design-system/` whenever the design-system review reopens. Editing source-of-truth CSS during a Phase 3 audit-only plan is out of scope.
 **Severity:** cosmetic (build warning only)
 
 ---

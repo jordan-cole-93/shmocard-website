@@ -8,7 +8,7 @@
 
 ## TL;DR
 
-**Direct CSS import from `app/globals.css`. No Tailwind 4 `@theme` block for design tokens.** Use Tailwind 4 utilities for **layout only** (grid, flex, spacing, sizing). Color, type, radius, shadow, motion = always `.shm-*` classes or `var(--*)` tokens. The CSS files in `context/design-system/` stay the canonical source of truth — Tailwind never gets a parallel copy.
+**Direct CSS import from `app/globals.css`. No Tailwind 4 `@theme` block for design tokens.** Use Tailwind 4 utilities for **layout only** (grid, flex, spacing, sizing). Color, type, radius, shadow, motion = always `.shm-*` classes or `var(--*)` tokens. The CSS files in `.claude/skills/shmocard-design-system/` stay the canonical source of truth — Tailwind never gets a parallel copy.
 
 ---
 
@@ -22,14 +22,14 @@
 @import "tailwindcss";
 
 /* Design system: tokens, type ramp, section backgrounds, waves */
-@import "../context/design-system/colors_and_type.css";
+@import "../.claude/skills/shmocard-design-system/colors_and_type.css";
 
 /* Design system: every primitive (.shm-btn, .shm-card, .shm-cart-*, etc.) */
-@import "../context/design-system/components.css";
+@import "../.claude/skills/shmocard-design-system/components.css";
 ```
 
 **Pros:**
-- CSS files in `context/design-system/` stay the **single source of truth.** Edit there → changes propagate everywhere.
+- CSS files in `.claude/skills/shmocard-design-system/` stay the **single source of truth.** Edit there → changes propagate everywhere.
 - Zero drift risk between Tailwind config and the design system.
 - The design system's invariants (`.shm-*` prefix, no gradients, no left-border stripes, no decorative blurs) are enforced because Tailwind never gets a chance to generate competing utilities.
 - Backwards compatible with the existing reference pages (homepage HTML, Buybox.html, Cart Drawer.html) since they already use the same CSS files.
@@ -56,7 +56,7 @@
 ```
 
 **Why rejected:**
-- **Drift hazard.** Token definitions now live in two places: `context/design-system/colors_and_type.css` AND `app/globals.css`. Updating one without the other = silent visual bug.
+- **Drift hazard.** Token definitions now live in two places: `.claude/skills/shmocard-design-system/colors_and_type.css` AND `app/globals.css`. Updating one without the other = silent visual bug.
 - **Violates the design system's own rule** ("the CSS is the source of truth"). Adding a parallel Tailwind 4 source breaks the contract.
 - **Tailwind generates competing utilities.** Putting `--color-ember` in `@theme` makes Tailwind generate `.bg-ember`, `.text-ember`, `.border-ember` — direct conflict with `.shm-bg-ember`. Choosing which wins becomes a rule everyone has to remember.
 - **Locks us out of escape valves.** The `.shm-bg-*` selectors run a chain of dark-section text/em/eyebrow flips (see `colors_and_type.css` lines 293–343). Tailwind utilities don't have that machinery — you'd lose the auto-flip for free.
@@ -118,12 +118,12 @@ Phase 3 task 03-01 starts here:
 /* Design system foundation: tokens, type ramp, section bgs, wave dividers,
    hairline flips for dark surfaces. Loads all 4 fonts via @font-face
    (relative paths from the file's location). */
-@import "../context/design-system/colors_and_type.css";
+@import "../.claude/skills/shmocard-design-system/colors_and_type.css";
 
 /* Design system primitives: every .shm-* component class (buttons, cards,
    badges, inputs, image frames, FAQ, mascot, sticker, nav, cart drawer,
    product cards, form patterns, PDP/buybox, checklist, callout). */
-@import "../context/design-system/components.css";
+@import "../.claude/skills/shmocard-design-system/components.css";
 
 /* Project-specific overrides go BELOW the design system imports
    so they win on source-order specificity. Page-level layout CSS
@@ -131,9 +131,9 @@ Phase 3 task 03-01 starts here:
    or component-scoped CSS. */
 ```
 
-**Path note:** `app/globals.css` lives at `app/globals.css`. Relative `../context/design-system/...` resolves correctly from that location.
+**Path note:** `app/globals.css` lives at `app/globals.css`. Relative `../.claude/skills/shmocard-design-system/...` resolves correctly from that location.
 
-**Font loading:** `colors_and_type.css` declares `@font-face` for all 4 brand fonts using relative `fonts/...` paths. Because the import path is `../context/design-system/colors_and_type.css`, the browser resolves `fonts/...` relative to **that file's location** (`context/design-system/`), so the fonts load from `context/design-system/fonts/`. **No `app/layout.tsx` font mounting needed for the brand fonts** — they're loaded by the imported CSS.
+**Font loading:** `colors_and_type.css` declares `@font-face` for all 4 brand fonts using relative `fonts/...` paths. Because the import path is `../.claude/skills/shmocard-design-system/colors_and_type.css`, the browser resolves `fonts/...` relative to **that file's location** (`.claude/skills/shmocard-design-system/`), so the fonts load from `.claude/skills/shmocard-design-system/fonts/`. **No `app/layout.tsx` font mounting needed for the brand fonts** — they're loaded by the imported CSS.
 
 ⚠️ **Caveat:** if Vercel or Next.js's CSS bundler doesn't preserve relative font paths through `@import` chains, font loading may fail in production. **Verify in Phase 3 by running `npm run build && npm start`, opening DevTools → Network, and confirming the 4 .ttf files load with 200 status from the deployed origin.** If they don't, fall back to mounting fonts via `next/font/local` in `app/layout.tsx` and removing the `@font-face` blocks from `colors_and_type.css` (or just supplementing — the file's `@font-face` declarations win over Google Fonts fallback regardless).
 
@@ -172,7 +172,7 @@ Phase 3 may eventually want **per-page CSS files** (`components/home/home.css`, 
 | Decision | Outcome |
 |---|---|
 | Token strategy | Direct CSS `@import`, no Tailwind `@theme` parallel copy |
-| Source of truth | `context/design-system/colors_and_type.css` + `components.css` |
+| Source of truth | `.claude/skills/shmocard-design-system/colors_and_type.css` + `components.css` |
 | Tailwind utility scope | Layout + spacing + sizing only |
 | Forbidden Tailwind utilities | `bg-*`, `text-*` (for color), `border-*`, `rounded-*`, `shadow-*`, `font-*`, `animate-*`, gradient utilities |
 | Font mounting | Via `@font-face` in `colors_and_type.css` (no `next/font` initially); verify in Phase 3 build |

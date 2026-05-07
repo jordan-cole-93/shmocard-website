@@ -24,7 +24,7 @@ A first-time visitor leaves understanding the parent brand and either buys (Shmo
 - [ ] **REQ-06** Shopify Storefront API wiring — product fetch, cart mutations (`cartCreate`, `cartLinesAdd`, `cartLinesRemove`), checkout redirect via `cart.checkoutUrl`.
 - [ ] **REQ-07** Webhook revalidation route at `app/api/revalidate/route.ts` — Shopify product changes propagate in ~5 seconds.
 - [ ] **REQ-08** Waitlist capture for Shmo Biz / Shmo Link / Shmo Reputation — email captured to GHL webhook.
-- [ ] **REQ-09** Design system from `context/design-system/` audited and wired in — tokens to `app/globals.css`, fonts mounted in `app/layout.tsx`, primitives composed into React components without restyling.
+- [ ] **REQ-09** Design system from `.claude/skills/shmocard-design-system/` audited and wired in — tokens to `app/globals.css`, fonts mounted in `app/layout.tsx`, primitives composed into React components without restyling.
 - [ ] **REQ-10** Mobile + a11y pass on every page; Vercel env mirrored from `.env.local`; DNS cutover for `shmocard.com`.
 
 ### Out of Scope
@@ -40,7 +40,7 @@ A first-time visitor leaves understanding the parent brand and either buys (Shmo
 ## Context
 
 - **Live store untouched**: `shop.shmocard.com` runs on Shopify, serves real customers, has its own theme. This repo builds a separate Next.js front-end that consumes Shopify data via Storefront API. Hard separation enforced by `.claude/rules/live-store-protection.md`.
-- **Design wipe (2026-05-06)**: every previous design artifact was deleted because the prior design pass failed quality bar. The new design system landed at `context/design-system/` on 2026-05-07 — a substantial, well-specified soft-neobrutalism system with locked `.shm-*` utility prefix, 4-color section rotation, soft-by-default cards, hand-drawn iconography, s'more mascot used as a sticker.
+- **Design wipe (2026-05-06)**: every previous design artifact was deleted because the prior design pass failed quality bar. The new design system landed at `.claude/skills/shmocard-design-system/` on 2026-05-07 — a substantial, well-specified soft-neobrutalism system with locked `.shm-*` utility prefix, 4-color section rotation, soft-by-default cards, hand-drawn iconography, s'more mascot used as a sticker.
 - **Headless integration**: connects via the "Shmo Card Headless" sales channel. Product catalog, pricing, inventory live in Shopify Admin, not code. Webhook revalidation drives ~5-second propagation.
 - **Audience**: local business owners (pawn shops, barbers, mechanics, jewelers, roofers, salons, retailers, cafés, mobile crews). Non-technical, peer-driven trust, tired of slick pitches. Site does not need to convince a stranger they have a review problem — it needs to convince someone who already knows.
 - **Brand voice**: warm, direct, crew-first. No exclamation marks. No emoji as decoration. Locked headlines per `context/general/marketing.md`.
@@ -50,7 +50,7 @@ A first-time visitor leaves understanding the parent brand and either buys (Shmo
 - **Tech stack**: Next.js (App Router) + TypeScript, Tailwind 4, Vercel hosting, Shopify Storefront API. No alternatives without explicit decision.
 - **Live store protection**: Storefront API only — no Admin API writes. Hard rule.
 - **Shopify data discipline**: product attributes (name, price, SKU, image, variants) come from Shopify at runtime. No hardcoded product data in components.
-- **Design system fidelity**: every utility class is `.shm-` prefixed. No restyling primitives. No gradients. No left-border accent stripes. Wave dividers only. Section rotation = 4 colors only (`marsh / graham / ember / cocoa`). Per `context/design-system/CLAUDE.md`.
+- **Design system fidelity**: every utility class is `.shm-` prefixed. No restyling primitives. No gradients. No left-border accent stripes. Wave dividers only. Section rotation = 4 colors only (`marsh / graham / ember / cocoa`). Per `.claude/skills/shmocard-design-system/CLAUDE.md`.
 - **File layout locked** per `.claude/rules/file-organization.md`. No new top-level folders without approval.
 - **Vault separation**: Jordan's Obsidian vault at `Jordan's Brain/Projects/Shmocard/` is read-only from this repo's perspective. Use `vault-sync` skill for writes.
 - **No `.env*` commits**: enforced by pre-tool-use hook.
@@ -67,7 +67,7 @@ A first-time visitor leaves understanding the parent brand and either buys (Shmo
 | Project-level `gsd-shmocard` skill over global `/gsd-ingest-docs` | Repo doesn't use ADR/PRD/SPEC convention; global skill returned 0 docs and stalled | ✓ Good — locked 2026-05-07 |
 | Live store stays read-only from this repo | Production safety; mistakes break paying customers | ✓ Good — LOCKED |
 | Product data in Shopify, presentation in code | Single source of truth; pricing changes don't require deploys; multi-currency safe | ✓ Good — LOCKED |
-| Folder rename `context/design system/` → `context/design-system/` | Kebab-case fixes shell escaping + import paths; stays inside `context/` | ✓ Good — locked 2026-05-07 (Phase 2 / 02-02) |
+| Folder rename `context/design system/` → `.claude/skills/shmocard-design-system/` | Kebab-case fixes shell escaping + import paths; stays inside `context/` | ✓ Good — locked 2026-05-07 (Phase 2 / 02-02) |
 | Design-system rules → `.claude/rules/design-system.md` (single CLAUDE.md hierarchy) | Eliminates two-CLAUDE.md drift; matches existing rule pattern; rule applies to all UI work | ✓ Good — locked 2026-05-07 (Phase 2 / 02-02) |
 | Tailwind 4 ↔ `.shm-*` coexistence: direct CSS `@import`, no `@theme` copy | Preserves CSS-as-source-of-truth invariant; zero drift risk; design system's `.shm-bg-*` flip machinery preserved | ✓ Good — locked 2026-05-07 (Phase 2 / 02-04) |
 | Cart state via Zustand + localStorage middleware | Standard headless-commerce pattern; persists for free; small bundle; less boilerplate | ✓ Good — locked 2026-05-07 (Phase 2 / D-01) |

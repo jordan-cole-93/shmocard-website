@@ -157,7 +157,7 @@ All four REQ-09 background values render correctly with type-flip behavior intac
 **1. [Spec gap] Wave size CSS does not have `--sm` / `--md` modifiers**
 
 - **Found during:** Task 2 (preparing Section component)
-- **Discovery:** Plan specifies `waveSize?: 'sm' | 'md' | 'lg' | 'xl'` with default `'md'`. `context/design-system/colors_and_type.css` lines 351-363 ship only `.shm-wave--lg` (64px) and `.shm-wave--xl` (80px). The default `.shm-wave` (no modifier) is the thin 18px wave. `--sm` and `--md` modifiers do not exist.
+- **Discovery:** Plan specifies `waveSize?: 'sm' | 'md' | 'lg' | 'xl'` with default `'md'`. `.claude/skills/shmocard-design-system/colors_and_type.css` lines 351-363 ship only `.shm-wave--lg` (64px) and `.shm-wave--xl` (80px). The default `.shm-wave` (no modifier) is the thin 18px wave. `--sm` and `--md` modifiers do not exist.
 - **Fix:** Section component still accepts the full `'sm'|'md'|'lg'|'xl'` union for forward-compat, but only emits the size class for `'lg'` and `'xl'`. `'sm'` and `'md'` resolve to the default thin wave with no extra class. This avoids dead class names in the DOM while honoring the typed API surface.
 - **Impact:** None at runtime — the default thin wave is the correct visual for `sm`/`md`. If the design system later ships `--sm` / `--md` modifiers, just extend `waveSizeClass()` in `Section.tsx`.
 - **Files modified:** `components/layout/Section.tsx`
