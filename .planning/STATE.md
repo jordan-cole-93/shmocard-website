@@ -3,14 +3,14 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: executing
-last_updated: "2026-05-07T05:28:00Z"
-last_activity: "2026-05-07 05:28 — 03-02 hybrid audit + add complete. Foundation audit (Nav/Footer/Mascot/Sticker) PASSED zero fixes. Container + Section primitives shipped at `components/layout/`; Section enforces REQ-09 4-color rotation at the type level. Smoke-test screenshot at `pictures/screenshots/03-02-base-layout-shell.png` shows 4 distinct backgrounds + wave dividers + Nav + Footer. Commits 76b22c9 (primitives), cfc8611 (smoke test). Ready for 03-03 homepage build."
+last_updated: "2026-05-07T03:41:02.175Z"
+last_activity: "2026-05-07 05:39 — 03-11 webhook revalidate route shipped. HMAC SHA-256 + timingSafeEqual on raw req.text() body; products/* triggers revalidateTag('product') + product:<handle> + collection:shmo-review. Curl-verified 200 valid + 401 forged HMAC, screenshots at `pictures/screenshots/03-11-revalidate-200.png` + `03-11-revalidate-401.png`. Files committed in sibling 03-12's commit ce7c52d (parallel-agent staging collision; deviation logged). Env-var contract for SHOPIFY_REVALIDATION_SECRET lives in `context/general/backend.md` (project hook blocks `.env*` writes). Summary `.planning/phases/03-rebuild/03-11-SUMMARY.md`."
 progress:
   total_phases: 4
   completed_phases: 0
   total_plans: 12
-  completed_plans: 2
-  percent: 17
+  completed_plans: 4
+  percent: 33
 ---
 
 # Project State
