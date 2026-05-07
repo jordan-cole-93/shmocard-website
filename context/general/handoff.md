@@ -1,6 +1,6 @@
 # handoff.md — Session Handoff
 
-**Last session:** 2026-05-07 — Phase 2 + early Phase 3 (3-A1 Next.js scaffold + 3-A2 asset migration). Session about to be `/compact`'d at ~50% context; this handoff is the post-compact resume pointer.
+**Last session:** 2026-05-07 — Phase 2 + Phase 3 stage 3-Foundations (all 6 plans). Stage 3-Foundations complete; next stage is 3-Homepage.
 
 ---
 
@@ -49,7 +49,7 @@ Phase 2 ran in 6 atomic commits (02-03 collapsed into 02-02):
 
 **Phase 1 — Docs refresh:** ✅ complete.
 **Phase 2 — Design system review:** ✅ complete.
-**Phase 3 — Rebuild:** **In progress (stage 3-Foundations, 33% in).** 3-A1 + 3-A2 committed. 3-A3 Nav + Footer next.
+**Phase 3 — Rebuild:** **In progress (stage 3-Foundations complete; 3-Homepage next).** All 6 Foundations plans committed: 3-discuss, 3-A1, 3-A2, 3-A3, 3-A4, 3-A5, 3-A6.
 
 ## What was done in Phase 3 so far
 
@@ -74,35 +74,53 @@ Phase 2 ran in 6 atomic commits (02-03 collapsed into 02-02):
   - 68 runtime files / 52 MB in public/
   - Smoke test: `<img src="/mascot/mascot-holding-card.png" className="shm-mascot shm-mascot--supporting" />` added to app/page.tsx
   - Browser-verified: `pictures/screenshots/phase-3-A2-asset-migration.png`. S'more mascot rendering at 140px on marshmallow bg.
+- **3-A3 — Nav + Footer global components** (commit `2ec62e9`):
+  - `components/Nav.tsx` + `components/Nav.module.css` — sticky `.shm-nav`, Cherry Bomb wordmark (Shmo=cocoa-deep / Card=ember), 4 product links with inline status badges (Review=clover/Live, Biz+Link+Reputation=honey/Soon), hand-drawn cart icon-button, primary "Shop" CTA. Mobile breakpoint hides links above 880px.
+  - `components/Footer.tsx` + `components/Footer.module.css` — cocoa-deep surface, 4-col grid (brand+social / products / shop / help), copyright row with privacy/terms.
+  - Layout in CSS Modules (per design-system rule: components own LAYOUT, primitives own appearance). All tokens via `var(--*)`, no hex.
+  - Mounted in `app/layout.tsx` wrapping `{children}`.
+  - Browser-verified: `pictures/screenshots/phase-3-A3-nav-footer.png`. Render matches `home-bundle.jsx` reference. Console clean except favicon 404 (fixed in 3-A6).
+- **3-A4 — Mascot + Sticker components** (commit `3f7c90d`):
+  - `components/Mascot.tsx` — typed wrapper around `.shm-mascot--{decoration|accent|supporting|hero}` (64/96/140/200px). Default size `supporting`.
+  - `components/Sticker.tsx` — typed wrapper around `.shm-sticker--{xs|sm|md}` (44/56/76px). Drop-shadow from primitive. Default size `md`.
+  - `components/mascot-poses.ts` — single source of truth for available poses (13 PNGs in public/mascot/) + tilt union + `mascotSrc()` helper.
+  - Both share `tilt` (l|r|sm-l|sm-r) + `fitRatio` override (e.g. megaphone = 1.3 per components.css note) + `className` extension API.
+  - Smoke-rendered all variants in app/page.tsx during verify, screenshot at `pictures/screenshots/phase-3-A4-mascot-sticker.png`, then stripped before commit.
+- **3-A5 — Zustand cart store skeleton** (commit `d2e4f26`):
+  - `components/cart/store.ts` — Zustand 5 + localStorage persist (D-01). State: cartId (Shopify GID), checkoutUrl, lines. Actions: setCart, addLine (merges by merchandiseId), updateQuantity (removes when ≤ 0), removeLine, clear. Persist name `shm-cart`, version 1.
+  - `components/cart/types.ts` — `CartLine` type (Shopify-friendly: merchandiseId GID, productHandle, title, variantTitle, price as decimal string, currencyCode, image url+alt, quantity).
+  - Selectors `selectLineCount` + `selectSubtotal` exported for cart-icon badge + drawer subtotal.
+  - SSR hydration guard noted in store.ts; consumers use `useStore.persist.hasHydrated()` (handled when cart drawer lands).
+  - Verified `npx tsc --noEmit` clean + dev server still 200. No browser screenshot — pure module.
+- **3-A6 — 3-Foundations close-out** (this commit):
+  - `app/icon.png` added (Next App Router auto-wires as favicon — kills the 404).
+  - STATE.md + handoff.md bumped — 3-Foundations complete, 3-Homepage next.
+  - Background dev server `bo30k1uis` killed.
 
-## What's next (post-compact resume)
+## What's next
 
-**3-A3 — Nav + Footer components.** These are global, used by every page.
+**3-Homepage stage** — 11 home section components per `.planning/phases/02-design-system-review/TRANSLATION.md`. Source-of-truth references:
+- `context/design-system/ui_kits/website/homepage/Shmocard Homepage.html` (final markup)
+- `context/design-system/ui_kits/website/homepage/home-bundle.jsx` (component decomposition)
+- `context/design-system/ui_kits/website/homepage/home.css` (page-level layout)
+- `context/design-system/ui_kits/website/homepage/home-data.jsx` (audiences, sub-brand data, FAQ data)
 
-1. Build `components/Nav.tsx`:
-   - Outer wrapper `.shm-nav` (sticky, marsh/85% bg + 10px backdrop blur + hairline bottom border — already styled in components.css, just compose)
-   - Logo lockup: `<img src="/logo/Logo-Mascot.png" />` (32px) + ShmoCard wordmark (Shmo=cocoa, Card=ember). Wordmark uses `var(--font-wordmark)` Cherry Bomb One.
-   - 4-link product menu with inline status badges:
-     - Shmo Review → `.shm-badge--status-clover` "Live"
-     - Shmo Biz / Link / Reputation → `.shm-badge--status-honey` "Soon"
-   - Cart icon-button (links to cart drawer trigger; drawer itself comes 3-A5+)
-   - Primary "Shop" CTA `.shm-btn--primary` (small size)
-2. Build `components/Footer.tsx`:
-   - `.shm-bg-cocoa` outer
-   - 4-column grid: brand+social / products / shop / help
-   - Bottom row: copyright
-   - All links placeholder `#` for now; final link list = open question for build-time review
-3. Wire both into `app/layout.tsx` wrapping `{children}`
-4. Restore app/page.tsx to a clean placeholder (drop the smoke-test mascot since real homepage is coming)
-5. Browser verify, screenshot to `pictures/screenshots/phase-3-A3-nav-footer.png`
-6. Atomic commit `phase(03-A3): nav + footer global components`
+Section order (per TRANSLATION.md):
+1. Hero (with type-cycle "missing" / "asking for" — implementation deferred to this stage)
+2. Audience strip (marquee)
+3. Proof grid (real Pawn Leads data — never mention "Pawn Leads" in copy, hard rule)
+4. Sub-brand spotlight (Shmo Review — alternating reverse layout)
+5. Sub-brand spotlight (Shmo Biz)
+6. Sub-brand spotlight (Shmo Link)
+7. Sub-brand spotlight (Shmo Reputation)
+8. Crew strip
+9. How-it-works grid
+10. FAQ (rewrite during build per Jordan)
+11. Final CTA (ember section)
 
-**Stages after 3-A3 (still in 3-Foundations sub-phase):**
-- 3-A4: Mascot.tsx + Sticker.tsx React component wrappers (replace inline `<img>` pattern with proper props-typed components)
-- 3-A5: Zustand cart store skeleton at components/cart/store.ts (no UI yet, just typed store + localStorage middleware per D-01)
-- 3-A6: 3-Foundations close-out — STATE.md update, dev server kill, atomic commit
+Load `frontend-design` skill at start of 3-Homepage — composition / hierarchy / cognitive-load principles apply once we're decomposing reference into subcomponents.
 
-**After 3-Foundations:**
+**Stages after 3-Homepage:**
 - 3-Homepage — 11 home section components from TRANSLATION.md
 - 3-ShmoReview — category page
 - 3-PDPs — `app/shmo-review/[handle]/page.tsx` + ~14 PDP components
@@ -131,28 +149,14 @@ Phase 2 ran in 6 atomic commits (02-03 collapsed into 02-02):
 
 ## Dev server state
 
-Background process `bm3jxs5az` was running `npm run dev` pre-compact. Post-compact: assume it's gone (background processes don't survive context resets). Restart with `npm run dev` — Next 15 + Turbopack reboots in ~1s.
-
-## How to start next session (post-compact)
-
-1. `git log --oneline | head -10` — confirms commit chain (last commit should be `350effe phase(03-A2)`).
-2. `git status` — should be clean (only untracked `.playwright-mcp/` if running locally; gitignored).
-3. Read `CLAUDE.md` + `.planning/STATE.md` + this `handoff.md`.
-4. Confirm `pictures/screenshots/phase-3-A2-asset-migration.png` exists and shows mascot rendering.
-5. Restart dev server: `npm run dev` (background).
-6. Begin 3-A3 — see "What's next" above for concrete steps.
-7. Continue atomic commits per stage. Each commit ends with browser screenshot + verification per `verification.md`.
-
-## Open decisions
-
-- **GHL webhook URL** — Jordan provides mid-Phase 3 when waitlist forms get wired (D-04).
-- **Final Shopify pricing tiers / SKU naming** — Jordan handles in Shopify Admin during Phase 3.
-- **DNS cutover plan** for `shmocard.com` — Phase 4.
-- `.claude/hooks/surface-applied-rules.sh` modification (Jordan's hook tweak introducing `skills= | rules= | why=` Following format) — left **uncommitted** in working tree at Phase 2 close-out. Jordan to commit when ready.
+Killed at 3-A6 close-out. Restart for next session: `npm run dev` (foreground or background — Turbopack reboots in ~1s). Was binding port 3001 (port 3000 held by an unrelated process).
 
 ## How to start next session
 
-1. Read `CLAUDE.md` + `context/general/scope.md` + this file + `.planning/STATE.md`.
-2. Confirm working tree state — should show only the hook file (line above) as modified, otherwise clean.
-3. Run `/gsd-plan-phase 3` (or invoke via project-level `gsd-shmocard` if global GSD still broken in this repo).
-4. Phase 3 plans should mirror `.planning/phases/02-design-system-review/TRANSLATION.md` ordering.
+1. `git log --oneline | head -10` — last commit should be the 3-A6 close-out (Foundations complete).
+2. `git status` — clean.
+3. Read `CLAUDE.md` + `.planning/STATE.md` + this `handoff.md`.
+4. **Load `frontend-design` skill before any 3-Homepage work** (composition decisions ahead, not pure ports — see "What's next" above).
+5. Restart dev server: `npm run dev`.
+6. Open `context/design-system/ui_kits/website/homepage/Shmocard Homepage.html` (or just open the HTML file in a browser tab) so the canonical reference is on screen while building.
+7. Begin section 1 (Hero) — atomic commit per section, browser screenshot + console-clean verify per `verification.md` between commits.

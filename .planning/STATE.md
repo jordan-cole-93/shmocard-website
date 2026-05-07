@@ -5,16 +5,16 @@
 See: .planning/PROJECT.md (updated 2026-05-07)
 
 **Core value:** First-time visitor leaves understanding the parent brand and either buys (Shmo Review) or joins a waitlist (other three) — without ever feeling pitched to.
-**Current focus:** Phase 3 — Rebuild (in progress, stage 3-Foundations)
+**Current focus:** Phase 3 — Rebuild (in progress, stage 3-Foundations complete; 3-Homepage next)
 
 ## Current Position
 
 Phase: 3 of 4 (Rebuild — in progress)
-Plan: 2 of ~6 in stage 3-Foundations (3-A1 scaffold + 3-A2 asset migration done; 3-A3 Nav + Footer next)
+Stage: 3-Foundations ✅ complete (6/6 plans). Next stage: 3-Homepage.
 Status: In progress
-Last activity: 2026-05-07 — Phase 3 started. Discussion CONTEXT.md committed (8a7db32). Next.js 15 + Tailwind 4 scaffolded (2417ead). Asset migration pictures/ → public/ done with smoke test (350effe). 68 runtime files in public/, 52 MB. Mascot rendering verified at .shm-mascot--supporting size.
+Last activity: 2026-05-07 — 3-Foundations finished. Commits: 8a7db32 (3-discuss), 2417ead (3-A1 scaffold), 350effe (3-A2 asset migration), 2ec62e9 (3-A3 Nav+Footer), 3f7c90d (3-A4 Mascot+Sticker), d2e4f26 (3-A5 cart store skeleton), this commit (3-A6 close-out). Site shell renders Nav + Footer on every page. Cart store ready for drawer wiring.
 
-Progress: [██████░░░░] 60%  *(2 phases complete + Phase 3 stage 3-Foundations 33% in)*
+Progress: [███████░░░] 70%  *(2 phases complete + Phase 3 stage 3-Foundations 100% done)*
 
 ## Performance Metrics
 
@@ -82,24 +82,29 @@ Still open:
 
 ## Next Concrete Action
 
-**Stage 3-Foundations / commit 3-A3 = Nav + Footer components.**
+**Begin 3-Homepage stage** — 11 home section components per `.planning/phases/02-design-system-review/TRANSLATION.md`.
 
-Build:
-- `components/Nav.tsx` — `.shm-nav` sticky bar; logo lockup (mascot 32px + ShmoCard wordmark Shmo=cocoa-deep + Card=ember); 4-link product menu with status badges (Review live = `.shm-badge--status-clover`, Biz/Link/Reputation soon = `.shm-badge--status-honey`); cart icon-button with count; primary "Shop" CTA `.shm-btn--primary--sm`. Mobile breakpoints deferred to Phase 4.
-- `components/Footer.tsx` — `.shm-bg-cocoa` 4-column grid: brand+social, products, shop, help. Bottom copyright row. Use locked headlines/voice rules from `context/general/marketing.md`.
+**Before starting:** load `frontend-design` skill (composition-heavy, not a pure port).
 
-Mount both in `app/layout.tsx` (wrap `{children}`). Replace placeholder content in `app/page.tsx` to confirm both render on every page.
+**References to keep open:**
+- `context/design-system/ui_kits/website/homepage/Shmocard Homepage.html`
+- `context/design-system/ui_kits/website/homepage/home-bundle.jsx`
+- `context/design-system/ui_kits/website/homepage/home.css`
+- `context/design-system/ui_kits/website/homepage/home-data.jsx`
 
-Verify per `verification.md`: dev server reload, browser screenshot to `pictures/screenshots/phase-3-A3-nav-footer.png`, console clean.
+**Section order:**
+1. Hero (with type-cycle "missing" / "asking for")
+2. Audience strip (marquee)
+3. Proof grid (real Pawn Leads data — never mention "Pawn Leads" in copy)
+4–7. Sub-brand spotlights (Review, Biz, Link, Reputation — alternating reverse)
+8. Crew strip
+9. How-it-works grid
+10. FAQ (rewrite during build)
+11. Final CTA (ember)
 
-After 3-A3 commit, continues to:
-- 3-A4: `Mascot.tsx` + `Sticker.tsx` reusable React components (replace inline `<img>` smoke test in `app/page.tsx`)
-- 3-A5: Cart store skeleton at `components/cart/store.ts` (Zustand + localStorage middleware per D-01). No UI yet — just the typed store + persist config.
-- 3-A6: 3-Foundations sub-phase close-out (handoff.md update, kill dev server bg, commit)
+**Pattern per section:** read reference markup → create `components/home/<Section>.tsx` (+ `.module.css` for layout) → mount in `app/page.tsx` with proper `.shm-wave` dividers between → browser-verify → atomic commit.
 
-Then 3-Homepage (the 11 home section components from TRANSLATION.md). Largest sub-stage — multi-session.
-
-Dev server: background process `bm3jxs5az` was running pre-compact. May need restart post-compact. Just `npm run dev` again — Next 15 + Turbopack reboots in ~1s.
+Dev server: killed at 3-A6 close-out. Restart with `npm run dev`.
 
 ---
 
