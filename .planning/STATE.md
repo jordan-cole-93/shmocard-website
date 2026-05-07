@@ -5,16 +5,16 @@
 See: .planning/PROJECT.md (updated 2026-05-07)
 
 **Core value:** First-time visitor leaves understanding the parent brand and either buys (Shmo Review) or joins a waitlist (other three) — without ever feeling pitched to.
-**Current focus:** Phase 2 ✅ complete; Phase 3 rebuild is next.
+**Current focus:** Phase 3 — Rebuild (in progress, stage 3-Foundations)
 
 ## Current Position
 
-Phase: 2 of 4 ✅ COMPLETE
-Plan: 7 of 7 (02-01, 02-02 [02-03 collapsed], 02-04, 02-05, 02-06, 02-07 all done)
-Status: Phase 2 complete — ready for Phase 3 plan
-Last activity: 2026-05-07 — Phase 2 closed out. All decisions locked, all docs aligned, working tree clean (except Jordan's pending hook tweak). Next: `/gsd-plan-phase 3` to formalize the rebuild plan from `.planning/phases/02-design-system-review/TRANSLATION.md`.
+Phase: 3 of 4 (Rebuild — in progress)
+Plan: 2 of ~6 in stage 3-Foundations (3-A1 scaffold + 3-A2 asset migration done; 3-A3 Nav + Footer next)
+Status: In progress
+Last activity: 2026-05-07 — Phase 3 started. Discussion CONTEXT.md committed (8a7db32). Next.js 15 + Tailwind 4 scaffolded (2417ead). Asset migration pictures/ → public/ done with smoke test (350effe). 68 runtime files in public/, 52 MB. Mascot rendering verified at .shm-mascot--supporting size.
 
-Progress: [█████░░░░░] 50%  *(2 of 4 phases complete)*
+Progress: [██████░░░░] 60%  *(2 phases complete + Phase 3 stage 3-Foundations 33% in)*
 
 ## Performance Metrics
 
@@ -82,7 +82,24 @@ Still open:
 
 ## Next Concrete Action
 
-Run `/gsd-plan-phase 2` to plan the Design system review phase. This will produce `.planning/phases/02-design-system-review/PLAN.md` with concrete tasks for the 7 plan stubs in ROADMAP.md.
+**Stage 3-Foundations / commit 3-A3 = Nav + Footer components.**
+
+Build:
+- `components/Nav.tsx` — `.shm-nav` sticky bar; logo lockup (mascot 32px + ShmoCard wordmark Shmo=cocoa-deep + Card=ember); 4-link product menu with status badges (Review live = `.shm-badge--status-clover`, Biz/Link/Reputation soon = `.shm-badge--status-honey`); cart icon-button with count; primary "Shop" CTA `.shm-btn--primary--sm`. Mobile breakpoints deferred to Phase 4.
+- `components/Footer.tsx` — `.shm-bg-cocoa` 4-column grid: brand+social, products, shop, help. Bottom copyright row. Use locked headlines/voice rules from `context/general/marketing.md`.
+
+Mount both in `app/layout.tsx` (wrap `{children}`). Replace placeholder content in `app/page.tsx` to confirm both render on every page.
+
+Verify per `verification.md`: dev server reload, browser screenshot to `pictures/screenshots/phase-3-A3-nav-footer.png`, console clean.
+
+After 3-A3 commit, continues to:
+- 3-A4: `Mascot.tsx` + `Sticker.tsx` reusable React components (replace inline `<img>` smoke test in `app/page.tsx`)
+- 3-A5: Cart store skeleton at `components/cart/store.ts` (Zustand + localStorage middleware per D-01). No UI yet — just the typed store + persist config.
+- 3-A6: 3-Foundations sub-phase close-out (handoff.md update, kill dev server bg, commit)
+
+Then 3-Homepage (the 11 home section components from TRANSLATION.md). Largest sub-stage — multi-session.
+
+Dev server: background process `bm3jxs5az` was running pre-compact. May need restart post-compact. Just `npm run dev` again — Next 15 + Turbopack reboots in ~1s.
 
 ---
 

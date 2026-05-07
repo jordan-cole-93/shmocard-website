@@ -1,6 +1,6 @@
 # handoff.md — Session Handoff
 
-**Last session:** 2026-05-07 — Phase 2 design system review complete + git initialized + project-level GSD skill created.
+**Last session:** 2026-05-07 — Phase 2 + early Phase 3 (3-A1 Next.js scaffold + 3-A2 asset migration). Session about to be `/compact`'d at ~50% context; this handoff is the post-compact resume pointer.
 
 ---
 
@@ -48,23 +48,100 @@ Phase 2 ran in 6 atomic commits (02-03 collapsed into 02-02):
 ## Project phase
 
 **Phase 1 — Docs refresh:** ✅ complete.
-**Phase 2 — Design system review:** ✅ complete (this session).
-**Phase 3 — Rebuild:** **Next.** Plans already drafted in `.planning/phases/02-design-system-review/TRANSLATION.md`; need formal `/gsd-plan-phase 3` to convert into per-task PLAN.md.
+**Phase 2 — Design system review:** ✅ complete.
+**Phase 3 — Rebuild:** **In progress (stage 3-Foundations, 33% in).** 3-A1 + 3-A2 committed. 3-A3 Nav + Footer next.
 
-## What's next
+## What was done in Phase 3 so far
 
-1. Run `/gsd-plan-phase 3` to formalize the Phase 3 plan from TRANSLATION.md content.
-2. Phase 3 execution order (per ROADMAP.md):
-   - Tokens + fonts wired into `app/globals.css` + `app/layout.tsx`
-   - Base layout shell (nav, footer, container, section primitive)
-   - Homepage build
-   - `/shmo-review` category page
-   - 3 PDPs (CR-80, L-Sign, Square Card)
-   - Cart UI + Shopify Cart API wiring
-   - Checkout redirect via `cart.checkoutUrl`
-   - Waitlist GHL webhook integration (URL provided mid-Phase 3)
-   - Webhook revalidation route
-3. Estimated effort: significantly larger than Phase 2 (~54 new files + Shopify integration). Multi-session.
+- **3-discuss** (commit `8a7db32`) — `/gsd-discuss-phase 3` ran manually (gsd-sdk binary missing, fallback workflow). Captured 13 decisions in `.planning/phases/03-rebuild/CONTEXT.md`. Pawn Leads brand-separation hard rule saved to memory.
+- **3-A1 — Next.js scaffold** (commit `2417ead`):
+  - package.json (Next 15 + React 19 + TS + Tailwind 4 + zustand + framer-motion)
+  - tsconfig.json (strict, `@/*` alias, excludes context/design-system/ui_kits/**/*.jsx)
+  - next.config.ts (minimal), postcss.config.mjs (Tailwind 4 plugin)
+  - app/globals.css per INTEGRATION.md skeleton (`@import "tailwindcss"` + `@import "../context/design-system/colors_and_type.css"` + `@import "../context/design-system/components.css"`)
+  - app/layout.tsx (locked metadata title from marketing.md), app/page.tsx (placeholder using `.shm-bg-marsh` + `.shm-display` + `.shm-eyebrow`)
+  - npm install: 51 packages, 8s. Dev server boots in ~1s.
+  - Browser-verified: `pictures/screenshots/phase-3-A1-scaffold-boot.png`. Bricolage Grotesque + Inter Tight rendering, marshmallow bg, ember `<em>` accent, eyebrow pill, all design-system rules applied via CSS @import chain.
+- **3-A2 — Asset migration** (commit `350effe`):
+  - First-time tracking of `pictures/{cr80,l-sign,plate,mascot,logo,shmo-review}/*` (raw source archive — never previously committed since initial commit was empty here)
+  - rsync pictures/* → public/* (excluding .DS_Store):
+    - pictures/mascot/ → public/mascot/ (13 emotions)
+    - pictures/cr80/ → public/products/cr80/
+    - pictures/l-sign/ → public/products/l-sign/ (color + black + transparent variants)
+    - pictures/plate/ → public/products/plate/
+    - pictures/logo/ → public/logo/
+    - pictures/shmo-review/ → public/hero/shmo-review/
+  - 68 runtime files / 52 MB in public/
+  - Smoke test: `<img src="/mascot/mascot-holding-card.png" className="shm-mascot shm-mascot--supporting" />` added to app/page.tsx
+  - Browser-verified: `pictures/screenshots/phase-3-A2-asset-migration.png`. S'more mascot rendering at 140px on marshmallow bg.
+
+## What's next (post-compact resume)
+
+**3-A3 — Nav + Footer components.** These are global, used by every page.
+
+1. Build `components/Nav.tsx`:
+   - Outer wrapper `.shm-nav` (sticky, marsh/85% bg + 10px backdrop blur + hairline bottom border — already styled in components.css, just compose)
+   - Logo lockup: `<img src="/logo/Logo-Mascot.png" />` (32px) + ShmoCard wordmark (Shmo=cocoa, Card=ember). Wordmark uses `var(--font-wordmark)` Cherry Bomb One.
+   - 4-link product menu with inline status badges:
+     - Shmo Review → `.shm-badge--status-clover` "Live"
+     - Shmo Biz / Link / Reputation → `.shm-badge--status-honey` "Soon"
+   - Cart icon-button (links to cart drawer trigger; drawer itself comes 3-A5+)
+   - Primary "Shop" CTA `.shm-btn--primary` (small size)
+2. Build `components/Footer.tsx`:
+   - `.shm-bg-cocoa` outer
+   - 4-column grid: brand+social / products / shop / help
+   - Bottom row: copyright
+   - All links placeholder `#` for now; final link list = open question for build-time review
+3. Wire both into `app/layout.tsx` wrapping `{children}`
+4. Restore app/page.tsx to a clean placeholder (drop the smoke-test mascot since real homepage is coming)
+5. Browser verify, screenshot to `pictures/screenshots/phase-3-A3-nav-footer.png`
+6. Atomic commit `phase(03-A3): nav + footer global components`
+
+**Stages after 3-A3 (still in 3-Foundations sub-phase):**
+- 3-A4: Mascot.tsx + Sticker.tsx React component wrappers (replace inline `<img>` pattern with proper props-typed components)
+- 3-A5: Zustand cart store skeleton at components/cart/store.ts (no UI yet, just typed store + localStorage middleware per D-01)
+- 3-A6: 3-Foundations close-out — STATE.md update, dev server kill, atomic commit
+
+**After 3-Foundations:**
+- 3-Homepage — 11 home section components from TRANSLATION.md
+- 3-ShmoReview — category page
+- 3-PDPs — `app/shmo-review/[handle]/page.tsx` + ~14 PDP components
+- 3-Cart — drawer + line items + storefront wiring
+- 3-Shopify — Storefront API queries + cart mutations + checkout redirect + webhook revalidation route
+- 3-Waitlist — modal + Server Action posting to GHL webhook (URL from Jordan mid-stage)
+
+## Architectural debt logged (still applies)
+
+- `gsd-sdk` not installed — global GSD workflow scripts (`/gsd-plan-phase`, `/gsd-discuss-phase`, etc.) can't run their state queries here. Manual workaround used throughout. Install once → all global commands wake up.
+- `gsd-shmocard` skill currently only handles bootstrap; doesn't yet wrap plan/execute/verify. Could expand later.
+- Audit issues #2, #6, #8 still deferred (cosmetic; roll into Phase 4 cleanup if friction).
+
+## Open decisions (still unresolved)
+
+- **GHL webhook URL** — Jordan provides mid-Phase 3 when waitlist plan stub is being built (3-Waitlist).
+- **Final Shopify pricing tiers / SKU naming** — Jordan handles in Shopify Admin during Phase 3.
+- **DNS cutover plan** for `shmocard.com` — Phase 4.
+
+## Locked rules to remember (new in Phase 3)
+
+- **Pawn Leads brand separation HARD RULE** — never write "Pawn Leads" / "PawnLeads" anywhere on Shmocard site. Saved to project memory at `~/.claude/projects/.../memory/feedback_pawn_leads_brand_separation.md`. Pre-deploy grep check confirms zero hits.
+- **Hero `<em>` type-cycle** — alternates "missing" / "asking for" every ~2.5s with crossfade. Reserve max-width for longer alternative. Implementation deferred to 3-Homepage stage.
+- **Tailwind utilities = layout/spacing/sizing only** — never `bg-*` (color), `text-*-color`, `border-*`, `rounded-*`, `shadow-*`, `font-*`, `animate-*`, gradients. Always `.shm-*` for visual concerns.
+- **Server-component-first** — `'use client'` only when local state, browser API, or event handler is required.
+
+## Dev server state
+
+Background process `bm3jxs5az` was running `npm run dev` pre-compact. Post-compact: assume it's gone (background processes don't survive context resets). Restart with `npm run dev` — Next 15 + Turbopack reboots in ~1s.
+
+## How to start next session (post-compact)
+
+1. `git log --oneline | head -10` — confirms commit chain (last commit should be `350effe phase(03-A2)`).
+2. `git status` — should be clean (only untracked `.playwright-mcp/` if running locally; gitignored).
+3. Read `CLAUDE.md` + `.planning/STATE.md` + this `handoff.md`.
+4. Confirm `pictures/screenshots/phase-3-A2-asset-migration.png` exists and shows mascot rendering.
+5. Restart dev server: `npm run dev` (background).
+6. Begin 3-A3 — see "What's next" above for concrete steps.
+7. Continue atomic commits per stage. Each commit ends with browser screenshot + verification per `verification.md`.
 
 ## Open decisions
 
