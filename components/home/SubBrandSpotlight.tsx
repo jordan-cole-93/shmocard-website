@@ -8,6 +8,12 @@ import type { SectionBg } from "@/components/layout/Section";
 import Section from "@/components/layout/Section";
 import Mascot from "@/components/Mascot";
 import type { SubBrand } from "./home-data";
+import NotifyButton from "./NotifyButton";
+
+// Sub-brand slugs that open the waitlist modal. Shmo Review never opens
+// the modal — it routes to /shmo-review for purchase.
+const WAITLIST_SLUGS = new Set(["biz", "link", "reputation"] as const);
+type WaitlistSlug = "biz" | "link" | "reputation";
 
 type Props = {
   data: SubBrand;
@@ -65,15 +71,12 @@ export default function SubBrandSpotlight({ data, nextBg, waveSize }: Props) {
           )}
 
           <div className="spotlight__cta-row">
-            {data.ctaPrimary.modal === "waitlist" ? (
-              <button
-                type="button"
-                className="shm-btn shm-btn--primary"
-                data-waitlist={data.slug}
-                data-product={data.eyebrow}
-              >
-                {data.ctaPrimary.label}
-              </button>
+            {data.ctaPrimary.modal === "waitlist" &&
+            WAITLIST_SLUGS.has(data.slug as WaitlistSlug) ? (
+              <NotifyButton
+                product={data.slug as WaitlistSlug}
+                label={data.ctaPrimary.label}
+              />
             ) : (
               <a
                 className="shm-btn shm-btn--primary"

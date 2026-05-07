@@ -3,6 +3,7 @@ import "./globals.css";
 import Nav from "@/components/Nav";
 import Footer from "@/components/Footer";
 import CartDrawer from "@/components/cart/CartDrawer";
+import ModalRoot from "@/components/modals/ModalRoot";
 
 export const metadata: Metadata = {
   title: "Shmocard — The toolkit your crew's been missing",
@@ -18,6 +19,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         {children}
         <Footer />
         <CartDrawer />
+        <ModalRoot />
       </body>
     </html>
   );

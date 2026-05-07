@@ -254,6 +254,8 @@ export const FAQ: FaqEntry[] = [
 ];
 
 // Video testimonial tiles. Crew photos / video URLs pending — placeholder treatment until assets land.
+// `videoUrl` and `posterUrl` are optional: VideoLightbox renders a "coming soon"
+// placeholder inside the lightbox shell when videoUrl is absent.
 export type VideoTile = {
   bgVariant: "ember" | "cocoa" | "honey";
   duration: string;
@@ -262,6 +264,8 @@ export type VideoTile = {
   role: string;
   shop: string;
   pending?: boolean;
+  videoUrl?: string;
+  posterUrl?: string;
 };
 
 export const VIDEO_TILES: VideoTile[] = [
