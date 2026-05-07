@@ -11,7 +11,8 @@ export default function HomePage() {
           The toolkit your crew&apos;s been <em>missing</em>.
         </h1>
         <p className="shm-lede">
-          Nav and footer wired. Homepage sections come next in stage 3-Homepage.
+          Nav and footer wired. Mascot and Sticker components ready. Homepage
+          sections come next in stage 3-Homepage.
         </p>
       </div>
     </main>
