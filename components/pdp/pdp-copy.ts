@@ -149,6 +149,10 @@ const slugFaq: Record<PdpSlug, PdpFaqItem[]> = {
       a: "Right next to the register or on the counter. Customers tap on their way out. No staff prompt needed — the sign does the asking.",
     },
     {
+      q: "Can I move the L-Sign between stations during a shift?",
+      a: "Yes. The acrylic body is light enough to pick up and reposition between active registers, side counters, or pickup zones. One standee per active station; move it as the shop opens and closes.",
+    },
+    {
       q: "Can I add my logo to the L-Sign?",
       a: "Yes. The face of the standee is custom-printed with your shop's branding — logo, name, color treatment.",
     },
