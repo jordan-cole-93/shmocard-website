@@ -76,7 +76,7 @@ Plans:
 **Plans**: 12 plans across 4 waves. Wave 1 = audit foundations (03-01, 03-02). Wave 2 = pages + Storefront lib + revalidate route (03-03, 03-04, 03-11, 03-12). Wave 3 = PDPs + cart drawer (03-05/06/07, 03-08). Wave 4 = checkout redirect + waitlist (03-09, 03-10). Finalized 2026-05-07 via `/gsd-plan-phase 3`; revisions 2026-05-07 to address plan-checker warnings.
 
 Plans:
-- [ ] 03-01-PLAN.md — AUDIT-ONLY: verify tokens + fonts wired in app/globals.css + app/layout.tsx (foundations 3-A1)
+- [x] 03-01-PLAN.md — AUDIT-ONLY: verify tokens + fonts wired in app/globals.css + app/layout.tsx (foundations 3-A1) ✅ 2026-05-07 (commit 14be4e5)
 - [ ] 03-02-PLAN.md — AUDIT shipped Nav/Footer/Mascot/Sticker + ADD Container + Section layout primitives (type-level 4-color rotation)
 - [ ] 03-03-PLAN.md — Homepage: 11 sections per Shmocard Homepage.html (Hero with em type-cycle, Audience marquee, Proof, 4× SubBrandSpotlight, CrewStrip, HowItWorks, VideoTestimonials, Compatibility, HomeFaq, FinalCta)
 - [ ] 03-04-PLAN.md — /shmo-review category: locked headline + tagline, bulk math, 3 format cards linking to PDPs, 6-question FAQ

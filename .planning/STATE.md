@@ -10,9 +10,9 @@ See: .planning/PROJECT.md (updated 2026-05-07)
 ## Current Position
 
 Phase: 3 of 4 (Rebuild — in progress)
-Stage: 3-Foundations ✅ complete (6/6 plans). Next stage: 3-Homepage.
+Stage: 3-Foundations ✅ complete (6/6 plans). Wave 1 audit started. Next stage: 3-Homepage.
 Status: In progress
-Last activity: 2026-05-07 — 3-Foundations finished. Commits: 8a7db32 (3-discuss), 2417ead (3-A1 scaffold), 350effe (3-A2 asset migration), 2ec62e9 (3-A3 Nav+Footer), 3f7c90d (3-A4 Mascot+Sticker), d2e4f26 (3-A5 cart store skeleton), this commit (3-A6 close-out). Site shell renders Nav + Footer on every page. Cart store ready for drawer wiring.
+Last activity: 2026-05-07 05:22 — 03-01 audit-only plan PASSED. Commit 14be4e5 (browser-verify tokens + fonts). Screenshot at `pictures/screenshots/03-01-tokens-and-fonts.png`. Two findings logged to `.planning/phases/03-rebuild/deferred-items.md` (DI-01 design-system @import order, DI-02 plan token-name drift) — both out of scope for 03-01. Wiring intact, design system green for downstream plans 03-02..03-12.
 
 Progress: [███████░░░] 70%  *(2 phases complete + Phase 3 stage 3-Foundations 100% done)*
 
