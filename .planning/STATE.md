@@ -3,14 +3,14 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: executing
-last_updated: "2026-05-07T03:44:00.000Z"
-last_activity: "2026-05-07 05:43 — 03-03 homepage build complete. Replaced smoke-test page.tsx with 13-section composition (Hero → AudienceStrip → Proof → 4× SubBrandSpotlight + CrewStrip → HowItWorks → VideoTestimonials → Compatibility → HomeFaq → FinalCta). All 4 sub-brands equal visual weight. Hero type-cycle (`missing` ↔ `asking for`) with reserved min-width — no layout shift. 4-color section rotation strict; reputation→FAQ uses xl wave. Anti-pattern grep checks all 0 (pawn-leads / admin-api / rogue Tailwind utils / hex). Screenshots: pictures/screenshots/03-03-homepage-{full,hero}.png. Commits 98bbc19 (scaffold), 192f5f7 (composition). REQ-01 + REQ-09 satisfied."
+last_updated: "2026-05-07T05:50:00.000Z"
+last_activity: "2026-05-07 05:50 — 03-04 /shmo-review category page complete. Built CategoryHero (locked headline + tagline), BulkMath (4-tier illustrative grid, no prices), FormatCards (CR-80/L-Sign/Square Card linking to PDP routes), inline HowItWorksShort (5 steps) + Proof (6 verified shop results, 2 quotes), CategoryFaq (8 questions, soft list, 1 mascot sticker). Section rotation marsh→graham→marsh→marsh→cocoa→marsh. Browser-verified at 1440×900: 200 OK, locked headline + tagline visible, 3 format hrefs resolve, 0 console errors. Screenshot pictures/screenshots/03-04-shmo-review-full.png (559K). Commits 27cb2d5 (Task 1, content split with ce7c52d per DI-03 parallel-agent collision) and 9849306 (Task 2 clean). REQ-02 satisfied. Wave 2 03-04 done."
 progress:
   total_phases: 4
   completed_phases: 0
   total_plans: 12
-  completed_plans: 5
-  percent: 42
+  completed_plans: 6
+  percent: 50
 ---
 
 # Project State
@@ -25,11 +25,11 @@ See: .planning/PROJECT.md (updated 2026-05-07)
 ## Current Position
 
 Phase: 3 of 4 (Rebuild — in progress)
-Stage: 3-Foundations ✅ complete (6/6 plans). Wave 1 audit + layout primitives complete (03-01, 03-02). Next stage: 3-Homepage (03-03).
+Stage: Wave 1 + Wave 2 03-03/03-04 complete. Next: 03-05/06/07 PDPs (CR-80, L-Sign, Square Card).
 Status: In progress
-Last activity: 2026-05-07 05:28 — 03-02 hybrid audit + add complete. Foundation audit (Nav/Footer/Mascot/Sticker) PASSED zero fixes. Container + Section primitives shipped at `components/layout/`; Section enforces REQ-09 4-color rotation at the type level. Smoke-test screenshot at `pictures/screenshots/03-02-base-layout-shell.png` shows 4 distinct backgrounds + wave dividers + Nav + Footer. Commits 76b22c9 (primitives), cfc8611 (smoke test). Ready for 03-03 homepage build.
+Last activity: 2026-05-07 05:50 — 03-04 /shmo-review category page complete. CategoryHero with locked headline + tagline, BulkMath 4-tier grid, 3 format cards routing to PDP slugs, 5-step HowItWorks-short, cocoa Proof block (6 results + 2 quotes), 8-question FAQ. Browser-verified, 0 console errors, screenshot saved. Commits 27cb2d5 + 9849306. REQ-02 satisfied.
 
-Progress: [██░░░░░░░░] 17%
+Progress: [█████░░░░░] 50%
 
 ## Performance Metrics
 
@@ -67,6 +67,7 @@ Recent decisions affecting current work:
 - LOCKED: Product data in Shopify, presentation in code.
 - LOCKED: Locked headlines per `context/general/marketing.md`.
 - [Phase 3 / 03-02]: 2026-05-07: Section primitive enforces 4-color rotation (REQ-09) at the type level via `SectionBg = 'marsh'|'graham'|'ember'|'cocoa'`. Container polymorphic via `as` prop. Wave size mapping: `lg`/`xl` emit CSS modifiers; `sm`/`md` fall back to default thin wave (no `--sm`/`--md` exist).
+- [Phase 3 / 03-04]: 2026-05-07: /shmo-review proof block on cocoa-bg renders rows without `.shm-card` wrapper to avoid white-on-white `.shm-h3` cascade. Bulk-math grid shows 4 tiers (1/3/5/10) with illustrative volume only — pricing fetched in PDPs (Shopify Storefront API). HowItWorks-short and Proof inlined inside `app/shmo-review/page.tsx`; only reusable category primitives factored into `components/category/*`.
 
 ### Pending Todos
 
