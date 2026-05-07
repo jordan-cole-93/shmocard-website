@@ -1,0 +1,6 @@
+/* components/layout/layout.module.css
+   Layout-only; visual lives in components.css.
+
+   Reserved for future layout-only concerns (e.g. section padding overrides
+   for full-bleed children). Empty for v1 — the design system's
+   .shm-section + .shm-container handle defaults. */
