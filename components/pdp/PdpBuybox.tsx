@@ -13,7 +13,9 @@ import type { ShopifyProduct } from "@/lib/shopify/types";
 import { PdpBuyboxProvider } from "./PdpBuyboxContext";
 import PdpGallery from "./PdpGallery";
 import PdpBuyboxColumn from "./PdpBuyboxColumn";
-import type { PdpSlug } from "./pdp-copy";
+import PdpStickyBar from "./PdpStickyBar";
+import PdpFaq from "./PdpFaq";
+import { pdpFaqFor, type PdpSlug } from "./pdp-copy";
 
 type Props = {
   product: ShopifyProduct;
@@ -34,12 +36,16 @@ export default function PdpBuybox({ product, slug }: Props) {
 
   return (
     <PdpBuyboxProvider defaultVariantId={defaultVariantId}>
+      <PdpStickyBar product={product} />
       <section className="pdp-buybox" aria-label={product.title}>
         <PdpGallery
           images={product.images.nodes}
           productTitle={product.title}
         />
-        <PdpBuyboxColumn product={product} slug={slug} />
+        <div>
+          <PdpBuyboxColumn product={product} slug={slug} />
+          <PdpFaq items={pdpFaqFor(slug)} />
+        </div>
       </section>
     </PdpBuyboxProvider>
   );

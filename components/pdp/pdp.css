@@ -31,19 +31,17 @@
   }
 }
 
-/* Gallery layout — main image + thumb strip */
+/* Gallery layout — main image + thumb strip.
+ *
+ * Note: gallery is NOT position:sticky. The PdpStickyBar IntersectionObserver
+ * watches #pdp-gallery and toggles when the gallery's top scrolls above the
+ * viewport — sticky pinning would prevent that. Sticky-on-desktop can be a
+ * Phase 4 enhancement using a separate sentinel element.
+ */
 .pdp-gal {
   display: flex;
   flex-direction: column;
   gap: 14px;
-  position: sticky;
-  top: 92px;
-}
-
-@media (max-width: 880px) {
-  .pdp-gal {
-    position: static;
-  }
 }
 
 .pdp-gal__main {
