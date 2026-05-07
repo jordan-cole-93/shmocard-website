@@ -61,11 +61,18 @@ export function Section({
         }
       : undefined;
 
+  // Wave divider is a SIBLING of the section, not a child. Putting the
+  // wave inside the section places it after `.shm-section`'s bottom
+  // padding (40px) — content gets a 40px gap before the wave instead
+  // of the wave biting into the section boundary. The canonical pattern
+  // (home-bundle.jsx:700-707) renders waves as siblings between sections.
   return (
-    <section className={sectionCls} id={id} aria-label={ariaLabel} style={sectionStyle}>
-      <div className={containerCls}>{children}</div>
+    <>
+      <section className={sectionCls} id={id} aria-label={ariaLabel} style={sectionStyle}>
+        <div className={containerCls}>{children}</div>
+      </section>
       {nextBg ? <div className={waveCls} aria-hidden="true" /> : null}
-    </section>
+    </>
   );
 }
 
