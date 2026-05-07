@@ -3,14 +3,14 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: executing
-last_updated: "2026-05-07T03:41:02.175Z"
-last_activity: "2026-05-07 05:39 — 03-11 webhook revalidate route shipped. HMAC SHA-256 + timingSafeEqual on raw req.text() body; products/* triggers revalidateTag('product') + product:<handle> + collection:shmo-review. Curl-verified 200 valid + 401 forged HMAC, screenshots at `pictures/screenshots/03-11-revalidate-200.png` + `03-11-revalidate-401.png`. Files committed in sibling 03-12's commit ce7c52d (parallel-agent staging collision; deviation logged). Env-var contract for SHOPIFY_REVALIDATION_SECRET lives in `context/general/backend.md` (project hook blocks `.env*` writes). Summary `.planning/phases/03-rebuild/03-11-SUMMARY.md`."
+last_updated: "2026-05-07T03:44:00.000Z"
+last_activity: "2026-05-07 05:43 — 03-03 homepage build complete. Replaced smoke-test page.tsx with 13-section composition (Hero → AudienceStrip → Proof → 4× SubBrandSpotlight + CrewStrip → HowItWorks → VideoTestimonials → Compatibility → HomeFaq → FinalCta). All 4 sub-brands equal visual weight. Hero type-cycle (`missing` ↔ `asking for`) with reserved min-width — no layout shift. 4-color section rotation strict; reputation→FAQ uses xl wave. Anti-pattern grep checks all 0 (pawn-leads / admin-api / rogue Tailwind utils / hex). Screenshots: pictures/screenshots/03-03-homepage-{full,hero}.png. Commits 98bbc19 (scaffold), 192f5f7 (composition). REQ-01 + REQ-09 satisfied."
 progress:
   total_phases: 4
   completed_phases: 0
   total_plans: 12
-  completed_plans: 4
-  percent: 33
+  completed_plans: 5
+  percent: 42
 ---
 
 # Project State
