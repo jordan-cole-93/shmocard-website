@@ -41,17 +41,36 @@ The vault holds Jordan's working notes (daily logs, captures, cross-project cont
 
 Skills below should fire automatically when their condition matches. If a condition matches the current task, invoke the skill **before** writing code or producing the design.
 
+### Subagent-dispatch wrappers (project-local — MANDATORY before spawning UI/Shopify subagents)
+
+**Why these exist:** spawned subagents structurally cannot access the Skill tool ([SDK issue #102](https://github.com/anthropics/claude-agent-sdk-typescript/issues/102)). Global skills like `frontend-design`, `impeccable`, `redesign-skill` only work inside the parent agent. To enforce design rules on UI work, the parent (orchestrator) MUST invoke the matching project-local wrapper skill first; the wrapper returns a verbatim guardrail block to splice into the subagent's Agent prompt. Rules travel as text inside the prompt — not as a Skill call the subagent can't make.
+
+| Condition | Wrapper to invoke (parent-side) | Use case |
+|---|---|---|
+| Spawning a subagent to **polish** an existing page (spacing / type / color / mascot — LAYOUT IS LOCKED) | `shmocard-polish-section` | Phase 4 page-by-page polish |
+| Spawning a subagent to **build a new page** from scratch | `shmocard-build-page` | Greenfield page work or layout-approved rebuild |
+| Spawning a subagent to **review a page visually** (Codex peer review or any review subagent) | `shmocard-design-review` | End-of-phase Codex pass; visual audits |
+| Spawning a subagent for **Shopify Storefront / cart / Server Action / webhook** work | `shmocard-shopify-work` | Live-store-protection enforcement on backend dispatch |
+
+**Hard rule:** when dispatching a UI or Shopify subagent, ALWAYS invoke the matching `shmocard-*` wrapper first. The wrapper produces the prompt; never write the subagent prompt freehand. Skipping the wrapper = subagent works without rules = rejected output (this is what happened on plan 04-01 — the executor changed video-tile sizing and box layouts because the layout-lock rule never reached its prompt).
+
+### Parent-agent skill routing (parent CAN invoke directly)
+
 | Condition | Skill to invoke | Notes |
 |---|---|---|
-| Any UI / visual / design / component / layout / page work | `frontend-design` (Anthropic plugin) | Always. Improves visual output, blocks generic AI design tells. |
+| Any UI / visual / design / component / layout / page work (parent agent — not subagent dispatch) | `frontend-design` (Anthropic plugin) | Always. Improves visual output, blocks generic AI design tells. |
+| Polish / hierarchy / spacing refinement (parent agent) | `impeccable` (Anthropic plugin) | Polish layer for finished structure. |
+| Upgrade existing UI to premium quality (parent agent) | `redesign-skill` | Pairs with `impeccable` on polish passes. |
 | Starting any non-trivial multi-step task in this repo | `gsd-progress` → then `/gsd-plan-phase` or `/gsd-quick` | GSD owns plan → execute → verify discipline. Skip for typo-level fixes. |
 | Trivial 1–3 file fix | `/gsd-fast` | No subagents, inline. |
 | Resuming session after `/clear` or break | `/gsd-resume-work` or `/gsd-progress` | Restores STATE.md context. |
-| Need to bootstrap or refresh `.planning/` for this repo | `gsd-shmocard` (project-local) | Replaces `/gsd-ingest-docs`. Knows our `context/general/` layout — global skill assumes ADR/PRD/SPEC dirs we don't have. |
+| Need to bootstrap or refresh `.planning/` for this repo | `gsd-shmocard` (project-local) | Replaces `/gsd-ingest-docs`. Knows our `context/general/` layout. |
 | Session lifecycle (capture decisions, edits, bug fixes) | `claude-mem` | Auto by plugin — no manual invocation. |
 | Tool-call output bloat / context preservation | `context-mode` | Auto by plugin — no manual invocation. Check stats with `/context-mode:ctx-stats`. |
 
 **Hard rule:** for any prompt mentioning design / layout / UI / component / hero / section / typography / palette / animation, load `frontend-design` first AND read `.claude/rules/design-system.md` (which points at the source-of-truth docs in `context/design-system/`). Design system rules WIN on visual / typography / mascot / section-rotation / utility-class-prefix conflicts. `frontend-design` anti-slop principles still apply for composition / hierarchy / cognitive load.
+
+**LAYOUT IS LOCKED on polish tasks.** When Jordan says "polish", "fix the spacing", "the design is missing something", or any refinement-not-restructure language, use `shmocard-polish-section` and respect its layout-lock. NEVER change grid columns, element ordering, tile size ratios, or structural HTML on a polish task. See `.claude/rules/design-system.md` for full rule text; the wrapper carries the embed for subagents.
 
 ## Current phase
 
