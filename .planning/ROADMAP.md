@@ -77,7 +77,7 @@ Plans:
 
 Plans:
 - [x] 03-01-PLAN.md — AUDIT-ONLY: verify tokens + fonts wired in app/globals.css + app/layout.tsx (foundations 3-A1) ✅ 2026-05-07 (commit 14be4e5)
-- [ ] 03-02-PLAN.md — AUDIT shipped Nav/Footer/Mascot/Sticker + ADD Container + Section layout primitives (type-level 4-color rotation)
+- [x] 03-02-PLAN.md — AUDIT shipped Nav/Footer/Mascot/Sticker + ADD Container + Section layout primitives (type-level 4-color rotation) ✅ 2026-05-07 (commits 76b22c9, cfc8611)
 - [ ] 03-03-PLAN.md — Homepage: 11 sections per Shmocard Homepage.html (Hero with em type-cycle, Audience marquee, Proof, 4× SubBrandSpotlight, CrewStrip, HowItWorks, VideoTestimonials, Compatibility, HomeFaq, FinalCta)
 - [ ] 03-04-PLAN.md — /shmo-review category: locked headline + tagline, bulk math, 3 format cards linking to PDPs, 6-question FAQ
 - [ ] 03-05-PLAN.md — CR-80 PDP at app/shmo-review/[handle]/page.tsx (dynamic route + 12-component PDP tree, .shm-buybox-sticky slides DOWN; SHARED tree consumed by 03-06/07)

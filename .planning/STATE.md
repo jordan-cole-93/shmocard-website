@@ -1,3 +1,18 @@
+---
+gsd_state_version: 1.0
+milestone: v1.0
+milestone_name: milestone
+status: executing
+last_updated: "2026-05-07T05:28:00Z"
+last_activity: "2026-05-07 05:28 — 03-02 hybrid audit + add complete. Foundation audit (Nav/Footer/Mascot/Sticker) PASSED zero fixes. Container + Section primitives shipped at `components/layout/`; Section enforces REQ-09 4-color rotation at the type level. Smoke-test screenshot at `pictures/screenshots/03-02-base-layout-shell.png` shows 4 distinct backgrounds + wave dividers + Nav + Footer. Commits 76b22c9 (primitives), cfc8611 (smoke test). Ready for 03-03 homepage build."
+progress:
+  total_phases: 4
+  completed_phases: 0
+  total_plans: 12
+  completed_plans: 2
+  percent: 17
+---
+
 # Project State
 
 ## Project Reference
@@ -10,15 +25,16 @@ See: .planning/PROJECT.md (updated 2026-05-07)
 ## Current Position
 
 Phase: 3 of 4 (Rebuild — in progress)
-Stage: 3-Foundations ✅ complete (6/6 plans). Wave 1 audit started. Next stage: 3-Homepage.
+Stage: 3-Foundations ✅ complete (6/6 plans). Wave 1 audit + layout primitives complete (03-01, 03-02). Next stage: 3-Homepage (03-03).
 Status: In progress
-Last activity: 2026-05-07 05:22 — 03-01 audit-only plan PASSED. Commit 14be4e5 (browser-verify tokens + fonts). Screenshot at `pictures/screenshots/03-01-tokens-and-fonts.png`. Two findings logged to `.planning/phases/03-rebuild/deferred-items.md` (DI-01 design-system @import order, DI-02 plan token-name drift) — both out of scope for 03-01. Wiring intact, design system green for downstream plans 03-02..03-12.
+Last activity: 2026-05-07 05:28 — 03-02 hybrid audit + add complete. Foundation audit (Nav/Footer/Mascot/Sticker) PASSED zero fixes. Container + Section primitives shipped at `components/layout/`; Section enforces REQ-09 4-color rotation at the type level. Smoke-test screenshot at `pictures/screenshots/03-02-base-layout-shell.png` shows 4 distinct backgrounds + wave dividers + Nav + Footer. Commits 76b22c9 (primitives), cfc8611 (smoke test). Ready for 03-03 homepage build.
 
-Progress: [███████░░░] 70%  *(2 phases complete + Phase 3 stage 3-Foundations 100% done)*
+Progress: [██░░░░░░░░] 17%
 
 ## Performance Metrics
 
 **Velocity:**
+
 - Total plans completed: 6 (Phase 1 inline plans)
 - Average duration: ~5 min/plan
 - Total execution time: ~30 min for Phase 1
@@ -33,6 +49,7 @@ Progress: [███████░░░] 70%  *(2 phases complete + Phase 3 st
 | 4 | 0/5 | Future | Launch readiness |
 
 **Recent Trend:**
+
 - Last activity: Phase 1 docs refresh + bootstrap
 - Trend: Healthy — no blockers, clear next step
 
@@ -49,6 +66,7 @@ Recent decisions affecting current work:
 - LOCKED: Live store at `shop.shmocard.com` is read-only from this repo. Storefront API only.
 - LOCKED: Product data in Shopify, presentation in code.
 - LOCKED: Locked headlines per `context/general/marketing.md`.
+- [Phase 3 / 03-02]: 2026-05-07: Section primitive enforces 4-color rotation (REQ-09) at the type level via `SectionBg = 'marsh'|'graham'|'ember'|'cocoa'`. Container polymorphic via `as` prop. Wave size mapping: `lg`/`xl` emit CSS modifiers; `sm`/`md` fall back to default thin wave (no `--sm`/`--md` exist).
 
 ### Pending Todos
 
@@ -57,6 +75,7 @@ None captured. Open questions live in `## Open Questions` below.
 ### Known Constraints
 
 See PROJECT.md Constraints section. Highlights:
+
 - No git history yet (repo not `git init`'d as of 2026-05-07).
 - All `.shm-*` design-system invariants per `context/design-system/CLAUDE.md`.
 - File layout locked per `.claude/rules/file-organization.md`.
@@ -87,16 +106,20 @@ Still open:
 **Before starting:** load `frontend-design` skill (composition-heavy, not a pure port).
 
 **References to keep open:**
+
 - `context/design-system/ui_kits/website/homepage/Shmocard Homepage.html`
 - `context/design-system/ui_kits/website/homepage/home-bundle.jsx`
 - `context/design-system/ui_kits/website/homepage/home.css`
 - `context/design-system/ui_kits/website/homepage/home-data.jsx`
 
 **Section order:**
+
 1. Hero (with type-cycle "missing" / "asking for")
 2. Audience strip (marquee)
 3. Proof grid (real Pawn Leads data — never mention "Pawn Leads" in copy)
+
 4–7. Sub-brand spotlights (Review, Biz, Link, Reputation — alternating reverse)
+
 8. Crew strip
 9. How-it-works grid
 10. FAQ (rewrite during build)
