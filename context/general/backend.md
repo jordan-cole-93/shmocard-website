@@ -54,6 +54,23 @@ Shopify product changes propagate in ~5 seconds:
 
 Set in `.env.local` locally. Mirror in Vercel dashboard at deploy time.
 
+### Phase 3 Storefront API env vars (contract)
+
+This is the canonical env-var contract consumed by `lib/shopify/index.ts` and `components/cart/actions.ts`. We deliberately do **not** ship `.env.local.example` — the pre-tool-use hook in `.claude/settings.json` blocks any `.env*` write per `.claude/rules/live-store-protection.md`. This table is the contract instead.
+
+| Var | Required | Source | Used by |
+|---|---|---|---|
+| `SHOPIFY_STORE_DOMAIN` | yes | Shopify Admin → Settings → Domains → primary domain (e.g. `shop.shmocard.com` or `shmocard.myshopify.com`). Scheme-prefixed values are tolerated and stripped by `getEndpoint()`. | `lib/shopify/index.ts` (endpoint construction); `components/cart/actions.ts` (`assertCheckoutUrl` allow-list) |
+| `SHOPIFY_STOREFRONT_ACCESS_TOKEN` | yes | Shopify Admin → Apps → **Headless** sales channel → Storefronts → [storefront] → **Public access token**. Public token (read + cart only). Never the Admin API access token. | `lib/shopify/index.ts` (`X-Shopify-Storefront-Access-Token` header) |
+| `SHOPIFY_REVALIDATION_SECRET` | yes (plan 03-11) | Generate locally (`openssl rand -hex 32`), paste into the Shopify webhook URL query string and into Vercel env. | `app/api/revalidate/route.ts` |
+| `GHL_WAITLIST_WEBHOOK_URL` | deferred | GoHighLevel inbound webhook URL — provided mid-Phase 3 for plan 03-10 (waitlist forms). Plan executes only when Jordan supplies the URL. | `app/api/waitlist/route.ts` (plan 03-10) |
+
+**Rules:**
+- Server-only. No `NEXT_PUBLIC_*` exposure of any of these.
+- Never log values. `lib/shopify/index.ts` throws on missing values with a generic message; it never echoes the token in error output.
+- Local: write to `.env.local` (gitignored). Production: Vercel project env. Don't commit either to git.
+- Cart cookie `shm-cart-id` is set with `httpOnly: true, secure: true, sameSite: 'lax', maxAge: 60*60*24*14` (14 days) — see `components/cart/actions.ts`.
+
 ## Shopify product handles (live)
 
 | Our slug | Shopify handle |
