@@ -45,13 +45,22 @@ export function Section({
   id,
   ariaLabel,
 }: SectionProps) {
-  const sectionCls = `shm-bg-${bg}`;
+  const sectionCls = `shm-section shm-bg-${bg}`;
   const containerCls = `shm-container ${containerClassName ?? ""}`.trim();
   const sizeCls = waveSizeClass(waveSize);
   const waveCls = `shm-wave shm-wave--${nextBg}${sizeCls ? ` ${sizeCls}` : ""}`;
 
+  // Tall waves bite into the section boundary; add canonical bottom padding
+  // so content doesn't overlap the wave shape.
+  const sectionStyle =
+    nextBg && (waveSize === "lg" || waveSize === "xl")
+      ? {
+          paddingBottom: `calc(var(--section-py-d) + var(--wave-height-${waveSize}))`,
+        }
+      : undefined;
+
   return (
-    <section className={sectionCls} id={id} aria-label={ariaLabel}>
+    <section className={sectionCls} id={id} aria-label={ariaLabel} style={sectionStyle}>
       <div className={containerCls}>{children}</div>
       {nextBg ? <div className={waveCls} aria-hidden="true" /> : null}
     </section>
