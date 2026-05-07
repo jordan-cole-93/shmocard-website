@@ -8,15 +8,24 @@ Skills below should fire automatically when their condition matches. If a condit
 
 | Condition | Skill to invoke | Notes |
 |---|---|---|
+| **Any UI / visual / design / component / layout / page work in this repo** | **`shmocard-design-system`** (project-local, auto-discoverable) | **MANDATORY FIRST.** Invoke via the Skill tool BEFORE writing code, BEFORE reading other docs, BEFORE any subagent dispatch. Loads `SKILL.md` (operator's manual), primitive table, canonical reference pointers, hard rules. No exceptions. |
 | Starting any non-trivial multi-step task in this repo | `gsd-progress` → then `/gsd-plan-phase` or `/gsd-quick` | GSD owns plan → execute → verify discipline. Skip for typo-level fixes. |
 | Trivial 1–3 file fix | `/gsd-fast` | No subagents, inline. |
 | Resuming session after `/clear` or break | `/gsd-resume-work` or `/gsd-progress` | Restores STATE.md context. |
 | Session lifecycle (capture decisions, edits, bug fixes) | `claude-mem` | Auto by plugin — no manual invocation. |
 | Tool-call output bloat / context preservation | `context-mode` | Auto by plugin — no manual invocation. Check stats with `/context-mode:ctx-stats`. |
 
-## Design / UI prompts
+## Hard rule for design / UI prompts
 
-For any prompt mentioning design / layout / UI / component / hero / section / typography / palette / animation, read `.claude/rules/design-system.md` (which points at the source-of-truth docs in `.claude/skills/shmocard-design-system/`). The design system is the authority on visual / typography / mascot / section-rotation / utility-class-prefix decisions in this repo. Anthropic's `frontend-design`, `impeccable`, and `redesign-skill` global skills are available if Jordan or the parent agent chooses to invoke them, but they are not auto-loaded — the design system rules are sufficient.
+For any prompt mentioning design / layout / UI / component / hero / section / typography / palette / animation / spacing / wave / mascot / sticker / Shmocard:
+
+1. **Invoke the `shmocard-design-system` Skill via the Skill tool FIRST.** This loads `SKILL.md` — the operator's manual with the primitive table, hard rules, canonical reference pages. Don't paraphrase from memory; load the actual file. Skipping this is a recurring failure mode and is what produced the 5h wave-divider seesaw on 2026-05-07.
+2. **Then read `.claude/rules/design-system.md`** — the project-level orchestrator that points at additional source-of-truth files (`PRIMITIVES.md`, `colors_and_type.css`, `components.css`, `ui_kits/website/*`).
+3. **Only after both are loaded**, write code or dispatch subagents.
+
+The design system is the authority on visual / typography / mascot / section-rotation / utility-class-prefix decisions. Anthropic's `frontend-design`, `impeccable`, and `redesign-skill` global skills are available if useful, but are not auto-loaded — the design system rules + SKILL.md are sufficient.
+
+**Symptom that this rule was broken:** producing UI code that fights the design system — wrong section bg, missing `.shm-` prefix, em accent missing, custom drawer instead of `.shm-cart-*`, hand-coded icons instead of hand-drawn cocoa-deep strokes. If you catch yourself inventing instead of composing primitives, the SKILL.md wasn't loaded.
 
 ## Project-local sub-agents
 
