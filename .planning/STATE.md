@@ -3,14 +3,14 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: executing
-last_updated: "2026-05-07T05:50:00.000Z"
-last_activity: "2026-05-07 05:50 — 03-04 /shmo-review category page complete. Built CategoryHero (locked headline + tagline), BulkMath (4-tier illustrative grid, no prices), FormatCards (CR-80/L-Sign/Square Card linking to PDP routes), inline HowItWorksShort (5 steps) + Proof (6 verified shop results, 2 quotes), CategoryFaq (8 questions, soft list, 1 mascot sticker). Section rotation marsh→graham→marsh→marsh→cocoa→marsh. Browser-verified at 1440×900: 200 OK, locked headline + tagline visible, 3 format hrefs resolve, 0 console errors. Screenshot pictures/screenshots/03-04-shmo-review-full.png (559K). Commits 27cb2d5 (Task 1, content split with ce7c52d per DI-03 parallel-agent collision) and 9849306 (Task 2 clean). REQ-02 satisfied. Wave 2 03-04 done."
+last_updated: "2026-05-07T06:15:00.000Z"
+last_activity: "2026-05-07 06:15 — 03-08 cart drawer complete. 12 .shm-cart-* primitive components + useCartHydration hook + global CartDrawer mount via app/layout.tsx. Zustand persist middleware DROPPED entirely (Cart Persistence Trap mitigation, RESEARCH.md Pitfall 6) — httpOnly cookie + Storefront query are sole source of truth for cartId/lines; UI state resets on reload. CartCheckoutButton calls assertCheckoutUrl Server Action before window.location.href (T-03-08-01 open-redirect guard). Built temp app/cart-smoke/ harness to verify add-to-cart end-to-end while sibling 03-05 PDP runs in parallel (DI-06 cleanup deferred). Browser-verified flow: cart create → add 2 products → qty +1 → remove → reload → hydrate from cookie. Screenshots 03-08-cart-empty.png + 03-08-cart-with-lines.png. Commits d01fca7 + 27aae54. REQ-06 cart UX surface satisfied. REQ-09 design system discipline holds. Wave 3 03-08 done."
 progress:
   total_phases: 4
   completed_phases: 0
   total_plans: 12
-  completed_plans: 6
-  percent: 50
+  completed_plans: 7
+  percent: 58
 ---
 
 # Project State
@@ -25,11 +25,11 @@ See: .planning/PROJECT.md (updated 2026-05-07)
 ## Current Position
 
 Phase: 3 of 4 (Rebuild — in progress)
-Stage: Wave 1 + Wave 2 03-03/03-04 complete. Next: 03-05/06/07 PDPs (CR-80, L-Sign, Square Card).
+Stage: Waves 1+2 complete; Wave 3 03-08 complete. Sibling 03-05 (CR-80 PDP) running in parallel; 03-06/07 (L-Sign, Square Card PDPs) pending.
 Status: In progress
-Last activity: 2026-05-07 05:50 — 03-04 /shmo-review category page complete. CategoryHero with locked headline + tagline, BulkMath 4-tier grid, 3 format cards routing to PDP slugs, 5-step HowItWorks-short, cocoa Proof block (6 results + 2 quotes), 8-question FAQ. Browser-verified, 0 console errors, screenshot saved. Commits 27cb2d5 + 9849306. REQ-02 satisfied.
+Last activity: 2026-05-07 06:15 — 03-08 cart drawer complete. 12 .shm-cart-* components + global CartDrawer mount + useCartHydration hook (cookie-driven). Zustand persist DROPPED (Cart Persistence Trap mitigation). assertCheckoutUrl open-redirect guard wired. Smoke harness verified add-to-cart → qty → remove → reload-hydration end-to-end. Commits d01fca7 + 27aae54. REQ-06 + REQ-09 satisfied for cart surface.
 
-Progress: [█████░░░░░] 50%
+Progress: [██████░░░░] 58%
 
 ## Performance Metrics
 
