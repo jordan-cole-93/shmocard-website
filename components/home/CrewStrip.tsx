@@ -1,18 +1,10 @@
 // components/home/CrewStrip.tsx
 // Server component. Inserted directly after Shmo Review spotlight.
-// 6-up crew photo grid — assets pending; render placeholder tiles.
+// 6-up crew photo grid — fills slots from CREW data, falls back to placeholder.
 
 import "./home.css";
 import Section from "@/components/layout/Section";
-
-const PLACEHOLDER_LABELS = [
-  "Crew tile",
-  "Crew tile",
-  "Crew tile",
-  "Crew tile",
-  "Crew tile",
-  "Crew tile",
-];
+import { CREW } from "./home-data";
 
 export default function CrewStrip() {
   return (
@@ -26,12 +18,42 @@ export default function CrewStrip() {
         </p>
       </div>
       <div className="crew-grid">
-        {PLACEHOLDER_LABELS.map((label, i) => (
-          <div key={i} className="crew-tile" aria-hidden="true">
-            <span className="crew-tile__chip">Photo coming</span>
-            <span>{label}</span>
-          </div>
-        ))}
+        {CREW.map((c, i) =>
+          c.photo ? (
+            <div key={i} className="crew-tile crew-tile--photo">
+              <img
+                className="crew-tile__photo"
+                src={c.photo}
+                alt={c.name ? `${c.name}${c.shop ? ` — ${c.shop}` : ""}` : ""}
+                loading="lazy"
+              />
+              {c.stat && (
+                <div className="crew-tile__sticker" aria-label={c.stat}>
+                  <svg
+                    className="crew-tile__sticker-shape"
+                    viewBox="0 0 220 120"
+                    xmlns="http://www.w3.org/2000/svg"
+                    aria-hidden="true"
+                  >
+                    <path
+                      d="M 30 72 Q 22 36, 60 32 Q 70 8, 112 22 Q 142 4, 168 30 Q 205 30, 195 68 Q 218 95, 178 102 Q 168 122, 132 108 Q 100 122, 78 104 Q 38 112, 30 72 Z"
+                      fill="var(--color-marshmallow)"
+                      stroke="var(--color-cocoa-deep)"
+                      strokeWidth="3"
+                      strokeLinejoin="round"
+                    />
+                  </svg>
+                  <span className="crew-tile__sticker-text">{c.stat}</span>
+                </div>
+              )}
+            </div>
+          ) : (
+            <div key={i} className="crew-tile" aria-hidden="true">
+              <span className="crew-tile__chip">Photo coming</span>
+              <span>Crew tile</span>
+            </div>
+          )
+        )}
       </div>
     </Section>
   );

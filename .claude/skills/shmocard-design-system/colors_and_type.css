@@ -315,10 +315,10 @@ html, body {
 .shm-bg-cocoa .shm-display, .shm-bg-cocoa .shm-h1, .shm-bg-cocoa .shm-h2, .shm-bg-cocoa .shm-h3 {
   color: var(--color-marshmallow);
 }
-.shm-bg-ember .shm-lede, .shm-bg-ember .shm-body,
-.shm-bg-cherry .shm-lede, .shm-bg-cherry .shm-body,
-.shm-bg-chocolate .shm-lede, .shm-bg-chocolate .shm-body,
-.shm-bg-cocoa .shm-lede, .shm-bg-cocoa .shm-body {
+.shm-bg-ember .shm-lede, .shm-bg-ember .shm-body, .shm-bg-ember .shm-checklist li,
+.shm-bg-cherry .shm-lede, .shm-bg-cherry .shm-body, .shm-bg-cherry .shm-checklist li,
+.shm-bg-chocolate .shm-lede, .shm-bg-chocolate .shm-body, .shm-bg-chocolate .shm-checklist li,
+.shm-bg-cocoa .shm-lede, .shm-bg-cocoa .shm-body, .shm-bg-cocoa .shm-checklist li {
   color: rgba(255, 251, 241, 0.86);
 }
 .shm-bg-ember .shm-italic, .shm-bg-ember em,

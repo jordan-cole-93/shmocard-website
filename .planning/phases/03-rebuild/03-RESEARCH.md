@@ -12,7 +12,7 @@ Phase 3 rebuilds the Shmocard marketing site by composing the locked design syst
 
 The decisions that shape every plan stub are already locked in `CONTEXT.md` and `DECISIONS.md`: Zustand for cart, framer-motion for section/drawer/modal motion (CSS for hover), Storefront API only (zero Admin API), Server-Component-first with `'use client'` only for interactive surfaces, `.shm-*` utility prefix mandatory, and the four-color section rotation enforced.
 
-**Primary recommendation:** Treat plans 03-01 and 03-02 as **delta audits** (verify what 3-A1..3-A6 already shipped — don't rebuild), then drive plans 03-03 onward with a thin `lib/shopify/` GraphQL fetch wrapper using Next.js fetch caching with tag-based revalidation. Section composition reads directly from `.claude/skills/shmocard-design-system/ui_kits/website/homepage/Shmocard Homepage.html` + `home.css` + `home-data.jsx` — these are the canonical layouts; do not invent.
+**Primary recommendation:** Treat plans 03-01 and 03-02 as **delta audits** (verify what 3-A1..3-A6 already shipped — don't rebuild), then drive plans 03-03 onward with a thin `lib/shopify/` GraphQL fetch wrapper using Next.js fetch caching with tag-based revalidation. Section composition reads directly from `.claude/skills/shmocard-design-system/ui_kits/website/homepage-shmocard/Shmocard Homepage.html` + `home.css` + `home-data.jsx` — these are the canonical layouts; do not invent.
 
 ---
 
@@ -906,7 +906,7 @@ See Pattern 4 above.
 - `.planning/phases/02-design-system-review/DECISIONS.md` — D-01..D-05 locked decisions [VERIFIED in repo]
 - `context/general/backend.md` — Shopify integration, env vars, webhook revalidation [VERIFIED in repo]
 - `.claude/skills/shmocard-design-system/SKILL.md` + `components.css` + `colors_and_type.css` — primitive source of truth [VERIFIED in repo]
-- `.claude/skills/shmocard-design-system/ui_kits/website/homepage/Shmocard Homepage.html` + `home.css` + `home-data.jsx` — canonical homepage layout [VERIFIED in repo]
+- `.claude/skills/shmocard-design-system/ui_kits/website/homepage-shmocard/Shmocard Homepage.html` + `home.css` + `home-data.jsx` — canonical homepage layout [VERIFIED in repo]
 - `.claude/skills/shmocard-design-system/ui_kits/website/Buybox.html` — canonical PDP [VERIFIED in repo]
 - `.claude/skills/shmocard-design-system/ui_kits/website/Cart Drawer.html` — canonical cart drawer [VERIFIED in repo]
 - [Shopify Storefront API reference](https://shopify.dev/docs/api/storefront/latest) — Cart, cartCreate, cartLinesAdd, cartLinesUpdate, cartLinesRemove [CITED]

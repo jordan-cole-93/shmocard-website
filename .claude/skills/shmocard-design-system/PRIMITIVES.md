@@ -452,7 +452,7 @@ Things that DO NOT have a primitive — if you need one, **add it to `components
 - Marquee / audience strip
 - Video tile
 
-If a request needs one of these, **read the canonical reference page first** (`ui_kits/website/homepage/Shmocard Homepage.html`) and copy its composition rather than inventing.
+If a request needs one of these, **read the canonical reference page first** (`ui_kits/website/homepage-shmocard/Shmocard Homepage.html`) and copy its composition rather than inventing.
 
 ---
 

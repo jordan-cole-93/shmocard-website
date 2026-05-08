@@ -6,14 +6,14 @@
    .shm-card from this file, the variant belongs in components.css.
 
    Translated from
-   .claude/skills/shmocard-design-system/ui_kits/website/homepage/home.css
+   .claude/skills/shmocard-design-system/ui_kits/website/homepage-shmocard/home.css
    for the Phase 3 rebuild. Section comments preserved.
    ============================================================ */
 
 /* ---------- Hero ---------- */
 /* Grid bg + hero-specific padding live on the section element so the
    pattern bleeds full viewport width (canonical pattern — see
-   .claude/skills/shmocard-design-system/ui_kits/website/homepage/home-bundle.jsx:649).
+   .claude/skills/shmocard-design-system/ui_kits/website/homepage-shmocard/home-bundle.jsx:649).
    The shm-container inside still constrains content max-width. */
 .home-hero-section {
   padding-top: 64px;
@@ -251,6 +251,13 @@
   display: grid; place-items: center;
   font-family: var(--font-display); font-weight: 700; font-size: 14px;
   flex-shrink: 0;
+  overflow: hidden;
+}
+.proof-quote__avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
 }
 .proof-quote__attr b {
   color: var(--color-cocoa-deep); font-weight: 700; display: block;
@@ -339,6 +346,13 @@
   background: transparent;
   display: flex; align-items: center; justify-content: center;
 }
+/* When the slot holds an illustration (Biz / Link / Reputation), drop the
+   container's overflow:hidden so the phone's drop shadow can breathe past
+   the rounded edges. Photo and placeholder cases keep the clipping. */
+.spotlight__art:has(.spotlight__illustration-frame) {
+  overflow: visible;
+  border-radius: 0;
+}
 .spotlight__art-img {
   width: 100%; height: 100%;
   object-fit: contain;
@@ -372,9 +386,27 @@
   margin-top: 22px;
 }
 .format-mini {
+  /* Reset button defaults when rendered as <button> */
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
   padding: 14px 16px;
   border-radius: var(--radius-md);
   display: flex; flex-direction: column; gap: 4px;
+  text-decoration: none;
+  color: inherit;
+  transition: transform 180ms ease, box-shadow 180ms ease, border-color 180ms ease;
+}
+.format-mini:hover {
+  transform: translateY(-2px);
+}
+.format-mini:focus-visible {
+  outline: 2px solid var(--color-ember);
+  outline-offset: 2px;
+}
+.format-mini--active {
+  border-color: var(--color-ember);
+  box-shadow: 0 0 0 2px var(--color-ember) inset;
 }
 .format-mini__title {
   font-family: var(--font-display); font-weight: 700;
@@ -432,6 +464,1133 @@
   color: var(--color-ink-3);
   font-family: var(--font-sans);
   font-size: 12px;
+}
+/* When a tile holds a real photo, allow the sticker to overflow the tile bounds.
+   The img clips itself to the tile's rounded shape via its own border-radius. */
+.crew-tile--photo { overflow: visible; }
+.crew-tile__photo {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  border-radius: var(--radius-lg);
+}
+.crew-tile__sticker {
+  position: absolute;
+  left: 50%;
+  bottom: 0;
+  width: 78%;
+  aspect-ratio: 220 / 120;
+  transform: translate(-50%, 42%) rotate(-5deg);
+  transform-origin: center center;
+  filter: drop-shadow(0 3px 0 rgba(59, 31, 20, 0.22));
+  pointer-events: none;
+  z-index: 2;
+}
+.crew-tile__sticker-shape {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+.crew-tile__sticker-text {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: clamp(10px, 1vw, 13px);
+  line-height: 1.08;
+  letter-spacing: -0.005em;
+  color: var(--color-cocoa-deep);
+  text-transform: uppercase;
+  text-align: center;
+  white-space: pre-line;
+  padding: 14% 16%;
+}
+
+/* ---------- Spotlight art placeholder (when no photo yet) ---------- */
+.spotlight__placeholder {
+  position: relative;
+  aspect-ratio: 1.1 / 1;
+  width: 100%;
+  border-radius: var(--radius-xl);
+  overflow: hidden;
+  background: var(--color-graham-soft);
+  display: grid; place-items: center;
+  color: var(--color-ink-3);
+  font-family: var(--font-sans);
+  font-size: 14px;
+}
+.spotlight__illustration-frame {
+  position: relative;
+  aspect-ratio: 1.1 / 1;
+  width: 100%;
+  display: block;
+}
+.spotlight__illustration {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* ---------- Phone-frame mockup primitive (used by sub-brand illustrations) ---------- */
+/* Realistic iPhone product mockup — matches the canonical "How It Works" phone in
+   .claude/skills/shmocard-design-system/ui_kits/website/homepage-shmoreview/.
+   Thin cocoa-deep body, soft drop shadow (NOT chunky), dynamic-island notch. */
+.phone-frame {
+  position: relative;
+  height: 92%;
+  aspect-ratio: 9 / 19.5;
+  background: var(--color-cocoa-deep);
+  border-radius: 38px;
+  padding: 10px;
+  box-shadow:
+    0 24px 56px rgba(46, 26, 15, 0.18),
+    0 0 0 1px rgba(46, 26, 15, 0.08);
+  display: block;
+}
+.phone-frame__notch {
+  position: absolute;
+  top: 14px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 42%;
+  height: 22px;
+  border-radius: 999px;
+  background: #0a0908;
+  z-index: 2;
+}
+.phone-frame__screen {
+  width: 100%;
+  height: 100%;
+  background: var(--color-marshmallow);
+  border-radius: 30px;
+  overflow: hidden;
+  position: relative;
+}
+.phone-frame__home {
+  position: absolute;
+  bottom: 6px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 32%;
+  height: 3px;
+  border-radius: 999px;
+  background: rgba(255, 251, 241, 0.55);
+  z-index: 2;
+}
+
+/* ---------- Biz scene: phone + physical card ---------- */
+/* Two-object composition: the recipient's phone showing the contact preview that
+   just appeared, plus the physical NFC business card tilted in front of it. */
+.spotlight__illustration--biz {
+  position: relative;
+  display: block;
+}
+.spotlight__illustration--biz .phone-frame {
+  position: absolute;
+  right: 10%;
+  top: 4%;
+  height: 92%;
+}
+
+/* Physical card — sits tilted at the bottom-left, slightly in front of phone */
+.biz-physical-card {
+  position: absolute;
+  left: 4%;
+  bottom: 8%;
+  width: 50%;
+  aspect-ratio: 1.586 / 1;
+  background: var(--color-marshmallow);
+  border-radius: 14px;
+  padding: 14px 16px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  transform: rotate(-9deg);
+  box-shadow:
+    0 18px 38px rgba(46, 26, 15, 0.18),
+    0 0 0 1px rgba(46, 26, 15, 0.08);
+  z-index: 2;
+}
+.biz-physical-card__head {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+.biz-physical-card__brand {
+  font-family: var(--font-wordmark);
+  font-size: 14px;
+  letter-spacing: 0;
+  color: var(--color-cocoa-deep);
+  line-height: 1;
+}
+.biz-physical-card__brand-em { color: var(--color-ember); }
+.biz-physical-card__chip {
+  width: 22px;
+  height: 22px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--color-ember);
+  border-radius: 5px;
+  flex-shrink: 0;
+}
+.biz-physical-card__chip svg {
+  width: 14px;
+  height: 14px;
+  color: var(--color-marshmallow);
+}
+.biz-physical-card__body {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+.biz-physical-card__name {
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: 16px;
+  letter-spacing: -0.01em;
+  color: var(--color-cocoa-deep);
+  line-height: 1.05;
+}
+.biz-physical-card__role {
+  font-size: 10.5px;
+  color: var(--color-ink-3);
+}
+
+/* Phone screen — contact preview that pops up after tap */
+.biz-screen {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 30px 14px 36px;
+  position: relative;
+}
+.biz-contact-preview {
+  width: 100%;
+  background: #ffffff;
+  border-radius: 16px;
+  padding: 16px 14px 12px;
+  box-shadow: 0 10px 28px rgba(46, 26, 15, 0.10);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 3px;
+}
+.biz-contact-preview__avatar {
+  width: 50px;
+  height: 50px;
+  border-radius: 999px;
+  background: var(--color-graham-soft);
+  object-fit: cover;
+  margin-bottom: 4px;
+  display: block;
+}
+.biz-contact-preview__name {
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: 13px;
+  letter-spacing: -0.01em;
+  color: var(--color-cocoa-deep);
+}
+.biz-contact-preview__role {
+  font-size: 9.5px;
+  color: var(--color-ink-3);
+}
+.biz-contact-preview__divider {
+  width: 100%;
+  height: 1px;
+  background: var(--color-hair);
+  margin: 8px 0 6px;
+}
+.biz-contact-preview__rows {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 10px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+.biz-contact-preview__rows li {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 9px;
+  color: var(--color-ink-2);
+  text-align: left;
+}
+.biz-contact-preview__rows svg {
+  width: 11px;
+  height: 11px;
+  color: var(--color-cocoa-deep);
+  flex-shrink: 0;
+}
+.biz-contact-preview__save {
+  width: 100%;
+  background: var(--color-ember);
+  color: var(--color-marshmallow);
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 10.5px;
+  padding: 7px 0;
+  border-radius: 999px;
+  text-align: center;
+  letter-spacing: 0.01em;
+}
+.biz-screen__caption {
+  position: absolute;
+  bottom: 14px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 8px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--color-ink-3);
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+/* ---------- Link scene: phone + annotated callouts ---------- */
+/* Phone on the left shows a link-in-bio page; callouts on the right
+   point at each destination button with a hand-drawn connector. */
+.spotlight__illustration--link {
+  position: relative;
+  display: block;
+}
+.spotlight__illustration--link .phone-frame {
+  position: absolute;
+  left: 4%;
+  top: 4%;
+  height: 92%;
+}
+.link-screen {
+  width: 100%;
+  height: 100%;
+  padding: 44px 14px 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  position: relative;
+}
+.link-screen__head {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 1px;
+}
+.link-screen__avatar {
+  width: 60px;
+  height: 60px;
+  border-radius: 999px;
+  background: var(--color-graham-soft);
+  object-fit: cover;
+  margin-bottom: 6px;
+  display: block;
+}
+.link-screen__name {
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: 13px;
+  letter-spacing: -0.01em;
+  color: var(--color-cocoa-deep);
+  margin-top: 2px;
+}
+.link-screen__bio {
+  font-size: 9.5px;
+  color: var(--color-ink-3);
+  margin-top: 1px;
+}
+.link-screen__status {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  margin-top: 6px;
+  padding: 3px 8px 3px 6px;
+  border-radius: 999px;
+  background: rgba(76, 175, 80, 0.12);
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 8.5px;
+  letter-spacing: 0.04em;
+  color: #2f7a2f;
+}
+.link-screen__status-dot {
+  width: 5px;
+  height: 5px;
+  border-radius: 999px;
+  background: #4caf50;
+  display: inline-block;
+}
+.link-screen__divider {
+  width: 100%;
+  height: 1px;
+  background: var(--color-hair);
+  margin: 8px 0 4px;
+}
+.link-screen__buttons {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+}
+.link-btn {
+  display: grid;
+  grid-template-columns: 14px 1fr 10px;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 12px;
+  border-radius: 999px;
+  background: var(--color-marshmallow);
+  border: 1px solid var(--color-hair);
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 10px;
+  color: var(--color-cocoa-deep);
+  letter-spacing: -0.005em;
+}
+.link-btn svg {
+  width: 100%;
+  height: auto;
+  color: var(--color-cocoa-deep);
+}
+.link-btn > svg:last-child {
+  width: 10px;
+  color: var(--color-ink-3);
+}
+
+/* ---------- Link callouts: scattered square tiles + ember connectors ---------- */
+.link-connectors {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 0;
+  overflow: visible;
+}
+.link-connectors path {
+  stroke: var(--color-cocoa-deep);
+  stroke-width: 0.3;
+  stroke-dasharray: 1.4 1.2;
+  stroke-linecap: butt;
+  stroke-linejoin: miter;
+}
+.link-connectors circle {
+  fill: var(--color-ember);
+}
+
+.link-callouts {
+  position: absolute;
+  inset: 0;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  z-index: 1;
+}
+.link-callout {
+  position: absolute;
+  width: 16%;
+  aspect-ratio: 1 / 1;
+}
+/* Tiles alternate close/far horizontally (close → far → close → far).
+   Each tile is 16% wide; transform centers it on its anchor. Y matches the
+   corresponding phone-button height so each connector is a straight line. */
+.link-callout--facebook { left: 62%; top: 52%; transform: translate(-50%, -50%); }
+.link-callout--youtube  { left: 84%; top: 62%; transform: translate(-50%, -50%); }
+.link-callout--donate   { left: 62%; top: 72%; transform: translate(-50%, -50%); }
+.link-callout--website  { left: 84%; top: 82%; transform: translate(-50%, -50%); }
+
+/* ---------- Shmo Reputation scene: marshmallow MacBook + dashboard inside ---------- */
+.spotlight__illustration--reputation {
+  position: relative;
+  display: block;
+}
+
+/* MacBook chassis — dark-chocolate cocoa-deep body. Same shadow treatment
+   as the iPhone phone-frame: soft drop shadow + a 1px subtle ring via
+   second drop-shadow. No solid border. */
+.rep-laptop {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: 92%;
+  display: flex;
+  flex-direction: column;
+  filter:
+    drop-shadow(0 24px 56px rgba(46, 26, 15, 0.18))
+    drop-shadow(0 0 0 1px rgba(46, 26, 15, 0.08));
+}
+.rep-laptop__lid {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 10;
+  background: #27130b;
+  border-radius: 14px 14px 4px 4px;
+  padding: 14px 12px 12px;
+}
+.rep-laptop__notch {
+  position: absolute;
+  top: 4px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 24%;
+  height: 8px;
+  background: #0a0908;
+  border-radius: 0 0 8px 8px;
+  z-index: 2;
+}
+.rep-laptop__screen {
+  width: 100%;
+  height: 100%;
+  background: var(--color-cocoa-deep);
+  border-radius: 4px;
+  overflow: hidden;
+  position: relative;
+}
+/* The base/hinge: a wider thin band underneath the lid — the iconic
+   MacBook silhouette. */
+.rep-laptop__base {
+  position: relative;
+  width: 110%;
+  height: 10px;
+  margin-left: -5%;
+  margin-top: -2px;
+  background: #27130b;
+  border-radius: 0 0 8px 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.rep-laptop__hinge {
+  display: block;
+  width: 14%;
+  height: 3px;
+  border-radius: 0 0 3px 3px;
+  background: rgba(255, 251, 241, 0.2);
+  margin-top: -8px;
+}
+
+/* Dashboard inside the laptop screen — full SaaS layout: sidebar + main */
+.rep-dashboard {
+  width: 100%;
+  height: 100%;
+  display: grid;
+  grid-template-columns: 28% 1fr;
+  font-family: var(--font-display);
+  color: var(--color-cocoa-deep);
+  font-size: 8px;
+}
+
+/* DARK-THEME DASHBOARD — sidebar darker than main, both on cocoa base */
+
+/* SIDEBAR — same dark chocolate (#27130b) as the laptop chassis */
+.rep-dashboard__sidebar {
+  background: #27130b;
+  border-right: 1px solid rgba(255, 251, 241, 0.08);
+  padding: 10px 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.rep-dashboard__brand {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 0 4px 6px;
+  border-bottom: 1px solid rgba(255, 251, 241, 0.12);
+}
+.rep-dashboard__brand-mark {
+  width: 14px;
+  height: 14px;
+  border-radius: 4px;
+  background: var(--color-ember);
+}
+.rep-dashboard__brand-text {
+  font-weight: 800;
+  font-size: 9px;
+  letter-spacing: -0.01em;
+  color: var(--color-marshmallow);
+}
+.rep-dashboard__nav {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+.rep-nav {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 6px;
+  border-radius: 5px;
+  font-weight: 600;
+  font-size: 8px;
+  color: rgba(255, 251, 241, 0.7);
+  letter-spacing: -0.005em;
+}
+.rep-nav svg {
+  width: 10px;
+  height: 10px;
+  flex-shrink: 0;
+}
+.rep-nav--active {
+  background: var(--color-cocoa-deep);
+  color: var(--color-marshmallow);
+  font-weight: 700;
+}
+.rep-nav__pill {
+  margin-left: auto;
+  padding: 1px 5px;
+  border-radius: 999px;
+  background: var(--color-ember);
+  color: var(--color-marshmallow);
+  font-size: 7px;
+  font-weight: 700;
+}
+.rep-dashboard__user {
+  margin-top: auto;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 4px 0;
+  border-top: 1px solid rgba(255, 251, 241, 0.12);
+}
+.rep-dashboard__user-avatar {
+  width: 16px;
+  height: 16px;
+  border-radius: 999px;
+  background: var(--color-cocoa-deep);
+  flex-shrink: 0;
+}
+.rep-dashboard__user-meta {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+.rep-dashboard__user-name {
+  font-weight: 700;
+  font-size: 8px;
+  color: var(--color-marshmallow);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.rep-dashboard__user-shop {
+  font-size: 7px;
+  font-weight: 500;
+  color: rgba(255, 251, 241, 0.65);
+}
+
+/* MAIN */
+.rep-dashboard__main {
+  padding: 10px 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  background: var(--color-cocoa-deep);
+  color: var(--color-marshmallow);
+  min-width: 0;
+}
+.rep-dashboard__topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.rep-dashboard__title {
+  font-weight: 800;
+  font-size: 13px;
+  letter-spacing: -0.012em;
+  color: var(--color-marshmallow);
+}
+.rep-dashboard__crumb {
+  font-size: 7.5px;
+  font-weight: 500;
+  color: rgba(255, 251, 241, 0.5);
+  margin-top: 1px;
+}
+.rep-dashboard__topbar-actions {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.rep-dashboard__search {
+  width: 60px;
+  height: 14px;
+  border-radius: 4px;
+  background: rgba(255, 251, 241, 0.06);
+  border: 1px solid rgba(255, 251, 241, 0.1);
+}
+.rep-dashboard__bell {
+  width: 14px;
+  height: 14px;
+  border-radius: 999px;
+  background: rgba(255, 251, 241, 0.06);
+  border: 1px solid rgba(255, 251, 241, 0.1);
+}
+
+/* Stats row (4 cards) */
+.rep-dashboard__stats {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 5px;
+}
+.rep-stat {
+  border: 1px solid rgba(255, 251, 241, 0.08);
+  border-radius: 6px;
+  padding: 5px 7px;
+  background: rgba(255, 251, 241, 0.04);
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+}
+.rep-stat__label {
+  font-size: 7px;
+  font-weight: 600;
+  color: rgba(255, 251, 241, 0.55);
+  letter-spacing: 0.02em;
+}
+.rep-stat__value {
+  font-weight: 800;
+  font-size: 13px;
+  letter-spacing: -0.01em;
+  color: var(--color-marshmallow);
+  display: flex;
+  align-items: baseline;
+  gap: 1px;
+}
+.rep-stat__value--ember { color: var(--color-ember); }
+.rep-stat__star {
+  width: 9px;
+  height: 9px;
+  display: inline-flex;
+  color: #fbbc05;
+  align-self: center;
+  margin-left: 1px;
+}
+.rep-stat__star svg { width: 100%; height: 100%; }
+.rep-stat__delta {
+  font-size: 6.5px;
+  font-weight: 600;
+  margin-top: 1px;
+}
+.rep-stat__delta--up { color: #6dd968; }
+.rep-stat__delta--flat { color: rgba(255, 251, 241, 0.5); }
+
+/* Bar chart */
+.rep-chart {
+  border: 1px solid rgba(255, 251, 241, 0.08);
+  border-radius: 6px;
+  padding: 7px 9px 6px;
+  background: rgba(255, 251, 241, 0.04);
+}
+.rep-chart__head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 5px;
+}
+.rep-chart__title {
+  font-weight: 700;
+  font-size: 8px;
+  letter-spacing: -0.005em;
+  color: var(--color-marshmallow);
+}
+.rep-chart__legend {
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  font-size: 7px;
+  color: rgba(255, 251, 241, 0.55);
+  font-weight: 600;
+}
+.rep-chart__legend-dot {
+  width: 5px;
+  height: 5px;
+  border-radius: 999px;
+  background: var(--color-ember);
+}
+.rep-chart__bars {
+  display: flex;
+  align-items: flex-end;
+  gap: 4px;
+  height: 28px;
+}
+.rep-chart__bar {
+  flex: 1;
+  background: var(--color-ember);
+  border-radius: 2px;
+  min-height: 4px;
+}
+.rep-chart__bar:nth-child(2n) { background: rgba(255, 91, 31, 0.55); }
+
+/* Reviews feed */
+.rep-feed {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  min-height: 0;
+}
+.rep-feed__head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.rep-feed__title {
+  font-weight: 700;
+  font-size: 8px;
+  color: var(--color-marshmallow);
+}
+.rep-feed__link {
+  font-size: 7px;
+  color: var(--color-ember);
+  font-weight: 700;
+}
+.rep-review {
+  border: 1px solid rgba(255, 251, 241, 0.08);
+  border-radius: 6px;
+  padding: 6px 8px;
+  background: rgba(255, 251, 241, 0.04);
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.rep-review__head {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.rep-review__avatar {
+  width: 14px;
+  height: 14px;
+  border-radius: 999px;
+  background: rgba(255, 251, 241, 0.25);
+  flex-shrink: 0;
+}
+.rep-review__person {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+.rep-review__name {
+  font-weight: 700;
+  font-size: 8px;
+  letter-spacing: -0.005em;
+  color: var(--color-marshmallow);
+}
+.rep-review__time {
+  font-size: 6.5px;
+  font-weight: 500;
+  color: rgba(255, 251, 241, 0.5);
+}
+.rep-review__stars {
+  margin-left: auto;
+  display: inline-flex;
+  gap: 1px;
+  color: #fbbc05;
+}
+.rep-review__stars svg {
+  width: 7px;
+  height: 7px;
+}
+.rep-review__lines {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+.rep-review__line {
+  height: 3px;
+  border-radius: 2px;
+  background: rgba(255, 251, 241, 0.18);
+  width: 100%;
+}
+.rep-review__line--short { width: 65%; }
+
+.rep-review__reply {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 7px;
+  background: rgba(255, 91, 31, 0.16);
+  border: 1px solid rgba(255, 91, 31, 0.32);
+  border-radius: 5px;
+  margin-top: 2px;
+}
+.rep-review__bot {
+  width: 10px;
+  height: 10px;
+  display: inline-flex;
+  color: var(--color-ember);
+  flex-shrink: 0;
+}
+.rep-review__bot svg { width: 100%; height: 100%; }
+.rep-review__reply-body {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+.rep-review__reply-line {
+  height: 3px;
+  border-radius: 2px;
+  background: rgba(255, 91, 31, 0.6);
+  width: 100%;
+}
+.rep-review__reply-line--short { width: 60%; }
+.rep-review__sent {
+  font-size: 7px;
+  font-weight: 700;
+  color: var(--color-ember);
+  letter-spacing: 0.02em;
+}
+
+
+/* Every callout is a browser window: shared URL-bar shell + per-CTA page body. */
+.callout-tile {
+  width: 100%;
+  height: 100%;
+  background: var(--color-marshmallow);
+  border: 1px solid var(--color-hair);
+  border-radius: 12px;
+  box-shadow: 0 6px 16px rgba(46, 26, 15, 0.08);
+  display: flex;
+  flex-direction: column;
+  font-family: var(--font-display);
+  color: var(--color-cocoa-deep);
+  overflow: hidden;
+}
+.callout-tile__urlbar {
+  display: flex;
+  align-items: center;
+  background: var(--color-graham-soft);
+  padding: 4px 6px;
+  border-bottom: 1px solid var(--color-hair);
+  flex-shrink: 0;
+}
+.callout-tile__lights {
+  display: inline-flex;
+  gap: 3px;
+}
+.callout-tile__lights span {
+  width: 5px;
+  height: 5px;
+  border-radius: 999px;
+}
+.callout-tile__lights span:nth-child(1) { background: var(--color-ember); }
+.callout-tile__lights span:nth-child(2) { background: var(--color-honey); }
+.callout-tile__lights span:nth-child(3) { background: var(--color-cocoa-deep); }
+.callout-tile__page {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Default callout-page layout — overridden per-CTA below */
+.callout-page {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 4px;
+  padding: 6px;
+}
+.callout-page__pill {
+  font-size: 7.5px;
+  font-weight: 700;
+  padding: 2px 7px;
+  border-radius: 999px;
+  background: var(--color-cocoa-deep);
+  color: var(--color-marshmallow);
+  letter-spacing: 0.01em;
+}
+.callout-page__pill--ember { background: var(--color-ember); }
+
+/* Facebook page — cover banner + avatar overlap + name stripe + Follow pill,
+   reads as a real FB profile page rather than an icon. */
+.callout-page--facebook {
+  background: var(--color-marshmallow);
+  padding: 0;
+  flex-direction: column;
+  align-items: stretch;
+  justify-content: flex-start;
+  gap: 0;
+}
+.callout-page__cover {
+  height: 36%;
+  background: var(--color-cocoa-deep);
+  flex-shrink: 0;
+}
+.callout-page__profile-row {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 0 7px;
+  margin-top: -10px;
+}
+.callout-page__avatar {
+  width: 22px;
+  height: 22px;
+  border-radius: 999px;
+  background: var(--color-cocoa-deep);
+  border: 2px solid var(--color-marshmallow);
+  flex-shrink: 0;
+}
+.callout-page__name-stripe {
+  height: 4px;
+  border-radius: 2px;
+  background: var(--color-cocoa-deep);
+  flex: 1;
+  margin-top: 6px;
+  max-width: 60%;
+}
+.callout-page__action-row {
+  display: flex;
+  justify-content: flex-end;
+  padding: 6px 7px 6px;
+  margin-top: auto;
+}
+
+/* YouTube page — video thumbnail (cover) + channel avatar + Subscribe pill,
+   parallel structure to the Facebook callout. */
+.callout-page--youtube {
+  background: var(--color-marshmallow);
+  padding: 0;
+  flex-direction: column;
+  align-items: stretch;
+  justify-content: flex-start;
+  gap: 0;
+}
+.callout-page--youtube .callout-page__cover {
+  height: 48%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.callout-page__play {
+  width: 22px;
+  height: 14px;
+  background: var(--color-ember);
+  border-radius: 3px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-marshmallow);
+}
+.callout-page__play svg {
+  width: 9px;
+  height: 9px;
+}
+
+/* Donate page — fundraiser heading + amount chips + full-width Donate button.
+   Reads as a real donation form rather than just a heart icon. */
+.callout-page--donate {
+  background: var(--color-marshmallow);
+  padding: 6px 7px 7px;
+  flex-direction: column;
+  align-items: stretch;
+  justify-content: space-between;
+  gap: 5px;
+}
+.callout-page__heading {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+.callout-page__heart-inline {
+  width: 11px;
+  height: 11px;
+  color: var(--color-ember);
+  display: inline-flex;
+  flex-shrink: 0;
+}
+.callout-page__heart-inline svg {
+  width: 100%;
+  height: 100%;
+}
+.callout-page--donate .callout-page__name-stripe {
+  height: 4px;
+  border-radius: 2px;
+  background: var(--color-cocoa-deep);
+  flex: 1;
+  max-width: 70%;
+  margin-top: 0;
+}
+.callout-page__amounts {
+  display: flex;
+  gap: 3px;
+}
+.callout-page__chip {
+  flex: 1;
+  text-align: center;
+  font-size: 6.5px;
+  font-weight: 700;
+  padding: 2px 0;
+  border-radius: 3px;
+  background: var(--color-graham-soft);
+  color: var(--color-cocoa-deep);
+}
+.callout-page__chip--active {
+  background: var(--color-ember);
+  color: var(--color-marshmallow);
+}
+.callout-page__pill--block {
+  display: block;
+  width: 100%;
+  text-align: center;
+  padding: 4px 0;
+}
+
+/* Website page — content stripes */
+.callout-page--website {
+  background: var(--color-marshmallow);
+  padding: 8px;
+  align-items: stretch;
+  justify-content: center;
+  gap: 4px;
+}
+.callout-page__stripe {
+  height: 4px;
+  background: var(--color-hair);
+  border-radius: 999px;
+  width: 100%;
+}
+.callout-page__stripe--head {
+  background: var(--color-cocoa-deep);
+  width: 70%;
+}
+.callout-page__stripe--short { width: 60%; }
+.spotlight__placeholder-chip {
+  position: absolute;
+  bottom: 14px; left: 14px;
+  font-size: 11px; font-weight: 500;
+  background: var(--color-cocoa-deep);
+  color: var(--color-marshmallow);
+  padding: 4px 10px;
+  border-radius: var(--radius-full);
+  pointer-events: none;
+  z-index: 1;
 }
 .crew-tile__chip {
   position: absolute;
@@ -534,6 +1693,33 @@
 .video-card__media-bg--ember { background: var(--color-ember); }
 .video-card__media-bg--cocoa { background: var(--color-cocoa-deep); }
 .video-card__media-bg--honey { background: var(--color-honey); }
+.video-card__media-bg--video,
+.video-card__media-bg--poster {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  background: var(--color-cocoa-deep);
+}
+/* Per-tile overlay color picks up the same bgVariant so the gradient
+   below the quote matches the colored placeholder on tiles without video. */
+.video-card--ember { --video-overlay-color: var(--color-ember); }
+.video-card--cocoa { --video-overlay-color: var(--color-cocoa-deep); }
+.video-card--honey { --video-overlay-color: var(--color-honey); }
+.video-card__media-overlay {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: linear-gradient(
+    to top,
+    var(--video-overlay-color) 0%,
+    var(--video-overlay-color) 22%,
+    transparent 60%
+  );
+  z-index: 1;
+}
+.video-card__play,
+.video-card__duration,
+.video-card__quote { z-index: 2; }
 .video-card__play {
   position: absolute;
   top: 18px; left: 18px;
@@ -606,6 +1792,12 @@
   color: var(--color-marshmallow);
   pointer-events: none;
 }
+/* Inline-play state: hide the static overlay chrome so native video controls take over. */
+.video-card--playing .video-card__play,
+.video-card--playing .video-card__duration,
+.video-card--playing .video-card__quote,
+.video-card--playing .video-card__media-overlay { display: none; }
+.video-card--playing .video-card__media { cursor: default; }
 @media (max-width: 1000px) {
   .video-grid { grid-template-columns: 1fr; max-width: 460px; margin: 0 auto; }
 }

@@ -12,7 +12,7 @@ Translate three reference surfaces from their current rendering models into Next
 
 | Surface | Source | Target |
 |---|---|---|
-| Homepage | `.claude/skills/shmocard-design-system/ui_kits/website/homepage/Shmocard Homepage.html` (Babel-loaded React 18 + 5 `home-*.jsx` bundles + `home.css`) | `app/page.tsx` + `components/home/*.tsx` + `components/home/home.css` |
+| Homepage | `.claude/skills/shmocard-design-system/ui_kits/website/homepage-shmocard/Shmocard Homepage.html` (Babel-loaded React 18 + 5 `home-*.jsx` bundles + `home.css`) | `app/page.tsx` + `components/home/*.tsx` + `components/home/home.css` |
 | PDP / Buybox | `.claude/skills/shmocard-design-system/ui_kits/website/Buybox.html` (vanilla HTML + inline `<style>`) | `app/shmo-review/[handle]/page.tsx` + `components/pdp/*.tsx` + `components/pdp/pdp.css` |
 | Cart drawer | `.claude/skills/shmocard-design-system/ui_kits/website/Cart Drawer.html` (vanilla HTML + multi-state artboard preview) | `components/cart/CartDrawer.tsx` + `components/cart/CartLine.tsx` etc. (mounted globally in `app/layout.tsx`) |
 

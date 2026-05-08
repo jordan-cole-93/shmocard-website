@@ -128,10 +128,10 @@ Still open:
 
 **References to keep open:**
 
-- `context/design-system/ui_kits/website/homepage/Shmocard Homepage.html`
-- `context/design-system/ui_kits/website/homepage/home-bundle.jsx`
-- `context/design-system/ui_kits/website/homepage/home.css`
-- `context/design-system/ui_kits/website/homepage/home-data.jsx`
+- `context/design-system/ui_kits/website/homepage-shmocard/Shmocard Homepage.html`
+- `context/design-system/ui_kits/website/homepage-shmocard/home-bundle.jsx`
+- `context/design-system/ui_kits/website/homepage-shmocard/home.css`
+- `context/design-system/ui_kits/website/homepage-shmocard/home-data.jsx`
 
 **Section order:**
 

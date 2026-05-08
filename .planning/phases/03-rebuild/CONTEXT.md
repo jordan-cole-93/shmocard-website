@@ -171,10 +171,10 @@ Implementation details Jordan does NOT need to weigh in on (per discuss-phase gu
 - `.claude/skills/shmocard-design-system/PRIMITIVES.md` — canonical primitive index
 - `.claude/skills/shmocard-design-system/colors_and_type.css` — every token + type ramp + section bg flips
 - `.claude/skills/shmocard-design-system/components.css` — every primitive
-- `.claude/skills/shmocard-design-system/ui_kits/website/homepage/Shmocard Homepage.html` + `home.css` — canonical marketing page
+- `.claude/skills/shmocard-design-system/ui_kits/website/homepage-shmocard/Shmocard Homepage.html` + `home.css` — canonical marketing page
 - `.claude/skills/shmocard-design-system/ui_kits/website/Buybox.html` — canonical PDP + sticky bar
 - `.claude/skills/shmocard-design-system/ui_kits/website/Cart Drawer.html` — canonical cart drawer
-- `.claude/skills/shmocard-design-system/ui_kits/website/homepage/home-data.jsx` — mock content shape (used as REFERENCE; final copy gets rewritten in Phase 3)
+- `.claude/skills/shmocard-design-system/ui_kits/website/homepage-shmocard/home-data.jsx` — mock content shape (used as REFERENCE; final copy gets rewritten in Phase 3)
 
 ### Asset source
 

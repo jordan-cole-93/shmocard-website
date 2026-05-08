@@ -71,7 +71,7 @@ The **content** of the system is locked and excellent. Only **structural houseke
 
 **The 3-model inconsistency is the single biggest structural issue.** Three reference pages = three different translation paths in Phase 3.
 
-#### Homepage breakdown (`ui_kits/website/homepage/`)
+#### Homepage breakdown (`ui_kits/website/homepage-shmocard/`)
 
 | File | Role | Notes |
 |---|---|---|
@@ -137,7 +137,7 @@ Token / primitive preview cards. Each file demonstrates one token group or compo
 ### State files (gitignored ✅)
 
 - `.design-canvas.state.json` — design canvas tooling state
-- `ui_kits/website/homepage/.image-slots.state.json` — runtime image-slot picker state
+- `ui_kits/website/homepage-shmocard/.image-slots.state.json` — runtime image-slot picker state
 
 Confirmed gitignored in `.gitignore`. Good.
 

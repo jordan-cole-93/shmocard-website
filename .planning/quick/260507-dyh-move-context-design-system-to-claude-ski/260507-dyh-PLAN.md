@@ -52,7 +52,7 @@ must_haves:
       provides: "primitives"
     - path: ".claude/skills/shmocard-design-system/fonts/"
       provides: "bundled font files"
-    - path: ".claude/skills/shmocard-design-system/ui_kits/website/homepage/Shmocard Homepage.html"
+    - path: ".claude/skills/shmocard-design-system/ui_kits/website/homepage-shmocard/Shmocard Homepage.html"
       provides: "canonical homepage reference"
     - path: ".claude/rules/file-organization.md"
       provides: "updated repo layout rule reflecting new design-system location"

@@ -34,7 +34,7 @@ Phase 2 audits the design system folder Jordan dropped at `.claude/skills/shmoca
 ### Source of truth (LOCKED)
 
 - **The CSS files are the canonical truth** when docs disagree (`colors_and_type.css`, `components.css`). Per `.claude/skills/shmocard-design-system/CLAUDE.md`.
-- **Reference pages are not optional reading** — `ui_kits/website/homepage/Shmocard Homepage.html`, `Buybox.html`, `Cart Drawer.html` define section structure, primitive composition, sticky bar behavior. Audit must respect these as authoritative.
+- **Reference pages are not optional reading** — `ui_kits/website/homepage-shmocard/Shmocard Homepage.html`, `Buybox.html`, `Cart Drawer.html` define section structure, primitive composition, sticky bar behavior. Audit must respect these as authoritative.
 - **`PRIMITIVES.md` is the canonical primitive index.** SKILL.md table is a quick reference.
 
 ### Hard rules to preserve (LOCKED — from design system's own CLAUDE.md)
@@ -113,8 +113,8 @@ Phase 2 audits the design system folder Jordan dropped at `.claude/skills/shmoca
 - `.claude/skills/shmocard-design-system/PRIMITIVES.md` — canonical primitive index
 - `.claude/skills/shmocard-design-system/colors_and_type.css` — every token + type ramp (LOCKED)
 - `.claude/skills/shmocard-design-system/components.css` — every primitive (LOCKED)
-- `.claude/skills/shmocard-design-system/ui_kits/website/homepage/Shmocard Homepage.html` — canonical marketing page
-- `.claude/skills/shmocard-design-system/ui_kits/website/homepage/home.css` — page-level CSS pattern
+- `.claude/skills/shmocard-design-system/ui_kits/website/homepage-shmocard/Shmocard Homepage.html` — canonical marketing page
+- `.claude/skills/shmocard-design-system/ui_kits/website/homepage-shmocard/home.css` — page-level CSS pattern
 - `.claude/skills/shmocard-design-system/ui_kits/website/Buybox.html` — canonical PDP + sticky bar
 - `.claude/skills/shmocard-design-system/ui_kits/website/Cart Drawer.html` — canonical cart drawer
 - `.claude/skills/shmocard-design-system/preview/*.html` — visual cards / QA fixtures (28 files)

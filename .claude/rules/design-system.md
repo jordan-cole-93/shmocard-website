@@ -12,7 +12,7 @@ The Shmocard design system lives at `.claude/skills/shmocard-design-system/`. Th
 2. **`.claude/skills/shmocard-design-system/README.md`** — brand voice, content rules, visual foundations.
 3. **`.claude/skills/shmocard-design-system/colors_and_type.css`** + **`.claude/skills/shmocard-design-system/components.css`** — the source of truth. **The CSS wins** when docs disagree.
 4. **`.claude/skills/shmocard-design-system/PRIMITIVES.md`** — canonical primitive index (token list, type ramp, every component family with every variant).
-5. **`.claude/skills/shmocard-design-system/ui_kits/website/homepage/Shmocard Homepage.html`** (+ `home.css` header) — canonical marketing page reference. Section rotation, hero, sub-brand spotlight, FAQ, footer all live here.
+5. **`.claude/skills/shmocard-design-system/ui_kits/website/homepage-shmocard/Shmocard Homepage.html`** (+ `home.css` header) — canonical marketing page reference. Section rotation, hero, sub-brand spotlight, FAQ, footer all live here.
 6. **`.claude/skills/shmocard-design-system/ui_kits/website/Buybox.html`** and **`Cart Drawer.html`** — canonical PDP and cart references.
 
 If a request maps to one of those reference pages, **start by copying the reference**. Do not invent a layout from scratch.

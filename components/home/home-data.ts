@@ -4,8 +4,6 @@
 // on the Shmocard public site. Brand separation between Shmocard (product)
 // and the services agency. Use shop names directly, no agency attribution.
 
-import type { MascotPose } from "../mascot-poses";
-
 export type SubBrand = {
   slug: "review" | "biz" | "link" | "reputation";
   number: "01" | "02" | "03" | "04";
@@ -24,9 +22,12 @@ export type SubBrand = {
   ctaSecondary?: { label: string; href: string };
   aside: string;
   bg: "marsh" | "graham" | "cocoa";
-  art: { kind: "photo"; src: string; chip?: { label: string; pill: string } } | { kind: "mascot"; pose: MascotPose; fitRatio?: number };
+  art:
+    | { kind: "photo"; src: string; chip?: { label: string; pill: string } }
+    | { kind: "placeholder"; label?: string }
+    | { kind: "illustration"; key: "biz" | "link" | "reputation" };
   reverse?: boolean;
-  formats?: { title: string; sub: string }[];
+  formats?: { title: string; sub: string; href: string; image?: string }[];
 };
 
 export const SUB_BRANDS: SubBrand[] = [
@@ -60,9 +61,24 @@ export const SUB_BRANDS: SubBrand[] = [
       chip: { label: "Wallet-size · PVC", pill: "CR-80" },
     },
     formats: [
-      { title: "CR-80 Card", sub: "Best seller · wallet-size · PVC" },
-      { title: "L-Sign", sub: "Counter standee · 4×6 acrylic" },
-      { title: "Square Card", sub: 'Disc · 2.25" · sticks anywhere' },
+      {
+        title: "CR-80 Card",
+        sub: "Best seller · wallet-size · PVC",
+        href: "/shmo-review/cr-80",
+        image: "/products/cr80/carrousel/magnific_2884310433.jpg",
+      },
+      {
+        title: "L-Sign",
+        sub: "Counter standee · 4×6 acrylic",
+        href: "/shmo-review/l-sign",
+        image: "/products/l-sign/carrousel-color/magnific_2884573578.jpg",
+      },
+      {
+        title: "Square Card",
+        sub: 'Disc · 2.25" · sticks anywhere',
+        href: "/shmo-review/square-card",
+        image: "/products/plate/carrousel/magnific_2885070657.jpg",
+      },
     ],
   },
   {
@@ -88,7 +104,7 @@ export const SUB_BRANDS: SubBrand[] = [
     ctaPrimary: { label: "Notify me when it's live", modal: "waitlist" },
     aside: "Pre-launch · email signup",
     bg: "graham",
-    art: { kind: "mascot", pose: "holding-card" },
+    art: { kind: "illustration", key: "biz" },
     reverse: true,
   },
   {
@@ -114,7 +130,7 @@ export const SUB_BRANDS: SubBrand[] = [
     ctaPrimary: { label: "Notify me when it's live", modal: "waitlist" },
     aside: "Pre-launch · email signup",
     bg: "marsh",
-    art: { kind: "mascot", pose: "heart-hands" },
+    art: { kind: "illustration", key: "link" },
   },
   {
     slug: "reputation",
@@ -139,7 +155,7 @@ export const SUB_BRANDS: SubBrand[] = [
     ctaPrimary: { label: "Notify me when it's live", modal: "waitlist" },
     aside: "Pre-launch · email signup",
     bg: "cocoa",
-    art: { kind: "mascot", pose: "megaphone", fitRatio: 1.3 },
+    art: { kind: "illustration", key: "reputation" },
     reverse: true,
   },
 ];
@@ -173,7 +189,35 @@ export const SHOPS: Shop[] = [
   { name: "Cashco", owner: "Morris", inc: "+47%" },
 ];
 
-export type Quote = { body: string; author: string; shop: string; initials: string };
+// Crew strip — real customer photos for the 6-up grid. Empty slots render placeholder.
+export type CrewMember = {
+  photo?: string;
+  name?: string;
+  shop?: string;
+  stat?: string;
+};
+
+export const CREW: CrewMember[] = [
+  {
+    photo: "/clients/nick-fulton.jpg",
+    name: "Nick Fulton",
+    shop: "USA Pawn",
+    stat: "80+ Reviews\nin one Week",
+  },
+  {},
+  {},
+  {},
+  {},
+  {},
+];
+
+export type Quote = {
+  body: string;
+  author: string;
+  shop: string;
+  initials: string;
+  photo?: string;
+};
 
 export const QUOTES: Quote[] = [
   {
@@ -182,13 +226,15 @@ export const QUOTES: Quote[] = [
     author: "Carli Karlson",
     shop: "Axel's Pawn",
     initials: "CK",
+    photo: "/clients/carli-karlson.jpg",
   },
   {
     body:
-      "My ShmoCards are the best. They have boosted our Google reviews by giving my team the ability to ask for a review just at the right time during a transaction.",
-    author: "Pawnbrokers Helping Pawnbrokers",
-    shop: "Industry group",
-    initials: "PH",
+      "Big shout to ShmoCard for getting our review link dialed in. Our team got 150 reviews last month and 55 so far this week in only 4 days. Great job!",
+    author: "Scott Nell",
+    shop: "Big Dog Pawn",
+    initials: "SN",
+    photo: "/clients/scott-nell.jpg",
   },
 ];
 
@@ -275,17 +321,23 @@ export type VideoTile = {
   pending?: boolean;
   videoUrl?: string;
   posterUrl?: string;
+  // Seconds into the video to use as the static thumbnail frame. Defaults to 0.5.
+  thumbnailTime?: number;
 };
 
 export const VIDEO_TILES: VideoTile[] = [
   {
+    // Approved exception (per Jordan): the speaker wears a Pawn Leads-branded shirt.
+    // Brand-separation rule is acknowledged and waived for this single clip.
     bgVariant: "ember",
-    duration: "1:42",
+    duration: "0:21",
     quote:
       "Got 14 in the first week. Marshall's already gotten five today and we've been open for an hour and a half.",
     person: "Carly",
     role: "Owner",
     shop: "Axel's Pawn",
+    videoUrl: "/videos/carli-axels.mp4",
+    posterUrl: "/videos/carli-tb.jpg",
   },
   {
     bgVariant: "cocoa",

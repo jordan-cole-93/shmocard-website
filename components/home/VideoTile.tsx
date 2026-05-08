@@ -2,13 +2,11 @@
 
 // components/home/VideoTile.tsx
 //
-// Client-side leaf for VideoTestimonials. Wraps the play button click
-// to dispatch openVideo() into the modal store. Pending tiles are
-// disabled and never open the lightbox.
-//
-// Plan 03-10 task 2.
+// Client-side leaf for VideoTestimonials. Plays the video inline inside
+// the tile (not in a modal). Pending tiles are disabled and show a
+// placeholder.
 
-import { openVideo } from "@/components/modals/modal-store";
+import { useRef, useState } from "react";
 import type { VideoTile as VideoTileData } from "./home-data";
 
 type Props = {
@@ -25,18 +23,56 @@ function PlayIcon() {
 }
 
 export default function VideoTile({ tile, index }: Props) {
+  const videoRef = useRef<HTMLVideoElement>(null);
+  const [isPlaying, setIsPlaying] = useState(false);
+
   const handleClick = (): void => {
     if (tile.pending) return;
-    // videoUrl is pending in the data layer until real assets land.
-    // Open the lightbox shell anyway — VideoLightbox renders the
-    // "Video coming soon" placeholder when no URL is provided.
-    openVideo(tile.videoUrl ?? "", `${tile.person} — ${tile.shop}`, tile.posterUrl);
+    const v = videoRef.current;
+    if (!v) return;
+    v.muted = false;
+    v.play();
+    setIsPlaying(true);
   };
 
   return (
-    <article className={`shm-card video-card ${tile.pending ? "video-card--pending" : ""}`}>
+    <article
+      className={`shm-card video-card video-card--${tile.bgVariant} ${tile.pending ? "video-card--pending" : ""} ${isPlaying ? "video-card--playing" : ""}`}
+    >
       <div className="video-card__media">
-        <div className={`video-card__media-bg video-card__media-bg--${tile.bgVariant}`} />
+        {tile.videoUrl ? (
+          <video
+            ref={videoRef}
+            className="video-card__media-bg video-card__media-bg--video"
+            // When a posterUrl is provided the browser shows it until play, and
+            // the video starts from 0:00. Without a poster, fall back to a
+            // seek-based thumbnail (#t=) so the tile doesn't show a black frame.
+            src={
+              tile.posterUrl
+                ? tile.videoUrl
+                : `${tile.videoUrl}#t=${tile.thumbnailTime ?? 0.5}`
+            }
+            poster={tile.posterUrl}
+            preload="metadata"
+            muted={!isPlaying}
+            controls={isPlaying}
+            playsInline
+            aria-hidden={!isPlaying}
+            onEnded={() => setIsPlaying(false)}
+          />
+        ) : tile.posterUrl ? (
+          <img
+            className="video-card__media-bg video-card__media-bg--poster"
+            src={tile.posterUrl}
+            alt=""
+            aria-hidden="true"
+          />
+        ) : (
+          <div className={`video-card__media-bg video-card__media-bg--${tile.bgVariant}`} />
+        )}
+        {/* Gradient overlay: transparent at top, solid bgVariant color at the bottom,
+            so the quote text reads cleanly without resizing the video. Hidden during playback. */}
+        {tile.videoUrl && <div className="video-card__media-overlay" aria-hidden="true" />}
         <button
           type="button"
           className="video-card__play"
@@ -44,7 +80,7 @@ export default function VideoTile({ tile, index }: Props) {
             tile.pending ? "Video coming soon" : `Play testimonial from ${tile.person}`
           }
           data-video-tile={index}
-          disabled={tile.pending}
+          disabled={tile.pending || isPlaying}
           onClick={handleClick}
         >
           <PlayIcon />

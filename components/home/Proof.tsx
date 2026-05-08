@@ -25,7 +25,13 @@ export default function Proof() {
             <figure key={i} className="shm-card proof-quote">
               <blockquote className="proof-quote__body">&ldquo;{q.body}&rdquo;</blockquote>
               <figcaption className="proof-quote__attr">
-                <span className="proof-quote__avatar">{q.initials}</span>
+                <span className="proof-quote__avatar">
+                  {q.photo ? (
+                    <img src={q.photo} alt={`${q.author} — ${q.shop}`} loading="lazy" />
+                  ) : (
+                    q.initials
+                  )}
+                </span>
                 <span>
                   <b>{q.author}</b>
                   {q.shop}

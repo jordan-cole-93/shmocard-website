@@ -19,7 +19,7 @@ Voice is **warm, direct, crew-first**. The visual system is **soft neobrutalism*
 
 The CSS is the system. The previews show the system. The docs describe the system. If they disagree, the CSS wins.
 
-**Before generating a new page, read `ui_kits/website/homepage/Shmocard Homepage.html` and its `home.css` header.** That homepage is the canonical marketing-page reference — section rotation, hero composition, sub-brand spotlights, video tiles, FAQ, footer. Copy its structure rather than inventing one. For PDPs and ecommerce flows, the same applies to `Buybox.html` and `Cart Drawer.html` in the same folder.
+**Before generating a new page, read `ui_kits/website/homepage-shmocard/Shmocard Homepage.html` and its `home.css` header.** That homepage is the canonical marketing-page reference — section rotation, hero composition, sub-brand spotlights, video tiles, FAQ, footer. Copy its structure rather than inventing one. For PDPs and ecommerce flows, the same applies to `Buybox.html` and `Cart Drawer.html` in the same folder.
 
 | File | Role |
 |---|---|
