@@ -1376,6 +1376,17 @@
   letter-spacing: 0.02em;
 }
 
+/* Mobile — Reputation dashboard simplifies under 720px so it stops fighting
+   the laptop chassis for horizontal space. Sidebar drops, stats grid collapses
+   from 4 to 2 cards (keeps Total reviews + This week, hides Avg rating +
+   Reply rate). The chart and recent activity feed remain. */
+@media (max-width: 720px) {
+  .rep-dashboard { grid-template-columns: 1fr; }
+  .rep-dashboard__sidebar { display: none; }
+  .rep-dashboard__stats { grid-template-columns: repeat(2, 1fr); gap: 6px; }
+  .rep-stat:nth-child(n + 3) { display: none; }
+}
+
 
 /* Every callout is a browser window: shared URL-bar shell + per-CTA page body. */
 .callout-tile {
