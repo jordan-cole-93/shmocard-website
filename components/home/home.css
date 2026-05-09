@@ -480,18 +480,25 @@
   .spotlight {
     display: flex;
     flex-direction: column;
+    align-items: stretch;
     gap: 22px;
   }
   .spotlight__copy { display: contents; }
   .spotlight__meta    { order: 1; }
   .spotlight__h       { order: 2; }
   .spotlight__art     { order: 3; }
-  .spotlight__lede    { order: 4; }
+  .formats-row        { order: 4; grid-template-columns: 1fr; gap: 10px; margin-top: 0; }
+  .spotlight__lede    { order: 5; }
   .spotlight .shm-checklist,
-  .spotlight .shm-checklist--featured { order: 5; }
-  .formats-row        { order: 6; grid-template-columns: 1fr; }
+  .spotlight .shm-checklist--featured { order: 6; }
   .spotlight__cta-row { order: 7; }
   .spotlight__aside   { order: 8; }
+  /* Format selectors more substantial at mobile — they're the primary
+     decision point for the section. Bigger padding + type so they don't
+     read as secondary chips. */
+  .format-mini { padding: 18px 20px; }
+  .format-mini__title { font-size: 17px; }
+  .format-mini__sub { font-size: 13px; }
   /* Reset desktop --reverse overrides — on mobile the art is always between
      headline and lede regardless of which side it lived on at desktop. */
   .spotlight--reverse .spotlight__copy { order: unset; }
