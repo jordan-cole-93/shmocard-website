@@ -180,17 +180,56 @@
   .home-hero__toolkit { grid-template-columns: repeat(2, 1fr); }
 }
 
-/* Mobile — sub-brand tile wordmark scales down + tile padding tightens so
-   ShmoReputation (the longest descriptor) fits inside the tile at 360+.
-   Below 360 the wordmark spills slightly; mascot illustration carries the
-   identity. Two-tone wordmark color treatment is preserved. */
+/* Mobile — switch to 1-column stack with horizontal tile layout (mascot
+   left, copy middle, status right). The desktop 4:5 portrait layout
+   breaks below ~480 because the mascot dominates and the wordmark + sub
+   pile up underneath. Single-column stack gives each sub-brand its own
+   readable row. Layout uses grid so wordmark and sub stack neatly in
+   the middle column without flex-wrap weirdness. */
 @media (max-width: 600px) {
-  .home-hero__tile { padding: 14px 10px; }
-  .home-hero__tile-name {
-    font-size: clamp(12px, 3.6vw, 18px);
-    letter-spacing: -0.02em;
+  .home-hero__toolkit { grid-template-columns: 1fr; gap: 12px; }
+  .home-hero__tile {
+    aspect-ratio: auto;
+    display: grid;
+    grid-template-columns: 80px 1fr auto;
+    grid-template-areas:
+      "art name status"
+      "art sub  status";
+    column-gap: 14px;
+    row-gap: 2px;
+    align-items: center;
+    padding: 14px 16px;
+    min-height: 96px;
+    border: 1px solid var(--color-hair);
+    background: var(--color-marshmallow);
   }
-  .home-hero__tile-sub { font-size: 11px; }
+  .home-hero__tile-art {
+    position: static;
+    grid-area: art;
+    width: 80px;
+    height: 80px;
+  }
+  .home-hero__tile-art img { max-width: 100%; max-height: 80px; }
+  .home-hero__tile-name {
+    grid-area: name;
+    align-self: end;
+    font-size: 20px;
+    letter-spacing: -0.01em;
+  }
+  .home-hero__tile-sub {
+    grid-area: sub;
+    align-self: start;
+    font-size: 13px;
+    margin: 0;
+    min-height: 0;
+    -webkit-line-clamp: 2;
+  }
+  .home-hero__tile-status {
+    position: static;
+    grid-area: status;
+    align-self: start;
+    margin-top: 2px;
+  }
 }
 
 /* ---------- Audience strip ---------- */
