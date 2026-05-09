@@ -18,7 +18,14 @@ export default function SubBrandIllustration({ illustrationKey }: Props) {
       </>
     );
   }
-  if (illustrationKey === "link") return <LinkPhone />;
+  if (illustrationKey === "link") {
+    return (
+      <>
+        <LinkPhone />
+        <LinkPhoneMobile />
+      </>
+    );
+  }
   if (illustrationKey === "reputation") return <ReputationLaptop />;
   return null;
 }
@@ -113,6 +120,57 @@ function NfcArcIcon() {
 }
 
 // ---------- Shmo Link scene ----------
+// Shared phone core — Cindy Doe link-in-bio with four destination buttons.
+// Used by both desktop (LinkPhone) and mobile (LinkPhoneMobile) variants.
+function LinkPhoneCore() {
+  return (
+    <div className="phone-frame">
+      <span className="phone-frame__notch" />
+      <div className="phone-frame__screen">
+        <div className="link-screen">
+          <div className="link-screen__head">
+            <img
+              className="link-screen__avatar"
+              src="/other/cindy-doe.jpg"
+              alt=""
+              aria-hidden="true"
+            />
+            <div className="link-screen__name">Cindy Doe</div>
+            <div className="link-screen__bio">Local diner since 1962</div>
+            <span className="link-screen__status">
+              <span className="link-screen__status-dot" /> Open now
+            </span>
+          </div>
+          <div className="link-screen__divider" />
+          <ul className="link-screen__buttons">
+            <li className="link-btn">
+              <FacebookIcon />
+              <span>Facebook profile</span>
+              <ChevronIcon />
+            </li>
+            <li className="link-btn">
+              <YoutubeIcon />
+              <span>YouTube channel</span>
+              <ChevronIcon />
+            </li>
+            <li className="link-btn">
+              <HeartIcon />
+              <span>Donate</span>
+              <ChevronIcon />
+            </li>
+            <li className="link-btn">
+              <GlobeIcon />
+              <span>Website</span>
+              <ChevronIcon />
+            </li>
+          </ul>
+        </div>
+      </div>
+      <span className="phone-frame__home" />
+    </div>
+  );
+}
+
 function LinkPhone() {
   return (
     <div
@@ -120,50 +178,7 @@ function LinkPhone() {
       role="img"
       aria-label="Shmo Link scene: a phone showing a link-in-bio page with four destination buttons (Facebook profile, YouTube profile, Donate, Website), with hand-drawn callouts pointing to each button explaining what it does."
     >
-      <div className="phone-frame">
-        <span className="phone-frame__notch" />
-        <div className="phone-frame__screen">
-          <div className="link-screen">
-            <div className="link-screen__head">
-              <img
-                className="link-screen__avatar"
-                src="/other/cindy-doe.jpg"
-                alt=""
-                aria-hidden="true"
-              />
-              <div className="link-screen__name">Cindy Doe</div>
-              <div className="link-screen__bio">Local diner since 1962</div>
-              <span className="link-screen__status">
-                <span className="link-screen__status-dot" /> Open now
-              </span>
-            </div>
-            <div className="link-screen__divider" />
-            <ul className="link-screen__buttons">
-              <li className="link-btn">
-                <FacebookIcon />
-                <span>Facebook profile</span>
-                <ChevronIcon />
-              </li>
-              <li className="link-btn">
-                <YoutubeIcon />
-                <span>YouTube channel</span>
-                <ChevronIcon />
-              </li>
-              <li className="link-btn">
-                <HeartIcon />
-                <span>Donate</span>
-                <ChevronIcon />
-              </li>
-              <li className="link-btn">
-                <GlobeIcon />
-                <span>Website</span>
-                <ChevronIcon />
-              </li>
-            </ul>
-          </div>
-        </div>
-        <span className="phone-frame__home" />
-      </div>
+      <LinkPhoneCore />
 
       {/* Callouts alternate close/far positions next to their phone buttons
           (close → far → close → far). Each connector is a straight dashed
@@ -203,6 +218,34 @@ function LinkPhone() {
           <DonateCallout />
         </li>
         <li className="link-callout link-callout--website">
+          <WebsiteCallout />
+        </li>
+      </ul>
+    </div>
+  );
+}
+
+// Mobile variant — phone centered on top, callouts laid out as a 2×2 grid
+// below (no connector lines since they no longer point sideways).
+function LinkPhoneMobile() {
+  return (
+    <div
+      className="spotlight__illustration spotlight__illustration--link-mobile"
+      role="img"
+      aria-label="Shmo Link scene: a phone showing a link-in-bio page with four destination buttons (Facebook profile, YouTube profile, Donate, Website), shown above four browser-style preview cards explaining what each button opens."
+    >
+      <LinkPhoneCore />
+      <ul className="link-callouts-mobile" aria-hidden="true">
+        <li className="link-callout-mobile">
+          <FacebookCallout />
+        </li>
+        <li className="link-callout-mobile">
+          <YoutubeCallout />
+        </li>
+        <li className="link-callout-mobile">
+          <DonateCallout />
+        </li>
+        <li className="link-callout-mobile">
           <WebsiteCallout />
         </li>
       </ul>

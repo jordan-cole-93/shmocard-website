@@ -1061,12 +1061,69 @@
 .link-callout--donate   { left: 62%; top: 72%; transform: translate(-50%, -50%); }
 .link-callout--website  { left: 84%; top: 82%; transform: translate(-50%, -50%); }
 
-/* Mobile — Link callouts and connector lines hide under 720px because they
-   spread to the right of the phone and crowd the section edge. The phone
-   alone communicates "branded link-in-bio" clearly enough. */
+/* ---------- Shmo Link — MOBILE variant ----------
+   Same content as the desktop --link illustration (phone with link-in-bio
+   page + four browser-window callout previews), but reorganized: phone
+   centered on top, four callouts laid out as a 2×2 grid below. No connector
+   lines because the spatial relationship that connectors imply (phone on
+   one side, callout on the other) doesn't apply when stacked vertically. */
+.spotlight__illustration--link-mobile { display: none; }
+
 @media (max-width: 720px) {
-  .link-connectors,
-  .link-callouts { display: none; }
+  /* Swap which illustration is visible. */
+  .spotlight__illustration--link { display: none; }
+  .spotlight__illustration--link-mobile { display: block; }
+
+  /* Same nested aspect-ratio overrides as biz-mobile so the parent chain can
+     size from intrinsic content height. */
+  .spotlight__art:has(.spotlight__illustration--link-mobile) {
+    aspect-ratio: auto;
+    overflow: visible;
+    display: block;
+    background: transparent;
+  }
+  .spotlight__art:has(.spotlight__illustration--link-mobile) .spotlight__illustration-frame {
+    aspect-ratio: auto;
+    height: auto;
+  }
+
+  .spotlight__illustration--link-mobile {
+    position: relative;
+    width: 100%;
+    height: auto;
+    padding: 16px 0 24px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 24px;
+  }
+
+  /* Phone — centered, explicit dimensions to escape the % aspect-ratio chain. */
+  .spotlight__illustration--link-mobile .phone-frame {
+    position: relative;
+    left: auto; right: auto; top: auto; bottom: auto;
+    width: 200px;
+    height: 432px;
+    aspect-ratio: auto;
+    flex-shrink: 0;
+  }
+
+  /* Callout grid — 2×2 below the phone. Each callout is a browser-style
+     mini-tile (the same FacebookCallout / YoutubeCallout / etc. components
+     from desktop). Reusing the .callout-tile primitive that lives inside. */
+  .link-callouts-mobile {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+  }
+  .link-callout-mobile {
+    aspect-ratio: 1 / 1;
+    display: block;
+  }
 }
 
 /* ---------- Shmo Reputation scene: marshmallow MacBook + dashboard inside ---------- */
