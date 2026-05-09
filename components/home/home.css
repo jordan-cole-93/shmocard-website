@@ -1870,6 +1870,16 @@
 @media (max-width: 720px) {
   .home-faq__sticker { right: 4px; top: -4px; }
 }
+/* Mobile — sticker drops below the section head so it stops overlapping the
+   "Quick answers, no fluff" headline. Position becomes a static block, centered. */
+@media (max-width: 600px) {
+  .home-faq__sticker {
+    position: static;
+    display: block;
+    margin: 18px auto 0;
+  }
+  .home-faq__head { padding-right: 0; }
+}
 
 /* ---------- Final CTA ---------- */
 .final-cta {
