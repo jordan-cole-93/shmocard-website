@@ -9,20 +9,26 @@
 type Props = { illustrationKey: "biz" | "link" | "reputation" };
 
 export default function SubBrandIllustration({ illustrationKey }: Props) {
-  if (illustrationKey === "biz") return <BizPhone />;
+  if (illustrationKey === "biz") {
+    // Both render to the DOM; CSS swaps which is visible at the 720 breakpoint.
+    return (
+      <>
+        <BizPhone />
+        <BizPhoneMobile />
+      </>
+    );
+  }
   if (illustrationKey === "link") return <LinkPhone />;
   if (illustrationKey === "reputation") return <ReputationLaptop />;
   return null;
 }
 
-function BizPhone() {
+// Shared inner content — same card + phone DOM. Layout is decided by the
+// parent's class (`--biz` for desktop, `--biz-mobile` for mobile).
+function BizPhoneInner() {
   return (
-    <div
-      className="spotlight__illustration spotlight__illustration--biz"
-      role="img"
-      aria-label="Shmo Biz scene: a physical NFC business card with John Doe's branding tilted next to an iPhone whose screen shows the contact preview that just appeared after tapping."
-    >
-      {/* Physical NFC business card — sits tilted at the bottom-left, in front of the phone. */}
+    <>
+      {/* Physical NFC business card — sits tilted, in front of the phone. */}
       <div className="biz-physical-card" aria-hidden="true">
         <div className="biz-physical-card__head">
           <span className="biz-physical-card__brand">Shmo<span className="biz-physical-card__brand-em">Biz</span></span>
@@ -69,6 +75,30 @@ function BizPhone() {
         </div>
         <span className="phone-frame__home" />
       </div>
+    </>
+  );
+}
+
+function BizPhone() {
+  return (
+    <div
+      className="spotlight__illustration spotlight__illustration--biz"
+      role="img"
+      aria-label="Shmo Biz scene: a physical NFC business card with John Doe's branding tilted next to an iPhone whose screen shows the contact preview that just appeared after tapping."
+    >
+      <BizPhoneInner />
+    </div>
+  );
+}
+
+function BizPhoneMobile() {
+  return (
+    <div
+      className="spotlight__illustration spotlight__illustration--biz-mobile"
+      role="img"
+      aria-label="Shmo Biz scene: a physical NFC business card with John Doe's branding above an iPhone whose screen shows the contact preview that just appeared after tapping."
+    >
+      <BizPhoneInner />
     </div>
   );
 }

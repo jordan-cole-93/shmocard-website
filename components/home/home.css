@@ -844,6 +844,70 @@
   white-space: nowrap;
 }
 
+/* ---------- Biz scene — MOBILE variant ----------
+   Same content as the desktop --biz illustration (physical card + phone with
+   contact preview), but reorganized for portrait viewports: card sits tilted
+   ABOVE the phone, both centered, both upright readable. Desktop version
+   stays untouched. */
+.spotlight__illustration--biz-mobile { display: none; }
+
+@media (max-width: 720px) {
+  /* Swap which illustration is visible. */
+  .spotlight__illustration--biz { display: none; }
+  .spotlight__illustration--biz-mobile { display: block; }
+
+  /* The mobile composition is naturally taller than wide, so override the
+     parent .spotlight__art's 1:1 aspect-ratio + center-flex layout for
+     the biz-mobile case so it sizes from its content. The intermediate
+     .spotlight__illustration-frame also caps height via its own
+     aspect-ratio (1.1/1) — drop it too. The inner .spotlight__illustration
+     uses height: 100%; we drop that since the parent is now intrinsic. */
+  .spotlight__art:has(.spotlight__illustration--biz-mobile) {
+    aspect-ratio: auto;
+    overflow: visible;
+    display: block;
+    background: transparent;
+  }
+  .spotlight__art:has(.spotlight__illustration--biz-mobile) .spotlight__illustration-frame {
+    aspect-ratio: auto;
+    height: auto;
+  }
+  .spotlight__illustration--biz-mobile {
+    height: auto;
+  }
+
+  .spotlight__illustration--biz-mobile {
+    position: relative;
+    display: block;
+    width: 100%;
+    padding: 16px 0 24px;
+    overflow: visible;
+  }
+
+  /* Card on top — block-level, intrinsic-sized, tilted. The negative margin
+     on the right pushes phone to overlap visually below it for a staggered
+     vertical composition. */
+  .spotlight__illustration--biz-mobile .biz-physical-card {
+    position: relative;
+    left: auto; bottom: auto; right: auto; top: auto;
+    width: 220px;
+    margin: 0 auto 0 22%;
+    transform: rotate(-5deg);
+    aspect-ratio: 1.586 / 1;
+  }
+
+  /* Phone below — upright, explicit dimensions so it lays out predictably
+     in normal block flow regardless of any aspect-ratio constraints. */
+  .spotlight__illustration--biz-mobile .phone-frame {
+    position: relative;
+    left: auto; right: auto; top: auto; bottom: auto;
+    width: 170px;
+    height: 368px;
+    aspect-ratio: auto;
+    margin: -10px 22% 0 auto;
+  }
+}
+
 /* ---------- Link scene: phone + annotated callouts ---------- */
 /* Phone on the left shows a link-in-bio page; callouts on the right
    point at each destination button with a hand-drawn connector. */
