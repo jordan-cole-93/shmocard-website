@@ -929,6 +929,14 @@
 .link-callout--donate   { left: 62%; top: 72%; transform: translate(-50%, -50%); }
 .link-callout--website  { left: 84%; top: 82%; transform: translate(-50%, -50%); }
 
+/* Mobile — Link callouts and connector lines hide under 720px because they
+   spread to the right of the phone and crowd the section edge. The phone
+   alone communicates "branded link-in-bio" clearly enough. */
+@media (max-width: 720px) {
+  .link-connectors,
+  .link-callouts { display: none; }
+}
+
 /* ---------- Shmo Reputation scene: marshmallow MacBook + dashboard inside ---------- */
 .spotlight__illustration--reputation {
   position: relative;
