@@ -470,10 +470,32 @@
   line-height: 1.4;
 }
 @media (max-width: 880px) {
-  .spotlight { grid-template-columns: 1fr; gap: 32px; }
-  .spotlight--reverse .spotlight__copy { order: 1; }
-  .spotlight--reverse .spotlight__art { order: 2; }
-  .formats-row { grid-template-columns: 1fr; }
+  /* Mobile spotlight order:
+     meta → headline → IMAGE → lede → bullets → format selectors → CTAs → caption.
+     Image sits right after the headline so the user sees what the product
+     looks like before reading copy or picking a format.
+     `display: contents` on __copy promotes its children to be direct
+     children of .spotlight, so we can interleave the art (sibling of __copy)
+     between them via CSS `order`. */
+  .spotlight {
+    display: flex;
+    flex-direction: column;
+    gap: 22px;
+  }
+  .spotlight__copy { display: contents; }
+  .spotlight__meta    { order: 1; }
+  .spotlight__h       { order: 2; }
+  .spotlight__art     { order: 3; }
+  .spotlight__lede    { order: 4; }
+  .spotlight .shm-checklist,
+  .spotlight .shm-checklist--featured { order: 5; }
+  .formats-row        { order: 6; grid-template-columns: 1fr; }
+  .spotlight__cta-row { order: 7; }
+  .spotlight__aside   { order: 8; }
+  /* Reset desktop --reverse overrides — on mobile the art is always between
+     headline and lede regardless of which side it lived on at desktop. */
+  .spotlight--reverse .spotlight__copy { order: unset; }
+  .spotlight--reverse .spotlight__art  { order: 3; }
 }
 
 /* ---------- Crew strip ---------- */
