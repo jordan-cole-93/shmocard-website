@@ -23,40 +23,62 @@ export default function Nav() {
           </span>
         </Link>
 
-        <nav className={styles.links} aria-label="Primary">
-          <Link href="/shmo-review" className={styles.link}>
-            Shmo Review
-            <span
-              className={`shm-badge shm-badge--status shm-badge--status-clover ${styles.linkStatus}`}
+        {/* Primary nav. At <=880px the four sub-brand links live inside a
+            native <details> menu that hangs below the nav (no JS state needed).
+            At >880px the desktop CSS unhides the panel inline and hides the
+            hamburger trigger. */}
+        <details className={styles.menu}>
+          <summary
+            className={styles.menuTrigger}
+            aria-label="Open primary navigation"
+          >
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2.2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              aria-hidden="true"
             >
-              Live
-            </span>
-          </Link>
-          <a href="#shmo-biz" className={styles.link}>
-            Shmo Biz
-            <span
-              className={`shm-badge shm-badge--status shm-badge--status-honey ${styles.linkStatus}`}
-            >
-              Soon
-            </span>
-          </a>
-          <a href="#shmo-link" className={styles.link}>
-            Shmo Link
-            <span
-              className={`shm-badge shm-badge--status shm-badge--status-honey ${styles.linkStatus}`}
-            >
-              Soon
-            </span>
-          </a>
-          <a href="#shmo-reputation" className={styles.link}>
-            Shmo Reputation
-            <span
-              className={`shm-badge shm-badge--status shm-badge--status-honey ${styles.linkStatus}`}
-            >
-              Soon
-            </span>
-          </a>
-        </nav>
+              <path d="M4 7h16M4 12h16M4 17h16" />
+            </svg>
+          </summary>
+          <nav className={styles.links} aria-label="Primary">
+            <Link href="/shmo-review" className={styles.link}>
+              Shmo Review
+              <span
+                className={`shm-badge shm-badge--status shm-badge--status-clover ${styles.linkStatus}`}
+              >
+                Live
+              </span>
+            </Link>
+            <a href="#shmo-biz" className={styles.link}>
+              Shmo Biz
+              <span
+                className={`shm-badge shm-badge--status shm-badge--status-honey ${styles.linkStatus}`}
+              >
+                Soon
+              </span>
+            </a>
+            <a href="#shmo-link" className={styles.link}>
+              Shmo Link
+              <span
+                className={`shm-badge shm-badge--status shm-badge--status-honey ${styles.linkStatus}`}
+              >
+                Soon
+              </span>
+            </a>
+            <a href="#shmo-reputation" className={styles.link}>
+              Shmo Reputation
+              <span
+                className={`shm-badge shm-badge--status shm-badge--status-honey ${styles.linkStatus}`}
+              >
+                Soon
+              </span>
+            </a>
+          </nav>
+        </details>
 
         <div className={styles.ctaRow}>
           {/* useCart-backed cart trigger — opens CartDrawer */}
