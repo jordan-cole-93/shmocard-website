@@ -17,3 +17,97 @@ main > section > .shm-wave:last-child { margin-bottom: 0; }
 main > section { margin: 0; }
 main > section + section { margin-top: 0; }
 main > section:has(> .shm-wave:last-child) { padding-bottom: 0; }
+
+/* ────────────────────────────────────────
+   01 HERO — centered, grid-textured marshmallow.
+   Custom section (not .shm-section) per reference. Wave is sibling.
+   Ported from review.css:92-152.
+   ──────────────────────────────────────── */
+.review-hero {
+  position: relative;
+  background: var(--color-marshmallow);
+  background-image:
+    linear-gradient(rgba(59, 31, 20, 0.055) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(59, 31, 20, 0.055) 1px, transparent 1px);
+  background-size: 32px 32px, 32px 32px;
+  background-position: -1px -1px;
+  padding-top: 56px;
+  padding-bottom: var(--section-py-d-lg);
+}
+.review-hero__inner {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 22px;
+}
+.review-hero__h {
+  margin: 0;
+  max-width: 16ch;
+}
+.review-hero__sticker {
+  display: inline-block;
+  width: 76px;
+  height: auto;
+  vertical-align: -22px;
+  margin-left: 10px;
+  transform: rotate(-8deg);
+  filter: drop-shadow(2px 4px 0 rgba(59, 31, 20, 0.18));
+  pointer-events: none;
+}
+.review-hero__lede {
+  max-width: 620px;
+  margin: 0;
+}
+.review-hero__cta-row {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin-top: 4px;
+}
+.review-hero__meta {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+  font-size: 13px;
+  color: var(--color-ink-3);
+  justify-content: center;
+}
+.review-hero__dot {
+  display: inline-block;
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: var(--color-muted);
+}
+.review-hero__strip {
+  width: 100%;
+  max-width: 1100px;
+  aspect-ratio: 16 / 7;
+  margin-top: 28px;
+  border-radius: 22px;
+  overflow: hidden;
+  background: var(--color-cream);
+  border: 1px solid var(--color-hair);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.review-hero__strip-label {
+  font-family: var(--font-body);
+  font-size: 13px;
+  color: var(--color-ink-3);
+  padding: 0 24px;
+  text-align: center;
+}
+@media (max-width: 720px) {
+  .review-hero__sticker {
+    width: 56px;
+    vertical-align: -16px;
+  }
+  .review-hero__strip {
+    aspect-ratio: 4 / 3;
+  }
+}

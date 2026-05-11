@@ -9,6 +9,7 @@
 // Server component. Client interactivity is opted-in inside leaf components.
 
 import "./shmo-review.css";
+import Hero from "@/components/shmo-review/Hero";
 
 export const metadata = {
   title: "Shmo Review — NFC tap cards built for crews",
@@ -17,5 +18,9 @@ export const metadata = {
 };
 
 export default function ShmoReviewPage() {
-  return <main />;
+  return (
+    <main>
+      <Hero />
+    </main>
+  );
 }
