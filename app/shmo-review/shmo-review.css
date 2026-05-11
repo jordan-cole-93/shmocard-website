@@ -111,3 +111,66 @@ main > section:has(> .shm-wave:last-child) { padding-bottom: 0; }
     aspect-ratio: 4 / 3;
   }
 }
+
+/* ────────────────────────────────────────
+   02 BULLET STRIP — graham. Stat-led: huge number → label →
+   title → body. Hairline rule between cells (vertical, not above).
+   Ported from review.css:155-197.
+   ──────────────────────────────────────── */
+.bullet-strip { padding-top: 64px; padding-bottom: 64px; }
+.bullet-strip__grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 0;
+}
+.bullet-strip__item {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 8px 28px 8px 0;
+  position: relative;
+}
+.bullet-strip__item + .bullet-strip__item {
+  padding-left: 28px;
+  border-left: 1px solid rgba(46, 26, 15, 0.18);
+}
+.bullet-strip__stat {
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: clamp(56px, 5.6vw, 84px);
+  line-height: 0.92;
+  letter-spacing: -0.04em;
+  color: var(--color-ember);
+  font-variation-settings: "opsz" 96;
+  margin-bottom: 2px;
+}
+.bullet-strip__stat-label {
+  font-family: var(--font-sans);
+  font-weight: 600;
+  font-size: 11px;
+  letter-spacing: 0.10em;
+  text-transform: uppercase;
+  color: var(--color-ink-3);
+  margin-bottom: 14px;
+}
+.bullet-strip__title {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 19px;
+  line-height: 1.18;
+  letter-spacing: -0.012em;
+  color: var(--color-cocoa-deep);
+  font-variation-settings: "opsz" 24;
+}
+.bullet-strip__body {
+  margin: 0;
+  font-size: 14px;
+  line-height: 1.5;
+  color: var(--color-ink-2);
+}
+@media (max-width: 1100px) {
+  .bullet-strip__grid { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 720px) {
+  .bullet-strip__grid { grid-template-columns: 1fr; }
+}
