@@ -1556,15 +1556,61 @@
   letter-spacing: 0.02em;
 }
 
-/* Mobile — Reputation dashboard simplifies under 720px so it stops fighting
-   the laptop chassis for horizontal space. Sidebar drops, stats grid collapses
-   from 4 to 2 cards (keeps Total reviews + This week, hides Avg rating +
-   Reply rate). The chart and recent activity feed remain. */
+/* ---------- Shmo Reputation — MOBILE variant ----------
+   Same content as the desktop --reputation illustration (MacBook chassis +
+   full dashboard interior with sidebar, 4 stats, chart, recent activity).
+   Reorganized for portrait viewports: chassis takes full container width,
+   sidebar collapses, stats grid becomes 2×2 to keep all four cards visible
+   without dropping any. */
+.spotlight__illustration--reputation-mobile { display: none; }
+
 @media (max-width: 720px) {
-  .rep-dashboard { grid-template-columns: 1fr; }
-  .rep-dashboard__sidebar { display: none; }
-  .rep-dashboard__stats { grid-template-columns: repeat(2, 1fr); gap: 6px; }
-  .rep-stat:nth-child(n + 3) { display: none; }
+  /* Swap which illustration is visible. */
+  .spotlight__illustration--reputation { display: none; }
+  .spotlight__illustration--reputation-mobile { display: block; }
+
+  /* Same aspect-ratio chain override as biz/link mobiles so the parent
+     container can size from intrinsic content height. */
+  .spotlight__art:has(.spotlight__illustration--reputation-mobile) {
+    aspect-ratio: auto;
+    overflow: visible;
+    display: block;
+    background: transparent;
+  }
+  .spotlight__art:has(.spotlight__illustration--reputation-mobile) .spotlight__illustration-frame {
+    aspect-ratio: auto;
+    height: auto;
+  }
+  .spotlight__illustration--reputation-mobile {
+    position: relative;
+    width: 100%;
+    height: auto;
+    padding: 16px 0 24px;
+  }
+
+  /* MacBook chassis flows naturally inside the mobile illustration —
+     not absolute-positioned like the desktop variant. */
+  .spotlight__illustration--reputation-mobile .rep-laptop {
+    position: relative;
+    left: auto; top: auto;
+    transform: none;
+    width: 100%;
+    margin: 0 auto;
+  }
+
+  /* Dashboard interior simplifies — sidebar hidden, stats become 2x2 so
+     all four cards (Total reviews, This week, Avg rating, Reply rate)
+     stay visible. Chart + recent activity remain at full width. */
+  .spotlight__illustration--reputation-mobile .rep-dashboard {
+    grid-template-columns: 1fr;
+  }
+  .spotlight__illustration--reputation-mobile .rep-dashboard__sidebar {
+    display: none;
+  }
+  .spotlight__illustration--reputation-mobile .rep-dashboard__stats {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 6px;
+  }
 }
 
 
