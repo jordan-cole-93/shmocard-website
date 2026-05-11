@@ -1589,13 +1589,25 @@
   }
 
   /* MacBook chassis flows naturally inside the mobile illustration —
-     not absolute-positioned like the desktop variant. */
+     not absolute-positioned like the desktop variant. The lid's desktop
+     16:10 aspect-ratio doesn't fit a portrait dashboard — drop it so the
+     lid sizes from interior content height. The screen inside also drops
+     its overflow:hidden so the full dashboard renders. */
   .spotlight__illustration--reputation-mobile .rep-laptop {
     position: relative;
     left: auto; top: auto;
     transform: none;
     width: 100%;
     margin: 0 auto;
+  }
+  .spotlight__illustration--reputation-mobile .rep-laptop__lid {
+    aspect-ratio: auto;
+    height: auto;
+    padding: 16px 10px 10px;
+  }
+  .spotlight__illustration--reputation-mobile .rep-laptop__screen {
+    height: auto;
+    overflow: visible;
   }
 
   /* Dashboard interior simplifies — sidebar hidden, stats become 2x2 so
