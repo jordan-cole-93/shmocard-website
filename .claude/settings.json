@@ -25,7 +25,8 @@
       "Read(//Users/jordancole/.claude/skills/impeccable/reference/**)",
       "Bash(lsof -ti:3000 -sTCP:LISTEN)",
       "mcp__playwright__browser_resize",
-      "mcp__playwright__browser_navigate"
+      "mcp__playwright__browser_navigate",
+      "mcp__playwright__browser_take_screenshot"
     ]
   },
   "hooks": {

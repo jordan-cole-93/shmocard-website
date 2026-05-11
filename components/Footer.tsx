@@ -53,10 +53,10 @@ export default function Footer() {
           <div className={styles.col}>
             <h4 className={styles.heading}>Shop</h4>
             <ul className={styles.list}>
-              <li><Link href="/shmo-review/cr-80">CR-80 Card</Link></li>
-              <li><Link href="/shmo-review/l-sign">L-Sign</Link></li>
-              <li><Link href="/shmo-review/square-card">Square Card</Link></li>
-              <li><Link href="/shmo-review#bundles">Bundles</Link></li>
+              <li><Link href="/shmo-review#buybox">CR-80 Card</Link></li>
+              <li><Link href="/shmo-review#formats">L-Sign</Link></li>
+              <li><Link href="/shmo-review#formats">Square Card</Link></li>
+              <li><Link href="/shmo-review">All formats</Link></li>
             </ul>
           </div>
 

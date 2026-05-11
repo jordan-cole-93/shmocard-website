@@ -1,121 +1,145 @@
 // app/shmo-review/page.tsx
-// /shmo-review category page — Shmo Review hub.
-// Server component. Composes Wave-1 Section primitive + Wave-2 category sub-components.
+// /shmo-review — Shmo Review category hub + embedded CR-80 buybox.
+// Server component. Composes the new Wave-1 → Wave-5 sections from
+// components/shmo-review/ inside the locked four-color rotation
+// (marsh / graham / ember / cocoa). Section-bg invariants enforced
+// at the type level by <Section bg nextBg> in components/layout/Section.tsx.
 //
-// Section rotation (REQ-09): marsh -> graham -> marsh -> marsh -> cocoa -> marsh.
-// Locked content lives inside the components — see CategoryHero for headline + tagline.
+// SHOPIFY DATA DISCIPLINE:
+//   The CR-80 product is fetched at request time and passed into
+//   BuyboxSection (and reachable in cache for FormatPicker). Prices,
+//   variants, images all live in Shopify. No hardcoded product data here.
+//
+// Reference plan: ~/.claude/plans/i-would-like-to-binary-feather.md
+
+import type { Metadata } from "next";
 
 import Section from "@/components/layout/Section";
-import CategoryHero from "@/components/category/CategoryHero";
-import BulkMath from "@/components/category/BulkMath";
-import FormatCards from "@/components/category/FormatCards";
-import CategoryFaq from "@/components/category/CategoryFaq";
 import {
-  HOW_IT_WORKS_SHORT,
-  PROOF_QUOTES,
-  PROOF_RESULTS,
-} from "@/components/category/category-data";
-import "@/components/category/category.css";
+  Hero,
+  BulletStrip,
+  FormatPicker,
+  BuyboxSection,
+  HowItWorksSticky,
+  StandoutMoments,
+  NumbersWall,
+  Objections,
+  ShipReturns,
+  ReviewFaq,
+  FinalCta,
+} from "@/components/shmo-review";
+import "@/components/shmo-review/shmo-review.css";
+import { getProductByHandle } from "@/lib/shopify/queries";
 
-export const metadata = {
-  title: "Shmo Review — One tap. One five-star review.",
+// CR-80 Shopify handle — single source of truth lives at
+// components/shmo-review/data.ts::REVIEW_FORMATS. Mirrored here so the
+// page can fetch the buybox product without instantiating REVIEW_FORMATS.
+const CR80_HANDLE = "google-reviews-nfc-tap-card-cr80";
+
+export const metadata: Metadata = {
+  title: "Shmo Review — Built for crews. Priced for bulk.",
   description:
-    "NFC review cards built for crews. Tap to leave a Google review in seconds. CR-80 wallet card, L-Sign counter standee, Square Card adhesive disc.",
+    "Pre-programmed NFC review cards, signs, and discs. Hand one over after every transaction — customer taps, leaves a five-star review, and you climb the rankings. No app, no login, no friction.",
 };
 
-function HowItWorksShort() {
+export default async function ShmoReviewPage() {
+  const cr80 = await getProductByHandle(CR80_HANDLE);
+
   return (
-    <div>
-      <div className="cat-how__head">
-        <span className="shm-eyebrow">How it works</span>
-        <h2 className="shm-h2">Five steps. About four seconds.</h2>
-        <p className="shm-lede">
-          From the customer's tap to a posted five-star review.
-        </p>
-      </div>
-      <ol className="cat-how__grid">
-        {HOW_IT_WORKS_SHORT.map((step) => (
-          <li key={step.n} className="shm-card cat-how__step">
-            <span className="cat-how__num" aria-hidden="true">
-              {step.n}
-            </span>
-            <h3 className="shm-h3">{step.title}</h3>
-            <p className="shm-body">{step.body}</p>
-          </li>
-        ))}
-      </ol>
-    </div>
-  );
-}
+    <main className="rev-page">
+      {/* Section rotation — clean marsh ↔ graham alternation with cocoa
+         and ember as accents (audit H1 fix, 2026-05-11). Previously had
+         five marsh-marsh runs with no waves; the page read monochrome.
+         Now: marsh→graham→marsh→graham→marsh→graham→marsh→cocoa→marsh→
+         graham→ember. Ratios land near the 60/25/10/5 guideline. */}
 
-function Proof() {
-  return (
-    <div>
-      <div className="cat-proof__head">
-        <span className="shm-eyebrow">Real shops, real numbers</span>
-        <h2 className="shm-h2">What happens when crews tap.</h2>
-        <p className="shm-lede">
-          Verified review-volume increases from real shops running Shmo Review
-          cards. Numbers, not promises.
-        </p>
-      </div>
-
-      {/* No .shm-card wrapper here. On cocoa-bg sections, the design system
-          flips .shm-h3 to marshmallow — a white card behind that creates
-          white-on-white. Direct on cocoa, the text reads correctly. */}
-      <div className="cat-proof__grid">
-        {PROOF_RESULTS.map((row) => (
-          <div key={row.shop} className="cat-proof__row">
-            <span className="shm-h2">{row.increase}</span>
-            <p className="shm-body">{row.shop}</p>
-            <p className="shm-meta">{row.owner}</p>
-          </div>
-        ))}
-      </div>
-
-      {/* Quotes stay on cocoa bg — no card wrapper. The cocoa-section
-          cascade already flips .shm-lede to marshmallow @ 0.86, which
-          reads cleanly on the chocolate background. */}
-      <div className="cat-proof__quotes">
-        {PROOF_QUOTES.map((q) => (
-          <blockquote key={q.attribution} className="cat-proof__quote">
-            <p className="shm-lede">&ldquo;{q.quote}&rdquo;</p>
-            <cite className="shm-meta">{q.attribution}</cite>
-          </blockquote>
-        ))}
-      </div>
-    </div>
-  );
-}
-
-export default function ShmoReviewPage() {
-  return (
-    <main>
-      <Section bg="marsh" nextBg="graham" ariaLabel="Shmo Review hero">
-        <CategoryHero />
+      {/* 1. Hero — marsh → graham */}
+      <Section bg="marsh" nextBg="graham" waveSize="lg" ariaLabel="Shmo Review hero">
+        <Hero />
       </Section>
 
-      <Section bg="graham" nextBg="marsh" ariaLabel="Bulk math">
-        <BulkMath />
+      {/* 2. BulletStrip — graham → marsh */}
+      <Section bg="graham" nextBg="marsh" waveSize="lg" ariaLabel="Why crews tap">
+        <BulletStrip />
       </Section>
 
-      {/* FormatCards stays on marsh and flows into HowItWorks (also marsh).
-          No wave divider between same-bg sections — wave is only emitted
-          when nextBg differs. */}
-      <Section bg="marsh" id="formats" ariaLabel="Formats">
-        <FormatCards />
+      {/* 3. FormatPicker — marsh → graham */}
+      <Section
+        bg="marsh"
+        nextBg="graham"
+        waveSize="lg"
+        id="formats"
+        ariaLabel="Formats"
+      >
+        <FormatPicker />
       </Section>
 
-      <Section bg="marsh" nextBg="cocoa" ariaLabel="How it works">
-        <HowItWorksShort />
+      {/* 4. BuyboxSection — graham → marsh (audit H1: BuyboxSection moved
+          from marsh to graham to break the marsh-marsh run with FormatPicker). */}
+      <Section
+        bg="graham"
+        nextBg="marsh"
+        waveSize="lg"
+        id="buybox"
+        ariaLabel="CR-80 buybox"
+      >
+        <BuyboxSection product={cr80} />
       </Section>
 
-      <Section bg="cocoa" nextBg="marsh" ariaLabel="Proof from real shops">
-        <Proof />
+      {/* 5. HowItWorksSticky — marsh → graham (xl wave for the dense section) */}
+      <Section
+        bg="marsh"
+        nextBg="graham"
+        waveSize="xl"
+        id="how"
+        ariaLabel="How it works"
+      >
+        <HowItWorksSticky />
       </Section>
 
-      <Section bg="marsh" ariaLabel="Frequently asked questions">
-        <CategoryFaq />
+      {/* 6. StandoutMoments — graham → marsh */}
+      <Section
+        bg="graham"
+        nextBg="marsh"
+        waveSize="lg"
+        ariaLabel="Standout moments"
+      >
+        <StandoutMoments />
+      </Section>
+
+      {/* 7. NumbersWall — marsh → cocoa (xl wave for the dark-bg transition) */}
+      <Section bg="marsh" nextBg="cocoa" waveSize="xl" ariaLabel="Verified shop numbers">
+        <NumbersWall />
+      </Section>
+
+      {/* 8. Objections — cocoa → marsh */}
+      <Section bg="cocoa" nextBg="marsh" waveSize="lg" ariaLabel="Objections answered">
+        <Objections />
+      </Section>
+
+      {/* 9. ShipReturns — marsh → graham */}
+      <Section
+        bg="marsh"
+        nextBg="graham"
+        waveSize="lg"
+        ariaLabel="Ship and returns"
+      >
+        <ShipReturns />
+      </Section>
+
+      {/* 10. ReviewFaq — graham → ember (xl wave for the bright-bg transition) */}
+      <Section
+        bg="graham"
+        nextBg="ember"
+        waveSize="xl"
+        ariaLabel="Frequently asked questions"
+      >
+        <ReviewFaq />
+      </Section>
+
+      {/* 11. FinalCta — ember (footer follows in layout.tsx) */}
+      <Section bg="ember" ariaLabel="Final call to action">
+        <FinalCta />
       </Section>
     </main>
   );

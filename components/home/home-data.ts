@@ -64,19 +64,19 @@ export const SUB_BRANDS: SubBrand[] = [
       {
         title: "CR-80 Card",
         sub: "Best seller · wallet-size · PVC",
-        href: "/shmo-review/cr-80",
+        href: "/shmo-review#buybox",
         image: "/products/cr80/carrousel/magnific_2884310433.jpg",
       },
       {
         title: "L-Sign",
         sub: "Counter standee · 4×6 acrylic",
-        href: "/shmo-review/l-sign",
+        href: "/shmo-review#formats",
         image: "/products/l-sign/carrousel-color/magnific_2884573578.jpg",
       },
       {
         title: "Square Card",
         sub: 'Disc · 2.25" · sticks anywhere',
-        href: "/shmo-review/square-card",
+        href: "/shmo-review#formats",
         image: "/products/plate/carrousel/magnific_2885070657.jpg",
       },
     ],
