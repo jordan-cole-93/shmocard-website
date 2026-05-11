@@ -1,6 +1,6 @@
 # scope.md — Project State & Roadmap
 
-**Last updated:** 2026-05-07
+**Last updated:** 2026-05-11
 
 Brand website for Shmocard at `shmocard.com`. Retail front door, headless Shopify + Next.js. Live store at `shop.shmocard.com` is untouched and stays untouched.
 
@@ -8,21 +8,24 @@ Brand website for Shmocard at `shmocard.com`. Retail front door, headless Shopif
 
 ## Where we are right now
 
-The repo is a **bare Next.js + Tailwind shell**. Every previous design artifact was wiped on 2026-05-06 because the prior design pass failed quality bar and Claude was hallucinating tokens. We are starting the design pass over from scratch.
+Homepage is built and through a Phase 4-A mobile pass. `/shmo-review` was rebuilt on design-system primitives (commit `44cb1c4`), then **fully deleted on 2026-05-11** ahead of a from-scratch rebuild. Cart smoke-test route exists.
 
-What still exists:
-- `app/` skeleton (bare `layout.tsx` + `page.tsx`, `globals.css` reduced to `@import "tailwindcss";`)
-- Project meta-context under `context/general/` (this file, `handoff.md`, `backend.md`, `tools.md`, `context.md`, `marketing.md`, `product.md`)
-- Empty per-page brainstorm files under `context/brainstorming/` (homepage-shmocard, homepage-shmoreview, product-page-cr80, product-page-l-sign, product-page-plate)
-- `.claude/` rules, hooks, commands, skills, settings
-- `pictures/` reference folder
+What exists in the codebase:
+- `app/page.tsx` — homepage (Hero, sub-brand spotlights for Biz/Link/Reputation, FAQ, FinalCta) — desktop + mobile passes complete
+- `app/cart-smoke/page.tsx` — Shopify cart wiring smoke test
+- `app/layout.tsx`, `app/globals.css` — base shell
+- `components/` — Nav (with mobile hamburger), Footer, Section primitive, home page components, cart components, modals/WaitlistModal, layout primitives
+- `lib/` — Shopify Storefront helpers, cart utilities, waitlist
+- `.claude/skills/shmocard-design-system/` — operator's manual, primitives, reference pages, fonts
+- `public/` — illustrations, mascot poses, sub-brand artwork
+- `pictures/screenshots/mobile-audit-2026-05-09/` — 25 mobile verification screenshots
 
-What does **not** exist yet:
-- No `components/`, no `lib/`, no `public/`
-- No project-level `app/`, `components/`, `lib/`, `public/` yet — those land in Phase 3
-- No mascot or illustration assets
-- No `framer-motion`, `lucide-react`, or `react-icons` in `package.json`
-- No Shopify Storefront wiring
+What does **not** exist:
+- **`/shmo-review` route** — deleted 2026-05-11, scheduled for from-scratch rebuild
+- **`components/shmo-review/`** — deleted 2026-05-11
+- PDP sub-routes (`/shmo-review/cr-80`, `/shmo-review/l-sign`, `/shmo-review/square-card`) — **abandoned in favor of single-page-with-anchors architecture** (decision confirmed 2026-05-11)
+- Webhook revalidation route
+- GHL waitlist webhook URL (deferred until forms get wired)
 
 ---
 
@@ -62,21 +65,24 @@ Design system landed on 2026-05-07 (later relocated to `.claude/skills/shmocard-
 
 Build out the site from the new design system, in order of leverage:
 
-- [ ] Base layout shell (nav, footer, page chrome)
-- [ ] Homepage — parent brand doorway, all four sub-brands with equal weight, locked headline "The toolkit your crew's been missing."
-- [ ] `/shmo-review` category page, locked headline "One tap. One five-star review.", tagline "Built for crews. Priced for bulk."
-- [ ] `/shmo-review/cr-80` — flagship PDP
-- [ ] `/shmo-review/l-sign` — counter standee PDP
-- [ ] `/shmo-review/square-card` — plate format PDP (Shopify handle: `google-review-plaque`)
-- [ ] Cart UI + Shopify Cart API wiring (`cartCreate`, `cartLinesAdd`, `cartLinesRemove`)
-- [ ] Checkout redirect via `cart.checkoutUrl`
-- [ ] Waitlist capture for Shmo Biz / Shmo Link / Shmo Reputation (GHL webhook)
-- [ ] Shopify Storefront API queries — product fetching for all PDPs and the category page
+- [x] Base layout shell (nav, footer, page chrome) — Nav has mobile hamburger; Footer links to `/shmo-review` anchors
+- [x] Homepage — parent brand doorway, all four sub-brands with equal weight, locked headline "The toolkit your crew's been missing."
+- [ ] **`/shmo-review` — single page with anchored sections** (rebuild from scratch, locked 2026-05-11):
+  - Locked headline: "One tap. One five-star review."
+  - Locked tagline: "Built for crews. Priced for bulk."
+  - All three formats (CR-80, L-Sign, Square Card) live on this one page via a format picker that drives an anchored buybox (`#buybox`). No PDP sub-routes.
+  - Footer + home format-card links already point at `/shmo-review#buybox` and `/shmo-review#formats` — wiring is in place, just need the route.
+- [x] Cart UI + Shopify Cart API wiring (`cartCreate`, `cartLinesAdd`, `cartLinesRemove`) — smoke-test route at `/cart-smoke`
+- [ ] Checkout redirect via `cart.checkoutUrl` — verify end-to-end during `/shmo-review` rebuild
+- [ ] Waitlist capture for Shmo Biz / Shmo Link / Shmo Reputation (GHL webhook URL pending)
+- [ ] Shopify Storefront API queries — finalize product fetching for the three `/shmo-review` formats
 - [ ] Webhook revalidation route (`app/api/revalidate/route.ts`)
 
 ### Phase 4 — Launch readiness
 
-- [ ] Mobile pass on every page
+- [x] Mobile pass on homepage (Phase 4-A complete 2026-05-11, commits `6fa19ae` → `dd64876`)
+- [ ] Mobile pass on `/shmo-review` (after rebuild)
+- [ ] Mobile pass on cart drawer
 - [ ] Lighthouse / a11y pass
 - [ ] Vercel env vars mirrored from `.env.local`
 - [ ] DNS cutover plan agreed with Jordan (`shmocard.com` → Vercel)
