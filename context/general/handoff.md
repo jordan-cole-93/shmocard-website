@@ -1,101 +1,102 @@
 # handoff.md — Session Handoff
 
-**Last session:** 2026-05-07 — Closed three structural gaps between the homepage build and the canonical reference: hero meta strip, sub-brand wordmark identity, and the two full-bleed sections (audience strip + compatibility band). Cleaned up redundant inline styles in the same pass.
+**Last session:** 2026-05-11 — Phase 4-A mobile pass on the homepage: audited 375px, scoped a 3-wave plan, landed all of Wave 1 (5 layout-break fixes), all of Wave 2 (3 separate mobile illustrations for Biz / Link / Reputation), a Reputation dark→light theme swap, the MacBook chassis fix for mobile, and a hamburger menu so the four sub-brand links are accessible on mobile.
 
 ---
 
 ## Project phase
 
-Phase 3 (Rebuild) still reads complete (12/12 plans). STATE.md still stale relative to git. No formal Phase 4 directory exists yet — the open routing question (A polish / B formalize visual-redesign / C launch-readiness) is still unresolved and was carried straight through this session in polish mode (path A).
+Phase 3 (Rebuild) still reads complete (12/12 plans). STATE.md still stale relative to git. Phase 4 (Launch readiness, per `CLAUDE.md`) opened informally this session under a sub-phase folder `.planning/phases/04-mobile-pass/`. Path A polish was the working assumption; ROADMAP.md still untouched.
 
-This session was canonical alignment + cleanup against the reference homepage at `.claude/skills/shmocard-design-system/ui_kits/website/homepage-shmocard/`. No phase metadata changes.
+Next chunk of Phase 4 work is queued in `.planning/phases/04-mobile-pass/PLAN.md` Wave 2 (polish) + Wave 3 (systematize breakpoints into tokens). Neither has started.
 
 ---
 
 ## What was done this session
 
-- **Hero meta strip — canonical hand-note port.** Replaced the three-attribute checklist (`Pre-programmed before shipping · Reprogrammable for life · 30-day returns`) with the canonical hand-note pattern: `Live now — Shmo Review` in Shadows Into Light Two ember 22px + 26px hand-drawn arrow SVG, dot separator, then plain `3 more tools coming this year` in 13px ink-3. Mirrors `home-bundle.jsx:660-669` exactly. New CSS rules: `.home-hero__hand-note` + `.home-hero__hand-note svg` in `components/home/home.css:56-65`.
+- **Phase 4-A plan written.** `.planning/phases/04-mobile-pass/PLAN.md` scopes the homepage mobile pass in three waves (layout breaks → polish → systematize) with verification protocol per wave.
 
-- **Sub-brand wordmark identity — tile names render as full sub-brand logos.** Each sub-brand tile name now renders as a concatenated wordmark mirroring the parent ShmoCard logo: `ShmoReview` / `ShmoBiz` / `ShmoLink` / `ShmoReputation`, no space, in Cherry Bomb One, two-tone (`Shmo` cocoa-deep + descriptor ember). Implemented via inline-IIFE in `components/home/Hero.tsx:82-95` that splits `sb.eyebrow` on first space, removes the space, wraps the descriptor in `<span class="home-hero__tile-name-suffix">`. CSS: `.home-hero__tile-name` swapped from `var(--font-display)` (Bricolage 800) to `var(--font-wordmark)` (Cherry Bomb One); added `.home-hero__tile-name-suffix { color: var(--color-ember) }`.
+- **Wave 1 — layout breaks (5 commits).** All landed atomically.
+  - Hero sub-brand tile wordmarks fit at 360+. ShmoReputation was clipping; tightened tile padding and ramped wordmark to `clamp(12px, 3.6vw, 18px)` under 600. `components/home/home.css`.
+  - Hero tiles restructured under 600 — 1-column with horizontal-row layout (mascot left, wordmark + sub stacked middle, status pill right). The original 4:5 portrait layout broke at narrow widths. CSS grid + `grid-template-areas`. `components/home/home.css`.
+  - Reputation dashboard simplifies under 720 inside the existing component (sidebar hidden, stats down from 4 → 2 cards). Later superseded by Wave 2.3.
+  - Shmo Link callouts + connectors hidden under 720 (phone-only on mobile). Later refined further.
+  - FAQ headline + mascot collision resolved — sticker drops below the headline at <600 via `position: static`. `components/home/HomeFaq.tsx` + `home.css`.
+  - Spotlight art moves between headline and lede on mobile (`<880`). Image now sits right after the headline so the user sees the product before reading the copy. CSS `display: contents` on `.spotlight__copy` + `order` on each child.
 
-- **Design system scope expansion — wordmark covers parent + sub-brand wordmarks.** The "wordmark = logo only" rule was asserted in 7 places. Updated all 7 to "parent logo + sub-brand wordmarks (`Shmo Review`, `Shmo Biz`, `Shmo Link`, `Shmo Reputation`)" so future devs can't re-hit the friction Jordan hit this session. Files: `.claude/skills/shmocard-design-system/SKILL.md:66 + :72`, `README.md:53 + :133 + :148`, `PRIMITIVES.md:62`, `colors_and_type.css:117`, `fonts/README.md:7`, `preview/01-logo-wordmark.html:63`, `.claude/rules/design-system.md:48`.
+- **Wave 2 — separate mobile illustrations.** Per Jordan: keep every detail, just rearrange. Pattern across all three: shared `*PhoneInner` / `*Core` helper, two parent components (`X` and `XMobile`), CSS toggling visibility at 720 via `:has()`.
+  - **Shmo Biz mobile** — card tilted on top + phone below (staggered vertical stack). Required overriding three nested aspect-ratio caps (`.spotlight__art` → `.spotlight__illustration-frame` → `.spotlight__illustration`) so the container sizes from intrinsic content height. `components/home/SubBrandIllustration.tsx` + `home.css`.
+  - **Shmo Link mobile** — three iterations: 2×2 grid below phone → callouts beside phone (column right) → phone only (callouts dropped per Jordan). Final: phone-only at 200×432, all four buttons visible. Same files.
+  - **Shmo Reputation mobile** — full MacBook chassis with all four stats preserved (2×2 grid), sidebar hidden, chart + 2 recent activity reviews intact. Same files.
 
-- **Audience strip → full-bleed.** Was wrapped in `<Section>` which adds `.shm-section` (40px section padding) + `.shm-container` (max-width clipping) — visually too much breathing room (~62px instead of 22px) and items clipping ~200px short of the section edges. Refactored to render its own raw `<section className="shm-bg-graham">` + sibling wave divider, matching canonical `home-bundle.jsx:704-707`. Also folded the per-item inline `style={{display:"inline-flex",gap:44}}` into `.audience-strip__group` CSS class. Set `aria-hidden="true"` since the marquee is decorative. File: `components/home/AudienceStrip.tsx`.
+- **Reputation dashboard dark → light theme.** Reverses the May 8 dark-theme work on this section. Sidebar bg `#27130b → graham-soft`. Main bg `cocoa-deep → marshmallow`. All `rgba(255, 251, 241, X)` → `cocoa-deep / ink-2 / ink-3`. Borders → `var(--color-hair)`. Stat / chart / review card bg → `cream`. Delta-up green changed from `#6dd968` (washed on dark) to `#2f9f4a` (readable on light). MacBook chassis (lid + base) intentionally stays dark — device frame, not interior theme. Ember accents (brand mark, +18 value, bars, reply box, Sent badge) and 5-star color stay as-is. `home.css`.
 
-- **Compatibility band → full-bleed (same fix).** Same exact bug as the audience strip — wrapped in `<Section>`. Refactored to raw `<section>` + sibling wave per `home-bundle.jsx:772`. File: `components/home/Compatibility.tsx`.
+- **Reputation mobile MacBook chassis fix.** First mobile build clipped the chassis because `.rep-laptop__lid` has `aspect-ratio: 16/10` baked in. Mobile override: aspect-ratio auto, height auto, screen overflow visible. Chassis now wraps the full dashboard like a real laptop screenshot. `home.css`.
 
-- **Inline-style cleanup — primitives already handled it.** HowItWorks and Proof had 5 inline `style={{...}}` props on section heads + ledes (centering, max-width 56ch, margin reset). Audited the design system: `.shm-section-head` in `components.css:396-400` already declares `text-align: center; margin: 0 auto 40px; max-width: 56ch`, and `.shm-section-head .shm-lede` already has `margin: 0`. The 5 inline styles were pure restatement of primitive defaults — pure cargo-cult code. Removed. The only inline doing real work — the `<ol>` reset on `.how-grid` — moved into the `.how-grid` CSS rule (`list-style: none; padding: 0; margin: 0`); also dropped the rule's previous `margin-top: 28px` since the inline was overriding it to 0 anyway. Files: `components/home/HowItWorks.tsx`, `components/home/Proof.tsx`, `components/home/home.css:456-462`.
+- **Mobile hamburger menu.** Previous mobile nav hid `.links` at <=880 with no replacement — 4 sub-brand links were inaccessible on mobile. Wrapped the primary nav in a native `<details>`/`<summary>` element so the dropdown works without JS. Summary is a round hamburger button matching the cart icon's pill-outline style. Dropdown is right-anchored, marshmallow bg, hair border, soft shadow. Desktop unchanged (trigger hidden, links rendered inline). `components/Nav.tsx` + `Nav.module.css`.
 
 ### Files modified
 
-- `components/home/Hero.tsx` — hand-note + tile name two-tone split rendering
-- `components/home/AudienceStrip.tsx` — bypass `<Section>`, raw section + sibling wave + `.audience-strip__group` class
-- `components/home/Compatibility.tsx` — bypass `<Section>`, raw section + sibling wave
-- `components/home/HowItWorks.tsx` — drop 3 inline styles
-- `components/home/Proof.tsx` — drop 2 inline styles
-- `components/home/home.css` — added `.home-hero__hand-note`, `.home-hero__hand-note svg`, `.home-hero__tile-name-suffix`, `.audience-strip__group`; updated `.home-hero__tile-name` to use `var(--font-wordmark)` + `letter-spacing: 0`; updated `.how-grid` with `<ol>` reset and removed `margin-top: 28px`
-- `.claude/skills/shmocard-design-system/SKILL.md` — wordmark scope (line 66) + logo two-tone rule (line 72)
-- `.claude/skills/shmocard-design-system/README.md` — wordmark two-tone (line 53), wordmark scope prose (line 133), wordmark font table (line 148)
-- `.claude/skills/shmocard-design-system/PRIMITIVES.md` — wordmark scope (line 62)
-- `.claude/skills/shmocard-design-system/colors_and_type.css` — wordmark comment (line 117)
-- `.claude/skills/shmocard-design-system/fonts/README.md` — wordmark scope in fonts table (line 7)
-- `.claude/skills/shmocard-design-system/preview/01-logo-wordmark.html` — preview note now mentions sub-brand wordmarks (line 63)
-- `.claude/rules/design-system.md` — wordmark scope in type stack section (line 48)
+- `components/home/home.css` — every wave touched this; most edits in the file
+- `components/home/SubBrandIllustration.tsx` — added `BizPhoneInner`, `BizPhoneMobile`, `LinkPhoneCore`, `LinkPhoneMobile`, `RepLaptopCore`, `ReputationLaptopMobile`. Existing components refactored to use the shared helpers.
+- `components/home/HomeFaq.tsx` — implicit through CSS only (the mascot move was a `position: static` rule, not JSX changes)
+- `components/Nav.tsx` — wrapped nav links in `<details>` + `<summary>` hamburger
+- `components/Nav.module.css` — mobile menu rules, hamburger button styling, dropdown panel
+- `.planning/phases/04-mobile-pass/PLAN.md` (new)
+- `pictures/screenshots/mobile-audit-2026-05-09/` — 25 verification screenshots
 
-### Screenshots produced (in `pictures/screenshots/`)
+### Commits landed (13 on `main`)
 
-- `hero-meta-handnote-port.png` — verifies hand-note renders correctly
-- `hero-tile-names-cherry-bomb.png` — first-pass Cherry Bomb on tile names (before two-tone split)
-- `hero-tile-names-subbrand-wordmarks.png` — final two-tone sub-brand wordmark treatment
-- `audience-strip-canonical-fullbleed.png` — verifies audience strip runs edge-to-edge
-- `compat-canonical-fullbleed.png` — verifies compat band runs edge-to-edge
-- `inline-styles-removed-fullpage.png` — full page after primitives cleanup
+- `6fa19ae` mobile(home): hero sub-brand tile wordmarks fit at 360+ (+ PLAN.md)
+- `0b0fcf4` mobile(home): reputation dashboard simplifies under 720
+- `92ebaec` mobile(home): shmo link callouts hide under 720
+- `9198a12` mobile(home): faq mascot drops below headline under 600
+- `131131a` mobile(home): hero tiles restructure to horizontal-row layout under 600
+- `590d3ab` mobile(home): spotlight art moves between headline and lede under 880
+- `bcb13b3` mobile(home): shmo biz illustration redone for mobile (vertical stack)
+- `29648b3` mobile(home): shmo link illustration redone for mobile (phone + 2x2 callouts)
+- `f7735d8` mobile(home): shmo link callouts column moves beside phone (right side)
+- `1071dd6` mobile(home): shmo link mobile drops callouts — phone only
+- `58978b5` mobile(home): shmo reputation illustration redone for mobile
+- `8405092` style(home): reputation dashboard interior flips to light theme
+- `f90e98c` fix(home): reputation mobile macbook chassis sizes from content
+- `dd64876` mobile(nav): hamburger menu exposes 4 sub-brand links
 
-### Commits landed
-
-- `e992363` polish(home): hero canonical alignment + sub-brand wordmark identity
-- `b1a4ae9` fix(layout): audience strip + compat band run full-bleed (canonical)
-- `a3745e8` refactor(home): drop redundant inline styles — primitive defaults handle it
-
-Each commit was created without `--no-verify`, pre-commit hooks ran clean, each leaves the build functional in isolation. Six logical units batched into three commits because `home.css` had cumulative changes across all six and splitting further would have required fragile patch surgery for no real benefit.
+(Three commits aren't in the count above because the Link mobile went through three iterations before landing — they're each their own commit. Reading them in sequence shows the design conversation.)
 
 ### Things explicitly NOT changed this session
 
-- Hero CTA row spacing — still queued from prior handoff
-- Proof section primitives audit (`.shm-card` confirm) — still queued
-- SubBrand spotlights mascot sizing (200px hero variant) — still queued
-- FAQ block primitive confirm (`.shm-faq-list` soft) — still queued
-- Final CTA / footer wave (`--xl` wave + extra padding-bottom calc) — still queued
-- ROADMAP / Phase 4 reframe — still untouched
-- STATE.md `last_activity` and `progress` block — still stale relative to git
-
-### Surprise dividend
-
-The 5 inline styles on HowItWorks + Proof weren't fixing missing primitive defaults — they were pure noise restating defaults that already existed. The design system was already correct; whoever built those components didn't realize `.shm-section-head` handled it. Lesson worth remembering: before adding `style={{...}}` to fix a layout, check the primitive's existing rules first.
+- Wave 2 polish items in `.planning/phases/04-mobile-pass/PLAN.md` (hero hand-note stack at <520, hero CTA full-width, CR-80 pill nowrap, testimonial quote type ramp, how-it-works step card padding, crew strip 1-col at <480, sticky nav scrim, section padding asymmetry).
+- Wave 3 systematize items (canonical `--bp-mobile/tablet/desktop` tokens, refactor home.css queries onto the token set, promote responsive primitive behavior into `components.css`, update PRIMITIVES.md / SKILL.md).
+- ROADMAP.md / Phase 4 reframe.
+- STATE.md last_activity + progress block.
+- Anything outside the homepage (Shmo Review, PDPs, cart, footer).
+- Pawn Leads shirt visible in video #1 (Jordan flagged this is out of scope for this task).
+- Avatar photo compression carried from prior session (still uncompressed in commit `7e1f52d`).
 
 ---
 
 ## What's next
 
-Path A homepage polish per the still-open routing question. The remaining queued targets in priority order:
+**Phase 4-A — Wave 2 polish** per `.planning/phases/04-mobile-pass/PLAN.md`. The 8 items are scoped, ordered, and contained to `home.css` edits. Each is one atomic commit.
 
-1. **Hero CTA row / meta strip** — spacing pass; the meta strip is now the canonical hand-note, but row alignment with the new hand-note hasn't been re-evaluated.
-2. **Proof section primitives** — confirm cards use `.shm-card` not custom rules.
-3. **SubBrand spotlights** — memory observation flagged spotlight mascot sizing as design-system non-compliant (200px hero variant is showcase-only — needs review).
-4. **FAQ block** — confirm it uses `.shm-faq-list` (soft) and not the rare `--featured-card` variant.
-5. **Final CTA / footer wave** — confirm `--xl` wave + extra padding-bottom calc per design-system rule.
+After Wave 2, **Wave 3 systematize** converts the ad-hoc `home.css` breakpoint set (1100/1000/880/720/600) onto canonical `--bp-*` tokens defined in `colors_and_type.css`, promotes primitive responsive behavior into `components.css`, and updates `PRIMITIVES.md` / `SKILL.md`.
 
-Independent of section choice: STATE.md `last_activity` and `progress` block remain stale relative to git. Refresh whenever the next phase begins.
+Independent of that, possible next directions:
+- Run mobile audit + pass on **/shmo-review** (category page) — same pattern as the homepage.
+- Run mobile audit + pass on the **3 PDPs** (CR-80, L-Sign, Square Card).
+- Run mobile audit + pass on the **cart drawer**.
+- Resolve the still-open Phase 4 routing question (A polish / B visual-redesign / C launch-readiness) by updating `ROADMAP.md`.
 
 ---
 
 ## Open decisions
 
-- **Phase 4 routing** — A vs B vs C still unresolved (carried from prior handoff). This session committed to A in practice but never updated ROADMAP.md.
-- **Canonical alignment scope** — The 2-line headline is locked, the hand-note is now canonical, the wordmark/sub-brand treatment is canonical+. But the eyebrow copy ("A toolkit, not a card" vs canonical "A toolkit for local crews"), lede copy, and second CTA label ("See the toolkit" vs canonical "Browse the toolkit") all still diverge from canonical. Confirm whether intentional Shmocard copy choices or also need alignment.
-- **Hero caret style** — current is soft CSS fade. Canonical is literal `|` glyph with hard square-wave blink in ember. Jordan picked soft earlier; flag only if he raises it.
-- **Tile envelope** — bordered vs floating, still deferred from prior session.
-- **Heart-hands badge nudge** — still deferred.
+- **Phase 4 routing** — A vs B vs C. This session committed to A in practice but ROADMAP.md still doesn't reflect it. Worth resolving.
+- **Wave 2 → Wave 3 → next page** ordering. Continue polishing the homepage at mobile (Wave 2 + 3) before moving to /shmo-review, or pivot now and come back for polish later?
+- **Avatar photo compression** (John 2.9 MB / Cindy 9.4 MB committed uncompressed) — still pending from prior session.
+- **Joey video status** — carried from prior session.
+- **Hero copy divergences** (eyebrow "A toolkit, not a card" vs canonical "A toolkit for local crews"; second CTA label) — still unresolved.
 
 ---
 
@@ -103,9 +104,7 @@ Independent of section choice: STATE.md `last_activity` and `progress` block rem
 
 1. Read this file.
 2. Read `CLAUDE.md`.
-3. Ask Jordan: **"Continuing homepage polish — which target next? Hero CTA row, Proof primitives, SubBrand spotlights, FAQ, or final CTA? Or pivot to Phase 4 routing?"**
-4. Before any UI work, invoke the `shmocard-design-system` Skill tool first per `.claude/rules/skill-routing.md` mandatory-first rule. Then read `.claude/rules/design-system.md`.
-5. Before dispatching any UI subagent, inline the design-system hard rules + the LAYOUT IS LOCKED paragraph into the Agent prompt verbatim. There is no UI wrapper skill — guardrails travel as text inside the prompt.
-6. **New audit pattern**: when a section visually feels "boxy" or "over-cushioned", check whether it's wrapped in `<Section>` when it should be a raw `<section className="shm-bg-{color}">` + sibling wave (the audience-strip / compat full-bleed pattern). The other 8 home sections correctly use `<Section>`; verified clean this session.
-7. **New audit pattern**: before adding `style={{...}}` to fix layout in a component, grep the design system primitives for existing rules — likely the primitive already handles it.
-8. Run `/gsd-progress` to see roadmap state before committing to a path.
+3. Ask Jordan: **"Continue Wave 2 polish (hero hand-note stack, CTAs full-width, testimonial type ramp, how-it-works tighter padding, crew strip 1-col, sticky nav scrim — 8 items in `.planning/phases/04-mobile-pass/PLAN.md`)? Or pivot to mobile audit on the next page — /shmo-review category, the 3 PDPs, or cart drawer?"**
+4. Before any UI work: invoke the `shmocard-design-system` Skill tool first per `.claude/rules/skill-routing.md`. Then read `.claude/rules/design-system.md`. Both load the operator's manual + the design rules verbatim.
+5. **New pattern from this session worth remembering:** when a section's content doesn't compress gracefully at mobile, the `:has()` selector + a parallel `*Mobile` React component with shared inner content is the right tool. Three separate mobile illustrations now use this pattern (Biz / Link / Reputation). Apply the same approach if `/shmo-review` or PDP sections break at mobile.
+6. **Another pattern:** when a `.spotlight__art` (or any aspect-ratio-locked container) needs to hold a portrait-shaped composition at mobile, override the entire chain: `.spotlight__art:has(--mobile-variant)` → aspect-ratio auto + overflow visible + display block, then `.spotlight__illustration-frame` → aspect-ratio auto + height auto, then the inner `.spotlight__illustration` → height auto. All three layers need to release their height constraint, not just the outer.
