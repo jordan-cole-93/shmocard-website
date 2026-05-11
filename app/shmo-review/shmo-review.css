@@ -174,3 +174,143 @@ main > section:has(> .shm-wave:last-child) { padding-bottom: 0; }
 @media (max-width: 720px) {
   .bullet-strip__grid { grid-template-columns: 1fr; }
 }
+
+/* ────────────────────────────────────────
+   03 BUYBOX — CR-80 PDP. Marsh bg. Gallery sticky on left,
+   buy column on right. Ported from review.css:286-353.
+   ──────────────────────────────────────── */
+.review-buybox.shm-section {
+  padding-top: 90px;
+  padding-bottom: 0;
+}
+.review-buybox > .shm-container {
+  padding-bottom: 80px;
+}
+.review-buybox .shm-section-head--start {
+  text-align: left;
+  align-items: flex-start;
+  max-width: 720px;
+}
+.pdp-buybox {
+  margin-top: 40px;
+  display: grid;
+  grid-template-columns: minmax(0, 1.05fr) minmax(0, 1fr);
+  gap: 56px;
+  align-items: start;
+}
+
+/* Gallery */
+.gal {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  position: sticky;
+  top: 24px;
+}
+.gal__main {
+  aspect-ratio: 1 / 1;
+  background: var(--color-cream);
+  border-radius: var(--radius-xl);
+  overflow: hidden;
+  border: 1px solid var(--color-hair);
+}
+.gal__main img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.gal__thumbs {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 10px;
+}
+.gal__thumb {
+  aspect-ratio: 1 / 1;
+  background: var(--color-cream);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  border: 1.5px solid var(--color-hair);
+  cursor: pointer;
+  padding: 0;
+  transition: border-color var(--motion-fast) var(--ease-standard);
+}
+.gal__thumb:hover { border-color: var(--color-cocoa-deep); }
+.gal__thumb.is-active { border: 2.5px solid var(--color-ember); }
+.gal__thumb img { width: 100%; height: 100%; object-fit: cover; display: block; }
+
+/* Buybox column */
+.bb { display: flex; flex-direction: column; gap: 18px; }
+.bb__title {
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: 36px;
+  line-height: 1.1;
+  letter-spacing: -0.022em;
+  color: var(--color-cocoa-deep);
+  margin: 0;
+  font-variation-settings: "opsz" 96;
+}
+.bb__sub {
+  font-size: 16px;
+  color: var(--color-ink-3);
+  line-height: 1.45;
+  margin: 0;
+}
+.bb__rule {
+  border: 0;
+  border-top: 1px solid var(--color-hair);
+  margin: 4px 0;
+}
+.bb__cta {
+  width: 100%;
+  margin-top: 8px;
+}
+.bb__meta {
+  text-align: center;
+  font-size: 12px;
+  color: var(--color-ink-3);
+  margin-top: 2px;
+}
+.bb__meta span + span::before {
+  content: "·";
+  margin: 0 8px;
+  color: var(--color-muted);
+}
+.bb__faq { margin-top: 14px; }
+
+.qty-block {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-top: 6px;
+}
+.qty-label,
+.config__label {
+  font-family: var(--font-sans);
+  font-weight: 700;
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--color-ink-3);
+}
+.qty-block .shm-qty { height: 48px; align-self: flex-start; }
+.qty-block .shm-qty__btn { width: 44px; height: 44px; font-size: 20px; }
+.qty-block .shm-qty__val { min-width: 56px; font-size: 18px; }
+
+.config {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-top: 6px;
+}
+.config__hint {
+  font-size: 12px;
+  color: var(--color-ink-3);
+  line-height: 1.4;
+}
+.shm-google__icon img,
+.shm-google__icon svg { width: 22px; height: 22px; display: block; }
+
+@media (max-width: 1100px) {
+  .pdp-buybox { grid-template-columns: 1fr; gap: 32px; }
+  .gal { position: static; }
+}
+@media (max-width: 720px) {
+  .gal__thumbs { grid-template-columns: repeat(4, 1fr); }
+}
