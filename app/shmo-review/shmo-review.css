@@ -1,0 +1,19 @@
+/* shmo-review.css — page-scoped layout for /shmo-review.
+   Ported from .claude/skills/shmocard-design-system/ui_kits/website/homepage-shmoreview/review.css
+   Layout only. No primitive restyles. */
+
+/* PAGE-SCOPED WAVE OVERRIDE — make every wave on this page tall enough
+   to read as a divider. The DS default (18px) is too subtle when sibling
+   section colors are close. We bump the base height; --lg/--xl still
+   scale up from there. */
+main .shm-wave { height: 56px; }
+main .shm-wave--lg { height: 88px; }
+main .shm-wave--xl { height: 120px; }
+
+/* Every section's trailing wave hugs the next section. Kills any
+   padding/margin gap between wave and next bg. Defensive against both
+   sibling-wave (this repo's <Section> convention) and child-wave layouts. */
+main > section > .shm-wave:last-child { margin-bottom: 0; }
+main > section { margin: 0; }
+main > section + section { margin-top: 0; }
+main > section:has(> .shm-wave:last-child) { padding-bottom: 0; }

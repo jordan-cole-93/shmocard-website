@@ -8,6 +8,7 @@
 import Link from "next/link";
 
 import NavCartIcon from "./cart/NavCartIcon";
+import NavLink from "./NavLink";
 import styles from "./Nav.module.css";
 
 export default function Nav() {
@@ -23,11 +24,14 @@ export default function Nav() {
           </span>
         </Link>
 
-        {/* Primary nav. At <=880px the four sub-brand links live inside a
-            native <details> menu that hangs below the nav (no JS state needed).
-            At >880px the desktop CSS unhides the panel inline and hides the
-            hamburger trigger. */}
-        <details className={styles.menu}>
+        {/* Primary nav. Rendered with `open` so the panel is visible by
+            default at every viewport — modern browsers hide non-summary
+            children of a closed <details> via the UA slot mechanism, which
+            CSS can't override. At >880px the hamburger summary is hidden
+            via CSS and the panel renders inline. At <=880px the summary
+            becomes the hamburger; the dropdown is shown by default on
+            initial mobile load and users tap to close. */}
+        <details className={styles.menu} open>
           <summary
             className={styles.menuTrigger}
             aria-label="Open primary navigation"
@@ -45,14 +49,18 @@ export default function Nav() {
             </svg>
           </summary>
           <nav className={styles.links} aria-label="Primary">
-            <Link href="/shmo-review" className={styles.link}>
+            <NavLink
+              href="/shmo-review"
+              className={styles.link}
+              activeClassName={styles.linkActive}
+            >
               Shmo Review
               <span
                 className={`shm-badge shm-badge--status shm-badge--status-clover ${styles.linkStatus}`}
               >
                 Live
               </span>
-            </Link>
+            </NavLink>
             <a href="#shmo-biz" className={styles.link}>
               Shmo Biz
               <span
