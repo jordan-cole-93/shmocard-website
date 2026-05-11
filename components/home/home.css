@@ -1093,40 +1093,19 @@
     height: auto;
     padding: 16px 0 24px;
     display: flex;
-    flex-direction: row;
     align-items: center;
     justify-content: center;
-    gap: 14px;
   }
 
-  /* Phone — left column, smaller than desktop because the callout column
-     needs the other half of the available width. Explicit dimensions to
-     escape the parent's % aspect-ratio chain. */
+  /* Phone centered, explicit dimensions to escape the parent's
+     % aspect-ratio chain. */
   .spotlight__illustration--link-mobile .phone-frame {
     position: relative;
     left: auto; right: auto; top: auto; bottom: auto;
-    width: 160px;
-    height: 420px;
+    width: 200px;
+    height: 432px;
     aspect-ratio: auto;
     flex-shrink: 0;
-  }
-
-  /* Callouts — vertical column on the right. Each tile is a browser-window
-     mini-mockup (same FacebookCallout / YoutubeCallout / etc. components
-     used on desktop). Sized smaller so all four fit alongside the phone. */
-  .link-callouts-mobile {
-    list-style: none;
-    margin: 0;
-    padding: 0;
-    flex: 1 1 auto;
-    min-width: 0;
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-  }
-  .link-callout-mobile {
-    aspect-ratio: 1.5 / 1;
-    display: block;
   }
 }
 

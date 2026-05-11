@@ -26,7 +26,14 @@ export default function SubBrandIllustration({ illustrationKey }: Props) {
       </>
     );
   }
-  if (illustrationKey === "reputation") return <ReputationLaptop />;
+  if (illustrationKey === "reputation") {
+    return (
+      <>
+        <ReputationLaptop />
+        <ReputationLaptopMobile />
+      </>
+    );
+  }
   return null;
 }
 
@@ -225,47 +232,30 @@ function LinkPhone() {
   );
 }
 
-// Mobile variant — phone centered on top, callouts laid out as a 2×2 grid
-// below (no connector lines since they no longer point sideways).
+// Mobile variant — phone only. Callouts dropped because they crowd at
+// portrait widths even when arranged as a side column; the phone alone
+// communicates "branded link-in-bio with destination buttons".
 function LinkPhoneMobile() {
   return (
     <div
       className="spotlight__illustration spotlight__illustration--link-mobile"
       role="img"
-      aria-label="Shmo Link scene: a phone showing a link-in-bio page with four destination buttons (Facebook profile, YouTube profile, Donate, Website), shown above four browser-style preview cards explaining what each button opens."
+      aria-label="Shmo Link scene: a phone showing a link-in-bio page with four destination buttons (Facebook profile, YouTube profile, Donate, Website)."
     >
       <LinkPhoneCore />
-      <ul className="link-callouts-mobile" aria-hidden="true">
-        <li className="link-callout-mobile">
-          <FacebookCallout />
-        </li>
-        <li className="link-callout-mobile">
-          <YoutubeCallout />
-        </li>
-        <li className="link-callout-mobile">
-          <DonateCallout />
-        </li>
-        <li className="link-callout-mobile">
-          <WebsiteCallout />
-        </li>
-      </ul>
     </div>
   );
 }
 
 // ---------- Shmo Reputation scene ----------
-function ReputationLaptop() {
+// Shared MacBook chassis + dashboard interior used by both desktop and mobile.
+function RepLaptopCore() {
   return (
-    <div
-      className="spotlight__illustration spotlight__illustration--reputation"
-      role="img"
-      aria-label="Shmo Reputation scene: a MacBook showing a reviews dashboard with stat cards and AI-replied reviews, with a floating Auto-replied tag."
-    >
-      <div className="rep-laptop">
-        <div className="rep-laptop__lid">
-          <span className="rep-laptop__notch" />
-          <div className="rep-laptop__screen">
-            <div className="rep-dashboard">
+    <div className="rep-laptop">
+      <div className="rep-laptop__lid">
+        <span className="rep-laptop__notch" />
+        <div className="rep-laptop__screen">
+          <div className="rep-dashboard">
               {/* SIDEBAR */}
               <aside className="rep-dashboard__sidebar">
                 <div className="rep-dashboard__brand">
@@ -410,11 +400,34 @@ function ReputationLaptop() {
               </main>
             </div>
           </div>
-        </div>
-        <div className="rep-laptop__base" aria-hidden="true">
-          <span className="rep-laptop__hinge" />
-        </div>
       </div>
+      <div className="rep-laptop__base" aria-hidden="true">
+        <span className="rep-laptop__hinge" />
+      </div>
+    </div>
+  );
+}
+
+function ReputationLaptop() {
+  return (
+    <div
+      className="spotlight__illustration spotlight__illustration--reputation"
+      role="img"
+      aria-label="Shmo Reputation scene: a MacBook showing a reviews dashboard with stat cards and AI-replied reviews."
+    >
+      <RepLaptopCore />
+    </div>
+  );
+}
+
+function ReputationLaptopMobile() {
+  return (
+    <div
+      className="spotlight__illustration spotlight__illustration--reputation-mobile"
+      role="img"
+      aria-label="Shmo Reputation scene: a MacBook showing a reviews dashboard with stat cards and AI-replied reviews, sized for mobile."
+    >
+      <RepLaptopCore />
     </div>
   );
 }
