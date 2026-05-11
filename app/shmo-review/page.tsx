@@ -12,6 +12,7 @@ import "./shmo-review.css";
 import Hero from "@/components/shmo-review/Hero";
 import BulletStrip from "@/components/shmo-review/BulletStrip";
 import Buybox from "@/components/shmo-review/Buybox";
+import FormatPicker from "@/components/shmo-review/FormatPicker";
 
 export const metadata = {
   title: "Shmo Review — NFC tap cards built for crews",
@@ -25,6 +26,7 @@ export default function ShmoReviewPage() {
       <Hero />
       <BulletStrip />
       <Buybox />
+      <FormatPicker />
     </main>
   );
 }
