@@ -14,6 +14,7 @@
 // Server component.
 
 import Section from "@/components/layout/Section";
+import type { SectionBg } from "@/components/layout/Section";
 
 // TODO(shopify): pricing comes from each format's Shopify product.
 const REVIEW_FORMATS: Array<{
@@ -73,9 +74,14 @@ const REVIEW_FORMATS: Array<{
   },
 ];
 
-export default function FormatPicker() {
+type Props = {
+  bg?: SectionBg;
+  nextBg?: SectionBg;
+};
+
+export default function FormatPicker({ bg = "marsh", nextBg = "marsh" }: Props = {}) {
   return (
-    <Section bg="marsh" nextBg="marsh" className="format-picker" id="formats" ariaLabel="Pick a Shmo Review format">
+    <Section bg={bg} nextBg={nextBg} className="format-picker" id="formats" ariaLabel="Pick a Shmo Review format">
       <div className="shm-section-head">
         <span className="shm-eyebrow">Four formats · same chip · same dashboard</span>
         <h2 className="shm-h2">

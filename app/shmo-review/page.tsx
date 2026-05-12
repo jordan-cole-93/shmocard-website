@@ -31,10 +31,10 @@ export default function ShmoReviewPage() {
       <Hero />
       <BulletStrip />
       <Buybox />
-      <FormatPicker />
       <HowItWorks />
       <CrewStrip />
-      <VideoTestimonials bg="graham" nextBg="marsh" />
+      <FormatPicker bg="graham" nextBg="marsh" />
+      <VideoTestimonials bg="marsh" nextBg="marsh" />
       <StandoutMoments />
       <NumbersWall />
     </main>
