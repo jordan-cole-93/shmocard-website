@@ -446,3 +446,377 @@ main > section:has(> .shm-wave:last-child) { padding-bottom: 0; }
 @media (max-width: 720px) {
   .format-grid { grid-template-columns: 1fr; }
 }
+
+/* ────────────────────────────────────────
+   05 HOW IT WORKS — sticky phone, scroll-driven.
+   Ported from review.css:355-618.
+   ──────────────────────────────────────── */
+.how-section.shm-section { padding-top: 80px; padding-bottom: 80px; }
+.how-stage {
+  margin-top: 40px;
+  display: grid;
+  grid-template-columns: minmax(0, 0.85fr) minmax(0, 1fr);
+  gap: 80px;
+  align-items: start;
+}
+.how-stage__phone-col { position: relative; }
+.how-stage__phone-sticky {
+  position: sticky;
+  top: 80px;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  align-items: center;
+}
+
+/* Phone frame */
+.phone-frame {
+  width: 320px;
+  aspect-ratio: 9 / 19.5;
+  background: var(--color-cocoa-deep);
+  border-radius: 44px;
+  padding: 14px;
+  position: relative;
+  box-shadow:
+    0 30px 80px rgba(46, 26, 15, 0.18),
+    0 0 0 1px rgba(46, 26, 15, 0.08);
+}
+.phone-frame__notch {
+  position: absolute;
+  top: 24px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 96px;
+  height: 26px;
+  border-radius: 999px;
+  background: #0a0908;
+  z-index: 2;
+}
+.phone-frame__screen {
+  width: 100%;
+  height: 100%;
+  background: var(--color-marshmallow);
+  border-radius: 32px;
+  overflow: hidden;
+  position: relative;
+}
+.phone-frame__home {
+  position: absolute;
+  bottom: 8px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100px;
+  height: 4px;
+  border-radius: 2px;
+  background: rgba(255, 251, 241, 0.5);
+  z-index: 2;
+}
+
+/* Phone screens */
+.phone-screen {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 32px 20px;
+  position: relative;
+  animation: phone-fade var(--motion-base) var(--ease-out);
+}
+@keyframes phone-fade {
+  from { opacity: 0; transform: scale(0.96); }
+  to   { opacity: 1; transform: scale(1); }
+}
+.phone-screen__caption {
+  position: absolute;
+  bottom: 28px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--color-ink-3);
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+/* Handoff screen */
+.phone-screen--handoff {
+  background: linear-gradient(180deg, var(--color-cream) 0%, var(--color-marshmallow) 100%);
+}
+.phone-screen__hand {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+}
+.phone-screen__card {
+  width: 200px;
+  aspect-ratio: 1.586 / 1;
+  background: linear-gradient(135deg, var(--color-ember) 0%, #c95a3c 100%);
+  border-radius: 14px;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  color: var(--color-marshmallow);
+  transform: rotate(-8deg);
+  box-shadow: 0 20px 40px rgba(217, 119, 87, 0.4);
+  animation: card-tilt 3s ease-in-out infinite alternate;
+}
+@keyframes card-tilt {
+  from { transform: rotate(-8deg) translateY(0); }
+  to   { transform: rotate(-4deg) translateY(-6px); }
+}
+.phone-screen__card-logo {
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: 11px;
+  letter-spacing: 0.16em;
+  opacity: 0.9;
+}
+.phone-screen__card-name {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 18px;
+  line-height: 1.1;
+  letter-spacing: -0.01em;
+}
+.phone-screen__card-chip {
+  align-self: flex-end;
+  width: 32px;
+  height: 32px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255, 251, 241, 0.2);
+  border-radius: 8px;
+}
+.phone-screen__card-chip svg { width: 18px; height: 18px; color: var(--color-marshmallow); }
+
+/* Tap screen */
+.phone-screen--tap { background: var(--color-cocoa-deep); color: var(--color-marshmallow); }
+.phone-tap-indicator {
+  width: 80px;
+  height: 80px;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 24px;
+}
+.phone-tap-indicator__dot {
+  width: 24px;
+  height: 24px;
+  background: var(--color-ember);
+  border-radius: 50%;
+  z-index: 2;
+}
+.phone-tap-indicator__ring,
+.phone-tap-indicator__ring--2 {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  border: 2px solid var(--color-ember);
+  border-radius: 50%;
+  animation: tap-ring 1.6s ease-out infinite;
+}
+.phone-tap-indicator__ring--2 { animation-delay: 0.8s; }
+@keyframes tap-ring {
+  from { transform: scale(0.4); opacity: 0.9; }
+  to   { transform: scale(1.4); opacity: 0; }
+}
+.phone-screen__notif {
+  width: 100%;
+  background: rgba(255, 251, 241, 0.08);
+  border: 1px solid rgba(255, 251, 241, 0.16);
+  border-radius: 14px;
+  padding: 14px;
+  backdrop-filter: blur(10px);
+}
+.phone-screen__notif-bar { display: flex; align-items: center; gap: 12px; }
+.phone-screen__notif-icon {
+  width: 36px;
+  height: 36px;
+  background: var(--color-marshmallow);
+  color: var(--color-cocoa-deep);
+  border-radius: 8px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+.phone-screen__notif-icon svg { width: 18px; height: 18px; }
+.phone-screen__notif-title { font-weight: 700; font-size: 14px; }
+.phone-screen__notif-sub { font-size: 12px; opacity: 0.7; margin-top: 2px; }
+
+/* Review screen */
+.phone-screen--review { background: var(--color-marshmallow); }
+.phone-review-card {
+  width: 100%;
+  background: var(--color-marshmallow);
+  border: 1px solid var(--color-hair);
+  border-radius: 12px;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  box-shadow: 0 10px 30px rgba(46, 26, 15, 0.06);
+}
+.phone-review-card__head {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid var(--color-hair);
+}
+.phone-review-card__shop {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 16px;
+  color: var(--color-cocoa-deep);
+}
+.phone-review-card__addr { font-size: 11px; color: var(--color-ink-3); }
+.phone-review-card__rate { display: flex; flex-direction: column; gap: 8px; }
+.phone-review-card__label { font-size: 11px; color: var(--color-ink-3); font-weight: 600; }
+.phone-review-card__stars { display: flex; gap: 4px; }
+.phone-review-card__star {
+  width: 24px;
+  height: 24px;
+  fill: #fbbc05;
+  animation: star-pop 0.4s var(--ease-out) backwards;
+}
+.phone-review-card__star:nth-child(1) { animation-delay: 0.1s; }
+.phone-review-card__star:nth-child(2) { animation-delay: 0.2s; }
+.phone-review-card__star:nth-child(3) { animation-delay: 0.3s; }
+.phone-review-card__star:nth-child(4) { animation-delay: 0.4s; }
+.phone-review-card__star:nth-child(5) { animation-delay: 0.5s; }
+@keyframes star-pop {
+  from { transform: scale(0); opacity: 0; }
+  to   { transform: scale(1); opacity: 1; }
+}
+.phone-review-card__textbox {
+  background: var(--color-cream);
+  border-radius: 8px;
+  padding: 10px 12px;
+  min-height: 50px;
+  font-size: 12px;
+}
+.phone-review-card__placeholder { color: var(--color-ink-3); }
+.phone-review-card__post {
+  background: #4285f4;
+  color: white;
+  text-align: center;
+  padding: 10px;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 13px;
+}
+
+/* Submitted screen */
+.phone-screen--submitted {
+  background: linear-gradient(180deg, #2a8a5b 0%, #1f6e47 100%);
+  color: var(--color-marshmallow);
+}
+.phone-submitted {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  text-align: center;
+}
+.phone-submitted__check {
+  width: 72px;
+  height: 72px;
+  background: var(--color-marshmallow);
+  color: #2a8a5b;
+  border-radius: 50%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 8px;
+  animation: check-pop 0.5s var(--ease-out);
+}
+@keyframes check-pop {
+  from { transform: scale(0); }
+  to   { transform: scale(1); }
+}
+.phone-submitted__check svg { width: 36px; height: 36px; }
+.phone-submitted__title {
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: 28px;
+  letter-spacing: -0.012em;
+  font-variation-settings: "opsz" 96;
+}
+.phone-submitted__sub { font-size: 14px; opacity: 0.85; }
+.phone-submitted__stars { display: flex; gap: 6px; margin-top: 10px; }
+.phone-submitted__stars svg { width: 22px; height: 22px; fill: #fbbc05; }
+
+/* Phone progress pips */
+.how-stage__progress { display: flex; gap: 10px; }
+.how-stage__pip {
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: 11px;
+  letter-spacing: 0.06em;
+  width: 36px;
+  height: 28px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 999px;
+  background: rgba(46, 26, 15, 0.06);
+  color: var(--color-ink-3);
+  transition: all var(--motion-fast) var(--ease-standard);
+}
+.how-stage__pip.is-active {
+  background: var(--color-ember);
+  color: var(--color-marshmallow);
+}
+
+/* Steps */
+.how-stage__steps {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 28vh;
+  padding: 28vh 0;
+}
+.how-stage__step {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  opacity: 0.32;
+  transition: opacity var(--motion-base) var(--ease-standard);
+  max-width: 480px;
+}
+.how-stage__step.is-active { opacity: 1; }
+.how-stage__step-num {
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: 14px;
+  letter-spacing: 0.06em;
+  color: var(--color-ember);
+}
+.how-stage__step-title {
+  margin: 0;
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: 38px;
+  line-height: 1.08;
+  letter-spacing: -0.018em;
+  color: var(--color-cocoa-deep);
+  font-variation-settings: "opsz" 96;
+}
+.how-stage__step-body { margin: 0; font-size: 17px; line-height: 1.5; color: var(--color-ink-2); }
+
+@media (max-width: 1100px) {
+  .how-stage { grid-template-columns: 1fr; gap: 0; }
+  .how-stage__phone-sticky { top: 60px; }
+}
