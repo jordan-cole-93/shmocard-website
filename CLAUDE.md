@@ -22,14 +22,14 @@ Brand website for Shmocard at `shmocard.com`. Retail front door — not an ad fu
 | Per-page wireframes | `context/brainstorming/*.md` (pending) |
 | Design system source | `.claude/skills/shmocard-design-system/` (read `SKILL.md` first) |
 | Personal preferences | `CLAUDE.local.md` (gitignored) |
-| Project-local subagents (auditors, safety gates) | `.claude/agents/` (3 files: `design-system-auditor`, `shopify-data-checker`, `live-store-guard`) |
+| Project-local subagents (builder, auditors, safety gates) | `.claude/agents/` (4 files: `design-system-builder` (mandatory for all UI), `design-system-auditor`, `shopify-data-checker`, `live-store-guard`) |
 
 ## Engineering rules (`.claude/rules/`)
 
 | File | Applies when |
 |---|---|
 | `design-system.md` | Any UI / visual / design / component / layout / page work |
-| `subagent-dispatch.md` | Spawning a subagent (UI hand-author guardrails or `shmocard-shopify-work` wrapper) |
+| `subagent-dispatch.md` | Spawning a subagent (mandatory `design-system-builder` for UI, `shmocard-shopify-work` wrapper for Shopify) |
 | `skill-routing.md` | Parent agent deciding which skill to load |
 | `live-store-protection.md` | Any Shopify Admin / theme / domain / payments touchpoint |
 | `shopify-data-discipline.md` | Product data, prices, SKUs, cart, checkout |

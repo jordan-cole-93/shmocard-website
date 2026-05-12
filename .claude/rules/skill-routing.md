@@ -8,9 +8,9 @@ Skills below should fire automatically when their condition matches. If a condit
 
 | Condition | Skill to invoke | Notes |
 |---|---|---|
-| **Any UI / visual / design / component / layout / page work in this repo** | **`shmocard-design-system`** (project-local, auto-discoverable) | **MANDATORY FIRST.** Invoke via the Skill tool BEFORE writing code, BEFORE reading other docs, BEFORE any subagent dispatch. Loads `SKILL.md` (operator's manual), primitive table, canonical reference pointers, hard rules. No exceptions. |
+| **Any UI / visual / design / component / layout / page work in this repo** | **`shmocard-design-system`** (project-local, auto-discoverable) | **MANDATORY FIRST.** Invoke via the Skill tool BEFORE writing code, BEFORE reading other docs, BEFORE any subagent dispatch. Loads `SKILL.md` (operator's manual), primitive table, canonical reference pointers, hard rules. No exceptions. After loading the skill, the parent must immediately dispatch the `design-system-builder` subagent (see below) — the parent does not write UI code itself. |
 | Starting any non-trivial multi-step task in this repo | `gsd-progress` → then `/gsd-plan-phase` or `/gsd-quick` | GSD owns plan → execute → verify discipline. Skip for typo-level fixes. |
-| Trivial 1–3 file fix | `/gsd-fast` | No subagents, inline. |
+| Trivial 1–3 file fix | `/gsd-fast` | No subagents, inline. **Exception:** even trivial UI fixes still route through `design-system-builder` unless it's a pure copy/text change. |
 | Resuming session after `/clear` or break | `/gsd-resume-work` or `/gsd-progress` | Restores STATE.md context. |
 | Session lifecycle (capture decisions, edits, bug fixes) | `claude-mem` | Auto by plugin — no manual invocation. |
 | Tool-call output bloat / context preservation | `context-mode` | Auto by plugin — no manual invocation. Check stats with `/context-mode:ctx-stats`. |
@@ -21,11 +21,13 @@ For any prompt mentioning design / layout / UI / component / hero / section / ty
 
 1. **Invoke the `shmocard-design-system` Skill via the Skill tool FIRST.** This loads `SKILL.md` — the operator's manual with the primitive table, hard rules, canonical reference pages. Don't paraphrase from memory; load the actual file. Skipping this is a recurring failure mode and is what produced the 5h wave-divider seesaw on 2026-05-07.
 2. **Then read `.claude/rules/design-system.md`** — the project-level orchestrator that points at additional source-of-truth files (`PRIMITIVES.md`, `colors_and_type.css`, `components.css`, `ui_kits/website/*`).
-3. **Only after both are loaded**, write code or dispatch subagents.
+3. **Dispatch the `design-system-builder` subagent via the Agent tool** to do the actual `.tsx` / `.css` work. The parent orchestrator does NOT write UI code directly — it dispatches, reviews, and (when the builder returns) optionally dispatches `design-system-auditor` for compliance verification before commit.
+
+The only carve-out for skipping the builder is a **pure copy/text edit** (typo fix, headline swap) with zero class / styling / structural changes. Anything that touches classes, styles, layout, spacing, color, mascots, or structure goes through the builder.
 
 The design system is the authority on visual / typography / mascot / section-rotation / utility-class-prefix decisions. Anthropic's `frontend-design`, `impeccable`, and `redesign-skill` global skills are available if useful, but are not auto-loaded — the design system rules + SKILL.md are sufficient.
 
-**Symptom that this rule was broken:** producing UI code that fights the design system — wrong section bg, missing `.shm-` prefix, em accent missing, custom drawer instead of `.shm-cart-*`, hand-coded icons instead of hand-drawn cocoa-deep strokes. If you catch yourself inventing instead of composing primitives, the SKILL.md wasn't loaded.
+**Symptom that this rule was broken:** producing UI code that fights the design system — wrong section bg, missing `.shm-` prefix, em accent missing, custom drawer instead of `.shm-cart-*`, hand-coded icons instead of hand-drawn cocoa-deep strokes. If you catch yourself inventing instead of composing primitives, you either skipped the SKILL.md OR you wrote code in the parent instead of dispatching the builder.
 
 ## Project-local sub-agents
 
@@ -33,10 +35,11 @@ Three project-local agents live at `.claude/agents/*.md`. They are spawned via t
 
 | Trigger condition | Agent to dispatch | Model | When |
 |---|---|---|---|
+| **Any UI work** — building / editing `.tsx` or `.css` in `app/` or `components/`, including polish | **`design-system-builder`** | **Sonnet** | **MANDATORY.** Parent dispatches instead of writing UI code itself. Rules + mandatory reads enumerated in the agent file. Only carve-out: pure copy/text edits with zero class or styling changes. |
 | Finished a UI change (`.tsx` / `.css`) and want design-system compliance verified before commit | `design-system-auditor` | Sonnet | Post-edit, pre-commit. Read-only audit. |
 | About to commit Shopify-touching code (`.tsx`/`.ts` referencing products, prices, cart) | `shopify-data-checker` | Haiku | Pre-commit. Scans for hardcoded product data. |
 | About to commit ANY Shopify-flagged change | `live-store-guard` | Haiku | Pre-commit. Defensive net for Admin API / theme / `.env` writes. |
 
-**Dispatch order on a Shopify UI commit:** `design-system-auditor` → `shopify-data-checker` → `live-store-guard`. All three must return PASS / SAFE before commit.
+**Dispatch order on a Shopify UI commit:** `design-system-builder` (build) → `design-system-auditor` (verify) → `shopify-data-checker` → `live-store-guard`. Builder produces the code; the three auditors all return PASS / SAFE before commit.
 
 **Hard rule:** never write subagent prompts freehand for these three concerns. Always dispatch the matching agent file. If the agent's enumerated rules are wrong, fix the agent file — don't bypass it with a freehand prompt.
