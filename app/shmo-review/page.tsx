@@ -14,6 +14,8 @@ import BulletStrip from "@/components/shmo-review/BulletStrip";
 import Buybox from "@/components/shmo-review/Buybox";
 import FormatPicker from "@/components/shmo-review/FormatPicker";
 import HowItWorks from "@/components/shmo-review/HowItWorks";
+import CrewStrip from "@/components/home/CrewStrip";
+import VideoTestimonials from "@/components/home/VideoTestimonials";
 import StandoutMoments from "@/components/shmo-review/StandoutMoments";
 import NumbersWall from "@/components/shmo-review/NumbersWall";
 
@@ -31,6 +33,8 @@ export default function ShmoReviewPage() {
       <Buybox />
       <FormatPicker />
       <HowItWorks />
+      <CrewStrip />
+      <VideoTestimonials bg="graham" nextBg="marsh" />
       <StandoutMoments />
       <NumbersWall />
     </main>
