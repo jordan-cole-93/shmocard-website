@@ -159,14 +159,17 @@ export default function HowItWorks() {
       if (!stage) return;
       const rect = stage.getBoundingClientRect();
       const vp = window.innerHeight;
-      // Scroll progress through the .how-stage section: 0 when the
-      // section's top hits the viewport top, 1 when its bottom hits
-      // the viewport bottom. Map that to 4 equal zones.
-      const total = rect.height - vp;
-      if (total <= 0) return;
-      const scrolled = Math.min(Math.max(-rect.top, 0), total);
-      const progress = scrolled / total;
-      const idx = Math.min(REVIEW_HOW_STEPS.length - 1, Math.floor(progress * REVIEW_HOW_STEPS.length));
+      // Progress 0 → 1 across the section's full visibility window:
+      //   0 = section top hits viewport bottom (just entered view)
+      //   1 = section bottom hits viewport top (just exited view)
+      // Total scroll distance = viewport height + section height.
+      const totalDistance = vp + rect.height;
+      const scrolled = vp - rect.top;
+      const progress = Math.max(0, Math.min(1, scrolled / totalDistance));
+      const idx = Math.min(
+        REVIEW_HOW_STEPS.length - 1,
+        Math.floor(progress * REVIEW_HOW_STEPS.length),
+      );
       setActiveIdx(idx);
     }
     update();
