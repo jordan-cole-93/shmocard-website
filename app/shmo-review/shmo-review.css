@@ -184,7 +184,7 @@ main > section:has(> .shm-wave:last-child) { padding-bottom: 0; }
   padding-bottom: 0;
 }
 .review-buybox > .shm-container {
-  padding-bottom: 80px;
+  padding-bottom: 32px;
 }
 .review-buybox .shm-section-head--start {
   text-align: left;
@@ -319,7 +319,7 @@ main > section:has(> .shm-wave:last-child) { padding-bottom: 0; }
    04 FORMAT PICKER — three format cards on marsh.
    Ported from review.css:199-284.
    ──────────────────────────────────────── */
-.format-picker.shm-section { padding-top: 80px; padding-bottom: 80px; }
+.format-picker.shm-section { padding-top: 32px; padding-bottom: 80px; }
 .format-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
