@@ -829,3 +829,78 @@ main > section:has(> .shm-wave:last-child) { padding-bottom: 0; }
   .how-stage { grid-template-columns: 1fr; gap: 0; }
   .how-stage__phone-sticky { top: 60px; }
 }
+
+/* ────────────────────────────────────────
+   06 STANDOUT MOMENTS — 3 hero stat cards on marsh.
+   Ported from review.css:620-672 (+ 1044 breakpoint).
+   ──────────────────────────────────────── */
+.standout.shm-section { padding-top: 32px; padding-bottom: 80px; }
+.standout-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 22px;
+  margin-top: 40px;
+}
+.standout-card {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 28px 26px;
+  border-radius: var(--radius-xl);
+  border: 1.5px solid var(--color-hair);
+  background: var(--color-marshmallow);
+  position: relative;
+  overflow: hidden;
+}
+.standout-card--ember { background: var(--color-ember); color: var(--color-marshmallow); border-color: transparent; }
+.standout-card--cocoa { background: var(--color-cocoa-deep); color: var(--color-marshmallow); border-color: transparent; }
+.standout-card--honey { background: var(--color-honey); color: var(--color-cocoa-deep); border-color: transparent; }
+.standout-card__big {
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: 96px;
+  line-height: 0.92;
+  letter-spacing: -0.04em;
+  font-variation-settings: "opsz" 96;
+  margin-bottom: 4px;
+}
+.standout-card__metric {
+  font-size: 13px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  opacity: 0.78;
+  font-weight: 600;
+}
+.standout-card__quote {
+  margin: 16px 0 0;
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: 19px;
+  line-height: 1.3;
+  letter-spacing: -0.008em;
+  font-variation-settings: "opsz" 24;
+  flex: 1;
+}
+.standout-card__attr {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  margin-top: 14px;
+  padding-top: 14px;
+  border-top: 1px solid currentColor;
+  opacity: 0.85;
+}
+.standout-card__attr { border-top-color: rgba(255, 255, 255, 0.2); }
+.standout-card--honey .standout-card__attr { border-top-color: rgba(46, 26, 15, 0.16); }
+.standout-card--ember .standout-card__attr,
+.standout-card--cocoa .standout-card__attr { border-top-color: rgba(255, 251, 241, 0.2); }
+.standout-card__attr b {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 14px;
+  font-variation-settings: "opsz" 24;
+}
+.standout-card__attr span { font-size: 12px; opacity: 0.75; }
+@media (max-width: 1100px) {
+  .standout-grid { grid-template-columns: 1fr; }
+}
