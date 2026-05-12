@@ -31,8 +31,8 @@ export default function ShmoReviewPage() {
       <Hero />
       <BulletStrip />
       <Buybox />
+      <CrewStrip nextBg="marsh" />
       <HowItWorks />
-      <CrewStrip />
       <FormatPicker bg="graham" nextBg="marsh" />
       <VideoTestimonials bg="marsh" nextBg="marsh" />
       <StandoutMoments />

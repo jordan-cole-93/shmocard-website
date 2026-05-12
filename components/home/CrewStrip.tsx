@@ -1,14 +1,22 @@
 // components/home/CrewStrip.tsx
-// Server component. Inserted directly after Shmo Review spotlight.
+// Server component. Inserted directly after Shmo Review spotlight on the
+// homepage, and reused on /shmo-review. Accepts bg/nextBg overrides so
+// the rotation can be tuned per page; defaults match the homepage usage.
 // 6-up crew photo grid — fills slots from CREW data, falls back to placeholder.
 
 import "./home.css";
 import Section from "@/components/layout/Section";
+import type { SectionBg } from "@/components/layout/Section";
 import { CREW } from "./home-data";
 
-export default function CrewStrip() {
+type Props = {
+  bg?: SectionBg;
+  nextBg?: SectionBg;
+};
+
+export default function CrewStrip({ bg = "marsh", nextBg = "graham" }: Props = {}) {
   return (
-    <Section bg="marsh" nextBg="graham" ariaLabel="Crew strip — the people who use Shmo Review">
+    <Section bg={bg} nextBg={nextBg} ariaLabel="Crew strip — the people who use Shmo Review">
       <div className="crew-strip__head">
         <span className="crew-strip__hash">For the people on the floor</span>
         <h2 className="shm-h2">Card per <em>crew member</em>, not card per shop.</h2>
