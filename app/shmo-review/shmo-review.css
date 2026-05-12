@@ -904,3 +904,82 @@ main > section:has(> .shm-wave:last-child) { padding-bottom: 0; }
 @media (max-width: 1100px) {
   .standout-grid { grid-template-columns: 1fr; }
 }
+
+/* ────────────────────────────────────────
+   07 NUMBERS WALL — animated bar chart on marsh.
+   Bars reveal on IntersectionObserver intersection.
+   Ported from review.css:674-725. Per Jordan + DS rules the bar fill
+   is a flat --color-ember token rather than the reference's
+   honey→ember gradient.
+   ──────────────────────────────────────── */
+.numbers-wall.shm-section { padding-top: 32px; padding-bottom: 80px; }
+.numbers-list {
+  margin-top: 40px;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  max-width: 1000px;
+  margin-left: auto;
+  margin-right: auto;
+}
+.numbers-row {
+  display: grid;
+  grid-template-columns: minmax(0, 240px) minmax(0, 1fr) auto;
+  gap: 28px;
+  align-items: center;
+  padding: 18px 0;
+  border-top: 1px solid var(--color-hair);
+}
+.numbers-row:last-child { border-bottom: 1px solid var(--color-hair); }
+.numbers-row__shop {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+.numbers-row__name {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 18px;
+  line-height: 1.1;
+  letter-spacing: -0.012em;
+  color: var(--color-cocoa-deep);
+  font-variation-settings: "opsz" 96;
+}
+.numbers-row__owner {
+  font-size: 12px;
+  color: var(--color-ink-3);
+}
+.numbers-row__bar {
+  height: 14px;
+  background: rgba(46, 26, 15, 0.06);
+  border-radius: 999px;
+  overflow: hidden;
+}
+.numbers-row__bar-fill {
+  height: 100%;
+  background: var(--color-ember);
+  border-radius: 999px;
+  width: 0;
+  transition: width 1.2s var(--ease-out);
+}
+.numbers-row__inc {
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: 28px;
+  line-height: 1;
+  letter-spacing: -0.018em;
+  color: var(--color-ember);
+  font-variation-settings: "opsz" 96;
+  min-width: 86px;
+  text-align: right;
+}
+.numbers-foot {
+  margin-top: 28px;
+  text-align: center;
+  font-size: 12px;
+  color: var(--color-ink-3);
+}
+@media (max-width: 720px) {
+  .numbers-row { grid-template-columns: 1fr; gap: 8px; }
+  .numbers-row__inc { text-align: left; }
+}
