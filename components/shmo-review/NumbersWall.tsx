@@ -19,15 +19,17 @@ import { useEffect, useRef, useState } from "react";
 
 import Section from "@/components/layout/Section";
 
+// Deliberately non-monotonic order so the bars zig-zag between high
+// and low values instead of fading into a sorted ramp.
 const REVIEW_NUMBERS = [
-  { shop: "Garden City",      owner: "Thomas",    inc: "+86%", note: "Roofing co · Atlanta" },
-  { shop: "Buffalo Jewelry",  owner: "Joey",      inc: "+81%", note: "Pawn & loan · Buffalo" },
   { shop: "Axel's Pawn",      owner: "Carly",     inc: "+71%", note: "Pawn shop · Minneapolis" },
+  { shop: "Garden City",      owner: "Thomas",    inc: "+86%", note: "Roofing co · Atlanta" },
+  { shop: "Cashco",           owner: "Morris",    inc: "+47%", note: "Pawn & loan · Houston" },
+  { shop: "Buffalo Jewelry",  owner: "Joey",      inc: "+81%", note: "Pawn & loan · Buffalo" },
+  { shop: "Smyrna",           owner: "Jason",     inc: "+41%", note: "Auto detail · Smyrna" },
   { shop: "CC Pawn",          owner: "Claiborne", inc: "+71%", note: "Pawn shop · Mobile" },
   { shop: "Granters",         owner: "Vito",      inc: "+60%", note: "Auto repair · Phoenix" },
-  { shop: "Cashco",           owner: "Morris",    inc: "+47%", note: "Pawn & loan · Houston" },
   { shop: "The Pawn Shop",    owner: "Chase",     inc: "+43%", note: "Pawn shop · Tampa" },
-  { shop: "Smyrna",           owner: "Jason",     inc: "+41%", note: "Auto detail · Smyrna" },
 ];
 
 const BAR_MAX = 100;
