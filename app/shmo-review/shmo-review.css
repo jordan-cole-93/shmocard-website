@@ -457,11 +457,10 @@ main > section:has(> .shm-wave:last-child) { padding-bottom: 0; }
   display: grid;
   grid-template-columns: minmax(0, 0.85fr) minmax(0, 1fr);
   gap: 80px;
-  /* No align-items: stretch (the default) so the phone-col grows to
-     match the steps-col height. Sticky positioning is bounded by the
-     parent's height — if the phone-col is shorter than the steps-col,
-     the sticky phone scrolls away mid-section. Reference uses
-     `align-items: start` which broke sticky pinning in this render. */
+  /* Tall section gives the page room to scroll while both columns
+     stay pinned via sticky. Scroll progress drives the active step
+     index (and therefore the phone screen) — see Steps block below. */
+  min-height: 200vh;
 }
 .how-stage__phone-col { position: relative; }
 .how-stage__phone-sticky {
@@ -782,21 +781,27 @@ main > section:has(> .shm-wave:last-child) { padding-bottom: 0; }
   color: var(--color-marshmallow);
 }
 
-/* Steps */
+/* Steps — compact stacked layout, all 4 visible together on the right.
+   The steps column is sticky alongside the phone column, so as the
+   user scrolls through the 200vh-tall section both stay pinned in
+   view. The active step (and matching phone screen) advances via a
+   scroll-progress listener in HowItWorks.tsx. */
 .how-stage__steps {
   list-style: none;
-  padding: 0;
   margin: 0;
+  padding: 0;
   display: flex;
   flex-direction: column;
-  gap: 28vh;
-  padding: 28vh 0;
+  gap: 32px;
+  position: sticky;
+  top: 80px;
+  align-self: start;
 }
 .how-stage__step {
   display: flex;
   flex-direction: column;
-  gap: 12px;
-  opacity: 0.32;
+  gap: 10px;
+  opacity: 0.55;
   transition: opacity var(--motion-base) var(--ease-standard);
   max-width: 480px;
 }

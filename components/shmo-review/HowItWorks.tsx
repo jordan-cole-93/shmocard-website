@@ -6,11 +6,14 @@
 // + review.css:355-618 (+ 1041-1042 breakpoints) + REVIEW_HOW_STEPS
 // from review-data.jsx:56-82.
 //
-// Layout: two-column grid. Phone (left) stays sticky while the four
-// step <li>s scroll past on the right. IntersectionObserver swaps the
-// phone screen based on which step is centered in the viewport.
+// Layout: two-column grid. Both columns are sticky (phone on left,
+// step list on right) inside a 200vh-tall `.how-stage`. As the user
+// scrolls through the section, a scroll-progress listener computes
+// which of the 4 steps is active (and therefore which phone screen
+// to render). All 4 step <li>s are always visible on the right; the
+// active one gets full opacity while the others fade to 0.55.
 //
-// Client component (needs IntersectionObserver + useState).
+// Client component (needs scroll listener + useState).
 
 import { useEffect, useRef, useState } from "react";
 
@@ -147,22 +150,32 @@ function PhoneScreen({ which }: { which: Screen }) {
 
 export default function HowItWorks() {
   const [activeIdx, setActiveIdx] = useState(0);
-  const stepRefs = useRef<Array<HTMLLIElement | null>>([]);
+  const stageRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
-    const obs = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((e) => {
-          if (e.isIntersecting) {
-            const idx = parseInt((e.target as HTMLElement).dataset.idx ?? "0", 10);
-            setActiveIdx(idx);
-          }
-        });
-      },
-      { rootMargin: "-40% 0px -40% 0px", threshold: 0.01 },
-    );
-    stepRefs.current.forEach((r) => r && obs.observe(r));
-    return () => obs.disconnect();
+    const stage = stageRef.current;
+    if (!stage) return;
+    function update() {
+      if (!stage) return;
+      const rect = stage.getBoundingClientRect();
+      const vp = window.innerHeight;
+      // Scroll progress through the .how-stage section: 0 when the
+      // section's top hits the viewport top, 1 when its bottom hits
+      // the viewport bottom. Map that to 4 equal zones.
+      const total = rect.height - vp;
+      if (total <= 0) return;
+      const scrolled = Math.min(Math.max(-rect.top, 0), total);
+      const progress = scrolled / total;
+      const idx = Math.min(REVIEW_HOW_STEPS.length - 1, Math.floor(progress * REVIEW_HOW_STEPS.length));
+      setActiveIdx(idx);
+    }
+    update();
+    window.addEventListener("scroll", update, { passive: true });
+    window.addEventListener("resize", update);
+    return () => {
+      window.removeEventListener("scroll", update);
+      window.removeEventListener("resize", update);
+    };
   }, []);
 
   const active = REVIEW_HOW_STEPS[activeIdx];
@@ -176,7 +189,7 @@ export default function HowItWorks() {
         </h2>
       </div>
 
-      <div className="how-stage">
+      <div className="how-stage" ref={stageRef}>
         <div className="how-stage__phone-col">
           <div className="how-stage__phone-sticky">
             <div className="phone-frame">
@@ -200,10 +213,6 @@ export default function HowItWorks() {
           {REVIEW_HOW_STEPS.map((s, i) => (
             <li
               key={i}
-              ref={(el) => {
-                stepRefs.current[i] = el;
-              }}
-              data-idx={i}
               className={`how-stage__step${i === activeIdx ? " is-active" : ""}`}
             >
               <div className="how-stage__step-num">{s.n}</div>
