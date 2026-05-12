@@ -319,7 +319,7 @@ main > section:has(> .shm-wave:last-child) { padding-bottom: 0; }
    04 FORMAT PICKER — three format cards on marsh.
    Ported from review.css:199-284.
    ──────────────────────────────────────── */
-.format-picker.shm-section { padding-top: 32px; padding-bottom: 80px; }
+.format-picker.shm-section { padding-top: 32px; padding-bottom: 32px; }
 .format-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
@@ -451,7 +451,7 @@ main > section:has(> .shm-wave:last-child) { padding-bottom: 0; }
    05 HOW IT WORKS — sticky phone, scroll-driven.
    Ported from review.css:355-618.
    ──────────────────────────────────────── */
-.how-section.shm-section { padding-top: 80px; padding-bottom: 80px; }
+.how-section.shm-section { padding-top: 32px; padding-bottom: 80px; }
 .how-stage {
   margin-top: 40px;
   display: grid;
