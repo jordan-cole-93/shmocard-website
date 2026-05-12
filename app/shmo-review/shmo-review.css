@@ -457,7 +457,11 @@ main > section:has(> .shm-wave:last-child) { padding-bottom: 0; }
   display: grid;
   grid-template-columns: minmax(0, 0.85fr) minmax(0, 1fr);
   gap: 80px;
-  align-items: start;
+  /* No align-items: stretch (the default) so the phone-col grows to
+     match the steps-col height. Sticky positioning is bounded by the
+     parent's height — if the phone-col is shorter than the steps-col,
+     the sticky phone scrolls away mid-section. Reference uses
+     `align-items: start` which broke sticky pinning in this render. */
 }
 .how-stage__phone-col { position: relative; }
 .how-stage__phone-sticky {
