@@ -1,3 +1,4 @@
+// Unused on /shmo-review as of this commit — replaced by Faq. Keep for reference / future repurposing.
 // components/shmo-review/StandoutMoments.tsx — Shmo Review standout cards.
 // Phase 6. Ported 1:1 from
 // .claude/skills/shmocard-design-system/ui_kits/website/homepage-shmoreview/review-parts.jsx:295-323

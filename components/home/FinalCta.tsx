@@ -1,13 +1,21 @@
 // components/home/FinalCta.tsx
-// Server component. Single high-emphasis ember band — no nextBg
-// (footer follows directly).
+// Server component. Single high-emphasis ember band.
+// bg defaults to "ember"; nextBg defaults to undefined (no wave — footer
+// follows directly on the homepage). Pass nextBg="cocoa" from /shmo-review
+// so the cocoa wave renders between FinalCta and the footer.
 
 import "./home.css";
 import Section from "@/components/layout/Section";
+import type { SectionBg } from "@/components/layout/Section";
 
-export default function FinalCta() {
+type Props = {
+  bg?: SectionBg;
+  nextBg?: SectionBg;
+};
+
+export default function FinalCta({ bg = "ember", nextBg }: Props) {
   return (
-    <Section bg="ember" ariaLabel="Final call to action">
+    <Section bg={bg} nextBg={nextBg} ariaLabel="Final call to action">
       <div className="final-cta">
         <span className="shm-eyebrow">Ready to ship</span>
         <h2 className="shm-h2">Pick a card, pick a kit, or build <em>your own</em>.</h2>

@@ -184,7 +184,7 @@ export default function HowItWorks() {
   const active = REVIEW_HOW_STEPS[activeIdx];
 
   return (
-    <Section bg="marsh" nextBg="marsh" className="how-section" id="how" ariaLabel="How Shmo Review works">
+    <Section bg="marsh" nextBg="cream" className="how-section" id="how" ariaLabel="How Shmo Review works">
       <div className="shm-section-head">
         <span className="shm-eyebrow">How it works · 4 steps · ~12 seconds</span>
         <h2 className="shm-h2">

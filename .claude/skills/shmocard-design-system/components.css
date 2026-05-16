@@ -175,6 +175,12 @@
 .shm-badge--cream { background: var(--color-marshmallow); color: var(--color-cocoa-deep); }
 .shm-badge--soft  { background: transparent; color: var(--color-ink-3); border-color: var(--color-hair-2); }
 
+/* ---- Size modifier -----------------------------------------
+   --sm  · Dense pack-row / tight list context. Composes with any
+           colour variant: .shm-badge.shm-badge--sm.shm-badge--ember
+   ------------------------------------------------------------ */
+.shm-badge--sm { font-size: 10px; padding: 3px 8px; gap: 4px; }
+
 /* ---- Status badges -----------------------------------------
    Quiet, informational. Default badge surface (cream pill, hairline
    outline) with a small colored dot prefix. Use the colour modifier
@@ -413,6 +419,117 @@
   opacity: 0.85;
 }
 .shm-press-strip img { height: 28px; width: auto; opacity: 0.7; filter: grayscale(1); }
+
+/* ============================================================
+   Marquee — infinite horizontal proof strip
+   -------------------------------------------------------
+   Usage:
+     <div class="shm-marquee">
+       <div class="shm-marquee__track">
+         <!-- 8 items, then duplicate 8 with aria-hidden="true" -->
+         <div class="shm-marquee__item">…</div>
+       </div>
+     </div>
+
+   The track contains DOUBLE the items (16 total for 8 visible)
+   so the loop is seamless. Duplicates carry aria-hidden="true".
+
+   Appearance lives here. Layout of __item children (name, stat,
+   note) is page-level.
+   ============================================================ */
+.shm-marquee {
+  position: relative;
+  overflow: hidden;
+  /* fade edges to the current section bg using a mask */
+  -webkit-mask-image: linear-gradient(
+    to right,
+    transparent 0%,
+    var(--color-marshmallow) 8%,
+    var(--color-marshmallow) 92%,
+    transparent 100%
+  );
+  mask-image: linear-gradient(
+    to right,
+    transparent 0%,
+    var(--color-marshmallow) 8%,
+    var(--color-marshmallow) 92%,
+    transparent 100%
+  );
+}
+
+/* On dark-bg sections the mask color must match the section bg.
+   Apply .shm-marquee--on-cocoa inside a .shm-bg-cocoa section. */
+.shm-marquee--on-cocoa {
+  -webkit-mask-image: linear-gradient(
+    to right,
+    transparent 0%,
+    var(--color-cocoa-deep) 8%,
+    var(--color-cocoa-deep) 92%,
+    transparent 100%
+  );
+  mask-image: linear-gradient(
+    to right,
+    transparent 0%,
+    var(--color-cocoa-deep) 8%,
+    var(--color-cocoa-deep) 92%,
+    transparent 100%
+  );
+}
+
+.shm-marquee--on-graham {
+  -webkit-mask-image: linear-gradient(
+    to right,
+    transparent 0%,
+    var(--color-graham-soft) 8%,
+    var(--color-graham-soft) 92%,
+    transparent 100%
+  );
+  mask-image: linear-gradient(
+    to right,
+    transparent 0%,
+    var(--color-graham-soft) 8%,
+    var(--color-graham-soft) 92%,
+    transparent 100%
+  );
+}
+
+.shm-marquee__track {
+  display: flex;
+  gap: 16px;
+  width: max-content;
+  animation: shm-marquee-scroll 48s linear infinite;
+}
+
+/* Reverse direction variant — pair with a forward track for
+   stacked two-row layouts */
+.shm-marquee--reverse .shm-marquee__track {
+  animation-direction: reverse;
+}
+
+/* Single proof-pill item — appearance only.
+   Inner layout (name / stat / note) is page-level. */
+.shm-marquee__item {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 20px;
+  background: var(--color-marshmallow);
+  border: var(--outline-soft);
+  border-radius: var(--radius-lg);
+  min-width: 220px;
+  max-width: 300px;
+  white-space: nowrap;
+}
+
+@keyframes shm-marquee-scroll {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .shm-marquee__track { animation: none; }
+}
 
 /* ============================================================
    Sticky nav

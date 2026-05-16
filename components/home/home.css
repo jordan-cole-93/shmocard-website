@@ -535,6 +535,22 @@
   gap: 14px;
   margin-top: 28px;
 }
+.crew-grid--3 {
+  grid-template-columns: repeat(3, 1fr);
+  max-width: 640px;
+  margin-left: auto;
+  margin-right: auto;
+}
+/* Full-width 3×2 layout — used on /shmo-review so tiles read larger than
+   the 6-across homepage grid. No max-width constraint so tiles fill the
+   container. Mobile drops to 2 columns matching the base .crew-grid
+   breakpoint convention. */
+.crew-grid--3col {
+  grid-template-columns: repeat(3, 1fr);
+}
+@media (max-width: 768px) {
+  .crew-grid--3col { grid-template-columns: repeat(2, 1fr); }
+}
 .crew-tile {
   position: relative;
   aspect-ratio: 1 / 1;

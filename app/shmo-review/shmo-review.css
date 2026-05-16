@@ -10,6 +10,15 @@ main .shm-wave { height: 56px; }
 main .shm-wave--lg { height: 88px; }
 main .shm-wave--xl { height: 120px; }
 
+/* ProofMarquee symmetry — the Buybox→ProofMarquee top wave (shm-wave--graham)
+   must match the ProofMarquee→CrewStrip bottom wave (shm-wave--marsh + --lg = 88px).
+   Buybox doesn't expose a waveSize prop so we target the specific wave color. */
+main .shm-wave--graham { height: 88px; }
+
+/* FAQ→FinalCta transition (cream→ember). High-contrast pair requires tall wave. */
+main .shm-wave--ember { height: 88px; }
+
+
 /* Every section's trailing wave hugs the next section. Kills any
    padding/margin gap between wave and next bg. Defensive against both
    sibling-wave (this repo's <Section> convention) and child-wave layouts. */
@@ -181,7 +190,7 @@ main > section:has(> .shm-wave:last-child) { padding-bottom: 0; }
    ──────────────────────────────────────── */
 .review-buybox.shm-section {
   padding-top: 90px;
-  padding-bottom: 0;
+  padding-bottom: var(--section-py-d-lg);
 }
 .review-buybox > .shm-container {
   padding-bottom: 32px;
@@ -233,6 +242,10 @@ main > section:has(> .shm-wave:last-child) { padding-bottom: 0; }
 .gal__thumb:hover { border-color: var(--color-cocoa-deep); }
 .gal__thumb.is-active { border: 2.5px solid var(--color-ember); }
 .gal__thumb img { width: 100%; height: 100%; object-fit: cover; display: block; }
+
+/* Pack rows — equal height. All 4 rows (1/2/5/10 card) lock to the
+   tallest natural row so the selector grid stays visually aligned. */
+.review-buybox .shm-pack-row { min-height: 88px; }
 
 /* Buybox column */
 .bb { display: flex; flex-direction: column; gap: 18px; }
@@ -324,27 +337,15 @@ main > section:has(> .shm-wave:last-child) { padding-bottom: 0; }
 .format-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 18px;
+  gap: 24px;
   margin-top: 40px;
+  max-width: 900px;
+  margin-inline: auto;
 }
 /* Make the whole product card a clickable link without underlines. */
 .format-grid .shm-product {
   text-decoration: none;
   color: inherit;
-}
-/* Extra body rows .shm-product__body doesn't ship out of the box —
-   a longer blurb under the sub-line and a price meta on the right
-   of the price row. Both stay layout-light (no appearance overrides
-   on the primitive). */
-.format-blurb {
-  margin: 6px 0 0;
-  font-size: 14px;
-  line-height: 1.5;
-  color: var(--color-ink-2);
-}
-.format-price-meta {
-  font-size: 11px;
-  color: var(--color-ink-3);
 }
 @media (max-width: 1100px) {
   .format-grid { grid-template-columns: repeat(2, 1fr); }
@@ -882,4 +883,86 @@ main > section:has(> .shm-wave:last-child) { padding-bottom: 0; }
 @media (max-width: 720px) {
   .numbers-row { grid-template-columns: 1fr; gap: 8px; }
   .numbers-row__inc { text-align: left; }
+}
+
+/* ────────────────────────────────────────
+   09 FAQ — soft hairline accordion on marsh.
+   Ported from review.css:797-800.
+   ──────────────────────────────────────── */
+.review-faq.shm-section { padding-top: var(--section-py-d); padding-bottom: 80px; }
+.review-faq__wrap { max-width: 820px; margin: 40px auto 0; }
+
+/* ────────────────────────────────────────
+   08 PROOF MARQUEE — infinite horizontal proof strip
+   Replaces NumbersWall (Phase 7 → Phase 8).
+   .shm-marquee primitive handles animation + mask.
+   This block owns inner-item layout only.
+   ──────────────────────────────────────── */
+.proof-marquee__head {
+  margin-bottom: 40px;
+  position: relative;
+}
+
+/* Mascot — celebrating pose, top-right of the head block.
+   Absolute so it never pushes text or overlaps the marquee track. */
+.proof-marquee__mascot {
+  position: absolute;
+  top: -8px;
+  right: 0;
+  pointer-events: none;
+}
+
+@media (max-width: 768px) {
+  .proof-marquee__mascot { display: none; }
+}
+
+/* Inner layout for each .shm-marquee__item */
+.proof-marquee__item {
+  /* override min-width from primitive for this use case */
+  min-width: 240px;
+}
+
+.proof-marquee__text {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  flex: 1 1 auto;
+  min-width: 0;
+}
+
+.proof-marquee__shop {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 15px;
+  line-height: 1.1;
+  letter-spacing: -0.01em;
+  color: var(--color-cocoa-deep);
+  font-variation-settings: "opsz" 32;
+  white-space: nowrap;
+}
+
+.proof-marquee__note {
+  font-family: var(--font-sans);
+  font-size: 12px;
+  color: var(--color-ink-3);
+  white-space: nowrap;
+}
+
+.proof-marquee__stat {
+  margin-left: auto;
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: 22px;
+  line-height: 1;
+  letter-spacing: -0.018em;
+  color: var(--color-ember);
+  font-variation-settings: "opsz" 96;
+  white-space: nowrap;
+}
+
+.proof-marquee__foot {
+  margin-top: 28px;
+  text-align: center;
+  font-size: 12px;
+  color: var(--color-ink-3);
 }

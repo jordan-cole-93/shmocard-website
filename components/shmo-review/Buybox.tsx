@@ -22,7 +22,7 @@ import { useState } from "react";
 
 import { useCartStore } from "@/components/cart/store";
 import type { CartLine } from "@/components/cart/types";
-import Section from "@/components/layout/Section";
+import Section, { type SectionBg } from "@/components/layout/Section";
 
 const STARS = [0, 1, 2, 3, 4];
 
@@ -65,7 +65,7 @@ const FAQ_ROWS = [
   { q: "Product details", a: "CR-80 / 85.6×54mm / 0.76mm PVC. NTAG 215 NFC chip. QR fallback printed on back. Hand-printed in Minneapolis." },
 ];
 
-export default function Buybox() {
+export default function Buybox({ nextBg = "marsh" }: { nextBg?: SectionBg }) {
   const [activeIdx, setActiveIdx] = useState(0);
   const [packIdx, setPackIdx] = useState(3); // 10-pack default (most popular)
   const [qty, setQty] = useState(1);
@@ -101,7 +101,7 @@ export default function Buybox() {
   }
 
   return (
-    <Section bg="marsh" nextBg="marsh" className="review-buybox" id="buybox" ariaLabel="Buy the CR-80 card">
+    <Section bg="marsh" nextBg={nextBg} className="review-buybox" id="buybox" ariaLabel="Buy the CR-80 card">
       <div className="shm-section-head shm-section-head--start">
         <span className="shm-eyebrow">★ Best seller · CR-80</span>
         <h2 className="shm-h2">
@@ -169,7 +169,7 @@ export default function Buybox() {
                 data-selected={packIdx === i}
               >
                 {p.pop && (
-                  <span className="shm-pack-row__pop shm-badge shm-badge--ember">Most popular</span>
+                  <span className="shm-pack-row__pop shm-badge shm-badge--ember shm-badge--sm">Most popular</span>
                 )}
                 <span className="shm-pack-row__thumb">
                   {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -179,7 +179,7 @@ export default function Buybox() {
                   <span className="shm-pack-row__name">
                     {p.qty} Card{p.qty > 1 ? "s" : ""}
                     {p.save && (
-                      <span className="shm-badge shm-badge--honey" style={{ marginLeft: 8 }}>
+                      <span className="shm-badge shm-badge--honey shm-badge--sm" style={{ marginLeft: 8 }}>
                         SAVE {p.save}
                       </span>
                     )}

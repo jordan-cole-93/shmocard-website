@@ -1,83 +1,101 @@
 // components/shmo-review/FormatPicker.tsx — Shmo Review format picker.
-// Phase 4. Composes the .shm-product primitive from the design system
-// (components.css:1011-1109). Page-level layout only owns .format-grid
-// + a tiny .format-blurb / .format-price-meta helper for the extra body
-// rows that .shm-product__body doesn't otherwise provide.
+// Composes .shm-product primitive (components.css:1011-1109).
+// Page-level layout owns .format-grid only.
 //
-// Reference data from REVIEW_FORMATS (review-data.jsx:10-47).
+// Product data (name, price, image, handle, availableForSale) fetched
+// from Shopify Storefront API via getProductByHandle. Marketing-copy
+// fields (sub, blurb, badge) remain as page-level framing copy.
 //
-// PLACEHOLDER PRODUCT DATA. Pricing + names hardcoded with TODO(shopify)
-// markers — swapped to Storefront in a future phase.
+// Handles (from context/general/backend.md):
+//   CR-80  → google-reviews-nfc-tap-card-cr80
+//   L-Sign → google-review-nfc-tap-card-l-sign
+//   Square → google-review-plaque
 //
 // Server component.
 
 import Section from "@/components/layout/Section";
 import type { SectionBg } from "@/components/layout/Section";
+import { getProductByHandle } from "@/lib/shopify/queries";
+import type { ShopifyProduct } from "@/lib/shopify/types";
 
-// TODO(shopify): pricing comes from each format's Shopify product.
-const REVIEW_FORMATS: Array<{
-  id: string;
-  name: string;
-  sub: string;
-  blurb: string;
-  price: string;
-  priceMeta: string;
-  art: string;
-  artAlt: string;
-  badge: string | null;
-  badgeTone: "ember" | "honey" | "soft";
-  href: string;
-}> = [
+// Framing copy — page-level merchandising decisions, not product attributes.
+const FORMAT_COPY: Record<
+  string,
   {
-    id: "cr80",
-    name: "CR-80 Card",
+    sub: string;
+    blurb: string;
+    badge: string | null;
+    badgeTone: "ember" | "honey" | "soft";
+  }
+> = {
+  "google-reviews-nfc-tap-card-cr80": {
     sub: "Wallet-size · PVC · best seller",
     blurb:
       "The countertop tap that turns happy crews into five-star reviews. Hand it over after every transaction.",
-    price: "$29.99",
-    priceMeta: "Bulk: $22 / card",
-    art: "/products/cr80/transparent/magnific_2884306972.png",
-    artAlt: "Shmo Review CR-80 card",
     badge: "Best seller",
     badgeTone: "ember",
-    href: "#buybox",
   },
-  {
-    id: "lsign",
-    name: "L-Sign",
+  "google-review-nfc-tap-card-l-sign": {
     sub: "Counter standee · 4×6 acrylic",
     blurb:
       "A clear acrylic standee for the counter. Tap, scan, done. Stays put when the crew is busy.",
-    price: "$39.99",
-    priceMeta: "Bulk: $32 / sign",
-    art: "/products/l-sign/transparent/magnific_2884477047.png",
-    artAlt: "Shmo Review L-Sign counter standee",
     badge: null,
     badgeTone: "soft",
-    href: "#",
   },
-  {
-    id: "square",
-    name: "Square Card",
+  "google-review-plaque": {
     sub: 'Disc · 2.25" · sticks anywhere',
     blurb:
       "An adhesive-backed disc. Sticks to laptops, tablets, registers, dashboards. Travels with the crew.",
-    price: "$24.99",
-    priceMeta: "Bulk: $18 / disc",
-    art: "/products/plate/transparent/magnific_2885042834.png",
-    artAlt: "Shmo Review Square Card disc",
     badge: "New",
     badgeTone: "honey",
-    href: "#",
   },
-];
+};
+
+// Fallback images used only when Shopify returns no image for a product.
+// TODO(shopify): remove once all products have images in Shopify Admin.
+const FALLBACK_IMAGES: Record<string, { src: string; alt: string }> = {
+  "google-reviews-nfc-tap-card-cr80": {
+    src: "/products/cr80/transparent/magnific_2884306972.png",
+    alt: "Shmo Review CR-80 card",
+  },
+  "google-review-nfc-tap-card-l-sign": {
+    src: "/products/l-sign/transparent/magnific_2884477047.png",
+    alt: "Shmo Review L-Sign counter standee",
+  },
+  "google-review-plaque": {
+    src: "/products/plate/transparent/magnific_2885042834.png",
+    alt: "Shmo Review Square Card disc",
+  },
+};
+
+const HANDLES = [
+  "google-reviews-nfc-tap-card-cr80",
+  "google-review-nfc-tap-card-l-sign",
+  "google-review-plaque",
+] as const;
+
+function formatPrice(amount: string, currencyCode: string): string {
+  const num = parseFloat(amount);
+  if (isNaN(num)) return amount;
+  return new Intl.NumberFormat("en-US", {
+    style: "currency",
+    currency: currencyCode,
+    minimumFractionDigits: 2,
+    maximumFractionDigits: 2,
+  }).format(num);
+}
 
 type Props = {
   bg?: SectionBg;
   nextBg?: SectionBg;
 };
 
-export default function FormatPicker({ bg = "marsh", nextBg = "marsh" }: Props = {}) {
+export default async function FormatPicker({ bg = "cream", nextBg = "marsh" }: Props = {}) {
+  // Fetch all three products in parallel. Null = product not found in Shopify.
+  const products = await Promise.all(
+    HANDLES.map((h) => getProductByHandle(h)),
+  );
+
   return (
     <Section bg={bg} nextBg={nextBg} className="format-picker" id="formats" ariaLabel="Pick a Shmo Review format">
       <div className="shm-section-head">
@@ -91,30 +109,73 @@ export default function FormatPicker({ bg = "marsh", nextBg = "marsh" }: Props =
         </p>
       </div>
       <div className="format-grid">
-        {REVIEW_FORMATS.map((f) => (
-          <a className="shm-product" href={f.href} key={f.id}>
-            <div className="shm-product__media">
-              {f.badge && (
-                <span
-                  className={`shm-product__tag shm-badge shm-badge--${f.badgeTone}`}
-                >
-                  {f.badge}
-                </span>
-              )}
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img src={f.art} alt={f.artAlt} />
-            </div>
-            <div className="shm-product__body">
-              <h3 className="shm-product__name">{f.name}</h3>
-              <p className="shm-product__sub">{f.sub}</p>
-              <p className="format-blurb">{f.blurb}</p>
-              <div className="shm-product__row">
-                <span className="shm-product__price">{f.price}</span>
-                <span className="format-price-meta">{f.priceMeta}</span>
+        {HANDLES.map((handle, i) => {
+          const product: ShopifyProduct | null = products[i];
+          const copy = FORMAT_COPY[handle];
+          const fallback = FALLBACK_IMAGES[handle];
+
+          // Product not found in Shopify — render disabled placeholder card.
+          if (!product) {
+            return (
+              <article className="shm-product" key={handle}>
+                <a className="shm-product__media" href="#formats">
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img src={fallback.src} alt={fallback.alt} />
+                </a>
+                <div className="shm-product__body">
+                  <h3 className="shm-product__name">{fallback.alt}</h3>
+                  <p className="shm-product__sub">{copy.sub}</p>
+                  <div className="shm-product__row">
+                    <span className="shm-product__price">—</span>
+                    <button className="shm-btn shm-btn--ghost shm-btn--sm" disabled type="button">Coming soon</button>
+                  </div>
+                </div>
+              </article>
+            );
+          }
+
+          const imageUrl =
+            product.featuredImage?.url ??
+            product.images.nodes[0]?.url ??
+            fallback.src;
+          const imageAlt =
+            product.featuredImage?.altText ??
+            product.images.nodes[0]?.altText ??
+            fallback.alt;
+          const price = formatPrice(
+            product.priceRange.minVariantPrice.amount,
+            product.priceRange.minVariantPrice.currencyCode,
+          );
+          const href = `/products/${product.handle}`;
+
+          return (
+            <article className="shm-product" key={product.handle}>
+              <a className="shm-product__media" href={href}>
+                {copy.badge && (
+                  <span className="shm-product__tag">
+                    <span className={`shm-badge shm-badge--${copy.badgeTone}`}>
+                      {copy.badge}
+                    </span>
+                  </span>
+                )}
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img src={imageUrl} alt={imageAlt ?? ""} />
+              </a>
+              <div className="shm-product__body">
+                <h3 className="shm-product__name">{product.title}</h3>
+                <p className="shm-product__sub">{copy.sub}</p>
+                <div className="shm-product__row">
+                  <span className="shm-product__price">{price}</span>
+                  {product.availableForSale ? (
+                    <a className="shm-btn shm-btn--primary shm-btn--sm" href={href}>View product</a>
+                  ) : (
+                    <button className="shm-btn shm-btn--ghost shm-btn--sm" disabled type="button">Coming soon</button>
+                  )}
+                </div>
               </div>
-            </div>
-          </a>
-        ))}
+            </article>
+          );
+        })}
       </div>
     </Section>
   );

@@ -15,7 +15,7 @@
 import type { ReactNode } from "react";
 import { Container } from "./Container";
 
-export type SectionBg = "marsh" | "graham" | "ember" | "cocoa";
+export type SectionBg = "marsh" | "graham" | "ember" | "cocoa" | "cream";
 export type SectionWaveSize = "sm" | "md" | "lg" | "xl";
 
 export type SectionProps = {

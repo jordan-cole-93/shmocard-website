@@ -144,6 +144,22 @@ Pair `--xl` waves with `padding-bottom: calc(var(--section-py-d) + var(--wave-he
 
 ---
 
+## Marquee — `.shm-marquee`
+
+Infinite horizontal proof strip. Items scroll left continuously. Track contains double the items (aria-hidden duplicates) for seamless loop.
+
+- `.shm-marquee` — outer container with `overflow: hidden` + edge-fade mask
+- `.shm-marquee__track` — flex row, `animation: shm-marquee-scroll 48s linear infinite`
+- `.shm-marquee__item` — single proof pill: marshmallow bg, soft outline, `--radius-lg`
+- `.shm-marquee--reverse` — reverses scroll direction (for stacked two-row layouts)
+- `.shm-marquee--on-cocoa` / `.shm-marquee--on-graham` — mask color variants for dark/tinted section bgs
+
+`@media (prefers-reduced-motion)` — animation stops; items remain visible in static flex row.
+
+**Inner layout** (name, stat, note columns inside `__item`) is page-level, not this primitive.
+
+---
+
 ## Buttons — `.shm-btn`
 
 Pill, hard outline, chunky offset shadow. Default fill is ember.
@@ -197,6 +213,9 @@ Pill, soft outline, no shadow.
 - `.shm-badge--honey` — Marketing tag (Bestseller, New)
 - `.shm-badge--cocoa` — Value prop on light bg, contrast on cocoa surfaces
 - `.shm-badge--cream` — On dark (cocoa/ember) surfaces only — default disappears there
+
+### Size modifier
+- `.shm-badge--sm` — Dense pack-row / tight list context. 10px font, 3px 8px padding. Composes with any colour variant: `.shm-badge.shm-badge--sm.shm-badge--ember`
 
 ### Status variants — `.shm-badge--status`
 Add a colored dot prefix.

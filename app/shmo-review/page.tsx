@@ -16,8 +16,9 @@ import FormatPicker from "@/components/shmo-review/FormatPicker";
 import HowItWorks from "@/components/shmo-review/HowItWorks";
 import CrewStrip from "@/components/home/CrewStrip";
 import VideoTestimonials from "@/components/home/VideoTestimonials";
-import StandoutMoments from "@/components/shmo-review/StandoutMoments";
-import NumbersWall from "@/components/shmo-review/NumbersWall";
+import Faq from "@/components/shmo-review/Faq";
+import FinalCta from "@/components/home/FinalCta";
+import ProofMarquee from "@/components/shmo-review/ProofMarquee";
 
 export const metadata = {
   title: "Shmo Review — NFC tap cards built for crews",
@@ -30,13 +31,14 @@ export default function ShmoReviewPage() {
     <main>
       <Hero />
       <BulletStrip />
-      <Buybox />
+      <Buybox nextBg="graham" />
+      <ProofMarquee />
       <CrewStrip nextBg="marsh" />
       <HowItWorks />
-      <FormatPicker bg="graham" nextBg="marsh" />
-      <VideoTestimonials bg="marsh" nextBg="marsh" />
-      <StandoutMoments />
-      <NumbersWall />
+      <FormatPicker bg="cream" nextBg="marsh" />
+      <VideoTestimonials bg="marsh" nextBg="cream" />
+      <Faq />
+      <FinalCta bg="ember" />
     </main>
   );
 }

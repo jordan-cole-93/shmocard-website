@@ -19,14 +19,17 @@ import { AnimatePresence, motion } from "framer-motion";
 import "./cart-drawer.css";
 
 import CartCheckoutButton from "./CartCheckoutButton";
+import CartDiscountForm from "./CartDiscountForm";
 import CartEmpty from "./CartEmpty";
-import CartFreeShipBand from "./CartFreeShipBand";
 import CartHeader from "./CartHeader";
 import CartLine from "./CartLine";
+import CartMilestones from "./CartMilestones";
 import CartPaymentsStrip from "./CartPaymentsStrip";
+import CartReminder from "./CartReminder";
 import CartScrim from "./CartScrim";
 import CartSummary from "./CartSummary";
 import CartTrustStrip from "./CartTrustStrip";
+import CartUpsell from "./CartUpsell";
 import { selectSubtotal, useCartStore } from "./store";
 import { useCartHydration } from "./useCartHydration";
 
@@ -105,13 +108,16 @@ export default function CartDrawer() {
 
             {hasLines ? (
               <>
-                <CartFreeShipBand subtotal={subtotal} />
+                <CartReminder />
+                <CartMilestones subtotal={subtotal} />
                 <div className="shm-cart__body">
                   {lines.map((line) => (
                     <CartLine key={line.id} line={line} />
                   ))}
+                  <CartUpsell />
                 </div>
                 <footer className="shm-cart__foot">
+                  <CartDiscountForm />
                   <CartSummary subtotal={subtotal} />
                   <CartCheckoutButton
                     checkoutUrl={checkoutUrl}

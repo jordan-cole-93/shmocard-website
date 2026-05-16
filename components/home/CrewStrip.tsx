@@ -12,9 +12,16 @@ import { CREW } from "./home-data";
 type Props = {
   bg?: SectionBg;
   nextBg?: SectionBg;
+  tiles?: number;
+  columns?: 3 | 6;
 };
 
-export default function CrewStrip({ bg = "marsh", nextBg = "graham" }: Props = {}) {
+export default function CrewStrip({ bg = "marsh", nextBg = "graham", tiles = 6, columns = 6 }: Props = {}) {
+  const visibleCrew = CREW.slice(0, tiles);
+  const gridClass =
+    columns === 3 ? "crew-grid crew-grid--3col" :
+    tiles <= 3    ? "crew-grid crew-grid--3" :
+                    "crew-grid";
   return (
     <Section bg={bg} nextBg={nextBg} ariaLabel="Crew strip — the people who use Shmo Review">
       <div className="crew-strip__head">
@@ -25,8 +32,8 @@ export default function CrewStrip({ bg = "marsh", nextBg = "graham" }: Props = {
           — <b>not on the counter</b>. That&apos;s where the math comes from.
         </p>
       </div>
-      <div className="crew-grid">
-        {CREW.map((c, i) =>
+      <div className={gridClass}>
+        {visibleCrew.map((c, i) =>
           c.photo ? (
             <div key={i} className="crew-tile crew-tile--photo">
               <img

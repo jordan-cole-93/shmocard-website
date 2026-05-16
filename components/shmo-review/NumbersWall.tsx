@@ -1,6 +1,9 @@
 "use client";
 
 // components/shmo-review/NumbersWall.tsx — Shmo Review numbers wall.
+// UNUSED as of Phase 8 (2026-05-13) — replaced by ProofMarquee.tsx.
+// File retained on disk for reference. Do not render from page.tsx.
+//
 // Phase 7. Ported 1:1 from
 // .claude/skills/shmocard-design-system/ui_kits/website/homepage-shmoreview/review-parts.jsx:328-381
 // + review.css:674-725 + REVIEW_NUMBERS data from review-data.jsx:84-94.

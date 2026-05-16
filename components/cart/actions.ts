@@ -21,13 +21,17 @@ import {
   CART_LINES_REMOVE_MUTATION,
   CART_LINES_UPDATE_MUTATION,
 } from "@/lib/shopify/mutations";
-import { CART_QUERY } from "@/lib/shopify/queries";
+import {
+  CART_QUERY,
+  PRODUCT_BY_HANDLE_QUERY,
+} from "@/lib/shopify/queries";
 import type {
   CartCreatePayload,
   CartLinesAddPayload,
   CartLinesRemovePayload,
   CartLinesUpdatePayload,
   ShopifyCart,
+  ShopifyProduct,
   ShopifyUserError,
 } from "@/lib/shopify/types";
 
@@ -308,6 +312,32 @@ export async function updateCartLine(
   const cart = data.cartLinesUpdate.cart;
   if (!cart) throw new Error("cartLinesUpdate returned null cart");
   return cart;
+}
+
+// ---------- Upsell ----------
+
+const UPSELL_HANDLES = [
+  "google-reviews-nfc-tap-card-cr80",
+  "google-review-nfc-tap-card-l-sign",
+  "google-review-plaque",
+] as const;
+
+/**
+ * Fetches the 3 upsell products from Shopify in parallel.
+ * Returns only products that exist (null handles are silently filtered).
+ * Called as a Server Action from CartUpsell on first mount.
+ */
+export async function getUpsellProducts(): Promise<ShopifyProduct[]> {
+  const results = await Promise.all(
+    UPSELL_HANDLES.map((handle) =>
+      shopifyFetch<{ product: ShopifyProduct | null }>({
+        query: PRODUCT_BY_HANDLE_QUERY,
+        variables: { handle },
+        tags: ["product", `product:${handle}`],
+      }).then(({ data }) => data.product),
+    ),
+  );
+  return results.filter((p): p is ShopifyProduct => p !== null);
 }
 
 /**
