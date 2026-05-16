@@ -1,22 +1,39 @@
 # tools.md — Tool Stack Reference
 
-What's wired into this repo for Claude Code, and how each piece is used. Skills auto-trigger by topic; commands are manual; hooks fire on lifecycle events; MCPs expose external systems as tools.
+What's wired into this repo for Codex and Claude-era compatibility, and how each piece is used. Codex is the active working environment for this project. The `.claude/` folder remains as a legacy/reference mirror for rules, skills, and source material while the migration settles.
 
 ---
+
+## Active Codex setup
+
+| Tool category | Config location |
+|---|---|
+| Project instructions | `AGENTS.md` |
+| Codex agents | `.codex/agents/` |
+| Codex hooks | `.codex/hooks.json` + `.codex/hooks/` |
+| Repo-local Codex skills | `.agents/skills/` |
+| Design-system runtime source | `.agents/skills/shmocard-design-system/` |
+| Legacy Claude mirror / reference | `.claude/` |
+
+The active Codex agents are:
+
+- `design-system-builder` — mandatory for UI `.tsx` / `.css` work in `app/` or `components/`.
+- `design-system-auditor` — read-only design-system compliance check.
+- `shopify-data-checker` — scans product/cart/checkout diffs for hardcoded Shopify data.
+- `live-store-guard` — defensive check before Shopify-touching commits.
 
 ## Auto-trigger skills (used in this repo)
 
 | Skill | When it fires | What it does |
 |---|---|---|
-| `frontend-design` (Anthropic plugin) | Any UI / visual / design / component / layout / page work | Improves visual output, blocks generic AI design tells. **Hard rule:** load before any UI prompt. |
+| `Shmocard` / `shmocard-design-system` | Any UI / visual / design / component / layout / page work | Loads the Shmocard primitive system. **Hard rule:** use before any UI prompt. |
 | `gsd-progress` | Resuming work or starting a non-trivial multi-step task | Restores `STATE.md` context and routes to the right GSD command. |
 | `gsd-plan-phase` | Non-trivial multi-step task in this repo | Generates a `PLAN.md` with subagent verification before code changes. |
 | `gsd-quick` | Multi-step task with light scope | Atomic commits + state tracking, skips heavier subagents. |
 | `gsd-fast` | Trivial 1–3 file fix | Inline, no subagents, no planning overhead. |
-| `claude-mem` | Every session | Auto-captures decisions, edits, bugfixes by the plugin. |
-| `context-mode` | Any tool call producing >20 lines of output | Routes large outputs through a sandbox; only summary enters context. Stats: `/context-mode:ctx-stats`. |
+| `context-mode` | Any tool call producing large output | Routes large outputs through a sandbox when available. |
 | `shopify-data-discipline` | Prompts mentioning product data, prices, SKUs, cart, checkout | Loads the "data lives in Shopify, presentation lives in code" rule. |
-| `vault-sync` | "Save this to my vault" / "capture this" / "add to Obsidian" | Writes to Jordan's vault under `Jordan's Brain/` with `(AICHECK)` prefix. |
+| Vault conventions | Reading/writing Jordan's Brain | Read freely when needed; write only through the project-approved vault workflow. |
 
 ## Manual commands (most-used in this repo)
 
@@ -37,11 +54,14 @@ The full GSD command surface is much wider — see `~/.claude/commands/`. Above 
 
 ## Hooks
 
-Hooks live at `.claude/hooks/` and are wired in `.claude/settings.json`. Current state after the design wipe:
+Codex hooks live in `.codex/hooks/` and are wired by `.codex/hooks.json`.
 
-- The `inject-design-rules.sh` and `check-placeholder-usage.sh` hooks were **disabled and removed** during the wipe — they referenced the deleted `DESIGN.md` / `PATTERNS.md`. They will be reinstated (or replaced) when the new design system lands.
-- The caveman + rule-surfacing user-prompt-submit hooks remain active (these enforce caveman comms mode and the "Following:" output line).
-- Live-store-protection pre-tool-use hook remains active for Shopify-related Bash commands and `.env*` edits.
+- PreToolUse blocks `.env*` edits unless Jordan explicitly approves.
+- PostToolUse reminds agents to capture screenshots after `.tsx` / `.css` edits.
+- UserPromptSubmit surfaces project rules.
+- Stop sweeps stray screenshots into `pictures/screenshots/` and runs a typecheck hook.
+
+Claude-era hooks/settings are no longer the active source of truth for Codex work.
 
 ## MCP servers
 
@@ -55,16 +75,6 @@ Configured in `.mcp.json` and via plugin marketplace:
 | shopify-plugin | Storefront API, Admin API, Hydrogen, Liquid skill bundle |
 
 Other MCPs available at the user level (Notion, GitHub, Vercel, Stripe, Gmail, Apify, etc.) are not used by this project's day-to-day workflow but are accessible if a task needs them.
-
-## Where each tool category is configured
-
-| Tool category | Config location |
-|---|---|
-| Skills | `~/.claude/skills/` (user) and `.claude/skills/` (repo) |
-| Commands | `~/.claude/commands/` (user) and `.claude/commands/` (repo) |
-| Hooks | `.claude/hooks/` + `.claude/settings.json` |
-| MCPs | `.mcp.json` + plugin marketplace |
-| Permissions | `.claude/settings.json` (committed) + `.claude/settings.local.json` (gitignored) |
 
 ## When to extend this list
 

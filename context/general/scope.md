@@ -1,6 +1,6 @@
 # scope.md — Project State & Roadmap
 
-**Last updated:** 2026-05-11
+**Last updated:** 2026-05-16
 
 Brand website for Shmocard at `shmocard.com`. Retail front door, headless Shopify + Next.js. Live store at `shop.shmocard.com` is untouched and stays untouched.
 
@@ -8,12 +8,14 @@ Brand website for Shmocard at `shmocard.com`. Retail front door, headless Shopif
 
 ## Where we are right now
 
-Homepage is built and through a Phase 4-A mobile pass. `/shmo-review` was rebuilt on design-system primitives (commit `44cb1c4`), then **fully deleted on 2026-05-11** ahead of a from-scratch rebuild. Cart smoke-test route exists.
+Homepage is built and through a Phase 4-A mobile pass. `/shmo-review` exists again and is mid-reconciliation after the Codex setup/migration pass. The page currently renders the main single-page review flow, but the working tree contains uncommitted page, cart, design-system, Codex setup, and screenshot changes that need to be sorted before more feature work.
 
 What exists in the codebase:
 - `app/page.tsx` — homepage (Hero, sub-brand spotlights for Biz/Link/Reputation, FAQ, FinalCta) — desktop + mobile passes complete
 - `app/cart-smoke/page.tsx` — Shopify cart wiring smoke test
 - `app/layout.tsx`, `app/globals.css` — base shell
+- `app/shmo-review/page.tsx` — active single-page Shmo Review route
+- `components/shmo-review/` — active review page sections including Hero, BulletStrip, Buybox, FormatPicker, HowItWorks, ProofMarquee, Faq, and legacy/recent proof sections
 - `components/` — Nav (with mobile hamburger), Footer, Section primitive, home page components, cart components, modals/WaitlistModal, layout primitives
 - `lib/` — Shopify Storefront helpers, cart utilities, waitlist
 - `.claude/skills/shmocard-design-system/` — operator's manual, primitives, reference pages, fonts
@@ -21,8 +23,6 @@ What exists in the codebase:
 - `pictures/screenshots/mobile-audit-2026-05-09/` — 25 mobile verification screenshots
 
 What does **not** exist:
-- **`/shmo-review` route** — deleted 2026-05-11, scheduled for from-scratch rebuild
-- **`components/shmo-review/`** — deleted 2026-05-11
 - PDP sub-routes (`/shmo-review/cr-80`, `/shmo-review/l-sign`, `/shmo-review/square-card`) — **abandoned in favor of single-page-with-anchors architecture** (decision confirmed 2026-05-11)
 - Webhook revalidation route
 - GHL waitlist webhook URL (deferred until forms get wired)
@@ -67,11 +67,12 @@ Build out the site from the new design system, in order of leverage:
 
 - [x] Base layout shell (nav, footer, page chrome) — Nav has mobile hamburger; Footer links to `/shmo-review` anchors
 - [x] Homepage — parent brand doorway, all four sub-brands with equal weight, locked headline "The toolkit your crew's been missing."
-- [ ] **`/shmo-review` — single page with anchored sections** (rebuild from scratch, locked 2026-05-11):
+- [ ] **`/shmo-review` — single page with anchored sections** (active, needs reconciliation before new sections):
   - Locked headline: "One tap. One five-star review."
   - Locked tagline: "Built for crews. Priced for bulk."
   - All three formats (CR-80, L-Sign, Square Card) live on this one page via a format picker that drives an anchored buybox (`#buybox`). No PDP sub-routes.
-  - Footer + home format-card links already point at `/shmo-review#buybox` and `/shmo-review#formats` — wiring is in place, just need the route.
+  - Current rendered order on disk: Hero → BulletStrip → Buybox → ProofMarquee → CrewStrip → HowItWorks → FormatPicker → VideoTestimonials → Faq → FinalCta.
+  - Before adding sections, verify this order in browser and decide whether ProofMarquee/Faq/FinalCta are the intended replacement for the older NumbersWall/Objections/ShipReturns tail.
 - [x] Cart UI + Shopify Cart API wiring (`cartCreate`, `cartLinesAdd`, `cartLinesRemove`) — smoke-test route at `/cart-smoke`
 - [ ] Checkout redirect via `cart.checkoutUrl` — verify end-to-end during `/shmo-review` rebuild
 - [ ] Waitlist capture for Shmo Biz / Shmo Link / Shmo Reputation (GHL webhook URL pending)
@@ -106,5 +107,5 @@ Build out the site from the new design system, in order of leverage:
 
 - `shop.shmocard.com` is live. Don't touch the Online Store theme, payment settings, or domain config. See `.claude/rules/live-store-protection.md`.
 - Product data lives in Shopify, not in code. See `.claude/rules/shopify-data-discipline.md`.
-- Don't invent design decisions while Phase 2 is pending. If a UI prompt comes in before the new system lands, surface that to Jordan and pause.
+- Don't invent design primitives. The design system has landed; compose existing `.shm-*` primitives and add new variants only in the design-system source.
 - Don't restructure folders without approval. See `.claude/rules/file-organization.md`.

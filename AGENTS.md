@@ -20,22 +20,22 @@ Brand website for Shmocard at `shmocard.com`. Retail front door — not an ad fu
 | Voice, copy, headlines, angles | `context/general/marketing.md` |
 | Product catalog, formats, status | `context/general/product.md` |
 | Per-page wireframes | `context/brainstorming/*.md` (pending) |
-| Design system source | `.claude/skills/shmocard-design-system/` (legacy/source mirror) and `.agents/skills/shmocard-design-system/` (Codex runtime copy) |
-| Personal preferences | `CLAUDE.local.md` (gitignored) |
-| Project-local subagents / agents | `.claude/agents/` (Claude legacy) and `.codex/agents/` (Codex active) |
+| Design system source | `.agents/skills/shmocard-design-system/` (read `SKILL.md` first; `.claude/skills/` remains the legacy mirror/reference source during migration) |
+| Personal preferences | `Codex.local.md` (gitignored) |
+| Project-local Codex agents (builder, auditors, safety gates) | `.codex/agents/` (4 files: `design-system-builder` (mandatory for all UI), `design-system-auditor`, `shopify-data-checker`, `live-store-guard`) |
 
-## Engineering rules (`.claude/rules/`)
+## Engineering rules (`.claude/rules/` during Codex migration)
 
 | File | Applies when |
 |---|---|
-| `design-system.md` | Any UI / visual / design / component / layout / page work |
-| `subagent-dispatch.md` | Spawning a subagent (mandatory `design-system-builder` for UI, `shmocard-shopify-work` wrapper for Shopify) |
-| `skill-routing.md` | Parent agent deciding which skill to load |
-| `live-store-protection.md` | Any Shopify Admin / theme / domain / payments touchpoint |
-| `shopify-data-discipline.md` | Product data, prices, SKUs, cart, checkout |
-| `verification.md` | Before claiming "done" on any task |
-| `file-organization.md` | Adding / moving folders or top-level files |
-| `vault-conventions.md` | Reading or writing to Jordan's Brain (Obsidian) |
+| `.claude/rules/design-system.md` | Any UI / visual / design / component / layout / page work |
+| `.claude/rules/subagent-dispatch.md` | Spawning a subagent (mandatory `design-system-builder` for UI, `shmocard-shopify-work` wrapper for Shopify) |
+| `.claude/rules/skill-routing.md` | Parent agent deciding which skill to load |
+| `.claude/rules/live-store-protection.md` | Any Shopify Admin / theme / domain / payments touchpoint |
+| `.claude/rules/shopify-data-discipline.md` | Product data, prices, SKUs, cart, checkout |
+| `.claude/rules/verification.md` | Before claiming "done" on any task |
+| `.claude/rules/file-organization.md` | Adding / moving folders or top-level files |
+| `.claude/rules/vault-conventions.md` | Reading or writing to Jordan's Brain (Obsidian) |
 
 ## Vault context
 

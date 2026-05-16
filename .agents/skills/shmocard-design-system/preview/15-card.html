@@ -1,0 +1,104 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><link rel="stylesheet" href="_card.css"></head>
+<body><div class="card" style="background:var(--color-marshmallow);">
+  <div class="col">
+    <span class="shm-eyebrow">Cards — soft default · hard opt-in</span>
+
+    <!-- Side-by-side examples -->
+    <div style="display:grid; grid-template-columns:1fr 1fr; gap:16px;">
+      <div class="shm-card shm-card--hover">
+        <h3 class="shm-h3" style="margin:0;">Soft card</h3>
+        <p class="shm-body" style="margin:8px 0 0;">Paper · 1.5px hairline · 22px radius · no shadow.</p>
+        <div style="margin-top:14px; font-size:13px; font-weight:600; color:var(--color-ember);">Read more →</div>
+      </div>
+      <div class="shm-card shm-card--hard">
+        <h3 class="shm-h3" style="margin:0;">Hard card</h3>
+        <p class="shm-body" style="margin:8px 0 0;">Paper · 2px cocoa outline · 22px radius · 4px chunky offset shadow.</p>
+        <div style="margin-top:14px; font-size:13px; font-weight:600; color:var(--color-ember);">Read more →</div>
+      </div>
+    </div>
+
+    <!-- SOFT in context -->
+    <div style="margin-top:6px;">
+      <div style="font-family:var(--font-display); font-weight:700; font-size:14px; color:var(--color-cocoa-deep); margin-bottom:8px;">Use SOFT for grids, body content, calm rhythm</div>
+      <div style="display:grid; grid-template-columns:repeat(3,1fr); gap:10px;">
+        <div class="shm-card" style="padding:12px;">
+          <div style="aspect-ratio:1/1; background:var(--color-cream-soft); border-radius:10px; margin-bottom:8px;"></div>
+          <div style="font-family:var(--font-display); font-weight:700; font-size:13px; color:var(--color-cocoa-deep);">Review CR80</div>
+          <div style="font-size:12px; color:var(--color-ink-muted);">$24</div>
+        </div>
+        <div class="shm-card" style="padding:12px;">
+          <div style="aspect-ratio:1/1; background:var(--color-cream-soft); border-radius:10px; margin-bottom:8px;"></div>
+          <div style="font-family:var(--font-display); font-weight:700; font-size:13px; color:var(--color-cocoa-deep);">Biz card</div>
+          <div style="font-size:12px; color:var(--color-ink-muted);">$28</div>
+        </div>
+        <div class="shm-card" style="padding:12px;">
+          <div style="aspect-ratio:1/1; background:var(--color-cream-soft); border-radius:10px; margin-bottom:8px;"></div>
+          <div style="font-family:var(--font-display); font-weight:700; font-size:13px; color:var(--color-cocoa-deep);">Link card</div>
+          <div style="font-size:12px; color:var(--color-ink-muted);">$24</div>
+        </div>
+      </div>
+      <div style="font-size:11px; color:var(--color-ink-muted); margin-top:6px;">→ Product grid · testimonial wall · FAQ rows · cart upsells</div>
+    </div>
+
+    <!-- HARD in context -->
+    <div style="margin-top:14px;">
+      <div style="font-family:var(--font-display); font-weight:700; font-size:14px; color:var(--color-cocoa-deep); margin-bottom:8px;">Use HARD for spotlight moments — max 2 per page</div>
+      <div style="display:grid; grid-template-columns:1.2fr 1fr; gap:10px;">
+        <div class="shm-card shm-card--hard" style="padding:14px;">
+          <div style="font-size:11px; font-weight:700; letter-spacing:0.1em; text-transform:uppercase; color:var(--color-ember); margin-bottom:6px;">Hero module</div>
+          <div style="font-family:var(--font-display); font-weight:800; font-size:18px; color:var(--color-cocoa-deep); line-height:1.15; letter-spacing:-0.015em;">Tap a card.<br>Get the review.</div>
+          <button class="shm-btn shm-btn--primary shm-btn--sm" style="margin-top:10px;">Shop now</button>
+        </div>
+        <div class="shm-card shm-card--hard" style="padding:14px; position:relative;">
+          <span class="shm-badge shm-badge--ember" style="position:absolute; top:-10px; right:14px;">Most popular</span>
+          <div style="font-family:var(--font-display); font-weight:800; font-size:16px; color:var(--color-cocoa-deep);">10-Pack</div>
+          <div style="font-family:var(--font-display); font-weight:800; font-size:22px; color:var(--color-cocoa-deep); margin-top:4px;">$219.99</div>
+          <div style="font-size:11px; color:var(--color-leaf); font-weight:600; margin-top:2px;">✓ Free shipping</div>
+        </div>
+      </div>
+      <div style="font-size:11px; color:var(--color-ink-muted); margin-top:6px;">→ Hero block · "Most popular" pack inside a soft group · buybox · final CTA</div>
+    </div>
+
+    <!-- Color variants — same softness, just colored fill -->
+    <div style="margin-top:14px;">
+      <div style="font-family:var(--font-display); font-weight:700; font-size:14px; color:var(--color-cocoa-deep); margin-bottom:8px;">Color variants — fill only, softness unchanged</div>
+      <div style="display:grid; grid-template-columns:repeat(4,1fr); gap:10px;">
+        <div class="shm-card shm-card--cream" style="padding:14px;">
+          <div style="font-family:var(--font-display); font-weight:700; font-size:13px;">Cream</div>
+          <div style="font-size:11px; color:var(--color-ink-3); margin-top:2px;"><code>--cream</code></div>
+        </div>
+        <div class="shm-card shm-card--graham" style="padding:14px;">
+          <div style="font-family:var(--font-display); font-weight:700; font-size:13px;">Graham</div>
+          <div style="font-size:11px; color:var(--color-ink-3); margin-top:2px;"><code>--graham</code></div>
+        </div>
+        <div class="shm-card shm-card--honey" style="padding:14px;">
+          <div style="font-family:var(--font-display); font-weight:700; font-size:13px;">Honey</div>
+          <div style="font-size:11px; color:var(--color-ink-3); margin-top:2px;"><code>--honey</code></div>
+        </div>
+        <div class="shm-card shm-card--ember" style="padding:14px;">
+          <div style="font-family:var(--font-display); font-weight:700; font-size:13px;">Ember</div>
+          <div style="font-size:11px; opacity:0.78; margin-top:2px;"><code>--ember</code></div>
+        </div>
+        <div class="shm-card shm-card--cherry" style="padding:14px;">
+          <div style="font-family:var(--font-display); font-weight:700; font-size:13px;">Cherry</div>
+          <div style="font-size:11px; opacity:0.78; margin-top:2px;"><code>--cherry</code></div>
+        </div>
+        <div class="shm-card shm-card--chocolate" style="padding:14px;">
+          <div style="font-family:var(--font-display); font-weight:700; font-size:13px;">Chocolate</div>
+          <div style="font-size:11px; opacity:0.78; margin-top:2px;"><code>--chocolate</code></div>
+        </div>
+        <div class="shm-card shm-card--cocoa" style="padding:14px;">
+          <div style="font-family:var(--font-display); font-weight:700; font-size:13px;">Cocoa</div>
+          <div style="font-size:11px; opacity:0.78; margin-top:2px;"><code>--cocoa</code></div>
+        </div>
+        <div class="shm-card shm-card--cocoa shm-card--hard" style="padding:14px;">
+          <div style="font-family:var(--font-display); font-weight:700; font-size:13px;">Cocoa + hard</div>
+          <div style="font-size:11px; opacity:0.78; margin-top:2px;"><code>--cocoa --hard</code></div>
+        </div>
+      </div>
+    </div>
+
+    <p class="token" style="margin:0;"><strong>Rule:</strong> soft is default. Hard is a spotlight — if everything is hard, nothing is. Aim for ≤2 hard cards per page. <code>.shm-card</code> · <code>.shm-card--hard</code> · <code>.shm-card--hover</code> (lift on hover, soft only) · color variants <code>--cream / --graham / --honey / --ember / --cherry / --cocoa / --chocolate</code>.</p>
+  </div>
+</div></body></html>

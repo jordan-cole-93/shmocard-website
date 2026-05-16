@@ -1,0 +1,159 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><link rel="stylesheet" href="_card.css">
+<style>
+  .demo-label {
+    font-family: var(--font-sans);
+    font-weight: 700;
+    font-size: 12px;
+    color: var(--color-cocoa-deep);
+    margin: 20px 0 8px;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+  }
+  .demo-label:first-child { margin-top: 0; }
+  .demo-label code {
+    font-weight: 500;
+    font-size: 11px;
+    color: var(--color-ember);
+    display: block;
+    margin-top: 2px;
+    text-transform: none;
+    letter-spacing: 0;
+  }
+
+  /* ── Page-level layout for __item internals (not the primitive) ── */
+  .shm-marquee__item-name {
+    font-family: var(--font-sans);
+    font-weight: 700;
+    font-size: 14px;
+    color: var(--color-ink);
+    white-space: nowrap;
+  }
+  .shm-marquee__item-note {
+    font-family: var(--font-sans);
+    font-size: 12px;
+    color: var(--color-ink-3);
+    white-space: nowrap;
+  }
+  .shm-marquee__item-stat {
+    margin-left: auto;
+    font-family: var(--font-display);
+    font-weight: 800;
+    font-size: 16px;
+    color: var(--color-ember);
+    white-space: nowrap;
+  }
+
+  .item-inner {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    flex: 1 1 auto;
+    min-width: 0;
+  }
+
+  .cocoa-bg { background: var(--color-cocoa-deep); padding: 16px; border-radius: var(--radius-lg); margin-top: 8px; }
+  .cocoa-bg .shm-marquee__item { background: rgba(255,251,241,0.08); border-color: rgba(255,251,241,0.15); }
+  .cocoa-bg .shm-marquee__item-name { color: var(--color-marshmallow); }
+  .cocoa-bg .shm-marquee__item-note { color: rgba(255,251,241,0.55); }
+</style>
+</head>
+<body><div class="card card-marsh">
+  <span class="shm-eyebrow">Marquee — infinite proof strip</span>
+
+  <div class="demo-label">Default — on marsh bg<code>.shm-marquee &gt; .shm-marquee__track &gt; .shm-marquee__item</code></div>
+  <div class="shm-marquee">
+    <div class="shm-marquee__track">
+      <!-- 6 items -->
+      <div class="shm-marquee__item">
+        <div class="item-inner">
+          <span class="shm-marquee__item-name">Axel's Pawn</span>
+          <span class="shm-marquee__item-note">Carly · Pawn · Minneapolis</span>
+        </div>
+        <span class="shm-marquee__item-stat">+71%</span>
+      </div>
+      <div class="shm-marquee__item">
+        <div class="item-inner">
+          <span class="shm-marquee__item-name">Garden City</span>
+          <span class="shm-marquee__item-note">Thomas · Roofing · Atlanta</span>
+        </div>
+        <span class="shm-marquee__item-stat">+86%</span>
+      </div>
+      <div class="shm-marquee__item">
+        <div class="item-inner">
+          <span class="shm-marquee__item-name">Buffalo Jewelry</span>
+          <span class="shm-marquee__item-note">Joey · Pawn · Buffalo</span>
+        </div>
+        <span class="shm-marquee__item-stat">+81%</span>
+      </div>
+      <div class="shm-marquee__item">
+        <div class="item-inner">
+          <span class="shm-marquee__item-name">Granters Auto</span>
+          <span class="shm-marquee__item-note">Vito · Auto repair · Phoenix</span>
+        </div>
+        <span class="shm-marquee__item-stat">+60%</span>
+      </div>
+      <div class="shm-marquee__item">
+        <div class="item-inner">
+          <span class="shm-marquee__item-name">CC Pawn</span>
+          <span class="shm-marquee__item-note">Claiborne · Pawn · Mobile</span>
+        </div>
+        <span class="shm-marquee__item-stat">+71%</span>
+      </div>
+      <div class="shm-marquee__item">
+        <div class="item-inner">
+          <span class="shm-marquee__item-name">Cashco</span>
+          <span class="shm-marquee__item-note">Morris · Pawn · Houston</span>
+        </div>
+        <span class="shm-marquee__item-stat">+47%</span>
+      </div>
+      <!-- duplicates for seamless loop (aria-hidden in real use) -->
+      <div class="shm-marquee__item" aria-hidden="true">
+        <div class="item-inner">
+          <span class="shm-marquee__item-name">Axel's Pawn</span>
+          <span class="shm-marquee__item-note">Carly · Pawn · Minneapolis</span>
+        </div>
+        <span class="shm-marquee__item-stat">+71%</span>
+      </div>
+      <div class="shm-marquee__item" aria-hidden="true">
+        <div class="item-inner">
+          <span class="shm-marquee__item-name">Garden City</span>
+          <span class="shm-marquee__item-note">Thomas · Roofing · Atlanta</span>
+        </div>
+        <span class="shm-marquee__item-stat">+86%</span>
+      </div>
+      <div class="shm-marquee__item" aria-hidden="true">
+        <div class="item-inner">
+          <span class="shm-marquee__item-name">Buffalo Jewelry</span>
+          <span class="shm-marquee__item-note">Joey · Pawn · Buffalo</span>
+        </div>
+        <span class="shm-marquee__item-stat">+81%</span>
+      </div>
+      <div class="shm-marquee__item" aria-hidden="true">
+        <div class="item-inner">
+          <span class="shm-marquee__item-name">Granters Auto</span>
+          <span class="shm-marquee__item-note">Vito · Auto repair · Phoenix</span>
+        </div>
+        <span class="shm-marquee__item-stat">+60%</span>
+      </div>
+      <div class="shm-marquee__item" aria-hidden="true">
+        <div class="item-inner">
+          <span class="shm-marquee__item-name">CC Pawn</span>
+          <span class="shm-marquee__item-note">Claiborne · Pawn · Mobile</span>
+        </div>
+        <span class="shm-marquee__item-stat">+71%</span>
+      </div>
+      <div class="shm-marquee__item" aria-hidden="true">
+        <div class="item-inner">
+          <span class="shm-marquee__item-name">Cashco</span>
+          <span class="shm-marquee__item-note">Morris · Pawn · Houston</span>
+        </div>
+        <span class="shm-marquee__item-stat">+47%</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="demo-label" style="margin-top:24px;">Reduced-motion — static fallback<code>@media (prefers-reduced-motion: reduce) → animation: none</code></div>
+  <p style="font-family:var(--font-sans);font-size:12px;color:var(--color-ink-3);margin:0 0 8px;">Items visible; track overflows silently. The leftmost visible items are legible.</p>
+
+</div></body></html>

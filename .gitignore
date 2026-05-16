@@ -23,6 +23,7 @@ yarn-debug.log*
 
 # Personal / per-developer
 CLAUDE.local.md
+Codex.local.md
 .claude/settings.local.json
 
 # Design system runtime artifacts

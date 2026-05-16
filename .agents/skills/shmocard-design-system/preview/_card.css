@@ -1,0 +1,41 @@
+/* Shared chrome for design-system preview cards.
+   Cards aim ~700×<height>, no titles (asset name renders outside).
+   The card itself has no border or shadow — content sits on cream. */
+@import url("../colors_and_type.css");
+@import url("../components.css");
+
+html, body {
+  margin: 0;
+  background: var(--color-cream);
+  font-family: var(--font-sans);
+  color: var(--color-cocoa-deep);
+}
+.card {
+  width: 700px;
+  padding: 24px;
+  background: var(--color-cream);
+}
+.card.card-marsh    { background: var(--color-marshmallow); }
+.card.card-graham   { background: var(--color-graham-soft); }
+.card.card-cocoa    { background: var(--color-cocoa-deep); color: var(--color-marshmallow); }
+
+/* Tiny utility helpers for cards */
+.row { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
+.col { display: flex; flex-direction: column; gap: 12px; }
+.label { font-size: 11px; letter-spacing: 1px; text-transform: uppercase; color: var(--color-muted); }
+.token {
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 11px;
+  color: var(--color-ink-3);
+  line-height: 1.55;
+}
+.swatch {
+  display: flex; flex-direction: column; gap: 6px; min-width: 0;
+}
+.swatch .chip {
+  border-radius: var(--radius-md);
+  border: 1px solid var(--color-hair);
+  height: 64px;
+}
+.swatch .name { font-size: 12px; font-weight: 600; color: var(--color-cocoa-deep); }
+.swatch .hex  { font-size: 11px; color: var(--color-muted); font-family: ui-monospace, SFMono-Regular, Menlo, monospace; }

@@ -1,18 +1,18 @@
 # handoff.md — Session Handoff
 
-**Last session:** 2026-05-12 — rebuilt /shmo-review from scratch through Phase 7 (9 of 11 sections live), reused two homepage sections, and refactored the FormatPicker onto the `.shm-product` primitive after a design-system audit.
+**Last session:** 2026-05-16 — Codex setup/reconciliation started. Created safety branch `codex-reconcile-shmo-review-state`, identified stale docs vs actual disk state, and began aligning project docs/config for Codex while preserving all existing dirty website work.
 
 ---
 
 ## Project phase
 
-Phase 3 (per scope.md) — single-page `/shmo-review` rebuild on design-system primitives.
+Phase 3 (per scope.md) — single-page `/shmo-review` rebuild on design-system primitives, currently in workspace reconciliation before more feature work.
 
-Section-by-section plan is documented in `context/brainstorming/shmo-review.md`. Through this session: **Phases 0 → 7 complete + 2 homepage sections reused**. Phases 8–11 (Objections / ShipReturns / FAQ / FinalCta) still to do.
+The older section-by-section plan is documented in `context/brainstorming/shmo-review.md`, but actual disk state has drifted beyond that plan. Current `app/shmo-review/page.tsx` renders: Hero → BulletStrip → Buybox → ProofMarquee → CrewStrip → HowItWorks → FormatPicker → VideoTestimonials → Faq → FinalCta.
 
 ---
 
-## What was done this session
+## What was done before this reconciliation
 
 - **Phase 0 — Scaffolding** (commit `3e14a79`): created `app/shmo-review/page.tsx`, `app/shmo-review/shmo-review.css` (page-scoped wave overrides 56/88/120px), `components/shmo-review/` folder, `components/NavLink.tsx` client component for active-state nav, `.linkActive` style in `components/Nav.module.css`. Also fixed a pre-existing bug from the 2026-05-11 mobile-pass commit where `<details>` wrapping hid every nav link at desktop — set `<details open>` as default in `components/Nav.tsx`.
 
@@ -61,7 +61,7 @@ Section-by-section plan is documented in `context/brainstorming/shmo-review.md`.
 - `components/home/CrewStrip.tsx` — optional `bg` / `nextBg` props
 - `components/home/VideoTestimonials.tsx` — optional `bg` / `nextBg` props
 
-### Current section order (matches Jordan's 2026-05-12 spec)
+### Last committed section order before drift
 
 1. Hero (custom bg, grid texture, marshmallow)
 2. BulletStrip (graham)
@@ -73,31 +73,39 @@ Section-by-section plan is documented in `context/brainstorming/shmo-review.md`.
 8. **StandoutMoments** — "What happens when crews actually hand them over." (marsh)
 9. **NumbersWall** — "Real shops. Real review-volume increases." (marsh → cocoa wave)
 
+Actual current disk order has since changed to the order listed at the top of this file.
+
 ---
+
+## Codex reconciliation status
+
+Current branch: `codex-reconcile-shmo-review-state`.
+
+Current buckets:
+
+- **Codex setup:** `AGENTS.md`, `.codex/`, `.agents/skills/`.
+- **Legacy/reference still present:** `.claude/` skills, agents, and rules.
+- **Website work in progress:** `/shmo-review`, design-system primitive updates, home section props, cart drawer additions.
+- **Verification artifacts:** untracked screenshots under `pictures/screenshots/`.
+
+Important config fix already made: Codex agent configs now point to `.agents/skills/...` and `.claude/rules/...` instead of the non-existent `.Codex/...` paths.
 
 ## What's next
 
-**Phase 8 — Objections (cocoa)** per `context/brainstorming/shmo-review.md`. First dark section on the page — `.shm-` prefix utilities will auto-flip text from cocoa-deep to marshmallow. Reference: `review-parts.jsx:386-413` + matching CSS at `review.css:727+` in `.claude/skills/shmocard-design-system/ui_kits/website/homepage-shmoreview/`.
+Do not immediately continue to the older Phase 8 plan. First finish reconciliation:
 
-Order of remaining phases per the plan doc:
+1. Verify whether the current `/shmo-review` tail order is intentional.
+2. Decide whether the untracked screenshots should be committed as proof artifacts or left local.
+3. Make a setup/docs commit for the Codex migration.
+4. Then make a separate website/cart commit only after browser verification.
 
-- **Phase 8 — Objections** (cocoa, 4-card answers to "but we already ask for reviews…" objections)
-- **Phase 9 — ShipReturns** (graham)
-- **Phase 10 — FAQ** (marsh)
-- **Phase 11 — FinalCta** (ember)
-
-Concrete next actions at the start of next session:
-
-1. Read `context/brainstorming/shmo-review.md` for the locked section rotation.
-2. Read this `handoff.md` for current state.
-3. Read the reference component + CSS for Objections (lines noted above).
-4. Port → wire into `page.tsx` between `NumbersWall` and the not-yet-built `ShipReturns` → screenshot → commit.
+Older reference for the next possible section remains: **Phase 8 — Objections (cocoa)** per `context/brainstorming/shmo-review.md`.
 
 ---
 
 ## Open decisions
 
-- **Section rotation tail.** Current end of page is `…NumbersWall (marsh → cocoa wave)`. The plan doc says Objections is the cocoa section. No conflict — proceed as planned. Just confirm with Jordan if he wants to reshuffle anything else like he did with CrewStrip.
+- **Section rotation tail.** Current disk order ends `…VideoTestimonials → Faq → FinalCta`, with `ProofMarquee` replacing the old NumbersWall slot. Confirm whether to keep that direction or return to Objections/ShipReturns from the old plan.
 - **Shopify wiring.** Every product field in Buybox + FormatPicker carries a `// TODO(shopify):` marker. The plan defers this to a dedicated future phase via the `shmocard-shopify-work` wrapper. Not blocking the current rebuild.
 - **Buybox sticky bar.** The reference's `.shm-buybox-sticky` slide-down-on-scroll bar is not yet wired up on `/shmo-review`. Plan doc has it as part of Phase 3 — verify with Jordan whether he wants it added retroactively before continuing to Phase 8, or after the page is fully built out.
 - **Mobile nav UX.** The `<details open>` fix in Phase 0 means the mobile dropdown is visible by default on first load. Acceptable trade-off, but a future iteration to a CSS-only checkbox-hack would give mobile-default-closed cleanly.
@@ -107,7 +115,7 @@ Concrete next actions at the start of next session:
 ## How to start next session
 
 1. Read this file.
-2. Read `CLAUDE.md`.
-3. Read `context/brainstorming/shmo-review.md`.
-4. Ask Jordan: "Green light for Phase 8 — Objections on cocoa, or want to refine anything in phases 0–7 first?"
-5. Invoke the `shmocard-design-system` skill before touching any UI code (per `.claude/rules/skill-routing.md`).
+2. Read `AGENTS.md`, `CLAUDE.md`, and `context/general/scope.md`.
+3. Run `git status --short`.
+4. Verify `/shmo-review` in browser before editing more UI.
+5. Ask Jordan whether to keep the current `ProofMarquee → ... → Faq → FinalCta` tail or return to the older Objections/ShipReturns plan.
