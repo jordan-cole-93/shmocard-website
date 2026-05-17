@@ -8,6 +8,7 @@ import Buybox from "@/components/shmo-review/Buybox";
 import Proof from "@/components/shmo-review/cr-80/Proof";
 import CrewStrip from "@/components/home/CrewStrip";
 import HowItWorks from "@/components/shmo-review/HowItWorks";
+import { ProofTiles } from "@/components/shmo-review/ProofMarquee";
 
 export const metadata = {
   title: "CR-80 Review Card — Shmo Review",
@@ -20,7 +21,7 @@ export default function Cr80Page() {
     <main>
       <Buybox nextBg="graham" />
       <Proof />
-      <CrewStrip nextBg="marsh" />
+      <CrewStrip nextBg="marsh" afterGrid={<ProofTiles />} />
       <HowItWorks />
     </main>
   );
