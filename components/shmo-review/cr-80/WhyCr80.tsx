@@ -97,7 +97,7 @@ const cards = [
 
 export function WhyCr80() {
   return (
-    <Section bg="marsh" nextBg="graham">
+    <Section bg="marsh" nextBg="marsh">
       <div className="why-cr80__inner">
         {/* Section head */}
         <div className="why-cr80__head">
