@@ -7,6 +7,7 @@ import "../shmo-review.css";
 import Buybox from "@/components/shmo-review/Buybox";
 import Proof from "@/components/shmo-review/cr-80/Proof";
 import WhyCr80 from "@/components/shmo-review/cr-80/WhyCr80";
+import SetupSteps from "@/components/shmo-review/cr-80/SetupSteps";
 
 export const metadata = {
   title: "CR-80 Review Card — Shmo Review",
@@ -20,6 +21,7 @@ export default function Cr80Page() {
       <Buybox nextBg="graham" />
       <Proof />
       <WhyCr80 />
+      <SetupSteps />
     </main>
   );
 }
