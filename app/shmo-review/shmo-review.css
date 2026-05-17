@@ -1210,7 +1210,8 @@ main > section:has(> .shm-wave:last-child) { padding-bottom: 0; }
 
 /* ────────────────────────────────────────
    CR-80 PDP — 03-04 WHY CR-80
-   marsh bg · 3-card value-prop row
+   marsh bg · asymmetric featured layout
+   Left: one hard featured card. Right: two compact graham cards stacked.
    ──────────────────────────────────────── */
 .why-cr80__inner {
   display: flex;
@@ -1222,35 +1223,148 @@ main > section:has(> .shm-wave:last-child) { padding-bottom: 0; }
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  gap: 16px;
-  max-width: 48ch;
+  gap: 14px;
+  max-width: 52ch;
 }
 
 .why-cr80__head .shm-h2 {
   margin: 0;
 }
 
+.why-cr80__lede {
+  margin: 0;
+}
+
+/* Asymmetric 2-col: featured (wider) left, compact stack right */
 .why-cr80__grid {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: 1.15fr 1fr;
   gap: 24px;
+  align-items: start;
 }
 
-/* Card layout — appearance from .shm-card primitive */
-.why-cr80__card {
+/* Featured card — layout on top of .shm-card.shm-card--hard */
+.why-cr80__featured {
   display: flex;
   flex-direction: column;
-  gap: 16px;
+  gap: 20px;
+  padding: 32px;
+  position: relative;
 }
 
-.why-cr80__icon {
+/* Mascot — absolute, top-right corner of the featured card */
+.why-cr80__mascot {
+  position: absolute;
+  top: -16px;
+  right: -12px;
+  pointer-events: none;
+}
+
+.why-cr80__featured-icon {
   display: flex;
   align-items: flex-start;
 }
 
-@media (max-width: 767px) {
+.why-cr80__stat-badge {
+  align-self: flex-start;
+}
+
+/* VS comparison block — mini stat row inside the featured card */
+.why-cr80__vs {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  padding: 16px 20px;
+  background: var(--color-cream);
+  border-radius: var(--radius-md);
+  border: 1px solid var(--color-hair-2);
+  margin-top: 4px;
+}
+
+.why-cr80__vs-item {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  flex: 1;
+}
+
+.why-cr80__vs-divider {
+  width: 1px;
+  height: 40px;
+  background: var(--color-hair-2);
+  flex-shrink: 0;
+}
+
+.why-cr80__vs-num {
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: 36px;
+  line-height: 1;
+  letter-spacing: -0.03em;
+  color: var(--color-ember);
+  font-variation-settings: "opsz" 96;
+}
+
+.why-cr80__vs-item--muted .why-cr80__vs-num {
+  color: var(--color-ink-4);
+}
+
+.why-cr80__vs-label {
+  font-family: var(--font-sans);
+  font-size: 12px;
+  line-height: 1.4;
+  color: var(--color-ink-3);
+  font-weight: 500;
+}
+
+/* Compact stack — two cards stacked vertically */
+.why-cr80__compact-stack {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+/* Compact card layout — on top of .shm-card.shm-card--graham */
+.why-cr80__compact {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.why-cr80__compact-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.why-cr80__checklist {
+  margin-top: 4px;
+}
+
+/* Mobile — single column, featured first */
+@media (max-width: 900px) {
   .why-cr80__grid {
     grid-template-columns: 1fr;
+  }
+
+  .why-cr80__mascot {
+    top: -12px;
+    right: -8px;
+  }
+}
+
+@media (max-width: 560px) {
+  .why-cr80__featured {
+    padding: 24px;
+  }
+
+  .why-cr80__vs {
+    padding: 12px 16px;
+  }
+
+  .why-cr80__vs-num {
+    font-size: 28px;
   }
 }
 
