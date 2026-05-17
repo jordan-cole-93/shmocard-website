@@ -1209,6 +1209,52 @@ main > section:has(> .shm-wave:last-child) { padding-bottom: 0; }
 }
 
 /* ────────────────────────────────────────
+   CR-80 PDP — 03-04 WHY CR-80
+   marsh bg · 3-card value-prop row
+   ──────────────────────────────────────── */
+.why-cr80__inner {
+  display: flex;
+  flex-direction: column;
+  gap: 48px;
+}
+
+.why-cr80__head {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 16px;
+  max-width: 48ch;
+}
+
+.why-cr80__head .shm-h2 {
+  margin: 0;
+}
+
+.why-cr80__grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+}
+
+/* Card layout — appearance from .shm-card primitive */
+.why-cr80__card {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.why-cr80__icon {
+  display: flex;
+  align-items: flex-start;
+}
+
+@media (max-width: 767px) {
+  .why-cr80__grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ────────────────────────────────────────
    CR-80 PDP — 03-03 PROOF
    graham bg · metrics grid + testimonial
    ──────────────────────────────────────── */
