@@ -11,7 +11,7 @@
 
 import Section from "@/components/layout/Section";
 
-const PROOF_ITEMS = [
+export const PROOF_ITEMS = [
   { shop: "Axel's Pawn",     owner: "Carly",     industry: "Pawn shop",   city: "Minneapolis", inc: "+71%" },
   { shop: "Garden City",     owner: "Thomas",    industry: "Roofing co",  city: "Atlanta",     inc: "+86%" },
   { shop: "Cashco",          owner: "Morris",    industry: "Pawn & loan", city: "Houston",     inc: "+47%" },
@@ -32,6 +32,16 @@ function ProofItem({ item }: { item: (typeof PROOF_ITEMS)[number] }) {
         </span>
       </div>
       <span className="proof-marquee__stat">{item.inc}</span>
+    </div>
+  );
+}
+
+export function ProofTiles() {
+  return (
+    <div className="crew-proof-grid" aria-label="Verified review-volume increases">
+      {PROOF_ITEMS.map((item, i) => (
+        <ProofItem key={i} item={item} />
+      ))}
     </div>
   );
 }

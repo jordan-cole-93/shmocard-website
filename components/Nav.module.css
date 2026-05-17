@@ -27,30 +27,22 @@
 .markShmo { color: var(--color-cocoa-deep); }
 .markCard { color: var(--color-ember); }
 
-/* Native <details>/<summary> wrapper around the primary nav.
-   At desktop the trigger is hidden and the .links panel is forced visible
-   inline; at <=880 the trigger is the hamburger button and the panel
-   becomes a dropdown anchored below the nav. */
+/* Primary nav wrapper. Desktop renders links inline; mobile starts closed
+   and opens the dropdown via the client-side menu button. */
 .menu {
   flex: 1;
   margin-left: 12px;
   position: relative;
 }
-.menu > summary {
-  display: none; /* desktop default — overridden inside the mobile media query */
-  list-style: none;
-  cursor: pointer;
-}
-.menu > summary::-webkit-details-marker { display: none; }
 
 .menuTrigger {
+  display: none; /* desktop default — overridden inside the mobile media query */
   width: 42px;
   height: 42px;
   border-radius: var(--radius-full);
   background: transparent;
   border: 1.5px solid var(--color-cocoa-deep);
   color: var(--color-cocoa-deep);
-  display: inline-flex;
   align-items: center;
   justify-content: center;
   transition: background var(--motion-fast) var(--ease-standard);
@@ -128,18 +120,21 @@
   line-height: 1;
 }
 
-@media (max-width: 880px) {
+  @media (max-width: 880px) {
   /* Mobile: hamburger trigger pinned to the far right (after the Shop CTA),
-     dropdown anchors right-aligned underneath it. The native <details>
-     open/closed state hides/shows the .links panel without JS. */
-  .inner { gap: 12px; }
+     dropdown anchors right-aligned underneath it and starts closed. */
+  .inner {
+    gap: 12px;
+    padding-left: 14px;
+    padding-right: 14px;
+  }
   .menu {
     flex: 0 0 auto;
     margin-left: 0;
     order: 3;
     position: static; /* let .links anchor to .inner via positioned ancestor */
   }
-  .menu > summary { display: inline-flex; }
+  .menuTrigger { display: inline-flex; }
   .ctaRow { order: 2; margin-left: auto; }
   .inner { position: relative; }
   .links {
@@ -157,5 +152,6 @@
     box-shadow: 0 14px 28px rgba(46, 26, 15, 0.12);
     z-index: 50;
   }
+  .menu[data-open="false"] .links { display: none; }
   .link { font-size: 15px; padding: 8px 0; }
 }

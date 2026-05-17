@@ -74,6 +74,12 @@ const HANDLES = [
   "google-review-plaque",
 ] as const;
 
+const PRODUCT_PAGE_HREFS: Record<(typeof HANDLES)[number], string> = {
+  "google-reviews-nfc-tap-card-cr80": "/shmo-review/cr-80",
+  "google-review-nfc-tap-card-l-sign": "#formats",
+  "google-review-plaque": "#formats",
+};
+
 function formatPrice(amount: string, currencyCode: string): string {
   const num = parseFloat(amount);
   if (isNaN(num)) return amount;
@@ -146,7 +152,7 @@ export default async function FormatPicker({ bg = "cream", nextBg = "marsh" }: P
             product.priceRange.minVariantPrice.amount,
             product.priceRange.minVariantPrice.currencyCode,
           );
-          const href = `/products/${product.handle}`;
+          const href = PRODUCT_PAGE_HREFS[handle];
 
           return (
             <article className="shm-product" key={product.handle}>

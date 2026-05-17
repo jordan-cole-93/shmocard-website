@@ -1,52 +1,59 @@
 "use client";
 
-// components/shmo-review/HowItWorks.tsx — sticky scroll-driven phone.
-// Phase 5. Ported 1:1 from
-// .claude/skills/shmocard-design-system/ui_kits/website/homepage-shmoreview/review-parts.jsx:137-292
-// + review.css:355-618 (+ 1041-1042 breakpoints) + REVIEW_HOW_STEPS
-// from review-data.jsx:56-82.
+// components/shmo-review/HowItWorks.tsx — warm four-step flow.
 //
-// Layout: two-column grid. Both columns are sticky (phone on left,
-// step list on right) inside a 200vh-tall `.how-stage`. As the user
-// scrolls through the section, a scroll-progress listener computes
-// which of the 4 steps is active (and therefore which phone screen
-// to render). All 4 step <li>s are always visible on the right; the
-// active one gets full opacity while the others fade to 0.55.
-//
-// Client component (needs scroll listener + useState).
+// Framer Motion drives the subtle scroll-linked scale/offset while CSS sticky
+// handles the actual card stacking.
 
-import { useEffect, useRef, useState } from "react";
-
+import { useRef, type CSSProperties } from "react";
+import {
+  motion,
+  useReducedMotion,
+  useScroll,
+  useTransform,
+  type MotionStyle,
+  type MotionValue,
+} from "framer-motion";
 import Section from "@/components/layout/Section";
 
 const STARS = [0, 1, 2, 3, 4];
 
 type Screen = "handoff" | "tap" | "review" | "submitted";
 
-const REVIEW_HOW_STEPS: Array<{ n: string; title: string; body: string; screen: Screen }> = [
+const REVIEW_HOW_STEPS: Array<{
+  n: string;
+  title: string;
+  body: string;
+  screen: Screen;
+  details: string[];
+}> = [
   {
     n: "01",
     title: "Crew hands the card",
     body: "After every transaction, an employee hands the customer the card. The ask happens at the right moment — when the customer is happy.",
     screen: "handoff",
+    details: ["Best after checkout", "Lives with the crew", "No counter card"],
   },
   {
     n: "02",
     title: "Customer taps the back of their phone",
     body: "iPhone XS+ and Android 5+ have NFC built in. The card sends a signed URL straight to their browser — no app, no login.",
     screen: "tap",
+    details: ["No app", "No login", "NFC plus QR fallback"],
   },
   {
     n: "03",
     title: "Your Google review page opens",
     body: "Their browser jumps straight to your review form. They see your shop name, your photos, your star rating.",
     screen: "review",
+    details: ["Direct Google link", "Shop context visible", "Fewer taps"],
   },
   {
     n: "04",
     title: "Five stars, one sentence",
     body: "They tap five and type. The whole thing takes seconds. You get a verified Google review, by the next time you check.",
     screen: "submitted",
+    details: ["Posted in seconds", "Verified review", "Fresh local proof"],
   },
 ];
 
@@ -134,7 +141,7 @@ function PhoneScreen({ which }: { which: Screen }) {
           </svg>
         </div>
         <div className="phone-submitted__title">Posted</div>
-        <div className="phone-submitted__sub">Thanks for the 5-star review!</div>
+        <div className="phone-submitted__sub">Thanks for the 5-star review</div>
         <div className="phone-submitted__stars">
           {STARS.map((i) => (
             <svg key={i} viewBox="0 0 24 24" aria-hidden="true">
@@ -148,40 +155,79 @@ function PhoneScreen({ which }: { which: Screen }) {
   );
 }
 
+function HowWarmStep({
+  step,
+  index,
+  total,
+  scrollYProgress,
+}: {
+  step: (typeof REVIEW_HOW_STEPS)[number];
+  index: number;
+  total: number;
+  scrollYProgress: MotionValue<number>;
+}) {
+  const shouldReduceMotion = useReducedMotion();
+  const stepStart = index / total;
+  const stepEnd = Math.min(1, (index + 1) / total);
+  const scale = useTransform(
+    scrollYProgress,
+    [stepStart, stepEnd],
+    [1, index === total - 1 ? 1 : 0.965],
+  );
+  const y = useTransform(
+    scrollYProgress,
+    [stepStart, stepEnd],
+    [0, index === total - 1 ? 0 : -12],
+  );
+
+  return (
+    <motion.article
+      className={`shm-card shm-card--cream how-warm-step${index % 2 ? " is-reverse" : ""}`}
+      style={
+        {
+          "--stack-offset": `${index * 12}px`,
+          zIndex: index + 1,
+          ...(shouldReduceMotion ? {} : { scale, y }),
+        } as MotionStyle & CSSProperties
+      }
+    >
+      <div className="how-warm-step__copy">
+        <span className="shm-badge shm-badge--sm shm-badge--ember how-warm-step__num">
+          {step.n}
+        </span>
+        <h3 className="how-warm-step__title">{step.title}</h3>
+        <p className="how-warm-step__body">{step.body}</p>
+        <ul className="how-warm-step__details" aria-label={`${step.title} details`}>
+          {step.details.map((detail) => (
+            <li
+              key={detail}
+              className="shm-badge shm-badge--honey"
+            >
+              {detail}
+            </li>
+          ))}
+        </ul>
+      </div>
+
+      <div className="how-warm-step__visual" aria-hidden="true">
+        <div className="phone-frame phone-frame--mini">
+          <div className="phone-frame__notch" />
+          <div className="phone-frame__screen">
+            <PhoneScreen which={step.screen} />
+          </div>
+          <div className="phone-frame__home" />
+        </div>
+      </div>
+    </motion.article>
+  );
+}
+
 export default function HowItWorks() {
-  const [activeIdx, setActiveIdx] = useState(0);
-  const stageRef = useRef<HTMLDivElement | null>(null);
-
-  useEffect(() => {
-    const stage = stageRef.current;
-    if (!stage) return;
-    function update() {
-      if (!stage) return;
-      const rect = stage.getBoundingClientRect();
-      const vp = window.innerHeight;
-      // Progress 0 → 1 across the section's full visibility window:
-      //   0 = section top hits viewport bottom (just entered view)
-      //   1 = section bottom hits viewport top (just exited view)
-      // Total scroll distance = viewport height + section height.
-      const totalDistance = vp + rect.height;
-      const scrolled = vp - rect.top;
-      const progress = Math.max(0, Math.min(1, scrolled / totalDistance));
-      const idx = Math.min(
-        REVIEW_HOW_STEPS.length - 1,
-        Math.floor(progress * REVIEW_HOW_STEPS.length),
-      );
-      setActiveIdx(idx);
-    }
-    update();
-    window.addEventListener("scroll", update, { passive: true });
-    window.addEventListener("resize", update);
-    return () => {
-      window.removeEventListener("scroll", update);
-      window.removeEventListener("resize", update);
-    };
-  }, []);
-
-  const active = REVIEW_HOW_STEPS[activeIdx];
+  const flowRef = useRef<HTMLDivElement | null>(null);
+  const { scrollYProgress } = useScroll({
+    target: flowRef,
+    offset: ["start 72%", "end 24%"],
+  });
 
   return (
     <Section bg="marsh" nextBg="cream" className="how-section" id="how" ariaLabel="How Shmo Review works">
@@ -192,38 +238,16 @@ export default function HowItWorks() {
         </h2>
       </div>
 
-      <div className="how-stage" ref={stageRef}>
-        <div className="how-stage__phone-col">
-          <div className="how-stage__phone-sticky">
-            <div className="phone-frame">
-              <div className="phone-frame__notch" />
-              <div className="phone-frame__screen">
-                <PhoneScreen which={active.screen} />
-              </div>
-              <div className="phone-frame__home" />
-            </div>
-            <div className="how-stage__progress">
-              {REVIEW_HOW_STEPS.map((_, i) => (
-                <div key={i} className={`how-stage__pip${i === activeIdx ? " is-active" : ""}`}>
-                  {String(i + 1).padStart(2, "0")}
-                </div>
-              ))}
-            </div>
-          </div>
-        </div>
-
-        <ol className="how-stage__steps">
-          {REVIEW_HOW_STEPS.map((s, i) => (
-            <li
-              key={i}
-              className={`how-stage__step${i === activeIdx ? " is-active" : ""}`}
-            >
-              <div className="how-stage__step-num">{s.n}</div>
-              <h3 className="how-stage__step-title">{s.title}</h3>
-              <p className="how-stage__step-body">{s.body}</p>
-            </li>
+      <div className="how-warm-flow" ref={flowRef}>
+        {REVIEW_HOW_STEPS.map((step, i) => (
+          <HowWarmStep
+            key={step.n}
+            step={step}
+            index={i}
+            total={REVIEW_HOW_STEPS.length}
+            scrollYProgress={scrollYProgress}
+          />
           ))}
-        </ol>
       </div>
     </Section>
   );

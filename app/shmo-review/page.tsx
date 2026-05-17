@@ -18,7 +18,7 @@ import CrewStrip from "@/components/home/CrewStrip";
 import VideoTestimonials from "@/components/home/VideoTestimonials";
 import Faq from "@/components/shmo-review/Faq";
 import FinalCta from "@/components/home/FinalCta";
-import ProofMarquee from "@/components/shmo-review/ProofMarquee";
+import { ProofTiles } from "@/components/shmo-review/ProofMarquee";
 
 export const metadata = {
   title: "Shmo Review — NFC tap cards built for crews",
@@ -31,9 +31,8 @@ export default function ShmoReviewPage() {
     <main>
       <Hero />
       <BulletStrip />
-      <Buybox nextBg="graham" />
-      <ProofMarquee />
-      <CrewStrip nextBg="marsh" />
+      <Buybox nextBg="marsh" />
+      <CrewStrip nextBg="marsh" afterGrid={<ProofTiles />} />
       <HowItWorks />
       <FormatPicker bg="cream" nextBg="marsh" />
       <VideoTestimonials bg="marsh" nextBg="cream" />

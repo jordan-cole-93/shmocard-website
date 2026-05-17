@@ -5,6 +5,7 @@
 // 6-up crew photo grid — fills slots from CREW data, falls back to placeholder.
 
 import "./home.css";
+import type { ReactNode } from "react";
 import Section from "@/components/layout/Section";
 import type { SectionBg } from "@/components/layout/Section";
 import { CREW } from "./home-data";
@@ -14,9 +15,10 @@ type Props = {
   nextBg?: SectionBg;
   tiles?: number;
   columns?: 3 | 6;
+  afterGrid?: ReactNode;
 };
 
-export default function CrewStrip({ bg = "marsh", nextBg = "graham", tiles = 6, columns = 6 }: Props = {}) {
+export default function CrewStrip({ bg = "marsh", nextBg = "graham", tiles = 6, columns = 6, afterGrid }: Props = {}) {
   const visibleCrew = CREW.slice(0, tiles);
   const gridClass =
     columns === 3 ? "crew-grid crew-grid--3col" :
@@ -70,6 +72,7 @@ export default function CrewStrip({ bg = "marsh", nextBg = "graham", tiles = 6, 
           )
         )}
       </div>
+      {afterGrid ? <div className="crew-strip__after-grid">{afterGrid}</div> : null}
     </Section>
   );
 }

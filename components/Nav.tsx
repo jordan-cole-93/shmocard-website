@@ -8,7 +8,7 @@
 import Link from "next/link";
 
 import NavCartIcon from "./cart/NavCartIcon";
-import NavLink from "./NavLink";
+import NavMenu from "./NavMenu";
 import styles from "./Nav.module.css";
 
 export default function Nav() {
@@ -24,69 +24,7 @@ export default function Nav() {
           </span>
         </Link>
 
-        {/* Primary nav. Rendered with `open` so the panel is visible by
-            default at every viewport — modern browsers hide non-summary
-            children of a closed <details> via the UA slot mechanism, which
-            CSS can't override. At >880px the hamburger summary is hidden
-            via CSS and the panel renders inline. At <=880px the summary
-            becomes the hamburger; the dropdown is shown by default on
-            initial mobile load and users tap to close. */}
-        <details className={styles.menu} open>
-          <summary
-            className={styles.menuTrigger}
-            aria-label="Open primary navigation"
-          >
-            <svg
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2.2"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              aria-hidden="true"
-            >
-              <path d="M4 7h16M4 12h16M4 17h16" />
-            </svg>
-          </summary>
-          <nav className={styles.links} aria-label="Primary">
-            <NavLink
-              href="/shmo-review"
-              className={styles.link}
-              activeClassName={styles.linkActive}
-            >
-              Shmo Review
-              <span
-                className={`shm-badge shm-badge--status shm-badge--status-clover ${styles.linkStatus}`}
-              >
-                Live
-              </span>
-            </NavLink>
-            <a href="#shmo-biz" className={styles.link}>
-              Shmo Biz
-              <span
-                className={`shm-badge shm-badge--status shm-badge--status-honey ${styles.linkStatus}`}
-              >
-                Soon
-              </span>
-            </a>
-            <a href="#shmo-link" className={styles.link}>
-              Shmo Link
-              <span
-                className={`shm-badge shm-badge--status shm-badge--status-honey ${styles.linkStatus}`}
-              >
-                Soon
-              </span>
-            </a>
-            <a href="#shmo-reputation" className={styles.link}>
-              Shmo Reputation
-              <span
-                className={`shm-badge shm-badge--status shm-badge--status-honey ${styles.linkStatus}`}
-              >
-                Soon
-              </span>
-            </a>
-          </nav>
-        </details>
+        <NavMenu />
 
         <div className={styles.ctaRow}>
           {/* useCart-backed cart trigger — opens CartDrawer */}
