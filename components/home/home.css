@@ -2131,6 +2131,10 @@
 }
 
 /* ---------- Final CTA ---------- */
+/* Give the section extra bottom breathing room — token is purpose-named for this */
+.shm-section:has(.final-cta) {
+  padding-bottom: var(--section-py-d-xl);
+}
 .final-cta {
   text-align: center;
 }
