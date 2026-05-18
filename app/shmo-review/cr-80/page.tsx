@@ -9,6 +9,7 @@ import Proof from "@/components/shmo-review/cr-80/Proof";
 import CrewStrip from "@/components/home/CrewStrip";
 import HowItWorks from "@/components/shmo-review/HowItWorks";
 import VideoTestimonials from "@/components/home/VideoTestimonials";
+import FinalCta from "@/components/home/FinalCta";
 import { ProofTiles } from "@/components/shmo-review/ProofMarquee";
 
 export const metadata = {
@@ -24,7 +25,8 @@ export default function Cr80Page() {
       <Proof />
       <CrewStrip nextBg="marsh" afterGrid={<ProofTiles />} />
       <HowItWorks />
-      <VideoTestimonials bg="cream" nextBg="cocoa" />
+      <VideoTestimonials bg="cream" nextBg="ember" />
+      <FinalCta />
     </main>
   );
 }
