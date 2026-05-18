@@ -20,7 +20,7 @@ export const metadata = {
 export default function Cr80Page() {
   return (
     <main>
-      <Buybox nextBg="graham" />
+      <Buybox nextBg="cream" />
       <Proof />
       <CrewStrip nextBg="marsh" afterGrid={<ProofTiles />} />
       <HowItWorks />

@@ -27,7 +27,7 @@ function StarIcon() {
 
 export function Proof() {
   return (
-    <Section bg="graham" nextBg="marsh">
+    <Section bg="cream" nextBg="marsh">
       <div className="proof-section__inner">
         {/* Section header */}
         <div className="proof-section__head">
