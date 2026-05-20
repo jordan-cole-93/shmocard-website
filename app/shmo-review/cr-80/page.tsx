@@ -8,6 +8,7 @@ import Buybox from "@/components/shmo-review/Buybox";
 import Proof from "@/components/shmo-review/cr-80/Proof";
 import CrewStrip from "@/components/home/CrewStrip";
 import HowItWorks from "@/components/shmo-review/HowItWorks";
+import FormatCompare from "@/components/shmo-review/FormatCompare";
 import VideoTestimonials from "@/components/home/VideoTestimonials";
 import FinalCta from "@/components/home/FinalCta";
 import { ProofTiles } from "@/components/shmo-review/ProofMarquee";
@@ -25,6 +26,7 @@ export default function Cr80Page() {
       <Proof />
       <CrewStrip nextBg="cream" afterGrid={<ProofTiles />} />
       <HowItWorks />
+      <FormatCompare currentHandle="google-reviews-nfc-tap-card-cr80" />
       <VideoTestimonials bg="cream" nextBg="ember" />
       <FinalCta />
     </main>
