@@ -8,17 +8,19 @@ import { DEFAULT_BUYBOX_GALLERY } from "@/components/shmo-review/Buybox";
 // Static pack config (D-01: variant metafields out of scope for Phase 8)
 // ---------------------------------------------------------------------------
 
-const PACK_STATIC: Record<number, Pick<BuyboxPack, "save" | "note" | "pop">> = {
-  1:  { save: null,  note: null,                     pop: false },
-  2:  { save: null,  note: null,                     pop: false },
-  5:  { save: "20%", note: "Free shipping included", pop: false },
-  10: { save: "27%", note: "Free shipping included", pop: true  },
+const PACK_STATIC: Record<number, Pick<BuyboxPack, "save" | "note" | "pop" | "tier" | "tierTone">> = {
+  1:  { save: null,  note: "Free shipping at 5+ packs", pop: false, tier: "Try",       tierTone: "soft"  },
+  2:  { save: null,  note: "Free shipping at 5+ packs", pop: false, tier: "Pair",      tierTone: "soft"  },
+  5:  { save: "20%", note: "Free shipping included",    pop: false, tier: "Crew",      tierTone: "honey" },
+  10: { save: "27%", note: "Free shipping included",    pop: true,  tier: "Full crew", tierTone: "ember" },
 };
 
-const PACK_STATIC_FALLBACK: Pick<BuyboxPack, "save" | "note" | "pop"> = {
+const PACK_STATIC_FALLBACK: Pick<BuyboxPack, "save" | "note" | "pop" | "tier" | "tierTone"> = {
   save: null,
   note: null,
   pop: false,
+  tier: undefined,
+  tierTone: undefined,
 };
 
 // ---------------------------------------------------------------------------
