@@ -2,18 +2,21 @@
 
 ## Overview
 
-Bare Next.js + Tailwind shell → audited design system → homepage + /shmo-review category → CR-80 PDP → L-Sign PDP → Square Card PDP → Shopify Storefront wiring → launch on `shmocard.com`. Source of truth for current state: `context/general/scope.md` + `handoff.md`.
+Bare Next.js + Tailwind shell → audited design system → homepage + /shmo-review category → CR-80 PDP → link hygiene + Coming Soon stubs → L-Sign PDP → Square Card PDP → cross-PDP mobile polish → Shopify Storefront wiring → tracking (GHL + FB Pixel) → launch on `shmocard.com`. Source of truth for current state: `context/general/scope.md` + `handoff.md`.
 
 ## Phases
 
 - [x] **Phase 1: Docs refresh** — Bring every `.md` file into alignment with the post-wipe reality. Complete 2026-05-07.
 - [x] **Phase 2: Design system review** — Audited `.claude/skills/shmocard-design-system/`, locked structural moves, locked Tailwind 4 ↔ `.shm-*` integration, locked reference-page translation map. Complete 2026-05-07.
 - [x] **Phase 3a: Homepage + /shmo-review category** — Tokens, base layout, homepage, /shmo-review category/family page. Complete 2026-05-16 (handoff.md).
-- [ ] **Phase 3: CR-80 PDP** — Build `/shmo-review/cr-80` product detail page from scratch. Active.
-- [ ] **Phase 4: L-Sign PDP** — Build `/shmo-review/l-sign` product detail page.
-- [ ] **Phase 5: Square Card PDP** — Build `/shmo-review/square-card` product detail page.
-- [ ] **Phase 6: Shopify Storefront wiring** — Replace placeholder product data with live Storefront API queries; wire cart + checkout redirect.
-- [ ] **Phase 7: Launch readiness** — Mobile pass, a11y, Vercel env, DNS cutover to `shmocard.com`.
+- [x] **Phase 3: CR-80 PDP** — Build `/shmo-review/cr-80` product detail page from scratch. Complete 2026-05-20 (SUMMARY.md).
+- [ ] **Phase 4: Link hygiene & Coming Soon stubs** — Audit every CTA / nav / footer link on built pages; stub `/shmo-review/l-sign`, `/shmo-review/square-card`, `/shmo-biz`, `/shmo-link`, `/shmo-reputation` as Coming Soon pages so nothing 404s.
+- [ ] **Phase 5: L-Sign PDP** — Build `/shmo-review/l-sign` product detail page using patterns established in Phase 3. Replaces the Phase 4 Coming Soon stub.
+- [ ] **Phase 6: Square Card PDP** — Build `/shmo-review/square-card` product detail page using patterns established in Phase 3. Replaces the Phase 4 Coming Soon stub.
+- [ ] **Phase 7: Cross-PDP mobile polish** — One pass across all 3 PDPs at 375 / 414 / 768 px. LAYOUT IS LOCKED — spacing / type / mascot only. Run before Shopify wiring so layout fights stay against placeholder data, not real Shopify strings.
+- [ ] **Phase 8: Shopify Storefront wiring** — Replace placeholder product data with live Storefront API queries; wire cart + checkout redirect. Read-only Admin (no mutations).
+- [ ] **Phase 9: Tracking — GHL webhook + Facebook Pixel** — Wire GHL webhook for order / customer sync; install Facebook Pixel + Conversions API for `ViewContent`, `AddToCart`, `InitiateCheckout`, `Purchase`. Depends on Phase 8 because pixel events fire on cart / checkout actions that don't exist until wiring is live.
+- [ ] **Phase 10: Launch readiness** — Final a11y audit, Vercel env vars, DNS cutover from `shop.shmocard.com` to `shmocard.com`. Highest blast radius — last phase.
 
 ## Phase Details
 
@@ -48,26 +51,77 @@ Bare Next.js + Tailwind shell → audited design system → homepage + /shmo-rev
 
 **Plans**: TBD — `/gsd-plan-phase 3` will break this into atomic plans.
 
-### Phase 4: L-Sign PDP
+### Phase 4: Link hygiene & Coming Soon stubs
 
-**Goal**: Build `/shmo-review/l-sign` product detail page using patterns established in Phase 3.
-**Depends on**: Phase 3.
+**Goal**: Every link on every built page resolves to either a real page or a Coming Soon placeholder. No 404s, no dead CTAs.
+
+**In scope**:
+1. Build a reusable `<ComingSoon>` component (Shmocard design system primitives only — hero card, headline, body, optional email-capture stub).
+2. Stub routes for `/shmo-review/l-sign`, `/shmo-review/square-card`, `/shmo-biz`, `/shmo-link`, `/shmo-reputation`, and any other sub-brand surfaces the homepage / footer link to.
+3. Audit every CTA / nav / footer link on `/`, `/shmo-review`, `/shmo-review/cr-80` — they all resolve cleanly (real page OR Coming Soon stub).
+4. Verify mobile nav + footer nav both work.
+
+**Out of scope**:
+- Building actual L-Sign / Square Card PDPs (Phases 5 + 6).
+- Email-capture wiring (collect-only; backend integration deferred).
+- Any Shopify product wiring.
+
+**Depends on**: Phase 3 (CR-80 PDP shipped — so we can audit its outbound links).
+**Plans**: TBD — `/gsd-plan-phase 4`.
+
+### Phase 5: L-Sign PDP
+
+**Goal**: Build `/shmo-review/l-sign` product detail page using patterns established in Phase 3. Replaces the Phase 4 Coming Soon stub.
+**Depends on**: Phase 3 + Phase 4 (Coming Soon stub exists at the L-Sign route).
 **Plans**: TBD.
 
-### Phase 5: Square Card PDP
+### Phase 6: Square Card PDP
 
-**Goal**: Build `/shmo-review/square-card` product detail page using patterns established in Phase 3.
-**Depends on**: Phase 3.
+**Goal**: Build `/shmo-review/square-card` product detail page using patterns established in Phase 3. Replaces the Phase 4 Coming Soon stub.
+**Depends on**: Phase 3 + Phase 4 + Phase 5 (Square inherits L-Sign learnings).
 **Plans**: TBD.
 
-### Phase 6: Shopify Storefront wiring
+### Phase 7: Cross-PDP mobile polish
 
-**Goal**: Replace all placeholder product data with live Storefront API queries; wire `cartCreate` / `cartLinesAdd` / cart drawer / checkout redirect. Read-only Admin (no mutations).
-**Depends on**: Phases 3, 4, 5 (all PDPs must exist with placeholder data first).
+**Goal**: Single mobile + a11y pass across all 3 PDPs at 375 / 414 / 768 px. Catch clipping, overflow, wave-divider gaps, mascot-cap violations, headline overflow before they multiply across Shopify-data variants.
+
+**In scope**:
+1. Playwright screenshots of all 3 PDPs at 375 / 414 / 768 px.
+2. Fix any layout / spacing / type issue found.
+3. a11y check — every interactive element labeled, contrast WCAG AA, keyboard tab order sensible.
+4. LAYOUT IS LOCKED — spacing / type / mascot scale only. No grid changes, no section reorders, no tile-ratio shifts.
+
+**Out of scope**:
+- Shopify wiring (Phase 8).
+- Tracking pixels (Phase 9).
+
+**Depends on**: Phases 5 + 6 (both PDPs exist with placeholder data).
 **Plans**: TBD.
 
-### Phase 7: Launch readiness
+### Phase 8: Shopify Storefront wiring
 
-**Goal**: Final pass before DNS cutover. Mobile audit, a11y audit, Vercel env vars, DNS swap from `shop.shmocard.com` to `shmocard.com`.
-**Depends on**: Phase 6.
+**Goal**: Replace all `TODO(shopify):` placeholder data with live Storefront API queries; wire `cartCreate` / `cartLinesAdd` / cart drawer / checkout redirect. Read-only Admin (no mutations).
+
+**Depends on**: Phases 3, 5, 6 (all 3 PDPs must exist with placeholder data first) + Phase 7 (mobile polish done before swapping to real-length Shopify strings).
+**Plans**: TBD.
+
+### Phase 9: Tracking — GHL webhook + Facebook Pixel
+
+**Goal**: Order data flows from Shopify → GHL for follow-up sequences; Facebook Pixel + Conversions API fires standard events on cart and checkout interactions.
+
+**In scope**:
+1. GHL webhook endpoint (Next.js route handler) for Shopify order-created events. Verify HMAC signature.
+2. Facebook Pixel base code installed site-wide (head injection or Next.js `Script` strategy).
+3. Standard pixel events wired: `ViewContent` (PDP load), `AddToCart` (cart mutation), `InitiateCheckout` (checkout redirect), `Purchase` (post-checkout return).
+4. Conversions API server-side mirror for the same events (deduplication via `event_id`).
+5. Test mode validation (FB Events Manager test events tab) before going live.
+
+**Depends on**: Phase 8 (pixel events fire on real cart/checkout flow; GHL webhook needs real Shopify order events).
+**Plans**: TBD.
+
+### Phase 10: Launch readiness
+
+**Goal**: Final pass before DNS cutover. Final a11y audit, Vercel env vars (Storefront token, GHL webhook secret, FB Pixel + CAPI tokens), DNS swap from `shop.shmocard.com` to `shmocard.com`.
+
+**Depends on**: Phase 9 (tracking live and verified in test mode before flipping DNS).
 **Plans**: TBD.

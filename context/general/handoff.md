@@ -6,9 +6,11 @@
 
 ## Project phase
 
-**Phase 3 — Rebuild**, mid-iteration on the CR-80 PDP. Homepage + cart smoke-test + base layout are done. CR-80 page mounted with all sections (Buybox → Proof → CrewStrip + ProofTiles → HowItWorks → VideoTestimonials → FinalCta). Currently in polish-and-CRO mode before paid ads start running.
+**Phase 3 — CR-80 PDP ✅ complete 2026-05-20.** Buybox → Proof → CrewStrip + ProofTiles → HowItWorks (4 alternating sections) → VideoTestimonials → FinalCta all shipped. Pack-row mobile CRO polished. SUMMARY.md written, ROADMAP.md flipped to `[x]`. See `.planning/phases/03-cr-80-pdp/SUMMARY.md`.
 
-**Sync issue:** `scope.md` still describes the deleted single-page-anchors architecture. The repo reversed to per-product PDP routes May 17 (memory 1097). Reconcile before next major dispatch.
+**Next phase: Phase 4 — Link hygiene & Coming Soon stubs.** Build reusable `<ComingSoon>` component, stub the 5 missing routes (L-Sign, Square Card, Shmo Biz, Shmo Link, Shmo Reputation), audit all CTAs / nav / footer links so nothing 404s. Run `/gsd-plan-phase 4` to kick off.
+
+ROADMAP.md restructured 2026-05-20 from 7 phases to **10 phases** to absorb Jordan's launch list (link audit, GHL webhook, FB Pixel, Coming Soon pages were missing). `scope.md` reconciled in the same pass — both files now agree on architecture and phase order.
 
 ---
 
@@ -67,31 +69,35 @@ None. All work uncommitted.
 
 ## What's next
 
-**Phase 3 — Rebuild** continues per scope.md.
+**Phase 4 — Link hygiene & Coming Soon stubs** is up next per the new 10-phase ROADMAP.
 
 Concrete next actions in order:
 
-1. **Reconcile `scope.md` + `handoff.md` against current architecture.** Both still describe the deleted single-page-anchors approach; actual state is per-product PDPs at `/shmo-review/cr-80` (with L-Sign + Square Card pending).
+1. **Run `/gsd-plan-phase 4`.** Breaks Phase 4 into atomic plans: `<ComingSoon>` component, 5 route stubs, link audit across `/`, `/shmo-review`, `/shmo-review/cr-80`.
 
-2. **Pick a wave from the two CRO source docs.** Both files exist:
-   - `context/brainstorming/cr-80-buybox-cro-plan.md` (paid-traffic CRO)
-   - `context/brainstorming/cr-80-competitor-selector-teardown.md` (competitor-specific selector changes)
+2. **Resolve open decisions (CR-80 carry-overs)** in parallel with Phase 4 — they unblock CRO wave choices and inform Phase 8 (Shopify wiring):
+   - Drop 1-card SKU on CR-80 PDP?
+   - Inflate compare-price MSRP for stronger anchoring?
+   - Bonus gifts available for 5-pack / 10-pack tiers?
 
-   The pack-row selector is already mostly aligned to Wave 1 of the competitor teardown after the badge reposition. Remaining low-risk Wave 1 items: louder selected state (ember bg fill + 3 px border), "Most popular" as corner ribbon (not floating overlay).
+3. **CRO wave choice — defer until L-Sign + Square ship.** The two research deliverables remain on tap:
+   - `context/brainstorming/cr-80-buybox-cro-plan.md` (paid-traffic CRO — message-match H1, CTA above checklist, sticky mobile bottom CTA bar)
+   - `context/brainstorming/cr-80-competitor-selector-teardown.md` (louder selected state, "Most popular" corner ribbon)
+   Best to run CRO experiments after Phase 7 (cross-PDP mobile polish) so changes apply across all 3 PDPs in one pass.
 
-   The above-the-fold CRO plan changes are higher-leverage: message-match H1, reorder so CTA sits above the checklist, sticky mobile bottom CTA bar.
+4. **Phase 5 + 6** — L-Sign and Square Card PDPs. Pattern locked from CR-80; should be faster.
 
-3. **Resolve open decisions** (see below) so Wave 2 can run.
+5. **Phase 8 — Shopify wiring.** Invoke `shmocard-shopify-work` skill before dispatching the build. Replaces all `TODO(shopify):` placeholders + wires cart + checkout redirect + webhook revalidation route.
 
-4. **Build remaining PDPs** — L-Sign (`/shmo-review/l-sign`) and Square Card (`/shmo-review/square-card`). Both still missing.
+6. **Phase 9 — Tracking.** GHL webhook + Facebook Pixel + Conversions API. Must come after Phase 8 because pixel events fire on cart/checkout actions that don't exist until wiring is live.
 
-5. **Wire Shopify Storefront API** for product fetching on the three `/shmo-review` PDPs. Today the Buybox component has hardcoded PLACEHOLDER product data with `TODO(shopify):` markers — invoke `shmocard-shopify-work` skill before dispatching the build.
+7. **Phase 10 — Launch readiness.** DNS cutover — last phase.
 
 ---
 
 ## Open decisions
 
-- **`scope.md` + previous `handoff.md` (replaced by this file) describe the wrong architecture.** Update scope.md when next phase touches it.
+- ✅ **`scope.md` reconciled 2026-05-20.** Now matches the per-product PDP architecture + new 10-phase ROADMAP.
 - **Drop the 1-card SKU on the CR-80 PDP?** Competitor sells 1 / 2 / 5 tiers; we have 1 / 2 / 5 / 10. Cutting 1-card lifts AOV floor for ad traffic.
 - **Inflate compare-price MSRP for stronger anchoring?** Current 27 % off vs competitor's 60 % off. DTC standard tactic.
 - **Bonus gifts available?** 5-pack "+ Setup Guide", 10-pack "+ Setup Guide + spare card". Need confirmation what exists or can be authored.
@@ -111,5 +117,5 @@ Concrete next actions in order:
    - `context/brainstorming/cr-80-competitor-selector-teardown.md`
 4. **Before any UI work:** invoke the `shmocard-design-system` Skill per `.claude/rules/skill-routing.md`. Then read `.claude/rules/design-system.md`.
 5. **Don't write UI code in the parent agent.** Dispatch the `design-system-builder` subagent for any `.tsx` / `.css` change (per `.claude/rules/subagent-dispatch.md`). Only carve-out: pure copy/text edits with zero class/styling changes.
-6. Ask Jordan: **"Want to keep iterating the selector (louder selected state + corner ribbon), tackle the bigger CRO levers (message-match H1, CTA above checklist, sticky mobile bar), or reconcile `scope.md` first?"**
+6. Ask Jordan: **"Ready to kick off Phase 4 (Link hygiene & Coming Soon stubs) with `/gsd-plan-phase 4`, or want to resolve CR-80 open decisions (drop 1-card SKU / inflate MSRP / bonus gifts) first?"**
 7. The dev server may be down at session start — check with `lsof -iTCP:3000` and `preview_list`. If nothing's running, `preview_start name=next-dev`.
