@@ -38,6 +38,8 @@ export type BuyboxPack = {
   note: string | null;
   compare: number | null;
   pop: boolean;
+  variantId?: string;
+  availableForSale?: boolean;
 };
 
 export type BuyboxGalleryImage = { src: string; alt: string };
