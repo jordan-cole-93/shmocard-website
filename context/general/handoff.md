@@ -1,16 +1,16 @@
 # handoff.md — Session Handoff
 
-**Last session:** 2026-05-20 — Phase 4 shipped + Phase 5 shipped end-to-end. Phase 5 work: refactored `<Buybox>` to take product props with CR-80 defaults (byte-identical backward-compat verified), then built `/shmo-review/l-sign` full PDP composing reused Phase 3 sections, then mobile + a11y pass at 375/414/768 px (all clean, no fixes needed). 6 atomic commits this Phase 5 stretch. Also discovered a recurring dev-server gotcha during Phase 4: after creating many new files at once, Next.js Fast Refresh can get stuck excluding CSS from the bundle — restart cure: `rm -rf .next && preview_start`. Saved 2 new memory rules: always reset preview viewport to desktop after mobile screenshots, and always use AskUserQuestion for decisions (Jordan's ADHD).
+**Last session:** 2026-05-20 — Phases 4, 5, 6 ALL shipped end-to-end in one marathon. Phase 6 work: built new `<FormatCompare>` shared component, mounted on CR-80 (06-02) for first checkpoint, then built Square Card PDP with FormatCompare baked in (06-03), then back-ported to L-Sign (06-04), then cross-page checkpoint (06-05 approved), then mobile + a11y pass (06-07) surfaced 1 WCAG issue → system-wide `.shm-btn--sm` min-height bumped 38 → 44 px (`7d34c18`). 8 atomic commits in this Phase 6 stretch. Memory rules saved: (a) reset preview viewport to desktop after mobile screenshots, (b) always use AskUserQuestion for decisions (Jordan's ADHD), (c) Next.js dev-server cache gotcha after `npm run build` — clear `.next/` before resuming dev.
 
 ---
 
 ## Project phase
 
-**Phase 5 — L-Sign PDP ✅ complete 2026-05-20.** Buybox refactored to take product props (zero-regression on `/shmo-review` + `/shmo-review/cr-80`); `/shmo-review/l-sign` full PDP shipped composing reused Phase 3 sections; mobile + a11y verified at 375/414/768 px. tsc + build clean. See `.planning/phases/05-l-sign-pdp/05-SUMMARY.md`.
+**Phase 6 — Square Card PDP + FormatCompare ✅ complete 2026-05-20.** Shipped new `<FormatCompare>` shared component mounted on all 3 PDPs (CR-80, L-Sign, Square Card) between HowItWorks and VideoTestimonials. Square Card Coming Soon stub replaced with full PDP. WCAG fix: `.shm-btn--sm` min-height 38 → 44 px system-wide. tsc + build clean. See `.planning/phases/06-square-card-pdp/06-SUMMARY.md`.
 
-**Next phase: Phase 6 — Square Card PDP + Format Compare section.** Build `/shmo-review/square-card` using the same Buybox-props + reused-sections pattern. Phase 6 also lands the deferred Format Compare section — build once with all 3 formats (CR-80 / L-Sign / Square), then back-port to CR-80 + L-Sign. Run **`/gsd-plan-phase 6`** to kick off.
+**Next phase: Phase 7 — Cross-PDP mobile polish.** Single mobile + a11y pass across all 3 PDPs (CR-80, L-Sign, Square Card) at 375 / 414 / 768 px. LAYOUT IS LOCKED — spacing / type / mascot only. Catch shared-component issues that earlier phases surfaced (Buybox heading hierarchy a11y, HowItWorks step-01 copy editorial for L-Sign + Square). Run BEFORE Shopify wiring so layout fights stay against placeholder data. Run **`/gsd-plan-phase 7`** to kick off.
 
-**Project progress:** 6 of 10 phases complete (60%). Phases 1, 2, 3a, 3, 4, 5 done. Remaining: 6 (Square Card PDP + Format Compare), 7 (Cross-PDP mobile polish), 8 (Shopify Storefront wiring), 9 (Tracking — GHL + FB Pixel), 10 (Launch readiness — DNS cutover).
+**Project progress:** 7 of 10 phases complete (70%). Phases 1, 2, 3a, 3, 4, 5, 6 done. Remaining: 7 (Cross-PDP mobile polish), 8 (Shopify Storefront wiring), 9 (Tracking — GHL + FB Pixel), 10 (Launch readiness — DNS cutover).
 
 ---
 
@@ -136,5 +136,5 @@ Concrete next actions in order:
    - `context/brainstorming/cr-80-competitor-selector-teardown.md`
 4. **Before any UI work:** invoke the `shmocard-design-system` Skill per `.claude/rules/skill-routing.md`. Then read `.claude/rules/design-system.md`.
 5. **Don't write UI code in the parent agent.** Dispatch the `design-system-builder` subagent for any `.tsx` / `.css` change (per `.claude/rules/subagent-dispatch.md`). Only carve-out: pure copy/text edits with zero class/styling changes.
-6. Ask Jordan via AskUserQuestion (per saved memory rule — Jordan has ADHD, no walls of text): **"Ready to kick off Phase 6 (Square Card PDP + Format Compare section) with `/gsd-plan-phase 6`? Phase 6 lands the deferred Format Compare since all 3 formats now exist (CR-80 + L-Sign shipped, Square next)."**
+6. Ask Jordan via AskUserQuestion (per saved memory rule — Jordan has ADHD, no walls of text): **"Ready to kick off Phase 7 (Cross-PDP mobile polish) with `/gsd-plan-phase 7`? All 3 PDPs now exist and need a single coordinated mobile + a11y sweep before Phase 8 Shopify wiring lands real product strings."** Also: clear `.next/` cache if dev server has been running since the last `npm run build` (avoid the 500 error from Phase 6 close-out).
 7. The dev server may be down at session start — check with `lsof -iTCP:3000` and `preview_list`. If nothing's running, `preview_start name=next-dev`.
