@@ -51,23 +51,6 @@ const FORMAT_COPY: Record<
   },
 };
 
-// Fallback images used only when Shopify returns no image for a product.
-// TODO(shopify): remove once all products have images in Shopify Admin.
-const FALLBACK_IMAGES: Record<string, { src: string; alt: string }> = {
-  "google-reviews-nfc-tap-card-cr80": {
-    src: "/products/cr80/transparent/magnific_2884306972.png",
-    alt: "Shmo Review CR-80 card",
-  },
-  "google-review-nfc-tap-card-l-sign": {
-    src: "/products/l-sign/transparent/magnific_2884477047.png",
-    alt: "Shmo Review L-Sign counter standee",
-  },
-  "google-review-plaque": {
-    src: "/products/plate/transparent/magnific_2885042834.png",
-    alt: "Shmo Review Square Card disc",
-  },
-};
-
 const HANDLES = [
   "google-reviews-nfc-tap-card-cr80",
   "google-review-nfc-tap-card-l-sign",
@@ -118,18 +101,14 @@ export default async function FormatPicker({ bg = "cream", nextBg = "marsh" }: P
         {HANDLES.map((handle, i) => {
           const product: ShopifyProduct | null = products[i];
           const copy = FORMAT_COPY[handle];
-          const fallback = FALLBACK_IMAGES[handle];
 
           // Product not found in Shopify — render disabled placeholder card.
           if (!product) {
             return (
               <article className="shm-product" key={handle}>
-                <a className="shm-product__media" href="#formats">
-                  {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img src={fallback.src} alt={fallback.alt} />
-                </a>
+                <div className="shm-product__media" />
                 <div className="shm-product__body">
-                  <h3 className="shm-product__name">{fallback.alt}</h3>
+                  <h3 className="shm-product__name">{copy.sub}</h3>
                   <p className="shm-product__sub">{copy.sub}</p>
                   <div className="shm-product__row">
                     <span className="shm-product__price">—</span>
@@ -143,11 +122,11 @@ export default async function FormatPicker({ bg = "cream", nextBg = "marsh" }: P
           const imageUrl =
             product.featuredImage?.url ??
             product.images.nodes[0]?.url ??
-            fallback.src;
+            "";
           const imageAlt =
             product.featuredImage?.altText ??
             product.images.nodes[0]?.altText ??
-            fallback.alt;
+            "";
           const price = formatPrice(
             product.priceRange.minVariantPrice.amount,
             product.priceRange.minVariantPrice.currencyCode,
