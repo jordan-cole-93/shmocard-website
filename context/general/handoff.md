@@ -1,20 +1,34 @@
 # handoff.md — Session Handoff
 
-**Last session:** 2026-05-20 — Heavy CR-80 PDP polish: buybox cleanup, HowItWorks restructured from sticky-stack to 4 alternating sections, pack-row mobile selector iterated through 5+ builder dispatches to final layout (SAVE badge under pack name, 96 px uniform rows), and 2 CRO research deliverables shipped to inform next-wave changes.
+**Last session:** 2026-05-20 — Phase 4 (Link hygiene & Coming Soon stubs) shipped end-to-end. Built shared `<ComingSoon>` component + 5 stub routes (Shmo Biz / Link / Reputation, L-Sign, Square Card) + upgraded 11 hrefs across NavMenu / Footer / FormatPicker. Also reconciled planning docs (ROADMAP restructured 7 → 10 phases, scope.md + handoff.md aligned, Phase 3 closed out with SUMMARY.md). Five atomic commits this session — `7ccca06`, `db1b14e`, `d4fba9f`, `d75aab4`, `ecb2e08`, plus phase close-out commit.
 
 ---
 
 ## Project phase
 
-**Phase 3 — CR-80 PDP ✅ complete 2026-05-20.** Buybox → Proof → CrewStrip + ProofTiles → HowItWorks (4 alternating sections) → VideoTestimonials → FinalCta all shipped. Pack-row mobile CRO polished. SUMMARY.md written, ROADMAP.md flipped to `[x]`. See `.planning/phases/03-cr-80-pdp/SUMMARY.md`.
+**Phase 4 — Link hygiene & Coming Soon stubs ✅ complete 2026-05-20.** Shared `<ComingSoon>` server component shipped + 5 stub routes mounted + 11 hrefs upgraded across nav/footer/format-picker. tsc + build clean. See `.planning/phases/04-link-hygiene-coming-soon-stubs/04-SUMMARY.md`.
 
-**Next phase: Phase 4 — Link hygiene & Coming Soon stubs.** Build reusable `<ComingSoon>` component, stub the 5 missing routes (L-Sign, Square Card, Shmo Biz, Shmo Link, Shmo Reputation), audit all CTAs / nav / footer links so nothing 404s. Run `/gsd-plan-phase 4` to kick off.
+**Next phase: Phase 5 — L-Sign PDP.** Build `/shmo-review/l-sign` product detail page using the CR-80 PDP pattern from Phase 3. Replaces the Phase 4 Coming Soon stub at that route. Run `/gsd-plan-phase 5` to kick off.
 
-ROADMAP.md restructured 2026-05-20 from 7 phases to **10 phases** to absorb Jordan's launch list (link audit, GHL webhook, FB Pixel, Coming Soon pages were missing). `scope.md` reconciled in the same pass — both files now agree on architecture and phase order.
+**Project progress:** 5 of 10 phases complete (50%). Phases 1, 2, 3a, 3, 4 done. Remaining: 5 (L-Sign PDP), 6 (Square Card PDP), 7 (Cross-PDP mobile polish), 8 (Shopify Storefront wiring), 9 (Tracking — GHL + FB Pixel), 10 (Launch readiness — DNS cutover).
 
 ---
 
 ## What was done this session
+
+**Phase 4 execution + planning hygiene:**
+
+- **Closed Phase 3 (CR-80 PDP).** Wrote `03-cr-80-pdp/SUMMARY.md`, flipped ROADMAP checkbox to `[x]`.
+- **Restructured ROADMAP from 7 → 10 phases.** Inserted Phase 4 (Link hygiene & Coming Soon), Phase 7 (Cross-PDP mobile polish), Phase 9 (Tracking) — covers Jordan's launch-readiness items that were missing from the old roadmap.
+- **Reconciled `scope.md` + `handoff.md`** against new ROADMAP and current per-product PDP architecture. Removed stale "PDPs abandoned" line; documented all 10 phases.
+- **Generated config.json** via `gsd-health --repair` (was missing, single blocker on health check).
+- **Phase 4 RESEARCH.md + PLAN.md + VALIDATION.md** generated via gsd-phase-researcher → gsd-planner → gsd-plan-checker pipeline. Plan-checker found 2 blockers + 3 warnings, all surgically addressed before execution.
+- **Built `<ComingSoon>` server component** at `components/ComingSoon.tsx` — Section + section-head + eyebrow + h1 + lede + disabled email-capture form + 140 px mascot sticker. Inline polish during 04-02 review: mascot reordered between section-head and field, form-card constrained ~520 px centered on desktop. One bug fix: `.shm-mascot--supporting` was missing the base `.shm-mascot` class, builder follow-up dispatch added it.
+- **Shipped 5 Coming Soon stub routes** — `/shmo-biz` (holding-card), `/shmo-link` (heart-hands), `/shmo-reputation` (megaphone), `/shmo-review/l-sign` (pointing), `/shmo-review/square-card` (thumbs-up). Each ~12 lines, composes `<ComingSoon>` with sub-brand props.
+- **Upgraded 11 hrefs across NavMenu / Footer / FormatPicker.** 10 planned + 1 follow-up (Footer "CR-80 Card" → `/shmo-review/cr-80` PDP). NavMenu and Footer internal-route links upgraded from bare `<a>` to Next.js `<Link>`.
+- **Build verification.** `npx tsc --noEmit` clean, `npm run build` clean. All 12 routes statically generated, 5 Coming Soon routes at 138 B each.
+
+**Earlier this session (pre-Phase 4):**
 
 - **Section-head removed above CR-80 gallery.** Deleted the `<div className="shm-section-head shm-section-head--start">` block (eyebrow + h2) in `components/shmo-review/Buybox.tsx` — gallery now starts the section directly.
 
@@ -63,7 +77,12 @@ ROADMAP.md restructured 2026-05-20 from 7 phases to **10 phases** to absorb Jord
 
 ### Commits landed this session
 
-None. All work uncommitted.
+1. `7ccca06` — `docs(planning): close Phase 3, restructure ROADMAP to 10 phases, plan Phase 4`
+2. `db1b14e` — `feat(coming-soon): add ComingSoon component + /shmo-biz stub (04-01)`
+3. `d4fba9f` — `feat(coming-soon): stub 4 remaining sub-brand routes (04-03)`
+4. `d75aab4` — `fix(links): upgrade anchor stubs to real Coming Soon routes (04-04)`
+5. `ecb2e08` — `fix(links): point Footer CR-80 Card to /shmo-review/cr-80 PDP`
+6. Phase 4 close-out commit (this commit) — `chore(phase-4): close out link hygiene + Coming Soon phase`
 
 ---
 
@@ -117,5 +136,5 @@ Concrete next actions in order:
    - `context/brainstorming/cr-80-competitor-selector-teardown.md`
 4. **Before any UI work:** invoke the `shmocard-design-system` Skill per `.claude/rules/skill-routing.md`. Then read `.claude/rules/design-system.md`.
 5. **Don't write UI code in the parent agent.** Dispatch the `design-system-builder` subagent for any `.tsx` / `.css` change (per `.claude/rules/subagent-dispatch.md`). Only carve-out: pure copy/text edits with zero class/styling changes.
-6. Ask Jordan: **"Ready to kick off Phase 4 (Link hygiene & Coming Soon stubs) with `/gsd-plan-phase 4`, or want to resolve CR-80 open decisions (drop 1-card SKU / inflate MSRP / bonus gifts) first?"**
+6. Ask Jordan: **"Ready to kick off Phase 5 (L-Sign PDP) with `/gsd-plan-phase 5`, or want to resolve CR-80 open decisions (drop 1-card SKU / inflate MSRP / bonus gifts) before building more PDPs?"**
 7. The dev server may be down at session start — check with `lsof -iTCP:3000` and `preview_list`. If nothing's running, `preview_start name=next-dev`.
