@@ -26,15 +26,53 @@ import Section, { type SectionBg } from "@/components/layout/Section";
 
 const STARS = [0, 1, 2, 3, 4];
 
+// ---------------------------------------------------------------------------
+// Exported types
+// ---------------------------------------------------------------------------
+
+export type BuyboxPack = {
+  qty: number;
+  price: number;
+  perCard: number;
+  save: string | null;
+  note: string | null;
+  compare: number | null;
+  pop: boolean;
+};
+
+export type BuyboxGalleryImage = { src: string; alt: string };
+
+export type BuyboxFaqRow = { q: string; a: string };
+
+export type BuyboxProduct = {
+  handle: string;
+  title: string;
+  sub: string;
+};
+
+export type BuyboxProps = {
+  product?: BuyboxProduct;
+  gallery?: BuyboxGalleryImage[];
+  packs?: BuyboxPack[];
+  checklist?: string[];
+  faqRows?: BuyboxFaqRow[];
+  ariaLabel?: string;
+  nextBg?: SectionBg;
+};
+
+// ---------------------------------------------------------------------------
+// CR-80 defaults (exported so future PDPs can reference them)
+// ---------------------------------------------------------------------------
+
 // TODO(shopify): replace with Storefront API product query result.
-const PRODUCT = {
+export const DEFAULT_BUYBOX_PRODUCT: BuyboxProduct = {
   handle: "shmo-review-cr80",
   title: "Google Review NFC Tap Card (CR-80)",
   sub: "The countertop tap that turns happy crews into five-star reviews.",
 };
 
 // TODO(shopify): swap gallery to Shopify product.images.nodes[].url.
-const GALLERY: Array<{ src: string; alt: string }> = [
+export const DEFAULT_BUYBOX_GALLERY: BuyboxGalleryImage[] = [
   { src: "/products/cr80/transparent/magnific_2884306972.png", alt: "CR-80 NFC tap card, front view" },
   { src: "/products/cr80/transparent/magnific_2884313989.png", alt: "CR-80 NFC tap card, trio stacked" },
   { src: "/products/cr80/transparent/magnific_2884319754.png", alt: "CR-80 NFC tap card, angled" },
@@ -44,34 +82,46 @@ const GALLERY: Array<{ src: string; alt: string }> = [
 ];
 
 // TODO(shopify): pack pricing tiers come from Shopify variants + metafields.
-const PACKS = [
+export const DEFAULT_BUYBOX_PACKS: BuyboxPack[] = [
   { qty: 1,  price: 29.99,  perCard: 29.99, save: null,  note: null,                       compare: null,   pop: false },
   { qty: 2,  price: 49.99,  perCard: 25.00, save: null,  note: null,                       compare: 59.98,  pop: false },
   { qty: 5,  price: 119.99, perCard: 24.00, save: "20%", note: "Free shipping included",   compare: 149.95, pop: false },
   { qty: 10, price: 219.99, perCard: 22.00, save: "27%", note: "Free shipping included",   compare: 299.90, pop: true  },
 ];
 
-const CHECKLIST = [
+export const DEFAULT_BUYBOX_CHECKLIST: string[] = [
   "Hand-printed in Minneapolis on premium PVC stock",
   "Pre-programmed to your Google review link before shipping",
   "Works on every modern phone — no app, no download",
   "60-day reprogramming + return guarantee",
 ];
 
-const FAQ_ROWS = [
+export const DEFAULT_BUYBOX_FAQ_ROWS: BuyboxFaqRow[] = [
   { q: "How it works", a: "Customer taps the card. Their phone opens your Google review page. They post — done." },
   { q: "Shipping", a: "Order by Tuesday 5pm CT, ships Friday. 3-day standard. Free expedited on 10+ packs." },
   { q: "60-day return + reprogramming guarantee", a: "Don't love it? Return for full refund within 60 days. Reprogram destination URL anytime." },
   { q: "Product details", a: "CR-80 / 85.6×54mm / 0.76mm PVC. NTAG 215 NFC chip. QR fallback printed on back. Hand-printed in Minneapolis." },
 ];
 
-export default function Buybox({ nextBg = "marsh" }: { nextBg?: SectionBg }) {
+// ---------------------------------------------------------------------------
+// Component
+// ---------------------------------------------------------------------------
+
+export default function Buybox({
+  product = DEFAULT_BUYBOX_PRODUCT,
+  gallery = DEFAULT_BUYBOX_GALLERY,
+  packs = DEFAULT_BUYBOX_PACKS,
+  checklist = DEFAULT_BUYBOX_CHECKLIST,
+  faqRows = DEFAULT_BUYBOX_FAQ_ROWS,
+  ariaLabel = "Buy the CR-80 card",
+  nextBg = "marsh",
+}: BuyboxProps) {
   const [activeIdx, setActiveIdx] = useState(0);
-  const [packIdx, setPackIdx] = useState(3); // 10-pack default (most popular)
+  const [packIdx, setPackIdx] = useState(Math.min(3, packs.length - 1)); // 10-pack default (most popular)
   const [qty, setQty] = useState(1);
   const [faqOpen, setFaqOpen] = useState(-1);
 
-  const pack = PACKS[packIdx];
+  const pack = packs[packIdx];
   const lineTotal = (pack.price * qty).toFixed(2);
 
   const addLine = useCartStore((s) => s.addLine);
@@ -85,14 +135,14 @@ export default function Buybox({ nextBg = "marsh" }: { nextBg?: SectionBg }) {
     // and rely on the server reconcile to refresh `lines`.
     const line: CartLine = {
       id: `local-${Date.now()}-${packIdx}`,
-      merchandiseId: `placeholder:cr80-pack-${pack.qty}`, // TODO(shopify)
-      productHandle: PRODUCT.handle, // TODO(shopify)
-      title: PRODUCT.title, // TODO(shopify)
+      merchandiseId: `placeholder:${product.handle}-pack-${pack.qty}`, // TODO(shopify)
+      productHandle: product.handle, // TODO(shopify)
+      title: product.title, // TODO(shopify)
       variantTitle: `${pack.qty}-pack`,
       price: pack.price.toFixed(2), // TODO(shopify)
       currencyCode: "USD",
-      imageUrl: GALLERY[0].src, // TODO(shopify)
-      imageAlt: GALLERY[0].alt,
+      imageUrl: gallery[0].src, // TODO(shopify)
+      imageAlt: gallery[0].alt,
       quantity: qty,
     };
     addLine(line);
@@ -100,16 +150,16 @@ export default function Buybox({ nextBg = "marsh" }: { nextBg?: SectionBg }) {
   }
 
   return (
-    <Section bg="marsh" nextBg={nextBg} className="review-buybox" id="buybox" ariaLabel="Buy the CR-80 card">
+    <Section bg="marsh" nextBg={nextBg} className="review-buybox" id="buybox" ariaLabel={ariaLabel}>
       <div className="pdp-buybox">
         {/* Gallery */}
         <div className="gal">
           <div className="gal__main">
             {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src={GALLERY[activeIdx].src} alt={GALLERY[activeIdx].alt} />
+            <img src={gallery[activeIdx].src} alt={gallery[activeIdx].alt} />
           </div>
           <div className="gal__thumbs">
-            {GALLERY.map((t, i) => (
+            {gallery.map((t, i) => (
               <button
                 key={i}
                 type="button"
@@ -138,15 +188,15 @@ export default function Buybox({ nextBg = "marsh" }: { nextBg?: SectionBg }) {
             <span className="shm-rating__count">· 87 verified reviews</span>
           </span>
 
-          <h3 className="bb__title">{PRODUCT.title}</h3>
+          <h3 className="bb__title">{product.title}</h3>
           <p className="bb__sub">
-            <em>{PRODUCT.sub}</em>
+            <em>{product.sub}</em>
           </p>
 
           <hr className="bb__rule" />
 
           <ul className="shm-checklist shm-checklist--featured">
-            {CHECKLIST.map((c) => (
+            {checklist.map((c) => (
               <li key={c}>{c}</li>
             ))}
           </ul>
@@ -154,7 +204,7 @@ export default function Buybox({ nextBg = "marsh" }: { nextBg?: SectionBg }) {
           {/* Pack selector */}
           <fieldset className="shm-pack-rows">
             <legend className="shm-pack-rows__label">Choose your pack</legend>
-            {PACKS.map((p, i) => (
+            {packs.map((p, i) => (
               <label
                 key={i}
                 className={`shm-pack-row${packIdx === i ? " shm-pack-row--checked" : ""}${p.pop ? " shm-pack-row--pop" : ""}`}
@@ -165,7 +215,7 @@ export default function Buybox({ nextBg = "marsh" }: { nextBg?: SectionBg }) {
                 )}
                 <span className="shm-pack-row__thumb">
                   {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img src={p.qty >= 5 ? GALLERY[1].src : GALLERY[0].src} alt="" />
+                  <img src={p.qty >= 5 ? gallery[1].src : gallery[0].src} alt="" />
                 </span>
                 <span className="shm-pack-row__main">
                   <span className="shm-pack-row__name">
@@ -260,7 +310,7 @@ export default function Buybox({ nextBg = "marsh" }: { nextBg?: SectionBg }) {
           </div>
 
           <ul className="shm-faq-list bb__faq">
-            {FAQ_ROWS.map((row, i) => (
+            {faqRows.map((row, i) => (
               <li
                 className={`shm-faq-item${faqOpen === i ? " shm-faq-item--open" : ""}`}
                 key={i}
