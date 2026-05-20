@@ -181,6 +181,10 @@
    --soft    · Quietest pill — translucent ink hairline, no fill. Caption-strength label.
    ------------------------------------------------------------ */
 .shm-badge--ember { background: var(--color-ember); color: var(--color-cocoa-deep); border-color: rgba(0,0,0,0.20); }
+/* Corner ribbon ember tier badge — white text accepted intentionally for visual punch.
+   System-wide .shm-badge--ember keeps dark text for WCAG AA (Phase 7 a11y fix).
+   This compound selector overrides ONLY for the corner-ribbon position. */
+.shm-pack-row__pop.shm-badge--ember { color: var(--color-marshmallow); }
 .shm-badge--honey { background: var(--color-honey); color: var(--color-cocoa-deep); }
 .shm-badge--cocoa { background: var(--color-cocoa-deep); color: var(--color-marshmallow); border-color: var(--color-cocoa-deep); }
 .shm-badge--cream { background: var(--color-marshmallow); color: var(--color-cocoa-deep); }
