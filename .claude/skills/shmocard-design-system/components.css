@@ -1886,7 +1886,7 @@ textarea.shm-input {
   align-items: center;
   gap: 14px;
   padding: 14px 18px;
-  min-height: 111px; /* equalize all rows: tallest natural row (name + badge + note) renders at 111px */
+  min-height: 88px; /* desktop: name + badge inline (row 1) + note (row 2) = 88px */
   background: var(--color-marshmallow);
   border: 2px solid var(--color-hair);
   border-radius: var(--radius-sm);
@@ -1914,6 +1914,19 @@ textarea.shm-input {
   display: flex; flex-direction: column;
   gap: 4px;
   min-width: 0;
+}
+/* Desktop: name + SAVE badge inline on row 1, note wraps to row 2. */
+@media (min-width: 640px) {
+  .shm-pack-row__main {
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 8px;
+    row-gap: 6px;
+  }
+  .shm-pack-row__note {
+    flex-basis: 100%;
+  }
 }
 .shm-pack-row__name {
   font-family: var(--font-display);
