@@ -19,10 +19,10 @@ const REVIEW_HOW_STEPS: Array<{
 }> = [
   {
     n: "01",
-    title: "Crew hands the card",
-    body: "After every transaction, an employee hands the customer the card. The ask happens at the right moment — when the customer is happy.",
+    title: "Put the card where customers can reach it",
+    body: "After the transaction — or right at the counter — your NFC card is there. The ask happens at the right moment, when the customer is happy.",
     screen: "handoff",
-    details: ["Best after checkout", "Lives with the crew", "No counter card"],
+    details: ["Works at checkout", "Self-serve or crew-assisted", "No app needed"],
   },
   {
     n: "02",
