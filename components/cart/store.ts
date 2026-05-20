@@ -24,6 +24,7 @@
 // Reference: RESEARCH.md Pitfall 6, plan 03-08 task 1.
 
 import { create } from "zustand";
+import type { ShopifyDiscountCode } from "@/lib/shopify/types";
 import type { CartLine } from "./types";
 
 /** Free-shipping unlock threshold in USD. Configurable in one place. */
@@ -36,6 +37,8 @@ type CartState = {
   checkoutUrl: string | null;
   /** Cart line items. Hydrated from server on mount; not persisted. */
   lines: CartLine[];
+  /** Applied discount codes. Hydrated from server on mount; not persisted. */
+  discountCodes: ShopifyDiscountCode[];
   /** Drawer open/closed. Resets on reload. */
   isOpen: boolean;
 };
@@ -46,6 +49,7 @@ type CartActions = {
     cartId: string | null,
     checkoutUrl: string | null,
     lines?: CartLine[],
+    discountCodes?: ShopifyDiscountCode[],
   ) => void;
   /** Replace just the line list — used by hydration + after mutations. */
   replaceLines: (lines: CartLine[]) => void;
@@ -66,17 +70,19 @@ const INITIAL_STATE: CartState = {
   cartId: null,
   checkoutUrl: null,
   lines: [],
+  discountCodes: [],
   isOpen: false,
 };
 
 export const useCartStore = create<CartStore>()((set) => ({
   ...INITIAL_STATE,
 
-  setCart: (cartId, checkoutUrl, lines) =>
+  setCart: (cartId, checkoutUrl, lines, discountCodes) =>
     set((state) => ({
       cartId,
       checkoutUrl,
       lines: lines ?? state.lines,
+      discountCodes: discountCodes ?? state.discountCodes,
     })),
 
   replaceLines: (lines) => set({ lines }),

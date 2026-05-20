@@ -70,14 +70,14 @@ export function useCartHydration(): void {
 
         if (!cart) {
           // No cookie OR Shopify expired the cart — start clean.
-          useCartStore.getState().setCart(null, null, []);
+          useCartStore.getState().setCart(null, null, [], []);
           return;
         }
 
         const lines = mapShopifyCartLines(cart);
         useCartStore
           .getState()
-          .setCart(cart.id, cart.checkoutUrl, lines);
+          .setCart(cart.id, cart.checkoutUrl, lines, cart.discountCodes);
       } catch {
         // Silent: hydration failure shouldn't block the page render.
         // The user can still browse; cart actions will surface errors.

@@ -125,6 +125,7 @@ const CART_FIELDS_FRAGMENT = /* GraphQL */ `
       subtotalAmount { amount currencyCode }
       totalAmount { amount currencyCode }
     }
+    discountCodes { code applicable }
     lines(first: 50) {
       nodes {
         id

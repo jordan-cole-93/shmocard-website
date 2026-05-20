@@ -17,6 +17,7 @@ import { cookies } from "next/headers";
 import { shopifyFetch } from "@/lib/shopify";
 import {
   CART_CREATE_MUTATION,
+  CART_DISCOUNT_CODES_UPDATE_MUTATION,
   CART_LINES_ADD_MUTATION,
   CART_LINES_REMOVE_MUTATION,
   CART_LINES_UPDATE_MUTATION,
@@ -27,6 +28,7 @@ import {
 } from "@/lib/shopify/queries";
 import type {
   CartCreatePayload,
+  CartDiscountCodesUpdatePayload,
   CartLinesAddPayload,
   CartLinesRemovePayload,
   CartLinesUpdatePayload,
@@ -362,5 +364,60 @@ export async function removeCartLine(lineId: string): Promise<ShopifyCart> {
   bubbleUserErrors(data.cartLinesRemove.userErrors);
   const cart = data.cartLinesRemove.cart;
   if (!cart) throw new Error("cartLinesRemove returned null cart");
+  return cart;
+}
+
+// ---------- Discount codes ----------
+
+const DISCOUNT_CODE_MAX_LENGTH = 256;
+
+function sanitizeDiscountCode(code: string): string {
+  if (typeof code !== "string") throw new Error("Invalid discount code");
+  const trimmed = code.trim();
+  if (trimmed.length === 0) throw new Error("Discount code is empty");
+  if (trimmed.length > DISCOUNT_CODE_MAX_LENGTH)
+    throw new Error("Discount code too long");
+  return trimmed;
+}
+
+/**
+ * Applies a single discount code to the cart.
+ * Returns the updated ShopifyCart so the caller can sync local state.
+ * Throws on userErrors — caller surfaces a generic message to the UI.
+ */
+export async function applyDiscountCode(code: string): Promise<ShopifyCart> {
+  const safe = sanitizeDiscountCode(code);
+  const cartId = await readCartCookie();
+  if (!cartId) throw new Error("applyDiscountCode: no cart cookie");
+  assertCartId(cartId);
+
+  const { data } = await shopifyFetch<CartDiscountCodesUpdatePayload>({
+    query: CART_DISCOUNT_CODES_UPDATE_MUTATION,
+    variables: { cartId, discountCodes: [safe] },
+    cache: "no-store",
+  });
+  bubbleUserErrors(data.cartDiscountCodesUpdate.userErrors);
+  const cart = data.cartDiscountCodesUpdate.cart;
+  if (!cart) throw new Error("cartDiscountCodesUpdate returned null cart");
+  return cart;
+}
+
+/**
+ * Clears all discount codes from the cart.
+ * Returns the updated ShopifyCart so the caller can sync local state.
+ */
+export async function clearDiscountCodes(): Promise<ShopifyCart> {
+  const cartId = await readCartCookie();
+  if (!cartId) throw new Error("clearDiscountCodes: no cart cookie");
+  assertCartId(cartId);
+
+  const { data } = await shopifyFetch<CartDiscountCodesUpdatePayload>({
+    query: CART_DISCOUNT_CODES_UPDATE_MUTATION,
+    variables: { cartId, discountCodes: [] },
+    cache: "no-store",
+  });
+  bubbleUserErrors(data.cartDiscountCodesUpdate.userErrors);
+  const cart = data.cartDiscountCodesUpdate.cart;
+  if (!cart) throw new Error("cartDiscountCodesUpdate returned null cart");
   return cart;
 }

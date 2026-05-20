@@ -43,3 +43,83 @@ body.shm-cart-locked {
    the button shell lives in Nav.module.css today. The trigger here is
    the click-target wrapper exposed by `.shm-cart-trigger` aria semantics
    (see components.css comment block). We don't add any visual rules. */
+
+/* ---------- Discount code form ---------- */
+
+.shm-cart-discount {
+  margin-top: var(--space-3);
+}
+
+.shm-cart-discount summary {
+  cursor: pointer;
+  font-size: 0.875rem;
+  color: var(--color-cocoa-deep);
+}
+
+.shm-cart-discount__applied {
+  list-style: none;
+  padding: 0;
+  margin: 8px 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.shm-cart-discount__chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 4px 8px;
+  background: var(--color-marsh);
+  border-radius: 4px;
+  font-size: 0.75rem;
+  color: var(--color-cocoa-deep);
+}
+
+.shm-cart-discount__chip button {
+  background: transparent;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  font-size: 1.125rem;
+  line-height: 1;
+  color: var(--color-cocoa-deep);
+}
+
+.shm-cart-discount__row {
+  display: flex;
+  gap: 6px;
+  margin-top: 8px;
+}
+
+.shm-cart-discount__row input {
+  flex: 1;
+  padding: 8px;
+  border: 1px solid var(--color-cocoa-deep);
+  border-radius: 4px;
+  font-family: var(--font-body);
+  font-size: 0.875rem;
+}
+
+.shm-cart-discount__row button {
+  padding: 8px 16px;
+  background: var(--color-ember);
+  color: var(--color-marshmallow);
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-family: var(--font-body);
+  font-weight: 600;
+  font-size: 0.875rem;
+}
+
+.shm-cart-discount__row button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.shm-cart-discount__error {
+  margin-top: 6px;
+  color: var(--color-ember);
+  font-size: 0.875rem;
+}

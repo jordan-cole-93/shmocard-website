@@ -81,6 +81,11 @@ export type ShopifyCartLine = {
   merchandise: ShopifyCartLineMerchandise;
 };
 
+export type ShopifyDiscountCode = {
+  code: string;
+  applicable: boolean;
+};
+
 export type ShopifyCart = {
   id: string;
   checkoutUrl: string;
@@ -90,6 +95,8 @@ export type ShopifyCart = {
     totalAmount: Money;
   };
   lines: Connection<ShopifyCartLine>;
+  // REQUIRED (not optional): missing fragment = tsc compile error, not silent undefined.
+  discountCodes: ShopifyDiscountCode[];
 };
 
 export type ShopifyUserError = {
@@ -121,6 +128,13 @@ export type CartLinesUpdatePayload = {
 
 export type CartLinesRemovePayload = {
   cartLinesRemove: {
+    cart: ShopifyCart | null;
+    userErrors: ShopifyUserError[];
+  };
+};
+
+export type CartDiscountCodesUpdatePayload = {
+  cartDiscountCodesUpdate: {
     cart: ShopifyCart | null;
     userErrors: ShopifyUserError[];
   };

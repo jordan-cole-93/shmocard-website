@@ -18,6 +18,7 @@ export const CART_FIELDS_FRAGMENT = /* GraphQL */ `
       subtotalAmount { amount currencyCode }
       totalAmount { amount currencyCode }
     }
+    discountCodes { code applicable }
     lines(first: 50) {
       nodes {
         id
@@ -70,6 +71,16 @@ export const CART_LINES_REMOVE_MUTATION = /* GraphQL */ `
   ${CART_FIELDS_FRAGMENT}
   mutation CartLinesRemove($cartId: ID!, $lineIds: [ID!]!) {
     cartLinesRemove(cartId: $cartId, lineIds: $lineIds) {
+      cart { ...CartFields }
+      userErrors { field message }
+    }
+  }
+`;
+
+export const CART_DISCOUNT_CODES_UPDATE_MUTATION = /* GraphQL */ `
+  ${CART_FIELDS_FRAGMENT}
+  mutation CartDiscountCodesUpdate($cartId: ID!, $discountCodes: [String!]) {
+    cartDiscountCodesUpdate(cartId: $cartId, discountCodes: $discountCodes) {
       cart { ...CartFields }
       userErrors { field message }
     }
