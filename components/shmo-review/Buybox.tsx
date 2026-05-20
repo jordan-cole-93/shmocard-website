@@ -188,7 +188,7 @@ export default function Buybox({
             <span className="shm-rating__count">· 87 verified reviews</span>
           </span>
 
-          <h3 className="bb__title">{product.title}</h3>
+          <h2 className="bb__title">{product.title}</h2>
           <p className="bb__sub">
             <em>{product.sub}</em>
           </p>
