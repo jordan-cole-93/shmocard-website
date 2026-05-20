@@ -83,20 +83,36 @@ Bare Next.js + Tailwind shell → audited design system → homepage + /shmo-rev
 
 ### Phase 7: Cross-PDP mobile polish
 
-**Goal**: Single mobile + a11y pass across all 3 PDPs at 375 / 414 / 768 px. Catch clipping, overflow, wave-divider gaps, mascot-cap violations, headline overflow before they multiply across Shopify-data variants.
+**Goal**: Single mobile + a11y pass across all 3 PDPs at 375 / 414 / 768 px. Catch clipping, overflow, wave-divider gaps, mascot-cap violations, headline overflow before they multiply across Shopify-data variants. Lands two known deferred shared-component fixes first: Buybox heading hierarchy (h3 → h2) + HowItWorks step 01 format-agnostic copy. Then a Playwright sweep × 3 PDPs × 3 breakpoints confirms no regressions from the Phase 6 FormatCompare mount. LAYOUT IS LOCKED — spacing / type / mascot / copy only.
 
 **In scope**:
-1. Playwright screenshots of all 3 PDPs at 375 / 414 / 768 px.
-2. Fix any layout / spacing / type issue found.
-3. a11y check — every interactive element labeled, contrast WCAG AA, keyboard tab order sensible.
-4. LAYOUT IS LOCKED — spacing / type / mascot scale only. No grid changes, no section reorders, no tile-ratio shifts.
+1. Buybox heading hierarchy fix — promote product title from `<h3>` to `<h2>` in `components/shmo-review/Buybox.tsx` line 191. `bb__title` is tag-agnostic — zero visual regression.
+2. HowItWorks step 01 copy fix — format-agnostic rewrite of `REVIEW_HOW_STEPS[0]` `title` / `body` / `details` in `components/shmo-review/HowItWorks.tsx`. Text-only edit. Default wording: "Put the card where customers can reach it" (builder picks final wording within voice constraints).
+3. Cross-PDP mobile audit at 375 / 414 / 768 px — 9 full-page Playwright screenshots (3 PDPs × 3 breakpoints).
+4. CR-80 6-thumb gallery wrap re-verified with FormatCompare now mounted.
+5. FormatCompare cross-PDP consistency spot-check (`currentHandle` wiring on all 3 PDPs).
+6. Cross-PDP a11y final check — keyboard tab order, heading outline (h2-first), color contrast spot-checks, qty button touch target measurement, FAQ aria-expanded check.
+7. LAYOUT IS LOCKED — spacing / type / mascot scale / copy only. No grid changes, no section reorders, no tile-ratio shifts.
+8. All UI work routed through `design-system-builder` per `.claude/rules/subagent-dispatch.md`.
 
 **Out of scope**:
 - Shopify wiring (Phase 8).
 - Tracking pixels (Phase 9).
+- L-Sign-specific testimonials / videos.
+- DRY extraction of FORMAT_COPY to `lib/shmo-review/format-copy.ts`.
+- HowItWorks prop-driven steps (Option B in RESEARCH.md) — Phase 7 locks Option A (format-agnostic shared copy).
+- `.shm-btn--sm` touch target (already fixed to 44px in Phase 6).
+- Primitive CSS changes in `.claude/skills/shmocard-design-system/components.css` — any primitive-level a11y fix gets surfaced to Jordan for separate-scope decision (matches Phase 6 protocol).
 
-**Depends on**: Phases 5 + 6 (both PDPs exist with placeholder data).
-**Plans**: TBD.
+**Depends on**: Phases 5 + 6 (all 3 PDPs exist with placeholder data + FormatCompare mounted).
+
+**Plans**: 6 plans
+- [ ] 07-01-PLAN.md — Fix Buybox heading hierarchy (h3 → h2 on `bb__title`) + PRE/POST visual diff on CR-80
+- [ ] 07-02-PLAN.md — Fix HowItWorks step 01 format-agnostic copy + PRE/POST visual diff on L-Sign
+- [ ] 07-03-PLAN.md — Cross-PDP mobile audit at 375/414/768 px (3 PDPs × 3 breakpoints = 9 full-page screenshots) + audit notes file
+- [ ] 07-04-PLAN.md — Conditional polish iteration (skip if 07-03 clean) — LAYOUT IS LOCKED
+- [ ] 07-05-PLAN.md — Cross-PDP a11y final check (heading outline, tab order, contrast, qty button measurement, FAQ aria-expanded) + a11y notes file
+- [ ] 07-06-PLAN.md — Phase close-out (tsc + build clean, STATE.md / ROADMAP.md / handoff.md / scope.md / 07-SUMMARY.md updates)
 
 ### Phase 8: Shopify Storefront wiring
 
