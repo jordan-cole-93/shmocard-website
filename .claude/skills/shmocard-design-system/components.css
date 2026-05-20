@@ -1886,6 +1886,7 @@ textarea.shm-input {
   align-items: center;
   gap: 14px;
   padding: 14px 18px;
+  min-height: 111px; /* equalize all rows: tallest natural row (name + badge + note) renders at 111px */
   background: var(--color-marshmallow);
   border: 2px solid var(--color-hair);
   border-radius: var(--radius-sm);
