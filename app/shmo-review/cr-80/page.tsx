@@ -23,7 +23,7 @@ export default function Cr80Page() {
     <main>
       <Buybox nextBg="cream" />
       <Proof />
-      <CrewStrip nextBg="marsh" afterGrid={<ProofTiles />} />
+      <CrewStrip nextBg="cream" afterGrid={<ProofTiles />} />
       <HowItWorks />
       <VideoTestimonials bg="cream" nextBg="ember" />
       <FinalCta />

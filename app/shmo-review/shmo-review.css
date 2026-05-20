@@ -294,19 +294,13 @@ main > section:has(> .shm-wave:last-child) { padding-bottom: 0; }
    buy column on right. Ported from review.css:286-353.
    ──────────────────────────────────────── */
 .review-buybox.shm-section {
-  padding-top: 90px;
+  padding-top: var(--section-py-d);
   padding-bottom: var(--section-py-d-lg);
 }
 .review-buybox > .shm-container {
   padding-bottom: 32px;
 }
-.review-buybox .shm-section-head--start {
-  text-align: left;
-  align-items: flex-start;
-  max-width: 720px;
-}
 .pdp-buybox {
-  margin-top: 40px;
   display: grid;
   grid-template-columns: minmax(0, 1.05fr) minmax(0, 1fr);
   gap: 56px;
@@ -351,6 +345,12 @@ main > section:has(> .shm-wave:last-child) { padding-bottom: 0; }
 /* Pack rows — equal height. All 4 rows (1/2/5/10 card) lock to the
    tallest natural row so the selector grid stays visually aligned. */
 .review-buybox .shm-pack-row { min-height: 88px; }
+
+/* SAVE badge inside __main: prevent it from stretching to full column width. */
+.review-buybox .shm-pack-row__main .shm-badge {
+  align-self: flex-start;
+  margin-top: 2px;
+}
 
 /* Buybox column */
 .bb { display: flex; flex-direction: column; gap: 18px; }
@@ -432,6 +432,24 @@ main > section:has(> .shm-wave:last-child) { padding-bottom: 0; }
 @media (max-width: 720px) {
   .gal__thumbs { grid-template-columns: repeat(4, 1fr); }
 }
+@media (max-width: 640px) {
+  /* Hide the per-row shipping note on mobile — shipping info is
+     communicated via the checklist and bb__meta below the CTA.
+     SAVE badge stays visible: it is the primary CRO signal in the
+     pack selector (Wave 1 #2) and must show at every viewport.
+     Rows 2 (5 Cards) and 3 (10 Cards) will be taller than rows 0/1
+     due to the badge — that height delta is intentional. */
+  .review-buybox .shm-pack-row__note { display: none; }
+  /* Uniform row height on mobile. Rows 0/1 (no badge) grow to match
+     rows 2/3 (badge + compare meta). 96px = name (26px) + badge (22px)
+     + 2px gap + 2×12px padding + 4px slack for the "Most popular"
+     overlay anchor on row 3. Tighter than the previous 116px. */
+  .review-buybox .shm-pack-row {
+    min-height: 96px;
+    padding-top: 12px;
+    padding-bottom: 12px;
+  }
+}
 
 /* ────────────────────────────────────────
    04 FORMAT PICKER — three .shm-product cards on marsh.
@@ -460,26 +478,19 @@ main > section:has(> .shm-wave:last-child) { padding-bottom: 0; }
 }
 
 /* ────────────────────────────────────────
-   05 HOW IT WORKS — warm four-step flow.
+   05 HOW IT WORKS — four separate sections, cream / marsh alternating.
+   Each step is a transparent layout container inside its own Section.
+   No sticky, no stack-offset, no .shm-card.
    ──────────────────────────────────────── */
-.how-section.shm-section { padding-top: 40px; padding-bottom: 80px; }
-.how-warm-flow {
-  margin-top: 36px;
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
-  padding-bottom: 56px;
+.how-step-head {
+  margin-bottom: 40px;
 }
 .how-warm-step {
-  position: sticky;
-  top: calc(86px + var(--stack-offset, 0px));
-  transform-origin: top center;
   display: grid;
   grid-template-columns: minmax(0, 1fr) minmax(240px, 300px);
   gap: 10px;
   align-items: center;
   padding: 20px clamp(70px, 9vw, 126px);
-  border-radius: var(--radius-xl);
 }
 .how-warm-step.is-reverse {
   grid-template-columns: minmax(240px, 300px) minmax(0, 1fr);
@@ -917,16 +928,8 @@ main > section:has(> .shm-wave:last-child) { padding-bottom: 0; }
   }
 }
 @media (max-width: 640px) {
-  .how-warm-flow {
-    gap: 14px;
-    padding-bottom: 0;
-  }
   .how-warm-step {
-    position: relative;
-    top: auto;
-    transform: none !important;
     padding: 22px;
-    border-radius: var(--radius-lg);
   }
   .how-warm-step__title {
     font-size: 31px;

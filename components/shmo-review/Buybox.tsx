@@ -14,8 +14,8 @@
 // Composes design-system primitives only:
 //   .shm-rating, .shm-eyebrow, .shm-h2, .shm-btn--primary/--xl,
 //   .shm-checklist--featured, .shm-pack-rows + .shm-pack-row,
-//   .shm-callout--success, .shm-qty, .shm-google, .shm-faq-list,
-//   .shm-badge--ember/--honey, .shm-section-head--start.
+//   .shm-qty, .shm-faq-list,
+//   .shm-badge--ember/--honey.
 // No primitive restyles. Layout-only CSS lives in shmo-review.css.
 
 import { useState } from "react";
@@ -69,7 +69,6 @@ export default function Buybox({ nextBg = "marsh" }: { nextBg?: SectionBg }) {
   const [activeIdx, setActiveIdx] = useState(0);
   const [packIdx, setPackIdx] = useState(3); // 10-pack default (most popular)
   const [qty, setQty] = useState(1);
-  const [gInput, setGInput] = useState("");
   const [faqOpen, setFaqOpen] = useState(-1);
 
   const pack = PACKS[packIdx];
@@ -102,13 +101,6 @@ export default function Buybox({ nextBg = "marsh" }: { nextBg?: SectionBg }) {
 
   return (
     <Section bg="marsh" nextBg={nextBg} className="review-buybox" id="buybox" ariaLabel="Buy the CR-80 card">
-      <div className="shm-section-head shm-section-head--start">
-        <span className="shm-eyebrow">★ Best seller · CR-80</span>
-        <h2 className="shm-h2">
-          Get the card the crews <em>actually</em> reach for.
-        </h2>
-      </div>
-
       <div className="pdp-buybox">
         {/* Gallery */}
         <div className="gal">
@@ -178,12 +170,12 @@ export default function Buybox({ nextBg = "marsh" }: { nextBg?: SectionBg }) {
                 <span className="shm-pack-row__main">
                   <span className="shm-pack-row__name">
                     {p.qty} Card{p.qty > 1 ? "s" : ""}
-                    {p.save && (
-                      <span className="shm-badge shm-badge--honey shm-badge--sm" style={{ marginLeft: 8 }}>
-                        SAVE {p.save}
-                      </span>
-                    )}
                   </span>
+                  {p.save && (
+                    <span className="shm-badge shm-badge--honey shm-badge--sm">
+                      SAVE {p.save}
+                    </span>
+                  )}
                   {p.note && (
                     <span className="shm-pack-row__note">
                       <svg
@@ -228,29 +220,6 @@ export default function Buybox({ nextBg = "marsh" }: { nextBg?: SectionBg }) {
             ))}
           </fieldset>
 
-          {/* Free shipping callout — only for qualifying packs */}
-          {pack.price >= 55 && (
-            <div className="shm-callout shm-callout--success">
-              <span className="shm-callout__icon">
-                <svg
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="3"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  aria-hidden="true"
-                >
-                  <polyline points="20 6 9 17 4 12" />
-                </svg>
-              </span>
-              <span>
-                <span className="shm-callout__title">Free shipping included</span>
-                <span className="shm-callout__sub">On all orders over $55.00</span>
-              </span>
-            </div>
-          )}
-
           {/* Quantity */}
           <div className="qty-block">
             <span className="qty-label">Quantity</span>
@@ -279,40 +248,6 @@ export default function Buybox({ nextBg = "marsh" }: { nextBg?: SectionBg }) {
                   <line x1="12" y1="5" x2="12" y2="19" />
                 </svg>
               </button>
-            </div>
-          </div>
-
-          {/* Configure (Google input) */}
-          <div className="config">
-            <span className="config__label">Configure (optional)</span>
-            <div className="shm-google">
-              <span className="shm-google__icon" aria-hidden="true">
-                <svg viewBox="0 0 24 24">
-                  <path
-                    d="M21.35 11.1H12v3.83h5.51c-.25 1.37-1.5 4-5.51 4-3.31 0-6.01-2.74-6.01-6.12 0-3.38 2.7-6.13 6.01-6.13 1.88 0 3.14.8 3.86 1.49l2.63-2.55C16.85 4.06 14.65 3 12 3 7.03 3 3 7.03 3 12s4.03 9 9 9c5.2 0 8.65-3.65 8.65-8.78 0-.59-.06-1.04-.13-1.5z"
-                    fill="#EA4335"
-                  />
-                  <path
-                    d="M21.35 11.1H12v3.83h5.51a5.61 5.61 0 0 1-2.4 3.66l3.86 2.99c2.25-2.08 3.55-5.13 3.55-8.98 0-.59-.06-1.04-.13-1.5z"
-                    fill="#4285F4"
-                  />
-                  <path d="M5.99 14.32a5.99 5.99 0 0 1 0-4.64L2.13 6.69a9 9 0 0 0 0 10.62l3.86-2.99z" fill="#FBBC05" />
-                  <path
-                    d="M12 21c2.65 0 4.85-.87 6.47-2.42l-3.86-2.99c-1.05.7-2.42 1.18-3.61 1.18-2.78 0-5.13-1.84-5.97-4.45L2.13 14.3C3.92 18.27 7.65 21 12 21z"
-                    fill="#34A853"
-                  />
-                </svg>
-              </span>
-              <input
-                type="text"
-                className="shm-google__input"
-                placeholder="Find your business on Google"
-                value={gInput}
-                onChange={(e) => setGInput(e.target.value)}
-              />
-            </div>
-            <div className="config__hint">
-              Found us? We&apos;ll pre-program your card before it ships. Skip and configure after delivery.
             </div>
           </div>
 

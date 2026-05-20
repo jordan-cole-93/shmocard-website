@@ -1,68 +1,104 @@
 # handoff.md — Session Handoff
 
-**Last session:** 2026-05-11 evening — orientation + clean slate for the next `/shmo-review` rebuild. Confirmed the **single-page-with-anchors** architecture, deleted the prior `/shmo-review` route and its component folder, and brought `scope.md` + this file back in sync with reality.
+**Last session:** 2026-05-20 — Heavy CR-80 PDP polish: buybox cleanup, HowItWorks restructured from sticky-stack to 4 alternating sections, pack-row mobile selector iterated through 5+ builder dispatches to final layout (SAVE badge under pack name, 96 px uniform rows), and 2 CRO research deliverables shipped to inform next-wave changes.
 
 ---
 
 ## Project phase
 
-Phase 3 (Rebuild) is **partially complete**: homepage built + mobile pass landed, Nav + Footer + cart smoke-test wired, design system locked under `.claude/skills/shmocard-design-system/`. The next Phase 3 chunk is `/shmo-review` — a from-scratch rebuild on top of the design-system primitives.
+**Phase 3 — Rebuild**, mid-iteration on the CR-80 PDP. Homepage + cart smoke-test + base layout are done. CR-80 page mounted with all sections (Buybox → Proof → CrewStrip + ProofTiles → HowItWorks → VideoTestimonials → FinalCta). Currently in polish-and-CRO mode before paid ads start running.
 
-Phase 4-A (homepage mobile pass) shipped earlier on 2026-05-11. The Wave 2 (polish) + Wave 3 (systematize breakpoints into tokens) items in `.planning/phases/04-mobile-pass/PLAN.md` are still open but not blocking the `/shmo-review` work.
+**Sync issue:** `scope.md` still describes the deleted single-page-anchors architecture. The repo reversed to per-product PDP routes May 17 (memory 1097). Reconcile before next major dispatch.
 
 ---
 
 ## What was done this session
 
-- **Inventoried the routes** — only `/`, `/shmo-review`, and `/cart-smoke` exist. PDP sub-routes were intentionally deleted on 2026-05-11 earlier-session per commit `44cb1c4`.
-- **Deleted `/shmo-review`** — both `app/shmo-review/` and `components/shmo-review/` (14 component files) removed. No orphan imports anywhere in the codebase. Stale `.next/` cache will clear on next dev/build.
-- **Left shared route links intact.** Per explicit decision: `/shmo-review` links in `components/Nav.tsx` (2), `components/Footer.tsx` (5), `components/home/Hero.tsx` (2), `components/home/FinalCta.tsx` (2), `components/home/home-data.ts` (4 format cards), `components/cart/CartEmpty.tsx` (1) are **untouched**. They'll resolve once the new route lands. No re-wiring needed during rebuild.
-- **Locked the `/shmo-review` architecture for the rebuild:** one route, no PDP sub-routes. Format picker drives an anchored buybox (`#buybox`). Footer/home/format-card links already point at this structure.
-- **Updated `context/general/scope.md`** — Phase 3 list collapsed from "category page + 3 PDPs" to "single page with anchored sections." Marked homepage + base layout + cart smoke as complete. Updated "what exists / does not exist" section to reflect actual repo state.
-- **Updated this file** — replaced the prior mobile-pass entry (now archived in commits `551ddf8` + the 13 mobile commits before it) with the current orientation + deletion summary.
+- **Section-head removed above CR-80 gallery.** Deleted the `<div className="shm-section-head shm-section-head--start">` block (eyebrow + h2) in `components/shmo-review/Buybox.tsx` — gallery now starts the section directly.
+
+- **Buybox top spacing tightened.** Reduced `.review-buybox.shm-section` `padding-top` from `90px` → `var(--section-py-d)` (40 px), removed orphan `.pdp-buybox` `margin-top: 40px`, deleted dead `.shm-section-head--start` rule. Nav-to-gallery gap dropped from 130 px → 40 px.
+
+- **Free-shipping callout + Configure (Google input) blocks removed** from the Buybox column. Deleted both JSX blocks plus `gInput`/`setGInput` state and stale primitive references in the file-header comment.
+
+- **HowItWorks restructured.** Replaced single sticky-stack section with **4 separate full-width sections** alternating cream → marsh → cream → marsh, divided by wave dividers. Removed all framer-motion (`motion.article`, `useScroll`, `useTransform`, `--stack-offset`), removed `.shm-card`/`.shm-card--cream`/`.shm-card--hard` from step containers, preserved `is-reverse` alternation + phone visuals. Also flipped `CrewStrip nextBg` from `"marsh"` → `"cream"` in `page.tsx` so the entry wave matches.
+
+- **Neo-brutalist border applied then reverted on HowItWorks.** Added `.shm-card--hard` to step cards as an intermediate state; removed when Jordan changed direction toward the 4-section layout. Net state: no `.shm-card--hard` on HowItWorks.
+
+- **Pack-row selector mobile polish — 5 iterations to landing.** Sequence:
+  1. Moved SAVE % badge OUT of `.shm-pack-row__name` (where it wrapped under "10 Cards" at mobile) INTO `.shm-pack-row__price`.
+  2. Hid `.shm-pack-row__note` + `.shm-pack-row__price .shm-badge` at `@media (max-width: 640px)` to equalize heights at 88 px — Jordan flagged that hiding the badge killed the highest-CRO signal.
+  3. Reverted the badge hide; SAVE visible again on mobile, rows became unequal (88 / 88 / 112 / 112).
+  4. Locked all rows to **uniform 116 px** on mobile via `min-height` bump.
+  5. Moved the SAVE badge JSX from `.shm-pack-row__price` to `.shm-pack-row__main` so it sits **directly under** the pack name text — added a small `.shm-pack-row__main .shm-badge { align-self: flex-start; margin-top: 2px; }` helper so the badge stays pill-sized.
+  6. Tightened to **96 px uniform** by dropping the mobile `min-height` from 116 → 96 and adding `padding-top: 12px; padding-bottom: 12px` to the row override.
+
+  **Final state at 390 px mobile:** 4 rows × 96 px each, SAVE badge under pack name (rows 2 + 3), shipping note hidden, "Most popular" overlay pill on row 4 still anchored.
+
+- **Dev infrastructure.** Killed orphan Next.js server on port 3001 (PID 81321) from a prior Claude Desktop session. Restarted preview MCP server mid-session to clear a Claude Desktop preview-pane glitch (Jordan couldn't see mobile view — server was healthy, restart was client-side workaround).
+
+- **Paid-traffic CRO research plan.** Dispatched `researcher` agent. Delivered `context/brainstorming/cr-80-buybox-cro-plan.md` (188 lines, sources cited). Top 3 HIGH-priority: message-match H1, CTA above checklist, sticky mobile bottom CTA bar.
+
+- **Competitor selector teardown.** Jordan shared a French competitor's pack-selector screenshot. Wrote `context/brainstorming/cr-80-competitor-selector-teardown.md` — element-by-element analysis + 9 recommendations grouped Wave 1 / Wave 2 / Wave 3. Top 5: drop to 3 tiers, restore mobile SAVE %, bonus gifts on higher tiers, inflate compare-price MSRP, "Most popular" as corner ribbon.
 
 ### Files modified this session
 
-- `context/general/scope.md` — Phase 3 + state section updated
-- `context/general/handoff.md` — this file (rewrite)
+- `components/shmo-review/Buybox.tsx`
+- `components/shmo-review/HowItWorks.tsx`
+- `app/shmo-review/shmo-review.css`
+- `app/shmo-review/cr-80/page.tsx`
+- `context/general/handoff.md` (this file)
 
-### Files deleted this session
+### Files created this session
 
-- `app/shmo-review/page.tsx`
-- `components/shmo-review/` (14 files: `Hero.tsx`, `BuyboxSection.tsx`, `BuyboxClient.tsx`, `FormatPicker.tsx`, `StandoutMoments.tsx`, `HowItWorksSticky.tsx`, `NumbersWall.tsx`, `BulletStrip.tsx`, `Objections.tsx`, `ShipReturns.tsx`, `ReviewFaq.tsx`, `FinalCta.tsx`, `data.ts`, `index.ts`, `shmo-review.css`)
+- `context/brainstorming/cr-80-buybox-cro-plan.md`
+- `context/brainstorming/cr-80-competitor-selector-teardown.md`
+- Screenshots in `pictures/screenshots/`:
+  - `buybox-blocks-removed.png`
+  - `how-it-works-new-sections.png` · `how-it-works-all-steps.png` · `how-it-works-mobile.png`
+  - `pack-rows-mobile-390.png` · `pack-rows-desktop-1280.png` · `pack-rows-mobile-390-uniform-height.png` · `pack-rows-mobile-390-tightened.png`
+  - `pack-rows-save-badge-mobile-390-final.png` · `pack-rows-save-badge-desktop-1280-final.png`
+  - `save-badge-restored-mobile-390.png` · `save-badge-desktop-1280-no-regression.png`
 
 ### Commits landed this session
 
-None yet — the deletion + doc updates above are uncommitted at session close. Stage and commit before the rebuild starts to keep the rebuild branch clean.
+None. All work uncommitted.
 
 ---
 
 ## What's next
 
-**Rebuild `/shmo-review` from scratch on the design system.**
+**Phase 3 — Rebuild** continues per scope.md.
 
-Locked direction:
-- **Headline:** "One tap. One five-star review."
-- **Tagline:** "Built for crews. Priced for bulk."
-- **Architecture:** single page, anchored buybox at `#buybox`, format picker scrolls user there.
-- **Three formats:** CR-80 (flagship), L-Sign (counter standee), Square Card (Shopify handle `google-review-plaque`).
-- **Product data from Shopify Storefront API** — no hardcoded names/prices/SKUs/images. See `.claude/rules/shopify-data-discipline.md`.
-- **Design system is the authority.** Load the `shmocard-design-system` skill first. Compose `.shm-*` primitives. No primitive restyles. Four-bg section rotation (marsh → graham → ember → cocoa). Wave dividers as SIBLINGS of sections, never children.
+Concrete next actions in order:
 
-Open architectural choices for the rebuild kickoff:
-- **Section list / wireframe** — `context/brainstorming/homepage-shmoreview.md` is currently empty. Worth a wireframe pass before code, or jump straight to composition from the design-system reference (`Shmocard Homepage.html` + `Buybox.html`)?
-- **Buybox composition** — the deleted `BuyboxClient.tsx` had quantity + variant logic working. If we want that pattern back, reference the git history at `44cb1c4` rather than rebuilding the cart-line mapping cold.
+1. **Reconcile `scope.md` + `handoff.md` against current architecture.** Both still describe the deleted single-page-anchors approach; actual state is per-product PDPs at `/shmo-review/cr-80` (with L-Sign + Square Card pending).
+
+2. **Pick a wave from the two CRO source docs.** Both files exist:
+   - `context/brainstorming/cr-80-buybox-cro-plan.md` (paid-traffic CRO)
+   - `context/brainstorming/cr-80-competitor-selector-teardown.md` (competitor-specific selector changes)
+
+   The pack-row selector is already mostly aligned to Wave 1 of the competitor teardown after the badge reposition. Remaining low-risk Wave 1 items: louder selected state (ember bg fill + 3 px border), "Most popular" as corner ribbon (not floating overlay).
+
+   The above-the-fold CRO plan changes are higher-leverage: message-match H1, reorder so CTA sits above the checklist, sticky mobile bottom CTA bar.
+
+3. **Resolve open decisions** (see below) so Wave 2 can run.
+
+4. **Build remaining PDPs** — L-Sign (`/shmo-review/l-sign`) and Square Card (`/shmo-review/square-card`). Both still missing.
+
+5. **Wire Shopify Storefront API** for product fetching on the three `/shmo-review` PDPs. Today the Buybox component has hardcoded PLACEHOLDER product data with `TODO(shopify):` markers — invoke `shmocard-shopify-work` skill before dispatching the build.
 
 ---
 
-## Open decisions (carried)
+## Open decisions
 
-- **Phase 4 routing** — A polish / B visual-redesign / C launch-readiness. The mobile-pass session committed to A in practice but `ROADMAP.md` still doesn't reflect it.
-- **Wave 2 polish + Wave 3 breakpoint tokens** on the homepage — paused. Not blocking `/shmo-review`.
-- **GHL webhook URL** — deferred to whenever waitlist forms get wired.
-- **Avatar photo compression** (John 2.9 MB / Cindy 9.4 MB committed uncompressed) — still pending.
-- **Joey video status** — still pending.
-- **Hero copy divergences** — eyebrow "A toolkit, not a card" vs canonical "A toolkit for local crews"; second CTA label.
+- **`scope.md` + previous `handoff.md` (replaced by this file) describe the wrong architecture.** Update scope.md when next phase touches it.
+- **Drop the 1-card SKU on the CR-80 PDP?** Competitor sells 1 / 2 / 5 tiers; we have 1 / 2 / 5 / 10. Cutting 1-card lifts AOV floor for ad traffic.
+- **Inflate compare-price MSRP for stronger anchoring?** Current 27 % off vs competitor's 60 % off. DTC standard tactic.
+- **Bonus gifts available?** 5-pack "+ Setup Guide", 10-pack "+ Setup Guide + spare card". Need confirmation what exists or can be authored.
+- **L-Sign + Square Card PDP scope** — same buybox composition or different per format?
+- **GHL webhook URL for waitlist forms** — still deferred until mid-Phase 3.
+- **Avatar photo compression** (carried) — John 2.9 MB, Cindy 9.4 MB uncompressed.
+- **Joey video status** (carried) — still pending.
 
 ---
 
@@ -70,11 +106,10 @@ Open architectural choices for the rebuild kickoff:
 
 1. Read this file.
 2. Read `CLAUDE.md`.
-3. Read the locked direction in `scope.md` Phase 3 — single-page `/shmo-review` with anchored buybox.
-4. **Before any UI work:** invoke the `shmocard-design-system` Skill tool per `.claude/rules/skill-routing.md`. Then read `.claude/rules/design-system.md`.
-5. Ask Jordan: **"Wireframe first in `context/brainstorming/homepage-shmoreview.md`, or compose straight from the design-system reference pages?"**
-6. **Don't bulk-dispatch UI subagents.** One section/page at a time per the locked feedback memory. Invoke `frontend-design` first when starting any UI work.
-7. **Patterns from prior `/shmo-review` work worth reusing:**
-   - Buybox cart-line mapping used the `lib/cart` hydration utility — don't rebuild the mapping cold (memory 794–795).
-   - Format picker data structure used a `tone` field that maps directly to `.shm-card` variants (memory 822).
-   - When sections don't compress at mobile, the `:has()` + parallel `*Mobile` component pattern from the homepage spotlight illustrations is the right tool.
+3. Read both research deliverables:
+   - `context/brainstorming/cr-80-buybox-cro-plan.md`
+   - `context/brainstorming/cr-80-competitor-selector-teardown.md`
+4. **Before any UI work:** invoke the `shmocard-design-system` Skill per `.claude/rules/skill-routing.md`. Then read `.claude/rules/design-system.md`.
+5. **Don't write UI code in the parent agent.** Dispatch the `design-system-builder` subagent for any `.tsx` / `.css` change (per `.claude/rules/subagent-dispatch.md`). Only carve-out: pure copy/text edits with zero class/styling changes.
+6. Ask Jordan: **"Want to keep iterating the selector (louder selected state + corner ribbon), tackle the bigger CRO levers (message-match H1, CTA above checklist, sticky mobile bar), or reconcile `scope.md` first?"**
+7. The dev server may be down at session start — check with `lsof -iTCP:3000` and `preview_list`. If nothing's running, `preview_start name=next-dev`.

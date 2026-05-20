@@ -1,19 +1,9 @@
-"use client";
-
-// components/shmo-review/HowItWorks.tsx — warm four-step flow.
+// components/shmo-review/HowItWorks.tsx — four-step flow, one Section per step.
 //
-// Framer Motion drives the subtle scroll-linked scale/offset while CSS sticky
-// handles the actual card stacking.
+// Each step lives in its own <Section> with alternating cream / marsh backgrounds,
+// separated by wave dividers (rendered as siblings via the Section primitive).
+// No framer-motion, no sticky stacking, no .shm-card wrapper.
 
-import { useRef, type CSSProperties } from "react";
-import {
-  motion,
-  useReducedMotion,
-  useScroll,
-  useTransform,
-  type MotionStyle,
-  type MotionValue,
-} from "framer-motion";
 import Section from "@/components/layout/Section";
 
 const STARS = [0, 1, 2, 3, 4];
@@ -155,100 +145,58 @@ function PhoneScreen({ which }: { which: Screen }) {
   );
 }
 
-function HowWarmStep({
-  step,
-  index,
-  total,
-  scrollYProgress,
-}: {
-  step: (typeof REVIEW_HOW_STEPS)[number];
-  index: number;
-  total: number;
-  scrollYProgress: MotionValue<number>;
-}) {
-  const shouldReduceMotion = useReducedMotion();
-  const stepStart = index / total;
-  const stepEnd = Math.min(1, (index + 1) / total);
-  const scale = useTransform(
-    scrollYProgress,
-    [stepStart, stepEnd],
-    [1, index === total - 1 ? 1 : 0.965],
-  );
-  const y = useTransform(
-    scrollYProgress,
-    [stepStart, stepEnd],
-    [0, index === total - 1 ? 0 : -12],
-  );
-
-  return (
-    <motion.article
-      className={`shm-card shm-card--cream how-warm-step${index % 2 ? " is-reverse" : ""}`}
-      style={
-        {
-          "--stack-offset": `${index * 12}px`,
-          zIndex: index + 1,
-          ...(shouldReduceMotion ? {} : { scale, y }),
-        } as MotionStyle & CSSProperties
-      }
-    >
-      <div className="how-warm-step__copy">
-        <span className="shm-badge shm-badge--sm shm-badge--ember how-warm-step__num">
-          {step.n}
-        </span>
-        <h3 className="how-warm-step__title">{step.title}</h3>
-        <p className="how-warm-step__body">{step.body}</p>
-        <ul className="how-warm-step__details" aria-label={`${step.title} details`}>
-          {step.details.map((detail) => (
-            <li
-              key={detail}
-              className="shm-badge shm-badge--honey"
-            >
-              {detail}
-            </li>
-          ))}
-        </ul>
-      </div>
-
-      <div className="how-warm-step__visual" aria-hidden="true">
-        <div className="phone-frame phone-frame--mini">
-          <div className="phone-frame__notch" />
-          <div className="phone-frame__screen">
-            <PhoneScreen which={step.screen} />
-          </div>
-          <div className="phone-frame__home" />
-        </div>
-      </div>
-    </motion.article>
-  );
-}
-
 export default function HowItWorks() {
-  const flowRef = useRef<HTMLDivElement | null>(null);
-  const { scrollYProgress } = useScroll({
-    target: flowRef,
-    offset: ["start 72%", "end 24%"],
-  });
+  const bgs: Array<"cream" | "marsh"> = ["cream", "marsh", "cream", "marsh"];
+  const nextBgs: Array<"marsh" | "cream"> = ["marsh", "cream", "marsh", "cream"];
 
   return (
-    <Section bg="marsh" nextBg="cream" className="how-section" id="how" ariaLabel="How Shmo Review works">
-      <div className="shm-section-head">
-        <span className="shm-eyebrow">How it works · 4 steps · ~12 seconds</span>
-        <h2 className="shm-h2">
-          From handoff to <em>five stars</em>, in one tap.
-        </h2>
-      </div>
+    <>
+      {REVIEW_HOW_STEPS.map((step, i) => (
+        <Section
+          key={step.n}
+          bg={bgs[i]}
+          nextBg={nextBgs[i]}
+          id={i === 0 ? "how" : undefined}
+          ariaLabel={i === 0 ? "How Shmo Review works" : undefined}
+          className="how-step-section"
+        >
+          {i === 0 && (
+            <div className="shm-section-head how-step-head">
+              <span className="shm-eyebrow">How it works · 4 steps · ~12 seconds</span>
+              <h2 className="shm-h2">
+                From handoff to <em>five stars</em>, in one tap.
+              </h2>
+            </div>
+          )}
 
-      <div className="how-warm-flow" ref={flowRef}>
-        {REVIEW_HOW_STEPS.map((step, i) => (
-          <HowWarmStep
-            key={step.n}
-            step={step}
-            index={i}
-            total={REVIEW_HOW_STEPS.length}
-            scrollYProgress={scrollYProgress}
-          />
-          ))}
-      </div>
-    </Section>
+          <article className={`how-warm-step${i % 2 ? " is-reverse" : ""}`}>
+            <div className="how-warm-step__copy">
+              <span className="shm-badge shm-badge--sm shm-badge--ember how-warm-step__num">
+                {step.n}
+              </span>
+              <h3 className="how-warm-step__title">{step.title}</h3>
+              <p className="how-warm-step__body">{step.body}</p>
+              <ul className="how-warm-step__details" aria-label={`${step.title} details`}>
+                {step.details.map((detail) => (
+                  <li key={detail} className="shm-badge shm-badge--honey">
+                    {detail}
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            <div className="how-warm-step__visual" aria-hidden="true">
+              <div className="phone-frame phone-frame--mini">
+                <div className="phone-frame__notch" />
+                <div className="phone-frame__screen">
+                  <PhoneScreen which={step.screen} />
+                </div>
+                <div className="phone-frame__home" />
+              </div>
+            </div>
+          </article>
+        </Section>
+      ))}
+    </>
   );
 }
