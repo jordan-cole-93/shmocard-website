@@ -1,16 +1,18 @@
 # handoff.md — Session Handoff
 
-**Last session:** 2026-05-20 — Phases 4, 5, 6, AND 7 ALL shipped end-to-end in one marathon. Phase 7 work: Buybox h3 → h2 (07-01), HowItWorks step 01 format-agnostic copy (07-02), 9-screenshot cross-PDP audit clean (07-03), a11y final check surfaced 3 primitive fixes (07-05) → applied all 3 (qty button 44 px, ember badge contrast, surgical ember-only ghost-button contrast — preserves white text on genuinely dark cocoa/chocolate/cherry backgrounds). 7 atomic commits in Phase 7. Memory rules saved this session: (a) reset preview viewport to desktop after mobile screenshots, (b) use AskUserQuestion for decisions, (c) clear `.next/` after `npm run build`, (d) don't suggest "pause" mid-session, (e) explain UI/CSS issues in plain English (not jargon).
+**Last session:** 2026-05-20 — Phases 4-8 ALL shipped end-to-end in one massive marathon. Phase 8 (Shopify Storefront wiring) is the biggest: built `lib/shopify/buybox-mapping.ts`, wired all 3 PDPs to `getProductByHandle()`, fixed L-Sign handle bug, wired Buybox.handleAdd to real `addLineToCart`, cleared 6 TODO(shopify) markers, shipped end-to-end discount code support (BLOCKER-fix step order honored), removed FormatPicker fallback constants, cross-PDP smoke confirmed all 3 PDPs serving live Shopify data with cart/checkout/discount working. CR8020OFF discount code created for testing. 2 Shopify Admin bugs surfaced for Jordan (L-Sign duplicate variants, Square Card naming "Plate"). Webhooks deferred to Phase 10 (need public URL). 9 atomic commits in Phase 8 alone.
+
+Memory rules saved this session: (a) reset preview viewport to desktop after mobile screenshots, (b) use AskUserQuestion for decisions, (c) clear `.next/` after `npm run build`, (d) don't suggest "pause" mid-session, (e) explain UI/CSS issues in plain English (not jargon).
 
 ---
 
 ## Project phase
 
-**Phase 7 — Cross-PDP mobile polish ✅ complete 2026-05-20.** Buybox h3 → h2, HowItWorks step 01 format-agnostic copy, 3 a11y primitive fixes (qty button 44 px, ember badge contrast, surgical ember-only ghost-button override). Cross-PDP audit at 375/414/768 px clean. tsc + build clean. See `.planning/phases/07-cross-pdp-mobile-polish/07-SUMMARY.md`.
+**Phase 8 — Shopify Storefront wiring ✅ complete 2026-05-20.** All 3 PDPs (CR-80, L-Sign, Square Card) now fetch live Shopify data via `getProductByHandle` + `mapProductToBuyboxProps`. Buybox.handleAdd wires real `addLineToCart` Server Action; cart drawer creates real Shopify lines. Discount code support shipped end-to-end (BLOCKER-fix implementation order honored). Checkout redirect verified to `https://shop.shmocard.com/checkouts/*`. 2 Shopify Admin bugs surfaced (L-Sign 8 duplicate variants — Jordan deletes in Admin; Square Card named "Plate" — accepted). Webhooks deferred to Phase 10 (need public URL). tsc + build clean. See `.planning/phases/08-shopify-storefront-wiring/08-SUMMARY.md`.
 
-**Next phase: Phase 8 — Shopify Storefront wiring.** The biggest remaining phase. Replace every `TODO(shopify):` placeholder across all 3 PDPs (Buybox product data, gallery, packs, checklist, FAQ — plus FormatCompare metadata) with live Storefront API queries. Wire cart + checkout redirect. Add webhook revalidation route. Read-only Admin (no mutations). **MUST invoke `shmocard-shopify-work` skill before dispatching the build** per `.claude/rules/subagent-dispatch.md`. Run **`/gsd-plan-phase 8`** to kick off.
+**Next phase: Phase 9 — Tracking (GHL webhook + Facebook Pixel + Conversions API).** Wire GHL webhook endpoint for Shopify order/customer events. Install Facebook Pixel + Conversions API for `ViewContent`, `AddToCart`, `InitiateCheckout`, `Purchase`. Server-side mirror via Conversions API with `event_id` dedup. Test mode validation before going live. Run **`/gsd-plan-phase 9`** to kick off.
 
-**Project progress:** 8 of 10 phases complete (80%). Phases 1, 2, 3a, 3, 4, 5, 6, 7 done. Remaining: 8 (Shopify Storefront wiring), 9 (Tracking — GHL + FB Pixel), 10 (Launch readiness — DNS cutover).
+**Project progress:** 9 of 10 phases complete (90%). Phases 1, 2, 3a, 3, 4, 5, 6, 7, 8 done. Remaining: 9 (Tracking), 10 (Launch readiness — DNS cutover + Phase 8's deferred webhooks).
 
 ---
 
