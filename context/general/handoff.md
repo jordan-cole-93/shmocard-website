@@ -1,6 +1,6 @@
 # handoff.md — Session Handoff
 
-**Last session:** 2026-05-20 — Phase 4 (Link hygiene & Coming Soon stubs) shipped end-to-end. Built shared `<ComingSoon>` component + 5 stub routes (Shmo Biz / Link / Reputation, L-Sign, Square Card) + upgraded 11 hrefs across NavMenu / Footer / FormatPicker. Also reconciled planning docs (ROADMAP restructured 7 → 10 phases, scope.md + handoff.md aligned, Phase 3 closed out with SUMMARY.md). Five atomic commits this session — `7ccca06`, `db1b14e`, `d4fba9f`, `d75aab4`, `ecb2e08`, plus phase close-out commit.
+**Last session:** 2026-05-20 — Phase 4 (Link hygiene & Coming Soon stubs) shipped end-to-end AND Phase 5 (L-Sign PDP) PLANNED but not yet executed. Phase 4 ran from planning hygiene through close-out (6 commits). Phase 5 ran research → plan → check → VALIDATION (plan-checker PASS, 7 atomic plans ready). Also discovered a recurring dev-server gotcha: after creating many new files at once, Next.js Fast Refresh can get stuck excluding CSS from the bundle — restart cure: `rm -rf .next && preview_start`. Saved 2 new memory rules: always reset preview viewport to desktop after mobile screenshots, and always use AskUserQuestion for decisions (Jordan's ADHD).
 
 ---
 
@@ -8,7 +8,7 @@
 
 **Phase 4 — Link hygiene & Coming Soon stubs ✅ complete 2026-05-20.** Shared `<ComingSoon>` server component shipped + 5 stub routes mounted + 11 hrefs upgraded across nav/footer/format-picker. tsc + build clean. See `.planning/phases/04-link-hygiene-coming-soon-stubs/04-SUMMARY.md`.
 
-**Next phase: Phase 5 — L-Sign PDP.** Build `/shmo-review/l-sign` product detail page using the CR-80 PDP pattern from Phase 3. Replaces the Phase 4 Coming Soon stub at that route. Run `/gsd-plan-phase 5` to kick off.
+**Phase 5 — L-Sign PDP PLANNED 2026-05-20, NOT YET EXECUTED.** Plan trio committed in `cc6d9e2`: 05-RESEARCH.md (HIGH confidence), 05-PLAN.md (7 atomic plans), 05-VALIDATION.md (manual-only strategy approved). Plan-checker returned PASS. Locked approach: refactor `<Buybox>` to take product props with CR-80 defaults (zero-regression on existing callers), then ship L-Sign PDP reusing every Phase 3 below-the-fold section as-is. Format Compare DEFERRED to Phase 6. Next: **`/gsd-execute-phase 5`** to start with plan 05-01 (PRE-refactor baseline screenshots).
 
 **Project progress:** 5 of 10 phases complete (50%). Phases 1, 2, 3a, 3, 4 done. Remaining: 5 (L-Sign PDP), 6 (Square Card PDP), 7 (Cross-PDP mobile polish), 8 (Shopify Storefront wiring), 9 (Tracking — GHL + FB Pixel), 10 (Launch readiness — DNS cutover).
 
@@ -136,5 +136,5 @@ Concrete next actions in order:
    - `context/brainstorming/cr-80-competitor-selector-teardown.md`
 4. **Before any UI work:** invoke the `shmocard-design-system` Skill per `.claude/rules/skill-routing.md`. Then read `.claude/rules/design-system.md`.
 5. **Don't write UI code in the parent agent.** Dispatch the `design-system-builder` subagent for any `.tsx` / `.css` change (per `.claude/rules/subagent-dispatch.md`). Only carve-out: pure copy/text edits with zero class/styling changes.
-6. Ask Jordan: **"Ready to kick off Phase 5 (L-Sign PDP) with `/gsd-plan-phase 5`, or want to resolve CR-80 open decisions (drop 1-card SKU / inflate MSRP / bonus gifts) before building more PDPs?"**
+6. Ask Jordan: **"Ready to execute Phase 5 (L-Sign PDP) — plan trio is committed at `cc6d9e2`, plan-checker PASS, 7 atomic plans pending. Start with 05-01 (PRE-refactor baselines)?"** Per the saved memory rule, ASK via AskUserQuestion with numbered options — never wall-of-text scenarios.
 7. The dev server may be down at session start — check with `lsof -iTCP:3000` and `preview_list`. If nothing's running, `preview_start name=next-dev`.
