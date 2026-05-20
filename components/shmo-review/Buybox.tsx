@@ -40,7 +40,7 @@ export type BuyboxPack = {
   compare: number | null;
   pop: boolean;
   tier?: string;
-  tierTone?: "soft" | "honey" | "ember";
+  tierTone?: "soft" | "cream" | "honey" | "ember";
   variantId?: string;
   availableForSale?: boolean;
 };
@@ -85,8 +85,8 @@ export const DEFAULT_BUYBOX_GALLERY: BuyboxGalleryImage[] = [
 ];
 
 export const DEFAULT_BUYBOX_PACKS: BuyboxPack[] = [
-  { qty: 1,  price: 29.99,  perCard: 29.99, save: null,  note: "Free shipping at 5+ packs", compare: null,   pop: false, tier: "Try",       tierTone: "soft"  },
-  { qty: 2,  price: 49.99,  perCard: 25.00, save: null,  note: "Free shipping at 5+ packs", compare: 59.98,  pop: false, tier: "Pair",      tierTone: "soft"  },
+  { qty: 1,  price: 29.99,  perCard: 29.99, save: null,  note: "Free shipping at 5+ packs", compare: null,   pop: false, tier: "Try",       tierTone: "cream" },
+  { qty: 2,  price: 49.99,  perCard: 25.00, save: null,  note: "Free shipping at 5+ packs", compare: 59.98,  pop: false, tier: "Pair",      tierTone: "cream" },
   { qty: 5,  price: 119.99, perCard: 24.00, save: "20%", note: "Free shipping included",    compare: 149.95, pop: false, tier: "Crew",      tierTone: "honey" },
   { qty: 10, price: 219.99, perCard: 22.00, save: "27%", note: "Free shipping included",    compare: 299.90, pop: true,  tier: "Full crew", tierTone: "ember" },
 ];

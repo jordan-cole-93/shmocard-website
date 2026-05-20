@@ -9,8 +9,8 @@ import { DEFAULT_BUYBOX_GALLERY } from "@/components/shmo-review/Buybox";
 // ---------------------------------------------------------------------------
 
 const PACK_STATIC: Record<number, Pick<BuyboxPack, "save" | "note" | "pop" | "tier" | "tierTone">> = {
-  1:  { save: null,  note: "Free shipping at 5+ packs", pop: false, tier: "Try",       tierTone: "soft"  },
-  2:  { save: null,  note: "Free shipping at 5+ packs", pop: false, tier: "Pair",      tierTone: "soft"  },
+  1:  { save: null,  note: "Free shipping at 5+ packs", pop: false, tier: "Try",       tierTone: "cream" },
+  2:  { save: null,  note: "Free shipping at 5+ packs", pop: false, tier: "Pair",      tierTone: "cream" },
   5:  { save: "20%", note: "Free shipping included",    pop: false, tier: "Crew",      tierTone: "honey" },
   10: { save: "27%", note: "Free shipping included",    pop: true,  tier: "Full crew", tierTone: "ember" },
 };
