@@ -1,7 +1,10 @@
 // app/shmo-review/cr-80/page.tsx — CR-80 product detail page.
 //
-// First pass uses the existing Shmo Review buybox component so the PDP
-// stays aligned with the current Shmocard design-system composition.
+// Phase 8: live Shopify data via getProductByHandle.
+// CR-80 handle: 'google-reviews-nfc-tap-card-cr80'
+//
+// Graceful degradation: if Shopify returns null, Buybox uses its hardcoded
+// defaults so the page never 500s on a Shopify outage.
 
 import "../shmo-review.css";
 import Buybox from "@/components/shmo-review/Buybox";
@@ -12,6 +15,8 @@ import FormatCompare from "@/components/shmo-review/FormatCompare";
 import VideoTestimonials from "@/components/home/VideoTestimonials";
 import FinalCta from "@/components/home/FinalCta";
 import { ProofTiles } from "@/components/shmo-review/ProofMarquee";
+import { getProductByHandle } from "@/lib/shopify/queries";
+import { mapProductToBuyboxProps } from "@/lib/shopify/buybox-mapping";
 
 export const metadata = {
   title: "CR-80 Review Card — Shmo Review",
@@ -19,10 +24,20 @@ export const metadata = {
     "Wallet-size NFC Google review card for shop crews. Pre-programmed before shipping, with QR fallback and free reprogramming.",
 };
 
-export default function Cr80Page() {
+const CR80_SUB =
+  "The countertop tap that turns happy crews into five-star reviews.";
+
+export default async function Cr80Page() {
+  const product = await getProductByHandle("google-reviews-nfc-tap-card-cr80");
+  const mapped = product ? mapProductToBuyboxProps(product) : {};
+  const buyboxProps =
+    mapped.product
+      ? { ...mapped, product: { ...mapped.product, sub: CR80_SUB } }
+      : mapped;
+
   return (
     <main>
-      <Buybox nextBg="cream" />
+      <Buybox {...buyboxProps} nextBg="cream" />
       <Proof />
       <CrewStrip nextBg="cream" afterGrid={<ProofTiles />} />
       <HowItWorks />
