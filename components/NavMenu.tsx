@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import Link from "next/link";
 
 import NavLink from "./NavLink";
 import styles from "./Nav.module.css";
@@ -48,24 +49,24 @@ export default function NavMenu() {
             Live
           </span>
         </NavLink>
-        <a href="#shmo-biz" className={styles.link} onClick={() => setOpen(false)}>
+        <Link href="/shmo-biz" className={styles.link} onClick={() => setOpen(false)}>
           Shmo Biz
           <span
             className={`shm-badge shm-badge--status shm-badge--status-honey ${styles.linkStatus}`}
           >
             Soon
           </span>
-        </a>
-        <a href="#shmo-link" className={styles.link} onClick={() => setOpen(false)}>
+        </Link>
+        <Link href="/shmo-link" className={styles.link} onClick={() => setOpen(false)}>
           Shmo Link
           <span
             className={`shm-badge shm-badge--status shm-badge--status-honey ${styles.linkStatus}`}
           >
             Soon
           </span>
-        </a>
-        <a
-          href="#shmo-reputation"
+        </Link>
+        <Link
+          href="/shmo-reputation"
           className={styles.link}
           onClick={() => setOpen(false)}
         >
@@ -75,7 +76,7 @@ export default function NavMenu() {
           >
             Soon
           </span>
-        </a>
+        </Link>
       </nav>
     </div>
   );

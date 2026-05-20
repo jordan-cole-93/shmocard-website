@@ -76,8 +76,8 @@ const HANDLES = [
 
 const PRODUCT_PAGE_HREFS: Record<(typeof HANDLES)[number], string> = {
   "google-reviews-nfc-tap-card-cr80": "/shmo-review/cr-80",
-  "google-review-nfc-tap-card-l-sign": "#formats",
-  "google-review-plaque": "#formats",
+  "google-review-nfc-tap-card-l-sign": "/shmo-review/l-sign",
+  "google-review-plaque": "/shmo-review/square-card",
 };
 
 function formatPrice(amount: string, currencyCode: string): string {

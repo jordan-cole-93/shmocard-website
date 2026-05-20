@@ -44,9 +44,9 @@ export default function Footer() {
             <h4 className={styles.heading}>Products</h4>
             <ul className={styles.list}>
               <li><Link href="/shmo-review">Shmo Review</Link></li>
-              <li><a href="#shmo-biz">Shmo Biz <span className={styles.soon}>Soon</span></a></li>
-              <li><a href="#shmo-link">Shmo Link <span className={styles.soon}>Soon</span></a></li>
-              <li><a href="#shmo-reputation">Shmo Reputation <span className={styles.soon}>Soon</span></a></li>
+              <li><Link href="/shmo-biz">Shmo Biz <span className={styles.soon}>Soon</span></Link></li>
+              <li><Link href="/shmo-link">Shmo Link <span className={styles.soon}>Soon</span></Link></li>
+              <li><Link href="/shmo-reputation">Shmo Reputation <span className={styles.soon}>Soon</span></Link></li>
             </ul>
           </div>
 
@@ -54,8 +54,8 @@ export default function Footer() {
             <h4 className={styles.heading}>Shop</h4>
             <ul className={styles.list}>
               <li><Link href="/shmo-review#buybox">CR-80 Card</Link></li>
-              <li><Link href="/shmo-review#formats">L-Sign</Link></li>
-              <li><Link href="/shmo-review#formats">Square Card</Link></li>
+              <li><Link href="/shmo-review/l-sign">L-Sign</Link></li>
+              <li><Link href="/shmo-review/square-card">Square Card</Link></li>
               <li><Link href="/shmo-review">All formats</Link></li>
             </ul>
           </div>
