@@ -58,7 +58,7 @@
 
 .shm-btn--lg { font-size: 17px; padding: 17px 28px; }
 .shm-btn--xl { font-size: 19px; padding: 20px 34px; box-shadow: var(--shadow-chunk); }
-.shm-btn--sm { font-size: 13px; padding: 10px 16px; min-height: 38px; }
+.shm-btn--sm { font-size: 13px; padding: 10px 16px; min-height: 44px; }
 
 /* Role variants — pick by JOB, not by color.
    ------------------------------------------------------------
