@@ -5,11 +5,11 @@
 // .claude/skills/shmocard-design-system/ui_kits/website/homepage-shmoreview/review-buybox.jsx:1-225
 // + review.css:286-353 (+ 1037-1058 breakpoints).
 //
-// PLACEHOLDER PRODUCT DATA. Every product field (handle / title / sub /
-// pack prices / SKUs / image URLs) is hardcoded with a TODO(shopify):
-// marker. A future phase swaps these to Storefront API + variant
-// metafields via the shmocard-shopify-work wrapper. See plan in
-// context/brainstorming/shmo-review.md.
+// ATC is wired to the real Shopify Storefront API via addLineToCart
+// (components/cart/actions.ts). On success the cart store is updated
+// wholesale from the server response and the drawer opens. Loading +
+// error states are handled inline; errors are generic (never raw
+// Shopify userErrors — phishing-surface rule).
 //
 // Composes design-system primitives only:
 //   .shm-rating, .shm-eyebrow, .shm-h2, .shm-btn--primary/--xl,
@@ -20,8 +20,9 @@
 
 import { useState } from "react";
 
+import { addLineToCart } from "@/components/cart/actions";
 import { useCartStore } from "@/components/cart/store";
-import type { CartLine } from "@/components/cart/types";
+import { mapShopifyCartLines } from "@/components/cart/useCartHydration";
 import Section, { type SectionBg } from "@/components/layout/Section";
 
 const STARS = [0, 1, 2, 3, 4];
@@ -66,14 +67,12 @@ export type BuyboxProps = {
 // CR-80 defaults (exported so future PDPs can reference them)
 // ---------------------------------------------------------------------------
 
-// TODO(shopify): replace with Storefront API product query result.
 export const DEFAULT_BUYBOX_PRODUCT: BuyboxProduct = {
   handle: "shmo-review-cr80",
   title: "Google Review NFC Tap Card (CR-80)",
   sub: "The countertop tap that turns happy crews into five-star reviews.",
 };
 
-// TODO(shopify): swap gallery to Shopify product.images.nodes[].url.
 export const DEFAULT_BUYBOX_GALLERY: BuyboxGalleryImage[] = [
   { src: "/products/cr80/transparent/magnific_2884306972.png", alt: "CR-80 NFC tap card, front view" },
   { src: "/products/cr80/transparent/magnific_2884313989.png", alt: "CR-80 NFC tap card, trio stacked" },
@@ -83,7 +82,6 @@ export const DEFAULT_BUYBOX_GALLERY: BuyboxGalleryImage[] = [
   { src: "/products/cr80/transparent/magnific_2884336096.png", alt: "CR-80 NFC tap card, back" },
 ];
 
-// TODO(shopify): pack pricing tiers come from Shopify variants + metafields.
 export const DEFAULT_BUYBOX_PACKS: BuyboxPack[] = [
   { qty: 1,  price: 29.99,  perCard: 29.99, save: null,  note: null,                       compare: null,   pop: false },
   { qty: 2,  price: 49.99,  perCard: 25.00, save: null,  note: null,                       compare: 59.98,  pop: false },
@@ -122,33 +120,39 @@ export default function Buybox({
   const [packIdx, setPackIdx] = useState(Math.min(3, packs.length - 1)); // 10-pack default (most popular)
   const [qty, setQty] = useState(1);
   const [faqOpen, setFaqOpen] = useState(-1);
+  const [adding, setAdding] = useState(false);
+  const [addError, setAddError] = useState<string | null>(null);
 
   const pack = packs[packIdx];
   const lineTotal = (pack.price * qty).toFixed(2);
 
-  const addLine = useCartStore((s) => s.addLine);
   const openCart = useCartStore((s) => s.open);
 
-  function handleAdd() {
-    // TODO(shopify): wire to Storefront API cartLinesAdd via Server Action.
-    // The placeholder line goes straight into the local Zustand store so
-    // the existing cart drawer + count badge work end-to-end visually.
-    // When Shopify lands, swap addLine() for the actions.ts mutation
-    // and rely on the server reconcile to refresh `lines`.
-    const line: CartLine = {
-      id: `local-${Date.now()}-${packIdx}`,
-      merchandiseId: `placeholder:${product.handle}-pack-${pack.qty}`, // TODO(shopify)
-      productHandle: product.handle, // TODO(shopify)
-      title: product.title, // TODO(shopify)
-      variantTitle: `${pack.qty}-pack`,
-      price: pack.price.toFixed(2), // TODO(shopify)
-      currencyCode: "USD",
-      imageUrl: gallery[0].src, // TODO(shopify)
-      imageAlt: gallery[0].alt,
-      quantity: qty,
-    };
-    addLine(line);
-    openCart();
+  async function handleAdd() {
+    const variantId = pack.variantId;
+
+    // Graceful degradation: if no variantId (Shopify outage / missing data),
+    // do NOT attempt the mutation. Surface soft error.
+    if (!variantId) {
+      setAddError("Couldn't load product details. Refresh and try again.");
+      return;
+    }
+
+    setAdding(true);
+    setAddError(null);
+    try {
+      const cart = await addLineToCart(variantId, qty);
+      const lines = mapShopifyCartLines(cart);
+      useCartStore.getState().setCart(cart.id, cart.checkoutUrl, lines);
+      openCart();
+    } catch (err) {
+      // Generic error — never echo Shopify userErrors verbatim (phishing-surface)
+      setAddError("Couldn't add to cart. Please try again.");
+      // Log to console for dev debugging — production logs surface in Vercel
+      console.error("addLineToCart failed", err);
+    } finally {
+      setAdding(false);
+    }
   }
 
   return (
@@ -303,9 +307,17 @@ export default function Buybox({
             </div>
           </div>
 
-          <button className="bb__cta shm-btn shm-btn--primary shm-btn--xl" onClick={handleAdd}>
-            Add to cart — ${lineTotal}
+          <button
+            className="bb__cta shm-btn shm-btn--primary shm-btn--xl"
+            onClick={handleAdd}
+            disabled={adding}
+            aria-busy={adding}
+          >
+            {adding ? "Adding…" : `Add to cart — $${lineTotal}`}
           </button>
+          {addError && (
+            <p className="bb__add-error" role="alert">{addError}</p>
+          )}
           <div className="bb__meta">
             <span>60-day return</span>
             <span>Ships in 3 days</span>

@@ -391,6 +391,12 @@ main > section:has(> .shm-wave:last-child) { padding-bottom: 0; }
   color: var(--color-muted);
 }
 .bb__faq { margin-top: 14px; }
+.bb__add-error {
+  margin-top: 8px;
+  color: var(--color-ember);
+  font-family: var(--font-body);
+  font-size: 0.875rem;
+}
 
 .qty-block {
   display: flex;
