@@ -1,16 +1,16 @@
 # handoff.md — Session Handoff
 
-**Last session:** 2026-05-20 — Phases 4, 5, 6 ALL shipped end-to-end in one marathon. Phase 6 work: built new `<FormatCompare>` shared component, mounted on CR-80 (06-02) for first checkpoint, then built Square Card PDP with FormatCompare baked in (06-03), then back-ported to L-Sign (06-04), then cross-page checkpoint (06-05 approved), then mobile + a11y pass (06-07) surfaced 1 WCAG issue → system-wide `.shm-btn--sm` min-height bumped 38 → 44 px (`7d34c18`). 8 atomic commits in this Phase 6 stretch. Memory rules saved: (a) reset preview viewport to desktop after mobile screenshots, (b) always use AskUserQuestion for decisions (Jordan's ADHD), (c) Next.js dev-server cache gotcha after `npm run build` — clear `.next/` before resuming dev.
+**Last session:** 2026-05-20 — Phases 4, 5, 6, AND 7 ALL shipped end-to-end in one marathon. Phase 7 work: Buybox h3 → h2 (07-01), HowItWorks step 01 format-agnostic copy (07-02), 9-screenshot cross-PDP audit clean (07-03), a11y final check surfaced 3 primitive fixes (07-05) → applied all 3 (qty button 44 px, ember badge contrast, surgical ember-only ghost-button contrast — preserves white text on genuinely dark cocoa/chocolate/cherry backgrounds). 7 atomic commits in Phase 7. Memory rules saved this session: (a) reset preview viewport to desktop after mobile screenshots, (b) use AskUserQuestion for decisions, (c) clear `.next/` after `npm run build`, (d) don't suggest "pause" mid-session, (e) explain UI/CSS issues in plain English (not jargon).
 
 ---
 
 ## Project phase
 
-**Phase 6 — Square Card PDP + FormatCompare ✅ complete 2026-05-20.** Shipped new `<FormatCompare>` shared component mounted on all 3 PDPs (CR-80, L-Sign, Square Card) between HowItWorks and VideoTestimonials. Square Card Coming Soon stub replaced with full PDP. WCAG fix: `.shm-btn--sm` min-height 38 → 44 px system-wide. tsc + build clean. See `.planning/phases/06-square-card-pdp/06-SUMMARY.md`.
+**Phase 7 — Cross-PDP mobile polish ✅ complete 2026-05-20.** Buybox h3 → h2, HowItWorks step 01 format-agnostic copy, 3 a11y primitive fixes (qty button 44 px, ember badge contrast, surgical ember-only ghost-button override). Cross-PDP audit at 375/414/768 px clean. tsc + build clean. See `.planning/phases/07-cross-pdp-mobile-polish/07-SUMMARY.md`.
 
-**Next phase: Phase 7 — Cross-PDP mobile polish.** Single mobile + a11y pass across all 3 PDPs (CR-80, L-Sign, Square Card) at 375 / 414 / 768 px. LAYOUT IS LOCKED — spacing / type / mascot only. Catch shared-component issues that earlier phases surfaced (Buybox heading hierarchy a11y, HowItWorks step-01 copy editorial for L-Sign + Square). Run BEFORE Shopify wiring so layout fights stay against placeholder data. Run **`/gsd-plan-phase 7`** to kick off.
+**Next phase: Phase 8 — Shopify Storefront wiring.** The biggest remaining phase. Replace every `TODO(shopify):` placeholder across all 3 PDPs (Buybox product data, gallery, packs, checklist, FAQ — plus FormatCompare metadata) with live Storefront API queries. Wire cart + checkout redirect. Add webhook revalidation route. Read-only Admin (no mutations). **MUST invoke `shmocard-shopify-work` skill before dispatching the build** per `.claude/rules/subagent-dispatch.md`. Run **`/gsd-plan-phase 8`** to kick off.
 
-**Project progress:** 7 of 10 phases complete (70%). Phases 1, 2, 3a, 3, 4, 5, 6 done. Remaining: 7 (Cross-PDP mobile polish), 8 (Shopify Storefront wiring), 9 (Tracking — GHL + FB Pixel), 10 (Launch readiness — DNS cutover).
+**Project progress:** 8 of 10 phases complete (80%). Phases 1, 2, 3a, 3, 4, 5, 6, 7 done. Remaining: 8 (Shopify Storefront wiring), 9 (Tracking — GHL + FB Pixel), 10 (Launch readiness — DNS cutover).
 
 ---
 
@@ -136,5 +136,5 @@ Concrete next actions in order:
    - `context/brainstorming/cr-80-competitor-selector-teardown.md`
 4. **Before any UI work:** invoke the `shmocard-design-system` Skill per `.claude/rules/skill-routing.md`. Then read `.claude/rules/design-system.md`.
 5. **Don't write UI code in the parent agent.** Dispatch the `design-system-builder` subagent for any `.tsx` / `.css` change (per `.claude/rules/subagent-dispatch.md`). Only carve-out: pure copy/text edits with zero class/styling changes.
-6. Ask Jordan via AskUserQuestion (per saved memory rule — Jordan has ADHD, no walls of text): **"Ready to kick off Phase 7 (Cross-PDP mobile polish) with `/gsd-plan-phase 7`? All 3 PDPs now exist and need a single coordinated mobile + a11y sweep before Phase 8 Shopify wiring lands real product strings."** Also: clear `.next/` cache if dev server has been running since the last `npm run build` (avoid the 500 error from Phase 6 close-out).
+6. Ask Jordan via AskUserQuestion (per saved memory rules — plain English, no jargon, never offer "pause"): **"Ready to kick off Phase 8 (Shopify Storefront wiring) with `/gsd-plan-phase 8`? Replaces every TODO(shopify) placeholder across all 3 PDPs with live API data and wires cart + checkout. Biggest remaining phase."** MUST invoke `shmocard-shopify-work` skill BEFORE dispatching builder per `.claude/rules/subagent-dispatch.md`. Also: if dev server was running during the last `npm run build`, clear `.next/` first (recurring cache-corruption bug — see saved memory rule).
 7. The dev server may be down at session start — check with `lsof -iTCP:3000` and `preview_list`. If nothing's running, `preview_start name=next-dev`.
