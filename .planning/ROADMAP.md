@@ -11,7 +11,7 @@ Bare Next.js + Tailwind shell → audited design system → homepage + /shmo-rev
 - [x] **Phase 3a: Homepage + /shmo-review category** — Tokens, base layout, homepage, /shmo-review category/family page. Complete 2026-05-16 (handoff.md).
 - [x] **Phase 3: CR-80 PDP** — Build `/shmo-review/cr-80` product detail page from scratch. Complete 2026-05-20 (SUMMARY.md).
 - [x] **Phase 4: Link hygiene & Coming Soon stubs** — Audit every CTA / nav / footer link on built pages; stub `/shmo-review/l-sign`, `/shmo-review/square-card`, `/shmo-biz`, `/shmo-link`, `/shmo-reputation` as Coming Soon pages so nothing 404s. Complete 2026-05-20 (SUMMARY.md).
-- [ ] **Phase 5: L-Sign PDP** — Build `/shmo-review/l-sign` product detail page using patterns established in Phase 3. Replaces the Phase 4 Coming Soon stub.
+- [x] **Phase 5: L-Sign PDP** — Build `/shmo-review/l-sign` product detail page using patterns established in Phase 3. Replaces the Phase 4 Coming Soon stub. Complete 2026-05-20 (SUMMARY.md).
 - [ ] **Phase 6: Square Card PDP** — Build `/shmo-review/square-card` product detail page using patterns established in Phase 3. Replaces the Phase 4 Coming Soon stub.
 - [ ] **Phase 7: Cross-PDP mobile polish** — One pass across all 3 PDPs at 375 / 414 / 768 px. LAYOUT IS LOCKED — spacing / type / mascot only. Run before Shopify wiring so layout fights stay against placeholder data, not real Shopify strings.
 - [ ] **Phase 8: Shopify Storefront wiring** — Replace placeholder product data with live Storefront API queries; wire cart + checkout redirect. Read-only Admin (no mutations).
