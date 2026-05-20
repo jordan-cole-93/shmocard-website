@@ -14,6 +14,7 @@ import Buybox, {
 import Proof from '@/components/shmo-review/cr-80/Proof';
 import CrewStrip from '@/components/home/CrewStrip';
 import HowItWorks from '@/components/shmo-review/HowItWorks';
+import FormatCompare from '@/components/shmo-review/FormatCompare';
 import VideoTestimonials from '@/components/home/VideoTestimonials';
 import FinalCta from '@/components/home/FinalCta';
 import { ProofTiles } from '@/components/shmo-review/ProofMarquee';
@@ -76,6 +77,7 @@ export default function LSignPage() {
       <Proof />
       <CrewStrip nextBg='cream' afterGrid={<ProofTiles />} />
       <HowItWorks />
+      <FormatCompare currentHandle="google-review-nfc-tap-card-l-sign" />
       <VideoTestimonials bg='cream' nextBg='ember' />
       <FinalCta />
     </main>
