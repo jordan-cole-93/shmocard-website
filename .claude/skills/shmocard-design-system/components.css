@@ -102,7 +102,6 @@
 .shm-btn--ghost.on-dark,
 .shm-bg-cocoa .shm-btn--ghost,
 .shm-bg-chocolate .shm-btn--ghost,
-.shm-bg-ember .shm-btn--ghost,
 .shm-bg-cherry .shm-btn--ghost {
   color: var(--color-marshmallow);
   border-color: rgba(255, 251, 241, 0.36);
@@ -110,11 +109,23 @@
 .shm-btn--ghost.on-dark:hover,
 .shm-bg-cocoa .shm-btn--ghost:hover,
 .shm-bg-chocolate .shm-btn--ghost:hover,
-.shm-bg-ember .shm-btn--ghost:hover,
 .shm-bg-cherry .shm-btn--ghost:hover {
   background: rgba(255, 251, 241, 0.12);
   color: var(--color-marshmallow);
   border-color: var(--color-marshmallow);
+}
+
+/* Ghost on ember — lighter bg, needs dark text for AA contrast */
+.shm-bg-ember .shm-btn--ghost,
+.shm-bg-ember .shm-btn--ghost.on-dark {
+  color: var(--color-cocoa-deep);
+  border-color: rgba(20, 14, 10, 0.28);
+}
+.shm-bg-ember .shm-btn--ghost:hover,
+.shm-bg-ember .shm-btn--ghost.on-dark:hover {
+  background: rgba(20, 14, 10, 0.08);
+  color: var(--color-cocoa-deep);
+  border-color: var(--color-cocoa-deep);
 }
 
 /* ============================================================
@@ -169,7 +180,7 @@
    --cream   · Use ONLY on dark (cocoa/ember) surfaces — default disappears there.
    --soft    · Quietest pill — translucent ink hairline, no fill. Caption-strength label.
    ------------------------------------------------------------ */
-.shm-badge--ember { background: var(--color-ember); color: var(--color-marshmallow); border-color: rgba(0,0,0,0.20); }
+.shm-badge--ember { background: var(--color-ember); color: var(--color-cocoa-deep); border-color: rgba(0,0,0,0.20); }
 .shm-badge--honey { background: var(--color-honey); color: var(--color-cocoa-deep); }
 .shm-badge--cocoa { background: var(--color-cocoa-deep); color: var(--color-marshmallow); border-color: var(--color-cocoa-deep); }
 .shm-badge--cream { background: var(--color-marshmallow); color: var(--color-cocoa-deep); }
@@ -725,7 +736,7 @@
   overflow: hidden;
 }
 .shm-qty__btn {
-  width: 32px; height: 32px;
+  min-width: 44px; min-height: 44px;
   border: 0; background: transparent;
   cursor: pointer;
   display: inline-flex; align-items: center; justify-content: center;
