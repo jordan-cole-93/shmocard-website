@@ -19,6 +19,8 @@ import VideoTestimonials from "@/components/home/VideoTestimonials";
 import Faq from "@/components/shmo-review/Faq";
 import FinalCta from "@/components/home/FinalCta";
 import { ProofTiles } from "@/components/shmo-review/ProofMarquee";
+import { getProductByHandle } from "@/lib/shopify/queries";
+import { mapProductToBuyboxProps } from "@/lib/shopify/buybox-mapping";
 
 export const metadata = {
   title: "Shmo Review — NFC tap cards built for crews",
@@ -26,12 +28,24 @@ export const metadata = {
     "NFC tap cards for crews. One card per person, fifteen reviews per week. Built for local shop crews.",
 };
 
-export default function ShmoReviewPage() {
+// Category page Buybox is wired to the CR-80 best-seller. Visitors who
+// decide on the category page can buy without navigating to the PDP.
+const CATEGORY_BUYBOX_SUB =
+  "The countertop tap that turns happy crews into five-star reviews.";
+
+export default async function ShmoReviewPage() {
+  const product = await getProductByHandle("google-reviews-nfc-tap-card-cr80");
+  const mapped = product ? mapProductToBuyboxProps(product) : {};
+  const buyboxProps =
+    mapped.product
+      ? { ...mapped, product: { ...mapped.product, sub: CATEGORY_BUYBOX_SUB } }
+      : mapped;
+
   return (
     <main>
       <Hero />
       <BulletStrip />
-      <Buybox nextBg="marsh" />
+      <Buybox {...buyboxProps} nextBg="marsh" />
       <CrewStrip nextBg="marsh" afterGrid={<ProofTiles />} />
       <HowItWorks />
       <FormatPicker bg="cream" nextBg="marsh" />
