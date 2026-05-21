@@ -51,8 +51,11 @@ Shopify product changes propagate in ~5 seconds:
 | `SHOPIFY_STORE_DOMAIN` | `shmocard.myshopify.com` |
 | `SHOPIFY_STOREFRONT_ACCESS_TOKEN` | Storefront API read token (Headless channel) |
 | `SHOPIFY_REVALIDATION_SECRET` | Webhook validation secret |
+| `NEXT_PUBLIC_FB_PIXEL_ID` | Meta Pixel ID for browser + CAPI fires (Phase 9) |
+| `FB_CAPI_ACCESS_TOKEN` | Meta Conversions API access token, server-only (Phase 9) |
+| `FB_TEST_EVENT_CODE` | Meta Test Event Code, DEV ONLY — do not set in Vercel production (Phase 9) |
 
-Set in `.env.local` locally. Mirror in Vercel dashboard at deploy time.
+Set in `.env.local` locally. Mirror in Vercel dashboard at deploy time. `FB_TEST_EVENT_CODE` is intentionally NOT mirrored to Vercel (see Phase 9 contract below — Pitfall 5).
 
 ### Phase 3 Storefront API env vars (contract)
 
@@ -70,6 +73,23 @@ This is the canonical env-var contract consumed by `lib/shopify/index.ts` and `c
 - Never log values. `lib/shopify/index.ts` throws on missing values with a generic message; it never echoes the token in error output.
 - Local: write to `.env.local` (gitignored). Production: Vercel project env. Don't commit either to git.
 - Cart cookie `shm-cart-id` is set with `httpOnly: true, secure: true, sameSite: 'lax', maxAge: 60*60*24*14` (14 days) — see `components/cart/actions.ts`.
+
+### Phase 9 Meta Pixel + Conversions API env vars (contract)
+
+This is the canonical env-var contract consumed by `lib/analytics/meta-capi.ts` and `components/analytics/PixelLoader.tsx`. Same hook protection as Phase 3 — no `.env.local.example` ships; this table is the contract.
+
+| Var | Required | Source | Used by |
+|---|---|---|---|
+| `NEXT_PUBLIC_FB_PIXEL_ID` | yes (Phase 9) | Meta Business Manager → Events Manager → Data Sources → [Pixel] → Settings → Dataset ID (15–16 digit number). Public — embedded in browser bundle by the `NEXT_PUBLIC_` prefix. **MUST match the Pixel ID configured in Shopify Admin → Sales channels → Facebook & Instagram → Settings → Pixel ID** (split-domain dedup requires identical IDs — Pitfall 8). | `components/analytics/PixelLoader.tsx` (browser `fbq` init); `lib/analytics/meta-capi.ts` (CAPI endpoint construction `graph.facebook.com/v25.0/{pixel_id}/events`) |
+| `FB_CAPI_ACCESS_TOKEN` | yes (Phase 9) | Meta Business Manager → Events Manager → [Pixel] → Settings → Conversions API → Generate access token. **Server-only — NEVER expose to client.** Enforced via `import "server-only"` at line 1 of `lib/analytics/meta-capi.ts`. | `lib/analytics/meta-capi.ts` (Authorization param for `graph.facebook.com` POST) |
+| `FB_TEST_EVENT_CODE` | DEV ONLY — DO NOT SET IN VERCEL PRODUCTION | Meta Business Manager → Events Manager → [Pixel] → Test Events tab → Test event code. When present, all CAPI fires include `test_event_code` field and events land in Events Manager Test Events tab instead of the production stream. Setting this in Vercel production would route real customer events to Test Events tab and break Meta's optimization (Pitfall 5). | `lib/analytics/meta-capi.ts` (conditional `test_event_code` payload field — only included when env var is truthy) |
+
+**Rules (Phase 9 additions):**
+- `NEXT_PUBLIC_FB_PIXEL_ID` is intentionally public (browser fires Pixel JS that needs the ID). Public Pixel IDs are normal — Meta's model assumes the ID is exposed.
+- `FB_CAPI_ACCESS_TOKEN` is server-only — `import "server-only"` at top of `lib/analytics/meta-capi.ts` blocks any accidental client-side import at build time.
+- `FB_TEST_EVENT_CODE` lives in `.env.local` ONLY (never in Vercel production). Phase 10 production deploy must verify this.
+- Never log any of these values. `metaFetch` errors return a generic message; the full Meta response stays server-side in `console.error` for debug.
+- Pixel ID parity is the supreme gate (Pitfall 8): the value in `NEXT_PUBLIC_FB_PIXEL_ID` MUST equal the Pixel ID configured in Shopify's Facebook & Instagram channel app — otherwise our site events and Shopify's Purchase land in different Pixel datasets and dedup fails.
 
 ## Shopify product handles (live)
 
