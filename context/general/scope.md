@@ -1,6 +1,6 @@
 # scope.md — Project State & Roadmap
 
-**Last updated:** 2026-05-20
+**Last updated:** 2026-05-22
 
 Brand website for Shmocard at `shmocard.com`. Retail front door, headless Shopify + Next.js. Live store at `shop.shmocard.com` is untouched and stays untouched.
 
@@ -26,14 +26,20 @@ What exists in the codebase:
 - `public/` — illustrations, mascot poses, sub-brand artwork
 - `pictures/screenshots/` — 50+ verification screenshots across homepage, /shmo-review, and CR-80 PDP iterations
 
-What does **not** exist yet:
-- L-Sign PDP (`/shmo-review/l-sign`) — Phase 5
-- Square Card PDP (`/shmo-review/square-card`) — Phase 6
-- Coming Soon stubs for sub-brand surfaces (`/shmo-biz`, `/shmo-link`, `/shmo-reputation`) — Phase 4
-- Webhook revalidation route — Phase 8 (Shopify wiring)
-- Live Storefront API queries on the PDPs (data is currently `TODO(shopify):` placeholders) — Phase 8
-- GHL webhook for order sync — Phase 9
-- Facebook Pixel + Conversions API — Phase 9
+What does **not** exist yet (post-Phase-9 punch list):
+- Vercel production env vars (`NEXT_PUBLIC_FB_PIXEL_ID`, `FB_CAPI_ACCESS_TOKEN` — Phase 10. `FB_TEST_EVENT_CODE` stays dev-only per Pitfall 5.)
+- Shopify product/collection revalidation webhook (deferred from Phase 8 — needs public Vercel URL, ships in Phase 10)
+- DNS cutover from `shop.shmocard.com` to `shmocard.com` — Phase 10 (highest blast radius)
+- Final a11y audit + launch smoke — Phase 10
+- Cookie consent / GDPR banner — deferred indefinitely (Phase 9 fires Pixel unconditionally; revisit if EU traffic becomes meaningful)
+
+What now exists (Phases 1–9 complete):
+- L-Sign PDP (`/shmo-review/l-sign`) — Phase 5 ✓
+- Square Card PDP (`/shmo-review/square-card`) — Phase 6 ✓
+- Coming Soon stubs for sub-brand surfaces — Phase 4 ✓
+- Live Storefront API queries on all 3 PDPs + category-page Buybox — Phases 8 + 9 ✓
+- GHL order webhook (configured Shopify-Admin direct per D-05; no site code) — Phase 9 ✓
+- Facebook Pixel + Conversions API dual-fire (ViewContent, AddToCart, InitiateCheckout from our site; PageView auto from Pixel base; Purchase from Shopify channel app) — Phase 9 ✓
 
 ---
 

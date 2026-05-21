@@ -15,8 +15,8 @@ Bare Next.js + Tailwind shell → audited design system → homepage + /shmo-rev
 - [x] **Phase 6: Square Card PDP + FormatCompare section** — Build `/shmo-review/square-card` product detail page using patterns from Phases 3 + 5; ships new shared `<FormatCompare>` component mounted on all 3 PDPs. Complete 2026-05-20 (SUMMARY.md).
 - [x] **Phase 7: Cross-PDP mobile polish** — One pass across all 3 PDPs at 375 / 414 / 768 px. LAYOUT IS LOCKED — spacing / type / mascot only. Run before Shopify wiring so layout fights stay against placeholder data, not real Shopify strings. Complete 2026-05-20 (SUMMARY.md).
 - [x] **Phase 8: Shopify Storefront wiring** — Replace placeholder product data with live Storefront API queries; wire cart + checkout redirect. Read-only Admin (no mutations). Complete 2026-05-20 (SUMMARY.md).
-- [ ] **Phase 9: Tracking — GHL webhook + Facebook Pixel** — Wire GHL webhook for order / customer sync; install Facebook Pixel + Conversions API for `ViewContent`, `AddToCart`, `InitiateCheckout`, `Purchase`. Depends on Phase 8 because pixel events fire on cart / checkout actions that don't exist until wiring is live.
-- [ ] **Phase 10: Launch readiness** — Final a11y audit, Vercel env vars, DNS cutover from `shop.shmocard.com` to `shmocard.com`. Highest blast radius — last phase.
+- [x] **Phase 9: Tracking — GHL webhook + Facebook Pixel** — ✅ COMPLETE 2026-05-22 (SUMMARY.md). Meta Pixel + CAPI dual-fire wired for ViewContent + AddToCart + InitiateCheckout from site; PageView auto from Pixel base; Purchase fires from Shopify Facebook & Instagram channel app (D-04, no site code). GHL order webhook configured Admin-side per D-05. Shared UUIDv4 event_id pairs browser Pixel + server CAPI for dedup. Pixel ID `1279390273687409` parity across both domains.
+- [ ] **Phase 10: Launch readiness** — Final a11y audit, Vercel env vars (NEXT_PUBLIC_FB_PIXEL_ID + FB_CAPI_ACCESS_TOKEN — NOT FB_TEST_EVENT_CODE), Shopify revalidation webhook (now possible with public URL), DNS cutover from `shop.shmocard.com` to `shmocard.com`. Highest blast radius — last phase.
 
 ## Phase Details
 
