@@ -22,6 +22,10 @@
 import { useState, useTransition } from "react";
 
 import { assertCheckoutUrl } from "./actions";
+import { trackInitiateCheckout } from "@/components/analytics/actions";
+import { useCartStore } from "@/components/cart/store";
+import { generateEventId } from "@/lib/analytics/event-id";
+import { trackPixelEvent } from "@/lib/analytics/fbq";
 
 type CartCheckoutButtonProps = {
   checkoutUrl: string | null;
@@ -47,6 +51,45 @@ export default function CartCheckoutButton({
     // the button is in an error state. (T-03-09-03)
     if (isNavigating || isError) return;
     if (!checkoutUrl) return;
+
+    // --- Phase 9 instrumentation: dual-fire InitiateCheckout ---
+    // Fires BEFORE setIsNavigating + startTransition + assertCheckoutUrl
+    // (Pitfall 10: server action must be dispatched before the browser
+    // commits to navigating, otherwise tab tear-down can drop the
+    // outbound request). Both fires are fire-and-forget. Pixel uses
+    // sendBeacon under the hood (survives navigation); Server Action
+    // runs server-side independent of tab navigation.
+    const cartState = useCartStore.getState();
+    const icoEventId = generateEventId();
+    const icoContentIds = cartState.lines.map((line) => line.merchandiseId);
+    const icoContents = cartState.lines.map((line) => ({
+      id: line.merchandiseId,
+      quantity: line.quantity,
+    }));
+    const icoValue = Number(
+      cartState.lines
+        .reduce((sum, line) => sum + Number(line.price) * line.quantity, 0)
+        .toFixed(2),
+    );
+    const icoParams = {
+      content_ids: icoContentIds,
+      content_type: "product" as const,
+      contents: icoContents,
+      value: icoValue,
+      currency: "USD" as const,
+    };
+    trackPixelEvent("InitiateCheckout", icoParams, icoEventId);
+    trackInitiateCheckout({
+      params: icoParams,
+      eventId: icoEventId,
+      fbp: readCookie("_fbp") ?? undefined,
+      fbc: readCookie("_fbc") ?? undefined,
+      eventSourceUrl:
+        typeof window !== "undefined" ? window.location.href : "",
+    }).catch(() => {
+      // Defensive — Server Action already swallows.
+    });
+    // --- end Phase 9 instrumentation ---
 
     setIsNavigating(true);
 
@@ -111,4 +154,14 @@ export default function CartCheckoutButton({
       ) : null}
     </>
   );
+}
+
+// Phase 9 — fbp/fbc cookies are non-httpOnly (written by fbevents.js).
+// Reading via document.cookie is correct. May be undefined at checkout
+// time if Pixel hasn't yet set them (rare — user has been on the site
+// long enough to build a cart, so Pixel's set the cookies by now).
+function readCookie(name: string): string | null {
+  if (typeof document === "undefined") return null;
+  const m = document.cookie.match(new RegExp(`(?:^|; )${name}=([^;]+)`));
+  return m ? decodeURIComponent(m[1]) : null;
 }
