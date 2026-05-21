@@ -21,9 +21,12 @@
 import { useState } from "react";
 
 import { addLineToCart } from "@/components/cart/actions";
+import { trackAddToCart } from "@/components/analytics/actions";
 import { useCartStore } from "@/components/cart/store";
 import { mapShopifyCartLines } from "@/components/cart/useCartHydration";
 import Section, { type SectionBg } from "@/components/layout/Section";
+import { generateEventId } from "@/lib/analytics/event-id";
+import { trackPixelEvent } from "@/lib/analytics/fbq";
 
 const STARS = [0, 1, 2, 3, 4];
 
@@ -169,6 +172,35 @@ export default function Buybox({
       const cart = await addLineToCart(variantId, qty);
       const lines = mapShopifyCartLines(cart);
       useCartStore.getState().setCart(cart.id, cart.checkoutUrl, lines);
+
+      // Phase 9 — AddToCart dual-fire (browser Pixel + server CAPI).
+      // Fires only after the cart line is confirmed by Shopify. Shared
+      // event_id dedupes the pair in Events Manager (48h window).
+      // Fire-and-forget — analytics MUST NOT block ATC UX (Pitfall 10).
+      const atcEventId = generateEventId();
+      const value = Math.round(pack.price * qty * 100) / 100;
+      const atcParams = {
+        content_ids: [variantId],
+        content_type: "product" as const,
+        contents: [{ id: variantId, quantity: qty }],
+        value,
+        currency: "USD" as const,
+      };
+
+      // Server fire — independent of browser Pixel load state.
+      trackAddToCart({
+        params: atcParams,
+        eventId: atcEventId,
+        fbp: readFbCookie("_fbp") ?? undefined,
+        fbc: readFbCookie("_fbc") ?? undefined,
+        eventSourceUrl: window.location.href,
+      }).catch(() => {
+        // Server Action swallows internally — defensive extra catch.
+      });
+
+      // Browser fire — fbq may not yet be loaded; poll briefly.
+      fireBrowserAtcWithRetry(atcParams, atcEventId);
+
       openCart();
     } catch (err) {
       // Generic error — never echo Shopify userErrors verbatim (phishing-surface)
@@ -543,4 +575,37 @@ export default function Buybox({
       </div>
     </Section>
   );
+}
+
+// Phase 9 — local helpers for AddToCart dual-fire.
+// fbp/fbc cookies are non-httpOnly (written by fbevents.js); reading via
+// document.cookie is correct. May be undefined on first cart action if
+// Pixel hasn't yet set them (Pitfall 7 — accepted; Match Quality improves
+// on second cart action after the user has spent time on the site).
+function readFbCookie(name: string): string | null {
+  if (typeof document === "undefined") return null;
+  const m = document.cookie.match(new RegExp(`(?:^|; )${name}=([^;]+)`));
+  return m ? decodeURIComponent(m[1]) : null;
+}
+
+// fbq race-fix: window.fbq may not be defined right after page load if
+// the Pixel script (next/script afterInteractive) hasn't finished loading.
+// Poll briefly (5s budget). The server CAPI fire is independent and already
+// landed by the time we attempt this — if the browser fire misses, dedup
+// just degrades to CAPI-only for this event (still recovers most signal).
+function fireBrowserAtcWithRetry(
+  params: Parameters<typeof trackPixelEvent>[1],
+  eventId: string,
+): void {
+  if (typeof window === "undefined") return;
+  const start = Date.now();
+  const tryFire = () => {
+    if (typeof window.fbq === "function") {
+      trackPixelEvent("AddToCart", params, eventId);
+      return;
+    }
+    if (Date.now() - start > 5000) return; // 5s budget — accept browser fire missed
+    window.setTimeout(tryFire, 100);
+  };
+  tryFire();
 }
