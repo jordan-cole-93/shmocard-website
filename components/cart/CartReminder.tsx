@@ -7,7 +7,7 @@
 export default function CartReminder() {
   return (
     <div className="shm-cart-reminder">
-      <b>Heads up:</b> activate your cards in the Shmocard app the moment they arrive.
+      <b>Heads up:</b> activate your cards in the app when they arrive.
     </div>
   );
 }

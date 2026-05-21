@@ -792,8 +792,8 @@
 .shm-cart-reminder {
   background: var(--color-ember);
   color: var(--color-marshmallow);
-  padding: 10px 24px;
-  font-size: 12px; line-height: 1.4;
+  padding: 10px 16px;
+  font-size: 11px; line-height: 1.4;
   text-align: center;
   border-bottom: 1px solid var(--color-cocoa-deep);
 }
