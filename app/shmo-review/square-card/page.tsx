@@ -14,6 +14,7 @@ import FinalCta from '@/components/home/FinalCta';
 import { ProofTiles } from '@/components/shmo-review/ProofMarquee';
 import { getProductByHandle } from '@/lib/shopify/queries';
 import { mapProductToBuyboxProps } from '@/lib/shopify/buybox-mapping';
+import ViewContentTracker from '@/components/analytics/ViewContentTracker';
 
 export const metadata = {
   title: 'Square Card NFC Disc — Shmo Review',
@@ -32,6 +33,11 @@ export default async function SquareCardPage() {
       ? { ...mapped, product: { ...mapped.product, sub: SQUARE_SUB } }
       : mapped;
 
+  const defaultPrice = product?.priceRange?.minVariantPrice?.amount
+    ? Number(product.priceRange.minVariantPrice.amount)
+    : null;
+  const defaultVariantId = product?.variants?.nodes?.[0]?.id ?? null;
+
   return (
     <main>
       <Buybox {...buyboxProps} ariaLabel='Buy the Square Card disc' nextBg='cream' />
@@ -41,6 +47,14 @@ export default async function SquareCardPage() {
       <FormatCompare currentHandle='google-review-plaque' />
       <VideoTestimonials bg='cream' nextBg='ember' />
       <FinalCta />
+      {product && defaultPrice !== null && defaultVariantId && (
+        <ViewContentTracker
+          productId={product.id}
+          defaultVariantId={defaultVariantId}
+          price={defaultPrice}
+          handle='google-review-plaque'
+        />
+      )}
     </main>
   );
 }

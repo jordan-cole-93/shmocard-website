@@ -17,6 +17,7 @@ import FinalCta from "@/components/home/FinalCta";
 import { ProofTiles } from "@/components/shmo-review/ProofMarquee";
 import { getProductByHandle } from "@/lib/shopify/queries";
 import { mapProductToBuyboxProps } from "@/lib/shopify/buybox-mapping";
+import ViewContentTracker from "@/components/analytics/ViewContentTracker";
 
 export const metadata = {
   title: "CR-80 Review Card — Shmo Review",
@@ -35,6 +36,11 @@ export default async function Cr80Page() {
       ? { ...mapped, product: { ...mapped.product, sub: CR80_SUB } }
       : mapped;
 
+  const defaultPrice = product?.priceRange?.minVariantPrice?.amount
+    ? Number(product.priceRange.minVariantPrice.amount)
+    : null;
+  const defaultVariantId = product?.variants?.nodes?.[0]?.id ?? null;
+
   return (
     <main>
       <Buybox {...buyboxProps} nextBg="cream" />
@@ -44,6 +50,14 @@ export default async function Cr80Page() {
       <FormatCompare currentHandle="google-reviews-nfc-tap-card-cr80" />
       <VideoTestimonials bg="cream" nextBg="ember" />
       <FinalCta />
+      {product && defaultPrice !== null && defaultVariantId && (
+        <ViewContentTracker
+          productId={product.id}
+          defaultVariantId={defaultVariantId}
+          price={defaultPrice}
+          handle="google-reviews-nfc-tap-card-cr80"
+        />
+      )}
     </main>
   );
 }

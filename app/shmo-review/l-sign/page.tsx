@@ -14,6 +14,7 @@ import FinalCta from '@/components/home/FinalCta';
 import { ProofTiles } from '@/components/shmo-review/ProofMarquee';
 import { getProductByHandle } from '@/lib/shopify/queries';
 import { mapProductToBuyboxProps } from '@/lib/shopify/buybox-mapping';
+import ViewContentTracker from '@/components/analytics/ViewContentTracker';
 
 export const metadata = {
   title: 'L-Sign Counter Standee — Shmo Review',
@@ -32,6 +33,11 @@ export default async function LSignPage() {
       ? { ...mapped, product: { ...mapped.product, sub: L_SIGN_SUB } }
       : mapped;
 
+  const defaultPrice = product?.priceRange?.minVariantPrice?.amount
+    ? Number(product.priceRange.minVariantPrice.amount)
+    : null;
+  const defaultVariantId = product?.variants?.nodes?.[0]?.id ?? null;
+
   return (
     <main>
       <Buybox {...buyboxProps} ariaLabel='Buy the L-Sign standee' nextBg='cream' />
@@ -41,6 +47,14 @@ export default async function LSignPage() {
       <FormatCompare currentHandle='google-review-nfc-tap-card-l-sign' />
       <VideoTestimonials bg='cream' nextBg='ember' />
       <FinalCta />
+      {product && defaultPrice !== null && defaultVariantId && (
+        <ViewContentTracker
+          productId={product.id}
+          defaultVariantId={defaultVariantId}
+          price={defaultPrice}
+          handle='google-review-nfc-tap-card-l-sign'
+        />
+      )}
     </main>
   );
 }
