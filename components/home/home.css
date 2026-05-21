@@ -2082,6 +2082,28 @@
 @media (max-width: 1000px) {
   .video-grid { grid-template-columns: 1fr; max-width: 460px; margin: 0 auto; }
 }
+@media (max-width: 720px) {
+  .video-grid {
+    display: flex;
+    grid-template-columns: none;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scroll-padding-left: 16px;
+    gap: 12px;
+    max-width: none;
+    margin-left: -16px;
+    margin-right: -16px;
+    padding-left: 16px;
+    padding-right: 16px;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+  }
+  .video-grid::-webkit-scrollbar { display: none; }
+  .video-grid .video-card {
+    flex: 0 0 82%;
+    scroll-snap-align: start;
+  }
+}
 
 /* ---------- Compatibility ---------- */
 .compat {
