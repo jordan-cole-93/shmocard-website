@@ -323,10 +323,38 @@ main > section:has(> .shm-wave:last-child) { padding-bottom: 0; }
   border: 1px solid var(--color-hair);
 }
 .gal__main img { width: 100%; height: 100%; object-fit: cover; display: block; }
+/* Nav row: arrow btn + thumbs grid + arrow btn */
+.gal__nav {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
 .gal__thumbs {
+  flex: 1;
   display: grid;
   grid-template-columns: repeat(6, 1fr);
   gap: 10px;
+}
+/* Arrow buttons — 44×44 WCAG tap target, hand-drawn cocoa chevron */
+.gal__nav-btn {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  border-radius: var(--radius-full);
+  background: var(--color-marshmallow);
+  border: 1.5px solid var(--color-hair);
+  cursor: pointer;
+  padding: 0;
+  transition: border-color var(--motion-fast) var(--ease-standard),
+              opacity var(--motion-fast) var(--ease-standard);
+}
+.gal__nav-btn:hover:not(:disabled) { border-color: var(--color-cocoa-deep); }
+.gal__nav-btn:disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
 }
 .gal__thumb {
   aspect-ratio: 1 / 1;
@@ -344,6 +372,106 @@ main > section:has(> .shm-wave:last-child) { padding-bottom: 0; }
 
 /* Pack rows — equal height baked into the primitive (components.css:shm-pack-row).
    The 88px page override is removed; min-height: 96px lives in the primitive. */
+
+/* ── Color swatches — page-local, not a system primitive.
+   56px outer tap target (WCAG 2.5.5 strict). Visible circle is 48px —
+   large enough for product images to be recognisable.
+   Flat CSS color: background set inline via style prop.
+   Image swatch: <img> fills the button; overflow:hidden clips to circle.
+   Active ring: ember outline via box-shadow (sits outside the circle).
+   ── */
+.shm-color-swatches {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  margin: 4px 0 12px 0;
+}
+.shm-color-swatch {
+  /* 56×56 outer tap target; visible circle = full 56px */
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  flex-shrink: 0;
+  position: relative;
+  overflow: hidden;                          /* clips <img> to circle */
+  background: var(--color-cream);            /* fallback behind image */
+  box-shadow: 0 0 0 1.5px var(--color-hair);
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+.shm-color-swatch img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  border-radius: inherit;
+}
+.shm-color-swatch:hover {
+  transform: scale(1.07);
+}
+.shm-color-swatch.is-active {
+  box-shadow:
+    0 0 0 2.5px var(--color-ember),
+    0 0 0 5px rgba(255, 91, 31, 0.22);
+}
+.shm-color-swatch:focus-visible {
+  outline: 2px solid var(--color-ember);
+  outline-offset: 3px;
+}
+
+/* ── Free-shipping progress bar — page-local, not a system primitive ── */
+.pack-shipping {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-top: -4px; /* pulls bar snug under pack rows */
+}
+
+.pack-shipping__bar {
+  height: 8px;
+  background: var(--color-cream);
+  border: 1px solid var(--color-hair);
+  border-radius: var(--radius-full);
+  overflow: hidden;
+}
+
+.pack-shipping__bar-fill {
+  height: 100%;
+  background: var(--color-ember);
+  border-radius: var(--radius-full);
+  transition: width 250ms var(--ease-standard);
+}
+
+.pack-shipping__label {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-family: var(--font-body);
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--color-ink-2);
+  line-height: 1.4;
+}
+
+.pack-shipping__icon {
+  flex-shrink: 0;
+  width: 16px;
+  height: 16px;
+  color: var(--color-cocoa-deep);
+}
+
+.pack-shipping__amount {
+  font-weight: 700;
+  color: var(--color-cocoa-deep);
+}
+
+/* Unlocked state — icon + text go cocoa-deep, bar stays ember */
+.pack-shipping--unlocked .pack-shipping__label {
+  color: var(--color-cocoa-deep);
+  font-weight: 600;
+}
 
 /* SAVE badge inside __main: prevent it from stretching to full column width. */
 .review-buybox .shm-pack-row__main .shm-badge {
@@ -436,6 +564,12 @@ main > section:has(> .shm-wave:last-child) { padding-bottom: 0; }
 }
 @media (max-width: 720px) {
   .gal__thumbs { grid-template-columns: repeat(4, 1fr); }
+  /* On mobile keep 44px touch target via padding, no fixed width. */
+  .gal__nav-btn {
+    min-width: 44px;
+    min-height: 44px;
+    padding: 12px;
+  }
 }
 @media (max-width: 640px) {
   /* Hide the per-row shipping note on mobile — shipping info is
@@ -469,16 +603,32 @@ main > section:has(> .shm-wave:last-child) { padding-bottom: 0; }
   max-width: 900px;
   margin-inline: auto;
 }
-/* Make the whole product card a clickable link without underlines. */
+/* Make the whole product card a clickable link without underlines.
+   min-width: 0 overrides CSS Grid's default min-width: auto so cards
+   cannot overflow their columns on narrow viewports. */
 .format-grid .shm-product {
   text-decoration: none;
   color: inherit;
+  min-width: 0;
 }
 @media (max-width: 1100px) {
   .format-grid { grid-template-columns: repeat(2, 1fr); }
 }
 @media (max-width: 720px) {
-  .format-grid { grid-template-columns: 1fr; }
+  .format-grid { grid-template-columns: repeat(2, 1fr); gap: 12px; }
+  /* Tighten body padding so content fits the ~165px column width. */
+  .format-grid .shm-product__body { padding: 10px 10px 12px; }
+  /* Stack price + button vertically — side-by-side doesn't fit at this width. */
+  .format-grid .shm-product__row {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 6px;
+  }
+  /* Button fills full width so it doesn't get clipped. */
+  .format-grid .shm-product__row .shm-btn {
+    width: 100%;
+    justify-content: center;
+  }
 }
 
 /* ────────────────────────────────────────

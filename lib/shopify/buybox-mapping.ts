@@ -1,8 +1,34 @@
 import "server-only";
 
 import type { ShopifyProduct, ShopifyVariant } from "./types";
-import type { BuyboxGalleryImage, BuyboxPack, BuyboxProduct, BuyboxProps } from "@/components/shmo-review/Buybox";
+import type { BuyboxColor, BuyboxGalleryImage, BuyboxPack, BuyboxProduct, BuyboxProps } from "@/components/shmo-review/Buybox";
 import { DEFAULT_BUYBOX_GALLERY } from "@/components/shmo-review/Buybox";
+
+// ---------------------------------------------------------------------------
+// Color swatch helpers
+// ---------------------------------------------------------------------------
+
+/**
+ * Map a Shopify color option value to a CSS color string for the swatch.
+ * Case-insensitive. Falls back to a neutral token string for unknown names
+ * so the swatch still renders with the text label as the primary cue.
+ */
+export function cssColorFor(name: string): string {
+  const n = name.toLowerCase().trim();
+  if (n === "white")                        return "#FFFFFF";
+  if (n === "black")                        return "#1A1A1A";
+  if (n === "cream")                        return "#F5E6D3";
+  if (n === "tan" || n === "beige")         return "#D6BCA0";
+  if (n === "brown")                        return "#6B4423";
+  if (n === "red")                          return "#C0392B";
+  if (n === "blue")                         return "#3B82F6";
+  if (n === "green")                        return "#16A34A";
+  if (n === "gold" || n === "yellow")       return "#E89A1A";
+  if (n === "pink")                         return "#F472B6";
+  if (n === "gray" || n === "grey")         return "#9CA3AF";
+  // Unknown color: neutral fallback — swatch still renders, name is the cue
+  return "#E5E5E5";
+}
 
 // ---------------------------------------------------------------------------
 // Static pack config (D-01: variant metafields out of scope for Phase 8)
@@ -78,6 +104,10 @@ export function mapVariantToPack(variant: ShopifyVariant, prevVariant?: ShopifyV
  *
  * page.tsx owns marketing sub-copy — `sub` is left empty here.
  * Gallery falls back to DEFAULT_BUYBOX_GALLERY if Shopify returns no images.
+ *
+ * Multi-option products (e.g. L-Sign with Color × Pack Qty):
+ *   Returns `colors`, `packsByColor`, and `packs` (= first color's packs for
+ *   backward-compat). Single-option products return only `packs` as before.
  */
 export function mapProductToBuyboxProps(product: ShopifyProduct): Partial<BuyboxProps> {
   const buyboxProduct: BuyboxProduct = {
@@ -94,6 +124,64 @@ export function mapProductToBuyboxProps(product: ShopifyProduct): Partial<Buybox
         }))
       : DEFAULT_BUYBOX_GALLERY;
 
+  // Detect Color option (case-insensitive)
+  const colorOpt = product.options.find(
+    (o) => o.name.toLowerCase() === "color"
+  );
+
+  if (colorOpt && colorOpt.values.length > 0) {
+    // --- Multi-option path (e.g. L-Sign: Color × Pack Qty) ---
+    const colors: BuyboxColor[] = colorOpt.values.map((v) => {
+      const variantWithImage = product.variants.nodes.find(
+        (variant) =>
+          variant.image &&
+          variant.selectedOptions.some(
+            (o) => o.name.toLowerCase() === "color" && o.value === v
+          )
+      );
+      return {
+        name: v,
+        cssColor: cssColorFor(v),
+        imageSrc: variantWithImage?.image?.url,
+        imageAlt: variantWithImage?.image?.altText ?? v,
+      };
+    });
+
+    // Group variants by color, sorted by qty ascending within each group
+    const packsByColor: Record<string, BuyboxPack[]> = {};
+    for (const color of colors) {
+      const colorVariants = product.variants.nodes.filter((v) => {
+        const variantColor = v.selectedOptions.find(
+          (o) => o.name.toLowerCase() === "color"
+        )?.value;
+        return variantColor === color.name;
+      });
+
+      // Sort by qty ascending so prevVariant pricing math is correct per-color
+      const sorted = [...colorVariants].sort((a, b) => {
+        const qa = parseQty(a.title) ?? 0;
+        const qb = parseQty(b.title) ?? 0;
+        return qa - qb;
+      });
+
+      packsByColor[color.name] = sorted
+        .map((v, i) => mapVariantToPack(v, sorted[i - 1]))
+        .filter((p) => p.qty > 0);
+    }
+
+    // `packs` = first color's packs for backward-compat (code reading .packs still works)
+    const firstColorPacks = packsByColor[colors[0].name] ?? [];
+
+    return {
+      product: buyboxProduct,
+      gallery,
+      packs: firstColorPacks,
+      colors,
+      packsByColor,
+    };
+  }
+
+  // --- Single-option path (CR-80, Square Card) — unchanged behavior ---
   const packs: BuyboxPack[] = product.variants.nodes.length > 0
     ? product.variants.nodes
         .map((v, i, arr) => mapVariantToPack(v, arr[i - 1]))

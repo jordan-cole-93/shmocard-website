@@ -32,7 +32,7 @@ export const PRODUCT_BY_HANDLE_QUERY = /* GraphQL */ `
         minVariantPrice { amount currencyCode }
         maxVariantPrice { amount currencyCode }
       }
-      images(first: 10) {
+      images(first: 50) {
         nodes { url altText width height }
       }
       options { id name values }
@@ -43,6 +43,7 @@ export const PRODUCT_BY_HANDLE_QUERY = /* GraphQL */ `
           availableForSale
           price { amount currencyCode }
           selectedOptions { name value }
+          image { url altText width height }
         }
       }
       featuredImage { url altText width height }

@@ -55,10 +55,21 @@ export type BuyboxProduct = {
   sub: string;
 };
 
+export type BuyboxColor = {
+  name: string;      // raw Shopify value e.g. "White", "Black"
+  cssColor: string;  // CSS color fallback when no variant image
+  imageSrc?: string; // variant image URL (preferred)
+  imageAlt?: string; // variant image alt text
+};
+
 export type BuyboxProps = {
   product?: BuyboxProduct;
   gallery?: BuyboxGalleryImage[];
   packs?: BuyboxPack[];
+  /** Color swatches — only present for multi-option products (e.g. L-Sign). */
+  colors?: BuyboxColor[];
+  /** Per-color pack lists — keyed by color name. Parallel to `colors`. */
+  packsByColor?: Record<string, BuyboxPack[]>;
   checklist?: string[];
   faqRows?: BuyboxFaqRow[];
   ariaLabel?: string;
@@ -113,19 +124,31 @@ export default function Buybox({
   product = DEFAULT_BUYBOX_PRODUCT,
   gallery = DEFAULT_BUYBOX_GALLERY,
   packs = DEFAULT_BUYBOX_PACKS,
+  colors,
+  packsByColor,
   checklist = DEFAULT_BUYBOX_CHECKLIST,
   faqRows = DEFAULT_BUYBOX_FAQ_ROWS,
   ariaLabel = "Buy the CR-80 card",
   nextBg = "marsh",
 }: BuyboxProps) {
+  const hasColors = colors != null && colors.length > 1 && packsByColor != null;
+
   const [activeIdx, setActiveIdx] = useState(0);
+  const [thumbPage, setThumbPage] = useState(0);
+  const [colorIdx, setColorIdx] = useState(0);
   const [packIdx, setPackIdx] = useState(Math.min(3, packs.length - 1)); // 10-pack default (most popular)
   const [qty, setQty] = useState(1);
   const [faqOpen, setFaqOpen] = useState(-1);
   const [adding, setAdding] = useState(false);
   const [addError, setAddError] = useState<string | null>(null);
 
-  const pack = packs[packIdx];
+  // Derive the active pack list — filters by selected color for multi-option products
+  const currentPacks: BuyboxPack[] =
+    hasColors && colors && packsByColor
+      ? (packsByColor[colors[colorIdx].name] ?? packs)
+      : packs;
+
+  const pack = currentPacks[Math.min(packIdx, currentPacks.length - 1)];
   const lineTotal = (pack.price * qty).toFixed(2);
 
   const openCart = useCartStore((s) => s.open);
@@ -166,20 +189,84 @@ export default function Buybox({
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img src={gallery[activeIdx].src} alt={gallery[activeIdx].alt} />
           </div>
-          <div className="gal__thumbs">
-            {gallery.map((t, i) => (
-              <button
-                key={i}
-                type="button"
-                className={`gal__thumb${activeIdx === i ? " is-active" : ""}`}
-                onClick={() => setActiveIdx(i)}
-                aria-label={`View image ${i + 1}`}
-              >
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img src={t.src} alt="" />
-              </button>
-            ))}
-          </div>
+          {(() => {
+            // Responsive page size: 4 on mobile (≤720px) handled via CSS grid;
+            // JS pagination uses 6 (desktop). We always paginate in groups of 6
+            // so that desktop shows clean pages. Mobile shows 4 per row but still
+            // pages every 6 — the two extra on each page just wrap to a second row
+            // on very small screens (but since mobile uses 4-col and we show 6,
+            // the 5th and 6th sit on a second row; that's fine because mobile
+            // pagination will never have >6 per page either way).
+            // NOTE: To make mobile pagination use 4 per page we'd need a
+            // ResizeObserver — Jordan approved simple constant-6 pages for now.
+            const PAGE = 6;
+            const totalPages = Math.ceil(gallery.length / PAGE);
+            const showNav = gallery.length > PAGE;
+            const pageStart = thumbPage * PAGE;
+            const pageSlice = gallery.slice(pageStart, pageStart + PAGE);
+            const prevDisabled = thumbPage === 0;
+            const nextDisabled = thumbPage === totalPages - 1;
+
+            return (
+              <div className="gal__nav">
+                {showNav && (
+                  <button
+                    type="button"
+                    className="gal__nav-btn gal__nav-btn--prev"
+                    onClick={() => setThumbPage((p) => Math.max(0, p - 1))}
+                    disabled={prevDisabled}
+                    aria-label="Previous thumbnails"
+                  >
+                    <svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true">
+                      <polyline
+                        points="13,4 7,10 13,16"
+                        stroke="var(--color-cocoa-deep)"
+                        strokeWidth="2.5"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                      />
+                    </svg>
+                  </button>
+                )}
+                <div className="gal__thumbs">
+                  {pageSlice.map((t, i) => {
+                    const globalIdx = pageStart + i;
+                    return (
+                      <button
+                        key={globalIdx}
+                        type="button"
+                        className={`gal__thumb${activeIdx === globalIdx ? " is-active" : ""}`}
+                        onClick={() => setActiveIdx(globalIdx)}
+                        aria-label={`View image ${globalIdx + 1}`}
+                      >
+                        {/* eslint-disable-next-line @next/next/no-img-element */}
+                        <img src={t.src} alt="" />
+                      </button>
+                    );
+                  })}
+                </div>
+                {showNav && (
+                  <button
+                    type="button"
+                    className="gal__nav-btn gal__nav-btn--next"
+                    onClick={() => setThumbPage((p) => Math.min(totalPages - 1, p + 1))}
+                    disabled={nextDisabled}
+                    aria-label="Next thumbnails"
+                  >
+                    <svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true">
+                      <polyline
+                        points="7,4 13,10 7,16"
+                        stroke="var(--color-cocoa-deep)"
+                        strokeWidth="2.5"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                      />
+                    </svg>
+                  </button>
+                )}
+              </div>
+            );
+          })()}
         </div>
 
         {/* Buybox column */}
@@ -212,9 +299,9 @@ export default function Buybox({
           {/* Pack selector */}
           <fieldset className="shm-pack-rows">
             <legend className="shm-pack-rows__label">Choose your pack</legend>
-            {packs.map((p, i) => (
+            {currentPacks.map((p, i) => (
               <label
-                key={i}
+                key={`${colorIdx}-${i}`}
                 className={`shm-pack-row${packIdx === i ? " shm-pack-row--checked" : ""}${p.pop ? " shm-pack-row--pop" : ""}${p.tier ? " shm-pack-row--has-tier" : ""}`}
                 data-selected={packIdx === i}
               >
@@ -277,6 +364,100 @@ export default function Buybox({
               </label>
             ))}
           </fieldset>
+
+          {/* Free-shipping progress bar */}
+          {(() => {
+            const freeShipThreshold = currentPacks.find((p) => p.qty >= 5)?.price ?? Infinity;
+            const current = pack.price;
+            const unlocked = current >= freeShipThreshold;
+            const fillPct = unlocked ? 100 : Math.round((current / freeShipThreshold) * 100);
+            const remaining = unlocked ? 0 : freeShipThreshold - current;
+            return (
+              <div className={`pack-shipping${unlocked ? " pack-shipping--unlocked" : ""}`} aria-live="polite">
+                <div className="pack-shipping__bar">
+                  <div
+                    className="pack-shipping__bar-fill"
+                    style={{ width: `${fillPct}%` }}
+                    role="progressbar"
+                    aria-valuenow={fillPct}
+                    aria-valuemin={0}
+                    aria-valuemax={100}
+                    aria-label={unlocked ? "Free shipping unlocked" : `${fillPct}% toward free shipping`}
+                  />
+                </div>
+                <div className="pack-shipping__label">
+                  {unlocked ? (
+                    <>
+                      <svg
+                        className="pack-shipping__icon"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        strokeWidth="2.4"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        aria-hidden="true"
+                      >
+                        <polyline points="20 6 9 17 4 12" />
+                      </svg>
+                      Free shipping included
+                    </>
+                  ) : (
+                    <>
+                      <svg
+                        className="pack-shipping__icon"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        strokeWidth="2.4"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        aria-hidden="true"
+                      >
+                        <rect x="3" y="8" width="13" height="8" rx="1" />
+                        <path d="M16 11h4l1 2v3h-5" />
+                        <circle cx="7" cy="18" r="2" />
+                        <circle cx="18" cy="18" r="2" />
+                      </svg>
+                      Add{" "}
+                      <strong className="pack-shipping__amount">${remaining.toFixed(2)}</strong>
+                      {" "}more to unlock free shipping
+                    </>
+                  )}
+                </div>
+              </div>
+            );
+          })()}
+
+          {/* Color swatches — only shown for multi-option products (e.g. L-Sign).
+              Positioned after free-shipping band, before quantity selector. */}
+          {hasColors && colors && packsByColor && (
+            <div className="shm-color-swatches" role="radiogroup" aria-label="Choose color">
+              {colors.map((c, i) => (
+                <button
+                  key={c.name}
+                  type="button"
+                  role="radio"
+                  aria-checked={colorIdx === i}
+                  aria-label={c.name}
+                  className={`shm-color-swatch${colorIdx === i ? " is-active" : ""}`}
+                  style={c.imageSrc ? undefined : { background: c.cssColor }}
+                  onClick={() => {
+                    setColorIdx(i);
+                    setPackIdx((prev) =>
+                      Math.min(prev, (packsByColor[c.name]?.length ?? 1) - 1)
+                    );
+                  }}
+                  title={c.name}
+                >
+                  {c.imageSrc && (
+                    // eslint-disable-next-line @next/next/no-img-element
+                    <img src={c.imageSrc} alt={c.imageAlt ?? c.name} />
+                  )}
+                </button>
+              ))}
+            </div>
+          )}
 
           {/* Quantity */}
           <div className="qty-block">

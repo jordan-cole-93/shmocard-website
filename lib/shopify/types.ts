@@ -34,6 +34,12 @@ export type ShopifyVariant = {
   availableForSale: boolean;
   price: Money;
   selectedOptions: ShopifySelectedOption[];
+  image?: {
+    url: string;
+    altText: string | null;
+    width: number;
+    height: number;
+  } | null;
 };
 
 export type Connection<T> = {
