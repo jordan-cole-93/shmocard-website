@@ -125,15 +125,27 @@ Bare Next.js + Tailwind shell → audited design system → homepage + /shmo-rev
 
 **Goal**: Order data flows from Shopify → GHL for follow-up sequences; Facebook Pixel + Conversions API fires standard events on cart and checkout interactions.
 
-**In scope**:
-1. GHL webhook endpoint (Next.js route handler) for Shopify order-created events. Verify HMAC signature.
-2. Facebook Pixel base code installed site-wide (head injection or Next.js `Script` strategy).
-3. Standard pixel events wired: `ViewContent` (PDP load), `AddToCart` (cart mutation), `InitiateCheckout` (checkout redirect), `Purchase` (post-checkout return).
-4. Conversions API server-side mirror for the same events (deduplication via `event_id`).
-5. Test mode validation (FB Events Manager test events tab) before going live.
+**In scope** (per CONTEXT.md decisions D-01 through D-11, locked 2026-05-21):
+1. GHL order sync configured **directly in Shopify Admin → Notifications → Webhooks** (D-05). Zero site code; no `/api/ghl-*` route (D-06). Phase 9 ships independent of Vercel deploy.
+2. Facebook Pixel base code installed site-wide via Next.js `<Script>` strategy `afterInteractive` in root layout.
+3. Standard pixel events wired on shmocard.com (our code): `ViewContent` (PDP mount), `AddToCart` (Buybox.handleAdd), `InitiateCheckout` (CartCheckoutButton.handleClick before redirect).
+4. **`Purchase` is NEVER fired from site code** (D-04) — owned by Shopify's Facebook & Instagram sales channel app on shop.shmocard.com (split-domain architecture D-01).
+5. Conversions API server-side mirror via Next.js Server Actions to Graph API v25.0. Dual-fire (Pixel + CAPI) with shared `event_id` UUIDv4 — Meta dedupes in 48-hour window (D-02 / D-08).
+6. Test mode validation via `FB_TEST_EVENT_CODE` env var in `.env.local` only — DEV ONLY, never Vercel production (D-09).
+7. 3 new env vars in `context/general/backend.md` contract (D-11): `NEXT_PUBLIC_FB_PIXEL_ID`, `FB_CAPI_ACCESS_TOKEN`, `FB_TEST_EVENT_CODE`.
 
-**Depends on**: Phase 8 (pixel events fire on real cart/checkout flow; GHL webhook needs real Shopify order events).
-**Plans**: TBD.
+**Depends on**: Phase 8 (pixel events fire on real cart/checkout flow that didn't exist before Phase 8 Shopify wiring).
+**Plans**: 10 plans
+- [ ] 09-01-PLAN.md (in 09-PLAN.md) — Admin gate: Meta Business Manager + Shopify channel app setup (Jordan-side, checkpoint)
+- [ ] 09-02-PLAN.md (in 09-PLAN.md) — Backend docs gate: 3 env vars in backend.md + .env.local.example
+- [ ] 09-03-PLAN.md (in 09-PLAN.md) — Analytics module scaffolding (types + hash + event-id + meta-capi)
+- [ ] 09-04-PLAN.md (in 09-PLAN.md) — Client-side fbq wrapper + ambient window.fbq declaration
+- [ ] 09-05-PLAN.md (in 09-PLAN.md) — PixelLoader component + root layout mount
+- [ ] 09-06-PLAN.md (in 09-PLAN.md) — Server Actions for CAPI fires (trackViewContent/AddToCart/InitiateCheckout)
+- [ ] 09-07-PLAN.md (in 09-PLAN.md) — Wire ViewContent on 3 PDPs (ViewContentTracker client child)
+- [ ] 09-08-PLAN.md (in 09-PLAN.md) — Wire AddToCart in Buybox.handleAdd (dual-fire)
+- [ ] 09-09-PLAN.md (in 09-PLAN.md) — Wire InitiateCheckout in CartCheckoutButton + Events Manager smoke
+- [ ] 09-10-PLAN.md (in 09-PLAN.md) — Phase close-out (STATE / ROADMAP / handoff / scope / SUMMARY)
 
 ### Phase 10: Launch readiness
 
