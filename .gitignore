@@ -38,6 +38,55 @@ Codex.local.md
 # Playwright MCP runtime artifacts
 .playwright-mcp/
 tsconfig.tsbuildinfo
+*.tsbuildinfo
 
-# GSD subagent worktree workspace (created/cleaned per Agent run)
-.claude/worktrees/
+# Build / cache
+.eslintcache
+.turbo/
+.swc/
+coverage/
+.cache/
+tmp/
+.tmp/
+
+# Test runners
+playwright-report/
+test-results/
+
+# macOS extras
+._*
+.AppleDouble
+.Spotlight-V100
+.Trashes
+
+# Other editors
+.history/
+.zed/
+.cursor/
+
+# Non-runtime: Claude Code dev tooling
+# Only `.claude/skills/shmocard-design-system/` is runtime (imported by app/globals.css).
+# Everything else under `.claude/` is local-only Claude Code config.
+.claude/*
+!.claude/skills/
+.claude/skills/*
+!.claude/skills/shmocard-design-system/
+
+# Non-runtime: Codex tooling
+.codex/
+.agents/
+
+# Non-runtime: GSD planning artifacts
+.planning/
+
+# Non-runtime: long-form project context (kept local, not in GitHub)
+context/
+
+# Non-runtime: reference assets (mockups, mascots, references — not served by Next.js)
+# `public/` is the runtime static folder and stays tracked.
+pictures/
+
+# Non-runtime: agent / MCP instructions (kept local)
+CLAUDE.md
+AGENTS.md
+.mcp.json
