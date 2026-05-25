@@ -74,7 +74,7 @@ export default function Footer() {
         <div className={styles.bottom}>
           <span>© ShmoCard 2026 · Built for crews. Priced for bulk.</span>
           <span>
-            <a href="#">Privacy</a> · <a href="#">Terms</a>
+            <Link href="/privacy-policy">Privacy</Link> · <Link href="/terms-of-service">Terms</Link>
           </span>
         </div>
       </div>
