@@ -9,6 +9,8 @@ const PUBLIC_ROUTES = [
   "/shmo-review/cr-80",
   "/shmo-review/l-sign",
   "/shmo-review/square-card",
+  "/privacy-policy",
+  "/terms-of-service",
 ] as const;
 
 export default function sitemap(): MetadataRoute.Sitemap {
