@@ -1,0 +1,67 @@
+/* components/legal/legal.css — layout-only for legal pages.
+   Typography hooks (.legal-page__body) use design-system tokens. */
+
+.legal-page {
+  max-width: 760px;
+  margin: 0 auto;
+  padding: var(--section-py-d, 80px) 0;
+}
+
+@media (max-width: 720px) {
+  .legal-page {
+    padding: 48px 0;
+  }
+}
+
+.legal-page__title {
+  font-family: var(--font-display);
+  font-size: clamp(2rem, 5vw, 3rem);
+  font-weight: 800;
+  color: var(--color-cocoa-deep);
+  margin: 0 0 1.5rem;
+}
+
+.legal-page__body {
+  color: var(--color-cocoa-deep);
+  font-family: var(--font-body);
+  font-size: 1rem;
+  line-height: 1.65;
+}
+
+.legal-page__empty-msg {
+  font-family: var(--font-body);
+  color: var(--color-cocoa-deep);
+  opacity: 0.7;
+  font-style: italic;
+}
+
+.legal-page__body h2 {
+  font-family: var(--font-display);
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin: 2.5rem 0 0.75rem;
+}
+.legal-page__body h3 {
+  font-family: var(--font-display);
+  font-size: 1.15rem;
+  font-weight: 700;
+  margin: 1.75rem 0 0.5rem;
+}
+.legal-page__body p {
+  margin: 0 0 1rem;
+}
+.legal-page__body ul,
+.legal-page__body ol {
+  margin: 0 0 1.25rem 1.5rem;
+}
+.legal-page__body li {
+  margin-bottom: 0.4rem;
+}
+.legal-page__body a {
+  color: var(--color-ember, #E15B2C);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+.legal-page__body strong {
+  font-weight: 700;
+}
