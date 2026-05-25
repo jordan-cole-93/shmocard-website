@@ -9,6 +9,9 @@
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
 
+import "../../shmo-review/shmo-review.css";
+import OfferBuybox from "@/components/offer/OfferBuybox";
+
 export const metadata: Metadata = {
   title: "Free Shmo Review Card — Special Offer",
   description:
@@ -29,8 +32,7 @@ export default function OfferFreeCardPage() {
 
   return (
     <main>
-      <h1>Free + Shipping Offer — placeholder</h1>
-      <p>Real page lands in Task 5.</p>
+      <OfferBuybox nextBg="cream" />
     </main>
   );
 }
