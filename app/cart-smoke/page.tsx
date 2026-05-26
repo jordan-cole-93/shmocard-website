@@ -10,6 +10,8 @@
 import { getProductByHandle } from "@/lib/shopify/queries";
 import SmokeAddButton from "./SmokeAddButton";
 
+export const dynamic = "force-dynamic";
+
 const HANDLES = [
   "google-reviews-nfc-tap-card-cr80",
   "google-review-nfc-tap-card-l-sign",

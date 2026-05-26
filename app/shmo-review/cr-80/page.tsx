@@ -19,6 +19,8 @@ import { getProductByHandle } from "@/lib/shopify/queries";
 import { mapProductToBuyboxProps } from "@/lib/shopify/buybox-mapping";
 import ViewContentTracker from "@/components/analytics/ViewContentTracker";
 
+export const dynamic = "force-dynamic";
+
 export const metadata = {
   title: "CR-80 Review Card — Shmo Review",
   description:

@@ -22,6 +22,8 @@ import { ProofTiles } from "@/components/shmo-review/ProofMarquee";
 import { getProductByHandle } from "@/lib/shopify/queries";
 import { mapProductToBuyboxProps } from "@/lib/shopify/buybox-mapping";
 
+export const dynamic = "force-dynamic";
+
 export const metadata = {
   title: "Shmo Review — NFC tap cards built for crews",
   description:
