@@ -83,7 +83,7 @@ export default function NavMenu() {
         {!isOfferRoute && (
           <a
             href="https://app.shmocard.com/auth/login"
-            className={styles.link}
+            className={`${styles.link} ${styles.linkMobileOnly}`}
             rel="noopener"
             onClick={() => setOpen(false)}
           >

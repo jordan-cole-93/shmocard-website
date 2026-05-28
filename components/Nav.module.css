@@ -83,19 +83,17 @@
   gap: 12px;
 }
 
-/* Log in — secondary text link for returning customers.
-   Hidden on mobile (accessible via hamburger menu instead). */
-.loginLink {
-  font-family: var(--font-body);
-  font-size: 14px;
-  font-weight: 500;
-  color: var(--color-ink-3);
-  text-decoration: none;
-  padding: 6px 4px;
-  white-space: nowrap;
-  transition: color var(--motion-fast) var(--ease-standard);
+/* loginDesktop — wraps the ctaRow Log in button.
+   Visible on desktop only; hidden on mobile (hamburger menu handles it). */
+.loginDesktop {
+  display: inline-flex;
 }
-.loginLink:hover { color: var(--color-cocoa-deep); }
+
+/* linkMobileOnly — shown only inside the hamburger dropdown (≤880px).
+   Hides on desktop so the ctaRow button is the single desktop login entry. */
+.linkMobileOnly {
+  display: none;
+}
 
 .cart {
   position: relative;
@@ -137,7 +135,8 @@
   @media (max-width: 880px) {
   /* Mobile: hamburger trigger pinned to the far right (after the Shop CTA),
      dropdown anchors right-aligned underneath it and starts closed. */
-  .loginLink { display: none; }
+  .loginDesktop { display: none; }
+  .linkMobileOnly { display: flex; }
   .inner {
     gap: 12px;
     padding-left: 14px;

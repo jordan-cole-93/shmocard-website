@@ -11,12 +11,14 @@ export default function NavLoginLink() {
   if (pathname.startsWith("/offer/")) return null;
 
   return (
-    <a
-      href="https://app.shmocard.com/auth/login"
-      className={styles.loginLink}
-      rel="noopener"
-    >
-      Log in
-    </a>
+    <span className={styles.loginDesktop}>
+      <a
+        href="https://app.shmocard.com/auth/login"
+        className="shm-btn shm-btn--ghost shm-btn--sm"
+        rel="noopener"
+      >
+        Log in
+      </a>
+    </span>
   );
 }
