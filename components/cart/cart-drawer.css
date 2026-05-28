@@ -39,6 +39,27 @@ body.shm-cart-locked {
   justify-content: center;
 }
 
+/* ── Issue 1: body scroll on iPhone ────────────────────────────────────
+   .shm-cart uses grid-template-rows: auto 1fr auto (components.css).
+   The 1fr row constrains height correctly, but the body child must have
+   min-height: 0 to allow overflow-y: auto to activate — without it the
+   body expands to fit all content and the scroll area collapses to zero. */
+.shm-cart__body {
+  min-height: 0;
+}
+
+/* ── Issue 2: slim footer on mobile (≤ 720px) ───────────────────────────
+   On small viewports the discount form + 4-row summary eat most of the
+   viewport, leaving near-zero scroll room in the body. Hidden on mobile;
+   unchanged on tablet / desktop. CTA, trust strip, and payment chips stay
+   visible on all breakpoints. Components stay in the DOM — easy to re-enable. */
+@media (max-width: 720px) {
+  .shm-cart-discount,
+  .shm-cart-summary {
+    display: none;
+  }
+}
+
 /* Cart trigger button (Nav cart icon). Layout-only — visual styling for
    the button shell lives in Nav.module.css today. The trigger here is
    the click-target wrapper exposed by `.shm-cart-trigger` aria semantics
