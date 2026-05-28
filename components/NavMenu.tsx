@@ -2,12 +2,15 @@
 
 import { useState } from "react";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 
 import NavLink from "./NavLink";
 import styles from "./Nav.module.css";
 
 export default function NavMenu() {
   const [open, setOpen] = useState(false);
+  const pathname = usePathname();
+  const isOfferRoute = pathname.startsWith("/offer/");
 
   return (
     <div className={styles.menu} data-open={open ? "true" : "false"}>
@@ -77,6 +80,16 @@ export default function NavMenu() {
             Soon
           </span>
         </Link>
+        {!isOfferRoute && (
+          <a
+            href="https://app.shmocard.com/auth/login"
+            className={styles.link}
+            rel="noopener"
+            onClick={() => setOpen(false)}
+          >
+            Log in
+          </a>
+        )}
       </nav>
     </div>
   );

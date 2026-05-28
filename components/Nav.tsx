@@ -8,6 +8,7 @@
 import Link from "next/link";
 
 import NavCartIcon from "./cart/NavCartIcon";
+import NavLoginLink from "./NavLoginLink";
 import NavMenu from "./NavMenu";
 import styles from "./Nav.module.css";
 
@@ -27,6 +28,8 @@ export default function Nav() {
         <NavMenu />
 
         <div className={styles.ctaRow}>
+          {/* Login — returning customers; suppressed on /offer/* routes */}
+          <NavLoginLink />
           {/* useCart-backed cart trigger — opens CartDrawer */}
           <NavCartIcon />
           <Link href="/shmo-review" className="shm-btn shm-btn--primary shm-btn--sm">
