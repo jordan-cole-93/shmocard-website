@@ -5,6 +5,7 @@ import Footer from "@/components/Footer";
 import CartDrawer from "@/components/cart/CartDrawer";
 import ModalRoot from "@/components/modals/ModalRoot";
 import PixelLoader from "@/components/analytics/PixelLoader";
+import GTMLoader from "@/components/analytics/GTMLoader";
 
 export const metadata: Metadata = {
   title: "Shmocard — The toolkit your crew's been missing",
@@ -16,6 +17,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="en">
       <body>
+        <GTMLoader />
         <Nav />
         {children}
         <Footer />
