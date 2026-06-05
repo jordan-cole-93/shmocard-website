@@ -6,6 +6,7 @@ import CartDrawer from "@/components/cart/CartDrawer";
 import ModalRoot from "@/components/modals/ModalRoot";
 import PixelLoader from "@/components/analytics/PixelLoader";
 import GTMLoader from "@/components/analytics/GTMLoader";
+import HotjarLoader from "@/components/analytics/HotjarLoader";
 
 export const metadata: Metadata = {
   title: "Shmocard — The toolkit your crew's been missing",
@@ -18,6 +19,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <html lang="en">
       <body>
         <GTMLoader />
+        <HotjarLoader />
         <Nav />
         {children}
         <Footer />
