@@ -168,7 +168,8 @@ export default function OfferBuybox({
     setAdding(true);
     setAddError(null);
     try {
-      const cart = await addLineToCart(variantId, qty);
+      const addQty = pack.price === 0 ? 1 : qty;
+      const cart = await addLineToCart(variantId, addQty);
       const lines = mapShopifyCartLines(cart);
       useCartStore.getState().setCart(cart.id, cart.checkoutUrl, lines);
 
@@ -177,11 +178,11 @@ export default function OfferBuybox({
       // event_id dedupes the pair in Events Manager (48h window).
       // Fire-and-forget — analytics MUST NOT block ATC UX (Pitfall 10).
       const atcEventId = generateEventId();
-      const value = Math.round(pack.price * qty * 100) / 100;
+      const value = Math.round(pack.price * addQty * 100) / 100;
       const atcParams = {
         content_ids: [variantId],
         content_type: "product" as const,
-        contents: [{ id: variantId, quantity: qty }],
+        contents: [{ id: variantId, quantity: addQty }],
         value,
         currency: "USD" as const,
       };
@@ -399,7 +400,7 @@ export default function OfferBuybox({
                   type="radio"
                   name="pack"
                   checked={packIdx === i}
-                  onChange={() => setPackIdx(i)}
+                  onChange={() => { setPackIdx(i); setQty(1); }}
                 />
               </label>
             ))}
@@ -436,8 +437,8 @@ export default function OfferBuybox({
             </div>
           )}
 
-          {/* Quantity */}
-          <div className="qty-block">
+          {/* Quantity — hidden for free pack (price === 0) */}
+          {pack.price > 0 && <div className="qty-block">
             <span className="qty-label">Quantity</span>
             <div className="shm-qty" role="group" aria-label="Quantity">
               <button
@@ -465,7 +466,7 @@ export default function OfferBuybox({
                 </svg>
               </button>
             </div>
-          </div>
+          </div>}
 
           <button
             className="bb__cta shm-btn shm-btn--primary shm-btn--xl"
