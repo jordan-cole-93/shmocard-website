@@ -204,9 +204,22 @@ export const CREW: CrewMember[] = [
     shop: "USA Pawn",
     stat: "80+ Reviews\nin one Week",
   },
-  {},
-  {},
-  {},
+  {
+    photo: "/clients/axels-pawn.jpg",
+    name: "Carly",
+    shop: "Axel's Pawn",
+    stat: "+71%\nmore reviews",
+  },
+  {
+    photo: "/clients/buffalo-jewelry.jpg",
+    name: "Joey",
+    shop: "Buffalo Jewelry & Loan",
+    stat: "+81%\nmore reviews",
+  },
+  {
+    photo: "/clients/us-pawn.jpg",
+    shop: "US Pawn",
+  },
   {},
   {},
 ];
