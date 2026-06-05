@@ -55,6 +55,7 @@ export default function Footer() {
             <ul className={styles.list}>
               <li><Link href="/shmo-review/cr-80">CR-80 Card</Link></li>
               <li><Link href="/shmo-review/l-sign">L-Sign</Link></li>
+              <li><Link href="/shmo-review/l-sign-black">L-Sign Black</Link></li>
               <li><Link href="/shmo-review/square-card">Square Card</Link></li>
               <li><Link href="/shmo-review">All formats</Link></li>
             </ul>

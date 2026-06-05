@@ -31,22 +31,29 @@ const FORMAT_COPY: Record<
     badge: null,
     badgeTone: "soft",
   },
-  "google-review-plaque": {
-    sub: 'Disc · 2.25" · sticks anywhere',
+  "google-review-nfc-tap-card-l-sign-black": {
+    sub: "Counter standee · black · 2 sizes",
     badge: "New",
     badgeTone: "honey",
+  },
+  "google-review-plaque": {
+    sub: 'Disc · 2.25" · sticks anywhere',
+    badge: null,
+    badgeTone: "soft",
   },
 };
 
 const HANDLES = [
   "google-reviews-nfc-tap-card-cr80",
   "google-review-nfc-tap-card-l-sign",
+  "google-review-nfc-tap-card-l-sign-black",
   "google-review-plaque",
 ] as const;
 
 const PRODUCT_PAGE_HREFS: Record<(typeof HANDLES)[number], string> = {
   "google-reviews-nfc-tap-card-cr80": "/shmo-review/cr-80",
   "google-review-nfc-tap-card-l-sign": "/shmo-review/l-sign",
+  "google-review-nfc-tap-card-l-sign-black": "/shmo-review/l-sign-black",
   "google-review-plaque": "/shmo-review/square-card",
 };
 
@@ -79,12 +86,12 @@ export default async function FormatCompare({ currentHandle }: FormatCompareProp
       ariaLabel="Compare Shmo Review formats"
     >
       <div className="shm-section-head">
-        <span className="shm-eyebrow">Three formats · same chip</span>
+        <span className="shm-eyebrow">Four formats · same chip</span>
         <h2 className="shm-h2">
           Not sure this is the <em>right</em> one?
         </h2>
         <p className="shm-lede">
-          All three use the same reprogrammable NFC chip and ship pre-loaded
+          All four use the same reprogrammable NFC chip and ship pre-loaded
           with your review link.
         </p>
       </div>

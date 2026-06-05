@@ -73,6 +73,10 @@ export type BuyboxProps = {
   colors?: BuyboxColor[];
   /** Per-color pack lists — keyed by color name. Parallel to `colors`. */
   packsByColor?: Record<string, BuyboxPack[]>;
+  /** Size option values — only present for products with a Size axis (e.g. Black L-Sign). */
+  sizes?: string[];
+  /** Per-size pack lists — keyed by size value. Parallel to `sizes`. */
+  packsBySize?: Record<string, BuyboxPack[]>;
   checklist?: string[];
   faqRows?: BuyboxFaqRow[];
   ariaLabel?: string;
@@ -129,27 +133,34 @@ export default function Buybox({
   packs = DEFAULT_BUYBOX_PACKS,
   colors,
   packsByColor,
+  sizes,
+  packsBySize,
   checklist = DEFAULT_BUYBOX_CHECKLIST,
   faqRows = DEFAULT_BUYBOX_FAQ_ROWS,
   ariaLabel = "Buy the CR-80 card",
   nextBg = "marsh",
 }: BuyboxProps) {
   const hasColors = colors != null && colors.length > 1 && packsByColor != null;
+  const hasSizes  = sizes  != null && sizes.length  > 1 && packsBySize  != null;
 
   const [activeIdx, setActiveIdx] = useState(0);
   const [thumbPage, setThumbPage] = useState(0);
   const [colorIdx, setColorIdx] = useState(0);
+  const [sizeIdx,  setSizeIdx]  = useState(0);
   const [packIdx, setPackIdx] = useState(Math.min(3, packs.length - 1)); // 10-pack default (most popular)
   const [qty, setQty] = useState(1);
   const [faqOpen, setFaqOpen] = useState(-1);
   const [adding, setAdding] = useState(false);
   const [addError, setAddError] = useState<string | null>(null);
 
-  // Derive the active pack list — filters by selected color for multi-option products
+  // Derive the active pack list — filters by selected color or size for multi-option products.
+  // A product has one secondary axis or the other, never both simultaneously.
   const currentPacks: BuyboxPack[] =
     hasColors && colors && packsByColor
       ? (packsByColor[colors[colorIdx].name] ?? packs)
-      : packs;
+      : hasSizes && sizes && packsBySize
+        ? (packsBySize[sizes[sizeIdx]] ?? packs)
+        : packs;
 
   const pack = currentPacks[Math.min(packIdx, currentPacks.length - 1)];
   const lineTotal = (pack.price * qty).toFixed(2);
@@ -486,6 +497,33 @@ export default function Buybox({
                     // eslint-disable-next-line @next/next/no-img-element
                     <img src={c.imageSrc} alt={c.imageAlt ?? c.name} />
                   )}
+                </button>
+              ))}
+            </div>
+          )}
+
+          {/* Size pills — only shown for products with a Size axis (e.g. Black L-Sign).
+              Text-pill equivalent of color swatches; uses .shm-size-pills primitive.
+              Positioned after free-shipping band, before quantity selector. */}
+          {hasSizes && sizes && packsBySize && (
+            <div className="shm-size-pills" role="radiogroup" aria-label="Choose size">
+              <span className="shm-size-pills__label">Size</span>
+              {sizes.map((s, i) => (
+                <button
+                  key={s}
+                  type="button"
+                  role="radio"
+                  aria-checked={sizeIdx === i}
+                  className={`shm-size-pill${sizeIdx === i ? " is-active" : ""}`}
+                  onClick={() => {
+                    setSizeIdx(i);
+                    setPackIdx((prev) =>
+                      Math.min(prev, (packsBySize[s]?.length ?? 1) - 1)
+                    );
+                    setQty(1);
+                  }}
+                >
+                  {s}
                 </button>
               ))}
             </div>

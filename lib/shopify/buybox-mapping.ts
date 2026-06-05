@@ -181,6 +181,50 @@ export function mapProductToBuyboxProps(product: ShopifyProduct): Partial<Buybox
     };
   }
 
+  // Detect Size option (case-insensitive) — parallel to Color path above.
+  // Products have one secondary axis or the other (Color OR Size), never both.
+  const sizeOpt = product.options.find(
+    (o) => o.name.toLowerCase() === "size"
+  );
+
+  if (sizeOpt && sizeOpt.values.length > 0) {
+    // --- Multi-option path (e.g. Black L-Sign: Size × Pack Qty) ---
+    const sizes: string[] = sizeOpt.values;
+
+    // Group variants by size value, sorted by qty ascending within each group
+    const packsBySize: Record<string, BuyboxPack[]> = {};
+    for (const size of sizes) {
+      const sizeVariants = product.variants.nodes.filter((v) => {
+        const variantSize = v.selectedOptions.find(
+          (o) => o.name.toLowerCase() === "size"
+        )?.value;
+        return variantSize === size;
+      });
+
+      // Sort by qty ascending so prevVariant pricing math is correct per-size
+      const sorted = [...sizeVariants].sort((a, b) => {
+        const qa = parseQty(a.title) ?? 0;
+        const qb = parseQty(b.title) ?? 0;
+        return qa - qb;
+      });
+
+      packsBySize[size] = sorted
+        .map((v, i) => mapVariantToPack(v, sorted[i - 1]))
+        .filter((p) => p.qty > 0);
+    }
+
+    // `packs` = first size's packs for backward-compat (mirrors firstColorPacks pattern)
+    const firstSizePacks = packsBySize[sizes[0]] ?? [];
+
+    return {
+      product: buyboxProduct,
+      gallery,
+      packs: firstSizePacks,
+      sizes,
+      packsBySize,
+    };
+  }
+
   // --- Single-option path (CR-80, Square Card) — unchanged behavior ---
   const packs: BuyboxPack[] = product.variants.nodes.length > 0
     ? product.variants.nodes

@@ -7,9 +7,10 @@
 // fields (sub, blurb, badge) remain as page-level framing copy.
 //
 // Handles (from context/general/backend.md):
-//   CR-80  → google-reviews-nfc-tap-card-cr80
-//   L-Sign → google-review-nfc-tap-card-l-sign
-//   Square → google-review-plaque
+//   CR-80       → google-reviews-nfc-tap-card-cr80
+//   L-Sign      → google-review-nfc-tap-card-l-sign
+//   L-Sign Black→ google-review-nfc-tap-card-l-sign-black
+//   Square      → google-review-plaque
 //
 // Server component.
 
@@ -42,24 +43,33 @@ const FORMAT_COPY: Record<
     badge: null,
     badgeTone: "soft",
   },
+  "google-review-nfc-tap-card-l-sign-black": {
+    sub: "Counter standee · black acrylic · 2 sizes",
+    blurb:
+      "The black acrylic standee — now in Medium and Large. Sits by the register; guests tap on their way out.",
+    badge: "New",
+    badgeTone: "honey",
+  },
   "google-review-plaque": {
     sub: 'Disc · 2.25" · sticks anywhere',
     blurb:
       "An adhesive-backed disc. Sticks to laptops, tablets, registers, dashboards. Travels with the crew.",
-    badge: "New",
-    badgeTone: "honey",
+    badge: null,
+    badgeTone: "soft",
   },
 };
 
 const HANDLES = [
   "google-reviews-nfc-tap-card-cr80",
   "google-review-nfc-tap-card-l-sign",
+  "google-review-nfc-tap-card-l-sign-black",
   "google-review-plaque",
 ] as const;
 
 const PRODUCT_PAGE_HREFS: Record<(typeof HANDLES)[number], string> = {
   "google-reviews-nfc-tap-card-cr80": "/shmo-review/cr-80",
   "google-review-nfc-tap-card-l-sign": "/shmo-review/l-sign",
+  "google-review-nfc-tap-card-l-sign-black": "/shmo-review/l-sign-black",
   "google-review-plaque": "/shmo-review/square-card",
 };
 

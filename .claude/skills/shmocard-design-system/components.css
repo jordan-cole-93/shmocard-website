@@ -2017,3 +2017,74 @@ textarea.shm-input {
   display: block;
   margin-top: 1px;
 }
+
+/* ============================================================
+   Size pills — labeled text-pill selector for size axes on PDPs.
+   Use when a product has a Size option (Medium / Large / etc.)
+   rather than a Color axis. Complements .shm-color-swatches
+   (which is color-specific); this is the text-label equivalent.
+
+   Usage:
+     <div class="shm-size-pills" role="radiogroup" aria-label="Choose size">
+       <span class="shm-size-pills__label">Size</span>
+       <button class="shm-size-pill is-active" role="radio" aria-checked="true">Medium</button>
+       <button class="shm-size-pill" role="radio" aria-checked="false">Large</button>
+     </div>
+
+   Rules:
+     • Pill radius (--radius-full) — consistent with buttons + badges.
+     • Soft outline by default, ember active ring on selection.
+     • Font: --font-display 700 — matches pack row names.
+     • Never recreate as .foo__size-pill. This is the primitive.
+   ============================================================ */
+.shm-size-pills {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin: 4px 0 12px 0;
+}
+.shm-size-pills__label {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 13px;
+  color: var(--color-cocoa-deep);
+  letter-spacing: -0.005em;
+  margin-right: 4px;
+  white-space: nowrap;
+}
+.shm-size-pill {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 8px 18px;
+  min-height: 40px;
+  border-radius: var(--radius-full);
+  background: var(--color-marshmallow);
+  color: var(--color-cocoa-deep);
+  border: var(--outline-soft-2);
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 14px;
+  letter-spacing: -0.005em;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: border-color var(--motion-fast) var(--ease-standard),
+              background var(--motion-fast) var(--ease-standard),
+              box-shadow var(--motion-fast) var(--ease-standard);
+}
+.shm-size-pill:hover {
+  border-color: var(--color-cocoa-deep);
+  background: var(--color-cream);
+}
+.shm-size-pill.is-active,
+.shm-size-pill[aria-checked="true"] {
+  border-color: var(--color-ember);
+  background: var(--color-ember-tint);
+  box-shadow: 0 0 0 2px var(--color-ember) inset;
+  color: var(--color-cocoa-deep);
+}
+.shm-size-pill:focus-visible {
+  outline: 2px solid var(--color-ember);
+  outline-offset: 2px;
+}
