@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Script from "next/script";
 import "./globals.css";
 import Nav from "@/components/Nav";
 import Footer from "@/components/Footer";
@@ -26,6 +27,12 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <CartDrawer />
         <ModalRoot />
         <PixelLoader />
+        <Script
+          src="https://beta.leadconnectorhq.com/loader.js"
+          data-resources-url="https://beta.leadconnectorhq.com/chat-widget/loader.js"
+          data-widget-id="6a28719b7b092d06b9069d31"
+          strategy="afterInteractive"
+        />
       </body>
     </html>
   );
