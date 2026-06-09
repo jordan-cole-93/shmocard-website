@@ -11,6 +11,8 @@ export default function CartUpsell() {
   const [addingId, setAddingId] = useState<string | null>(null);
   const [, startTransition] = useTransition();
   const setCart = useCartStore((s) => s.setCart);
+  const cartLines = useCartStore((s) => s.lines);
+  const cartHandles = cartLines.map((l) => l.productHandle);
 
   useEffect(() => {
     getUpsellProducts()
@@ -64,11 +66,16 @@ export default function CartUpsell() {
     );
   }
 
+  const visibleProducts = products.filter(
+    (p) => !cartHandles.includes(p.handle),
+  );
+  if (visibleProducts.length === 0) return null;
+
   return (
     <div className="shm-cart-upsell">
       <h4 className="shm-cart-upsell__title">Round it out</h4>
       <div className="shm-cart-upsell__grid">
-        {products.map((product) => {
+        {visibleProducts.map((product) => {
           const isAdding = addingId === product.id;
           const imgUrl =
             product.featuredImage?.url ??

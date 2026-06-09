@@ -27,8 +27,8 @@ import { create } from "zustand";
 import type { ShopifyDiscountCode } from "@/lib/shopify/types";
 import type { CartLine } from "./types";
 
-/** Free-shipping unlock threshold in USD. Configurable in one place. */
-export const FREE_SHIP_THRESHOLD_USD = 50;
+/** Free-shipping unlock threshold in USD. Matches Shopify shipping profile. */
+export const FREE_SHIP_THRESHOLD_USD = 55;
 
 type CartState = {
   /** Shopify cart GID. Hydrated from server on mount; not persisted. */

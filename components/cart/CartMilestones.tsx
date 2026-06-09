@@ -4,6 +4,8 @@
 // Thresholds are hardcoded merchandising copy (not product attributes).
 // Icons copied verbatim from the canonical Cart Drawer.html reference.
 
+import { FREE_SHIP_THRESHOLD_USD } from "./store";
+
 type CartMilestonesProps = {
   subtotal: number;
 };
@@ -46,7 +48,7 @@ const IconGift = () => (
 const MILESTONES = [
   { key: "app",   label: "Shmocard app",  at: 0,   icon: <IconApp /> },
   { key: "guide", label: "Free ebook",    at: 25,  icon: <IconGuide /> },
-  { key: "ship",  label: "Free shipping", at: 75,  icon: <IconShip /> },
+  { key: "ship",  label: "Free shipping", at: FREE_SHIP_THRESHOLD_USD, icon: <IconShip /> },
   { key: "gift",  label: "Mystery gift",  at: 120, icon: <IconGift /> },
 ] as const;
 

@@ -19,7 +19,6 @@ import { AnimatePresence, motion } from "framer-motion";
 import "./cart-drawer.css";
 
 import CartCheckoutButton from "./CartCheckoutButton";
-import CartDiscountForm from "./CartDiscountForm";
 import CartEmpty from "./CartEmpty";
 import CartHeader from "./CartHeader";
 import CartLine from "./CartLine";
@@ -117,7 +116,6 @@ export default function CartDrawer() {
                   <CartUpsell />
                 </div>
                 <footer className="shm-cart__foot">
-                  <CartDiscountForm />
                   <CartSummary subtotal={subtotal} />
                   <CartCheckoutButton
                     checkoutUrl={checkoutUrl}
