@@ -321,6 +321,7 @@ export async function updateCartLine(
 const UPSELL_HANDLES = [
   "google-reviews-nfc-tap-card-cr80",
   "google-review-nfc-tap-card-l-sign",
+  "google-review-nfc-tap-card-l-sign-black",
   "google-review-plaque",
 ] as const;
 

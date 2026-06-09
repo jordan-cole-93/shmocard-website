@@ -6,6 +6,21 @@ import { useCartStore } from "./store";
 import { mapShopifyCartLines } from "./useCartHydration";
 import type { ShopifyProduct } from "@/lib/shopify/types";
 
+// Products that belong to the same family — if any family member is in the
+// cart, all others in the family are hidden from the upsell grid.
+// This covers: free-card offer (free-CR-80 handle ≠ paid-CR-80 handle) and
+// L-Sign color variants (white ≠ black handle).
+const HANDLE_FAMILIES: string[][] = [
+  ["google-reviews-nfc-tap-card-cr80", "free-google-review-nfc-tap-card-cr80"],
+  ["google-review-nfc-tap-card-l-sign", "google-review-nfc-tap-card-l-sign-black"],
+];
+
+function isBlockedByFamily(handle: string, cartHandles: string[]): boolean {
+  const family = HANDLE_FAMILIES.find((f) => f.includes(handle));
+  if (!family) return false;
+  return family.some((h) => cartHandles.includes(h));
+}
+
 export default function CartUpsell() {
   const [products, setProducts] = useState<ShopifyProduct[] | null>(null);
   const [addingId, setAddingId] = useState<string | null>(null);
@@ -67,7 +82,7 @@ export default function CartUpsell() {
   }
 
   const visibleProducts = products.filter(
-    (p) => !cartHandles.includes(p.handle),
+    (p) => !cartHandles.includes(p.handle) && !isBlockedByFamily(p.handle, cartHandles),
   );
   if (visibleProducts.length === 0) return null;
 
