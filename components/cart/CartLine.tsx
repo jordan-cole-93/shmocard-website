@@ -24,7 +24,7 @@ export default function CartLine({ line }: CartLineProps) {
   const maxQty = Number(line.price) === 0 ? 1 : 99;
 
   const onQty = (next: number) => {
-    if (Number(line.price) === 0 && next > 1) return;
+    if (Number(line.price) === 0) return;
     setError(null);
     // Optimistic local update.
     updateQuantity(line.id, next);
@@ -77,7 +77,9 @@ export default function CartLine({ line }: CartLineProps) {
           </p>
         ) : null}
         <div className="shm-cart-item__row">
-          <CartQty value={line.quantity} onChange={onQty} busy={busy} max={maxQty} />
+          {Number(line.price) > 0 && (
+            <CartQty value={line.quantity} onChange={onQty} busy={busy} max={maxQty} />
+          )}
           <button
             type="button"
             className="shm-cart-item__remove"
