@@ -24,3 +24,19 @@
    source-order specificity preserves the design system's invariants.
    Page-level layout CSS lives in components/<area>/<area>.css —
    not here. */
+
+/* Third-party widget fixes
+   ----------------------------------------------------------------- */
+
+/* GoHighLevel chat widget: the custom element renders a transparent
+   container that intercepts pointer events even when collapsed,
+   blocking clicks on the cart checkout button and other CTAs.
+   Setting pointer-events: none on the host lets clicks pass through
+   to the page. The widget's internal shadow DOM restores auto on its
+   own interactive elements (bubble, popup). */
+chat-widget {
+  pointer-events: none;
+}
+chat-widget * {
+  pointer-events: auto;
+}
