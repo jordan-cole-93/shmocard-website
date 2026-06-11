@@ -1,0 +1,566 @@
+- generic [active] [ref=e1]:
+  - banner [ref=e2]:
+    - generic [ref=e3]:
+      - link "ShmoCard home" [ref=e4] [cursor=pointer]:
+        - /url: /
+        - generic [ref=e5]:
+          - generic [ref=e6]: Shmo
+          - generic [ref=e7]: Card
+      - navigation "Primary" [ref=e9]:
+        - link "Shmo Review Live" [ref=e10] [cursor=pointer]:
+          - /url: /shmo-review
+          - text: Shmo Review
+          - generic [ref=e11]: Live
+        - link "Shmo Biz Soon" [ref=e12] [cursor=pointer]:
+          - /url: /shmo-biz
+          - text: Shmo Biz
+          - generic [ref=e13]: Soon
+        - link "Shmo Link Soon" [ref=e14] [cursor=pointer]:
+          - /url: /shmo-link
+          - text: Shmo Link
+          - generic [ref=e15]: Soon
+        - link "Shmo Reputation Soon" [ref=e16] [cursor=pointer]:
+          - /url: /shmo-reputation
+          - text: Shmo Reputation
+          - generic [ref=e17]: Soon
+      - generic [ref=e18]:
+        - button "Cart, 4 items" [ref=e499] [cursor=pointer]:
+          - img [ref=e20]
+          - generic [ref=e500]: "4"
+        - link "Shop →" [ref=e23] [cursor=pointer]:
+          - /url: /shmo-review
+  - main [ref=e24]:
+    - region "Claim your free Shmo Review card" [ref=e25]:
+      - generic [ref=e27]:
+        - generic [ref=e28]:
+          - img "FREE Google Review NFC Tap Card (CR80)" [ref=e30]
+          - generic [ref=e31]:
+            - button "Previous thumbnails" [disabled] [ref=e32]:
+              - img [ref=e33]
+            - generic [ref=e35]:
+              - button "View image 1" [ref=e36] [cursor=pointer]
+              - button "View image 2" [ref=e37] [cursor=pointer]
+              - button "View image 3" [ref=e38] [cursor=pointer]
+              - button "View image 4" [ref=e39] [cursor=pointer]
+              - button "View image 5" [ref=e40] [cursor=pointer]
+              - button "View image 6" [ref=e41] [cursor=pointer]
+            - button "Next thumbnails" [ref=e42] [cursor=pointer]:
+              - img [ref=e43]
+        - generic [ref=e45]:
+          - generic [ref=e46]:
+            - generic [ref=e47]:
+              - img [ref=e48]
+              - img [ref=e50]
+              - img [ref=e52]
+              - img [ref=e54]
+              - img [ref=e56]
+            - generic [ref=e58]: "4.9"
+            - generic [ref=e59]: · 87 verified reviews
+          - heading "FREE Google Review NFC Tap Card (CR80)" [level=2] [ref=e60]
+          - paragraph [ref=e61]:
+            - emphasis [ref=e62]: Get a free Shmo Review NFC card. You only pay $7 shipping.
+          - separator [ref=e63]
+          - list [ref=e64]:
+            - listitem [ref=e65]: Hand-printed in Minneapolis on premium PVC stock
+            - listitem [ref=e66]: Pre-programmed to your Google review link before shipping
+            - listitem [ref=e67]: Works on every modern phone — no app, no download
+            - listitem [ref=e68]: 60-day reprogramming + return guarantee
+          - group "Choose your pack" [ref=e69]:
+            - generic [ref=e70]: Choose your pack
+            - generic [ref=e71] [cursor=pointer]:
+              - generic [ref=e72]: FREE
+              - generic [ref=e74]:
+                - generic [ref=e75]: 1 Card
+                - generic [ref=e76]:
+                  - img [ref=e77]
+                  - text: + $7 shipping
+              - generic [ref=e82]:
+                - generic [ref=e83]: FREE
+                - generic [ref=e84]: + $7 shipping
+              - radio "FREE 1 Card + $7 shipping FREE + $7 shipping" [checked]
+            - generic [ref=e85] [cursor=pointer]:
+              - generic [ref=e86]: Pair
+              - generic [ref=e88]:
+                - generic [ref=e89]: 2 Cards
+                - generic [ref=e90]:
+                  - img [ref=e91]
+                  - text: Standard shipping
+              - generic [ref=e96]:
+                - generic [ref=e97]: $49.99
+                - generic [ref=e98]: $25.00 / card0
+              - radio "Pair 2 Cards Standard shipping $49.99 $25.00 / card0"
+            - generic [ref=e99] [cursor=pointer]:
+              - generic [ref=e100]: Crew
+              - generic [ref=e102]:
+                - generic [ref=e103]: 5 Cards
+                - generic [ref=e104]:
+                  - img [ref=e105]
+                  - text: Free shipping included
+              - generic [ref=e110]:
+                - generic [ref=e111]: $119.99
+                - generic [ref=e112]:
+                  - text: $24.00 / card ·
+                  - generic [ref=e113]: $124.98
+              - radio "Crew 5 Cards Free shipping included $119.99 $24.00 / card · $124.98"
+            - generic [ref=e114] [cursor=pointer]:
+              - generic [ref=e115]: Full crew
+              - generic [ref=e117]:
+                - generic [ref=e118]: 10 Cards
+                - generic [ref=e119]:
+                  - img [ref=e120]
+                  - text: Free shipping included
+              - generic [ref=e125]:
+                - generic [ref=e126]: $219.99
+                - generic [ref=e127]:
+                  - text: $22.00 / card ·
+                  - generic [ref=e128]: $239.98
+              - radio "Full crew 10 Cards Free shipping included $219.99 $22.00 / card · $239.98"
+          - button "Claim my free card — $7 shipping" [ref=e129] [cursor=pointer]
+          - generic [ref=e130]: 60-day return·Ships in 3 days
+          - list [ref=e131]:
+            - listitem [ref=e132]:
+              - button "How it works" [ref=e133] [cursor=pointer]:
+                - generic [ref=e134]: How it works
+                - img [ref=e136]
+            - listitem [ref=e137]:
+              - button "Shipping" [ref=e138] [cursor=pointer]:
+                - generic [ref=e139]: Shipping
+                - img [ref=e141]
+            - listitem [ref=e142]:
+              - button "60-day return + reprogramming guarantee" [ref=e143] [cursor=pointer]:
+                - generic [ref=e144]: 60-day return + reprogramming guarantee
+                - img [ref=e146]
+            - listitem [ref=e147]:
+              - button "Product details" [ref=e148] [cursor=pointer]:
+                - generic [ref=e149]: Product details
+                - img [ref=e151]
+    - generic [ref=e154]:
+      - generic [ref=e155]:
+        - generic [ref=e156]: ✦ Real shops · real numbers
+        - heading "The math only works when the crew taps." [level=2] [ref=e157]:
+          - text: The math
+          - emphasis [ref=e158]: only
+          - text: works when the crew taps.
+      - generic [ref=e159]:
+        - generic [ref=e160]:
+          - generic [ref=e161]:
+            - paragraph [ref=e162]: ✦ The Pawn Shop
+            - paragraph [ref=e163]: +43%
+            - paragraph [ref=e164]: more reviews in 60 days
+            - paragraph [ref=e165]: Chase
+          - generic [ref=e166]:
+            - paragraph [ref=e167]: ✦ Granters
+            - paragraph [ref=e168]: +60%
+            - paragraph [ref=e169]: more reviews in 60 days
+            - paragraph [ref=e170]: Vito
+          - generic [ref=e171]:
+            - paragraph [ref=e172]: ✦ Axel's Pawn
+            - paragraph [ref=e173]: +71%
+            - paragraph [ref=e174]: more reviews in 60 days
+            - paragraph [ref=e175]: Carly
+          - generic [ref=e176]:
+            - paragraph [ref=e177]: ✦ Buffalo Jewelry & Loan
+            - paragraph [ref=e178]: +81%
+            - paragraph [ref=e179]: more reviews in 60 days
+            - paragraph [ref=e180]: Joey
+        - generic [ref=e181]:
+          - generic "5 stars" [ref=e183]:
+            - img [ref=e184]
+            - img [ref=e186]
+            - img [ref=e188]
+            - img [ref=e190]
+            - img [ref=e192]
+          - blockquote [ref=e194]: "\"We've gotten 5 Google Reviews just today now that our NFC cards are up and running. It makes it so much easier to get customers to follow through.\""
+          - generic [ref=e195]:
+            - generic [ref=e196]: Carli Karlson
+            - generic [ref=e197]: Axel's Pawn · Facebook post, Nov 2025
+    - region "Crew strip — the people who use Shmo Review" [ref=e198]:
+      - generic [ref=e199]:
+        - generic [ref=e200]:
+          - generic [ref=e201]: For the people on the floor
+          - heading "Card per crew member, not card per shop." [level=2] [ref=e202]:
+            - text: Card per
+            - emphasis [ref=e203]: crew member
+            - text: ", not card per shop."
+          - paragraph [ref=e204]: The card has to live with the person handing the customer their coffee, keys, or receipt — not on the counter. That's where the math comes from.
+        - generic [ref=e205]:
+          - generic [ref=e206]:
+            - img "Nick Fulton — USA Pawn" [ref=e207]
+            - generic "80+ Reviews in one Week":
+              - img
+              - generic: 80+ Reviews in one Week
+          - generic [ref=e208]:
+            - img "Carly — Axel's Pawn" [ref=e209]
+            - generic "+71% more reviews":
+              - img
+              - generic: +71% more reviews
+          - generic [ref=e210]:
+            - img "Joey — Buffalo Jewelry & Loan" [ref=e211]
+            - generic "+81% more reviews":
+              - img
+              - generic: +81% more reviews
+          - generic [ref=e213]:
+            - generic: Photo coming
+            - generic [ref=e214]: Crew tile
+          - generic [ref=e215]:
+            - generic: Photo coming
+            - generic [ref=e216]: Crew tile
+        - generic "Verified review-volume increases" [ref=e218]:
+          - generic [ref=e219]:
+            - generic [ref=e220]:
+              - generic [ref=e221]: Axel's Pawn
+              - generic [ref=e222]: Carly · Pawn shop · Minneapolis
+            - generic [ref=e223]: +71%
+          - generic [ref=e224]:
+            - generic [ref=e225]:
+              - generic [ref=e226]: Garden City
+              - generic [ref=e227]: Thomas · Roofing co · Atlanta
+            - generic [ref=e228]: +86%
+          - generic [ref=e229]:
+            - generic [ref=e230]:
+              - generic [ref=e231]: Cashco
+              - generic [ref=e232]: Morris · Pawn & loan · Houston
+            - generic [ref=e233]: +47%
+          - generic [ref=e234]:
+            - generic [ref=e235]:
+              - generic [ref=e236]: Buffalo Jewelry
+              - generic [ref=e237]: Joey · Pawn & loan · Buffalo
+            - generic [ref=e238]: +81%
+          - generic [ref=e239]:
+            - generic [ref=e240]:
+              - generic [ref=e241]: Smyrna
+              - generic [ref=e242]: Jason · Auto detail · Smyrna
+            - generic [ref=e243]: +41%
+          - generic [ref=e244]:
+            - generic [ref=e245]:
+              - generic [ref=e246]: CC Pawn
+              - generic [ref=e247]: Claiborne · Pawn shop · Mobile
+            - generic [ref=e248]: +71%
+          - generic [ref=e249]:
+            - generic [ref=e250]:
+              - generic [ref=e251]: Granters
+              - generic [ref=e252]: Vito · Auto repair · Phoenix
+            - generic [ref=e253]: +60%
+          - generic [ref=e254]:
+            - generic [ref=e255]:
+              - generic [ref=e256]: The Pawn Shop
+              - generic [ref=e257]: Chase · Pawn shop · Tampa
+            - generic [ref=e258]: +43%
+    - region "How Shmo Review works" [ref=e259]:
+      - generic [ref=e260]:
+        - generic [ref=e261]:
+          - generic [ref=e262]: ✦ How it works · 4 steps · ~12 seconds
+          - heading "From handoff to five stars, in one tap." [level=2] [ref=e263]:
+            - text: From handoff to
+            - emphasis [ref=e264]: five stars
+            - text: ", in one tap."
+        - article [ref=e265]:
+          - generic [ref=e266]:
+            - generic [ref=e267]: "01"
+            - heading "Put the card where customers can reach it" [level=3] [ref=e268]
+            - paragraph [ref=e269]: After the transaction — or right at the counter — your NFC card is there. The ask happens at the right moment, when the customer is happy.
+            - list "Put the card where customers can reach it details" [ref=e270]:
+              - listitem [ref=e271]: Works at checkout
+              - listitem [ref=e272]: Self-serve or crew-assisted
+              - listitem [ref=e273]: No app needed
+          - generic [ref=e278]:
+            - generic [ref=e280]:
+              - generic [ref=e281]: SHOP
+              - generic [ref=e282]: Tap to leave a review
+              - img [ref=e284]
+            - generic [ref=e286]: Handing over the card
+    - article [ref=e290]:
+      - generic [ref=e291]:
+        - generic [ref=e292]: "02"
+        - heading "Customer taps the back of their phone" [level=3] [ref=e293]
+        - paragraph [ref=e294]: iPhone XS+ and Android 5+ have NFC built in. The card sends a signed URL straight to their browser — no app, no login.
+        - list "Customer taps the back of their phone details" [ref=e295]:
+          - listitem [ref=e296]: No app
+          - listitem [ref=e297]: No login
+          - listitem [ref=e298]: NFC plus QR fallback
+      - generic [ref=e303]:
+        - generic [ref=e309]:
+          - img [ref=e311]
+          - generic [ref=e313]:
+            - generic [ref=e314]: Open in Safari
+            - generic [ref=e315]: g.page/shop-name/review
+        - generic [ref=e316]: Tap detected · opening
+    - article [ref=e320]:
+      - generic [ref=e321]:
+        - generic [ref=e322]: "03"
+        - heading "Your Google review page opens" [level=3] [ref=e323]
+        - paragraph [ref=e324]: Their browser jumps straight to your review form. They see your shop name, your photos, your star rating.
+        - list "Your Google review page opens details" [ref=e325]:
+          - listitem [ref=e326]: Direct Google link
+          - listitem [ref=e327]: Shop context visible
+          - listitem [ref=e328]: Fewer taps
+      - generic [ref=e333]:
+        - generic [ref=e334]:
+          - generic [ref=e335]:
+            - generic [ref=e336]: Your Shop
+            - generic [ref=e337]: 123 Main St · Open now
+          - generic [ref=e338]:
+            - generic [ref=e339]: Rate your experience
+            - generic [ref=e340]:
+              - img [ref=e341]
+              - img [ref=e501]
+              - img [ref=e503]
+              - img [ref=e505]
+              - img [ref=e507]
+          - generic [ref=e343]: Tell others what you liked…
+          - generic [ref=e344]: Post review
+        - generic [ref=e345]: Google review form
+    - article [ref=e349]:
+      - generic [ref=e350]:
+        - generic [ref=e351]: "04"
+        - heading "Five stars, one sentence" [level=3] [ref=e352]
+        - paragraph [ref=e353]: They tap five and type. The whole thing takes seconds. You get a verified Google review, by the next time you check.
+        - list "Five stars, one sentence details" [ref=e354]:
+          - listitem [ref=e355]: Posted in seconds
+          - listitem [ref=e356]: Verified review
+          - listitem [ref=e357]: Fresh local proof
+      - generic [ref=e362]:
+        - generic [ref=e363]:
+          - img [ref=e365]
+          - generic [ref=e367]: Posted
+          - generic [ref=e368]: Thanks for the 5-star review
+          - generic [ref=e369]:
+            - img [ref=e370]
+            - img [ref=e372]
+            - img [ref=e374]
+            - img [ref=e376]
+            - img [ref=e378]
+        - generic [ref=e380]: Five stars · one sentence
+    - region "Video testimonials" [ref=e382]:
+      - generic [ref=e383]:
+        - generic [ref=e384]:
+          - generic [ref=e385]: Crews on camera
+          - heading "Watch shops talk about the bulk math." [level=2] [ref=e386]:
+            - text: Watch shops talk about the
+            - emphasis [ref=e387]: bulk math
+            - text: .
+          - paragraph [ref=e388]: Real owners, real shops, no scripts. Watch what changed when every crew member had a card in their pocket.
+        - generic [ref=e389]:
+          - article [ref=e390]:
+            - generic [ref=e391] [cursor=pointer]:
+              - button "Play testimonial from Carly" [ref=e393]:
+                - img [ref=e394]
+              - generic [ref=e396]: 0:21
+              - paragraph [ref=e398]: “Got 14 in the first week. Marshall's already gotten five today and we've been open for an hour and a half.”
+            - generic [ref=e399]:
+              - generic [ref=e400]:
+                - generic [ref=e401]: Carly
+                - text: Owner
+              - generic [ref=e402]: Axel's Pawn
+          - article [ref=e403]:
+            - generic [ref=e404] [cursor=pointer]:
+              - button "Play testimonial from Carly" [ref=e406]:
+                - img [ref=e407]
+              - generic [ref=e409]: 0:58
+              - paragraph [ref=e411]: “He got five Google reviews in less than two hours of being open.”
+            - generic [ref=e412]:
+              - generic [ref=e413]:
+                - generic [ref=e414]: Carly
+                - text: Owner
+              - generic [ref=e415]: Axel's Pawn
+          - article [ref=e416]:
+            - generic [ref=e417]:
+              - button "Video coming soon" [disabled]:
+                - img
+              - generic [ref=e419]: —
+              - paragraph [ref=e421]: “Video coming soon — shop transcription pending.”
+            - generic [ref=e422]:
+              - generic [ref=e423]:
+                - generic [ref=e424]: Joey
+                - text: Owner
+              - generic [ref=e425]: Buffalo Jewelry & Loan
+    - region "Final call to action" [ref=e426]:
+      - generic [ref=e428]:
+        - generic [ref=e429]: ✦ Ready to ship
+        - heading "Pick a card, pick a kit, or build your own." [level=2] [ref=e430]:
+          - text: Pick a card, pick a kit, or build
+          - emphasis [ref=e431]: your own
+          - text: .
+        - paragraph [ref=e432]: Orders placed by Tuesday ship Friday — your crew taps for five-stars by next Monday.
+        - generic [ref=e433]:
+          - link "Shop the cards" [ref=e434] [cursor=pointer]:
+            - /url: /shmo-review
+          - link "Browse formats" [ref=e435] [cursor=pointer]:
+            - /url: /shmo-review
+  - contentinfo [ref=e436]:
+    - generic [ref=e437]:
+      - generic [ref=e438]:
+        - generic [ref=e439]:
+          - generic [ref=e441]: ShmoCard
+          - paragraph [ref=e442]: A family of NFC tools built for local shop crews. One brand. One dashboard. One-time card purchase.
+          - generic [ref=e443]:
+            - link "Instagram" [ref=e444] [cursor=pointer]:
+              - /url: "#"
+              - img [ref=e445]
+            - link "Facebook" [ref=e449] [cursor=pointer]:
+              - /url: "#"
+              - img [ref=e450]
+            - link "YouTube" [ref=e452] [cursor=pointer]:
+              - /url: "#"
+              - img [ref=e453]
+        - generic [ref=e456]:
+          - heading "Products" [level=4] [ref=e457]
+          - list [ref=e458]:
+            - listitem [ref=e459]:
+              - link "Shmo Review" [ref=e460] [cursor=pointer]:
+                - /url: /shmo-review
+            - listitem [ref=e461]:
+              - link "Shmo Biz Soon" [ref=e462] [cursor=pointer]:
+                - /url: /shmo-biz
+                - text: Shmo Biz
+                - generic [ref=e463]: Soon
+            - listitem [ref=e464]:
+              - link "Shmo Link Soon" [ref=e465] [cursor=pointer]:
+                - /url: /shmo-link
+                - text: Shmo Link
+                - generic [ref=e466]: Soon
+            - listitem [ref=e467]:
+              - link "Shmo Reputation Soon" [ref=e468] [cursor=pointer]:
+                - /url: /shmo-reputation
+                - text: Shmo Reputation
+                - generic [ref=e469]: Soon
+        - generic [ref=e470]:
+          - heading "Shop" [level=4] [ref=e471]
+          - list [ref=e472]:
+            - listitem [ref=e473]:
+              - link "CR-80 Card" [ref=e474] [cursor=pointer]:
+                - /url: /shmo-review/cr-80
+            - listitem [ref=e475]:
+              - link "L-Sign" [ref=e476] [cursor=pointer]:
+                - /url: /shmo-review/l-sign
+            - listitem [ref=e477]:
+              - link "L-Sign Black" [ref=e478] [cursor=pointer]:
+                - /url: /shmo-review/l-sign-black
+            - listitem [ref=e479]:
+              - link "Square Card" [ref=e480] [cursor=pointer]:
+                - /url: /shmo-review/square-card
+            - listitem [ref=e481]:
+              - link "All formats" [ref=e482] [cursor=pointer]:
+                - /url: /shmo-review
+        - generic [ref=e483]:
+          - heading "Help" [level=4] [ref=e484]
+          - list [ref=e485]:
+            - listitem [ref=e486]:
+              - link "How it works" [ref=e487] [cursor=pointer]:
+                - /url: "#how"
+            - listitem [ref=e488]:
+              - link "Shipping & returns" [ref=e489] [cursor=pointer]:
+                - /url: "#"
+            - listitem [ref=e490]:
+              - link "Contact support" [ref=e491] [cursor=pointer]:
+                - /url: "#"
+            - listitem [ref=e492]:
+              - link "hello@shmocard.com" [ref=e493] [cursor=pointer]:
+                - /url: mailto:hello@shmocard.com
+      - generic [ref=e494]:
+        - generic [ref=e495]: © ShmoCard 2026 · Built for crews. Priced for bulk.
+        - generic [ref=e496]:
+          - link "Privacy" [ref=e497] [cursor=pointer]:
+            - /url: /privacy-policy
+          - text: ·
+          - link "Terms" [ref=e498] [cursor=pointer]:
+            - /url: /terms-of-service
+  - button "Open Next.js Dev Tools" [ref=e514] [cursor=pointer]:
+    - img [ref=e515]
+  - alert [ref=e518]
+  - dialog "Shopping cart" [ref=e520]:
+    - banner [ref=e521]:
+      - heading "Your cart 4 items" [level=2] [ref=e522]:
+        - text: Your cart
+        - generic [ref=e523]: 4 items
+      - button "Close cart" [ref=e524] [cursor=pointer]:
+        - img [ref=e525]
+    - generic [ref=e527]: "Heads up: activate your cards in the app when they arrive."
+    - generic [ref=e528]:
+      - paragraph [ref=e529]: You unlocked everything. Nice crew, nice work.
+      - generic [ref=e530]:
+        - generic [ref=e533]:
+          - img [ref=e535]
+          - generic [ref=e538]: Shmocard app
+        - generic [ref=e539]:
+          - img [ref=e541]
+          - generic [ref=e544]: Free ebook
+        - generic [ref=e545]:
+          - img [ref=e547]
+          - generic [ref=e552]: Free shipping
+        - generic [ref=e553]:
+          - img [ref=e555]
+          - generic [ref=e559]: Mystery gift
+    - generic [ref=e560]:
+      - article [ref=e561]:
+        - img "Google Review NFC Tap Card (L Sign - Black)" [ref=e563]
+        - generic [ref=e564]:
+          - heading "Google Review NFC Tap Card (L Sign - Black)" [level=3] [ref=e565]
+          - generic [ref=e566]: $219.99
+          - paragraph [ref=e567]:
+            - generic [ref=e568]: "Option: 10 L Sign / Large"
+          - generic [ref=e569]:
+            - generic [ref=e570]:
+              - button "Decrease quantity" [disabled] [ref=e571]:
+                - img [ref=e572]
+              - generic [ref=e573]: "1"
+              - button "Increase quantity" [ref=e574] [cursor=pointer]:
+                - img [ref=e575]
+            - button "Remove" [ref=e577] [cursor=pointer]
+      - article [ref=e578]:
+        - img "FREE Google Review NFC Tap Card (CR80)" [ref=e580]
+        - generic [ref=e581]:
+          - heading "FREE Google Review NFC Tap Card (CR80)" [level=3] [ref=e582]
+          - generic [ref=e583]: $0.00
+          - paragraph [ref=e584]:
+            - generic [ref=e585]: "Option: 1 Card"
+          - button "Remove" [ref=e587] [cursor=pointer]
+      - generic [ref=e588]:
+        - heading "Round it out" [level=4] [ref=e589]
+        - generic [ref=e590]:
+          - button "Google Review NFC Tap Card (CR80) Google Review NFC Tap Card (CR80) from $30 Add" [ref=e591] [cursor=pointer]:
+            - img "Google Review NFC Tap Card (CR80)" [ref=e593]
+            - generic [ref=e594]:
+              - generic [ref=e595]: Google Review NFC Tap Card (CR80)
+              - generic [ref=e596]: from $30
+            - generic "Add" [ref=e597]: +
+          - button "Google Review NFC Tap Card (L Sign) Google Review NFC Tap Card (L Sign) from $30 Add" [ref=e598] [cursor=pointer]:
+            - img "Google Review NFC Tap Card (L Sign)" [ref=e600]
+            - generic [ref=e601]:
+              - generic [ref=e602]: Google Review NFC Tap Card (L Sign)
+              - generic [ref=e603]: from $30
+            - generic "Add" [ref=e604]: +
+          - button "Google Review NFC Tap Card (Plate) Google Review NFC Tap Card (Plate) from $30 Add" [ref=e605] [cursor=pointer]:
+            - img "Google Review NFC Tap Card (Plate)" [ref=e607]
+            - generic [ref=e608]:
+              - generic [ref=e609]: Google Review NFC Tap Card (Plate)
+              - generic [ref=e610]: from $30
+            - generic "Add" [ref=e611]: +
+    - contentinfo [ref=e612]:
+      - group [ref=e613]:
+        - generic "Have a code?" [ref=e614] [cursor=pointer]
+      - generic [ref=e615]:
+        - generic [ref=e616]:
+          - generic [ref=e617]: Subtotal
+          - generic [ref=e618]: $219.99
+        - generic [ref=e619]:
+          - generic [ref=e620]: Shipping
+          - emphasis [ref=e622]: Free
+        - generic [ref=e623]:
+          - generic [ref=e624]: Tax
+          - generic [ref=e625]: Calculated at checkout
+        - generic [ref=e626]:
+          - generic [ref=e627]: Total
+          - generic [ref=e628]: $219.99
+      - button "Tap to checkout — $219.99" [ref=e629] [cursor=pointer]
+      - generic [ref=e630]:
+        - generic [ref=e631]: Ships in 2 business days
+        - generic [ref=e633]: 30-day swap if a card flops
+        - generic [ref=e635]: Real humans on support
+      - generic [ref=e636]:
+        - generic [ref=e637]: Visa
+        - generic [ref=e638]: MC
+        - generic [ref=e639]: Amex
+        - generic [ref=e640]: Apple Pay
+        - generic [ref=e641]: G Pay
+        - generic [ref=e642]: PayPal

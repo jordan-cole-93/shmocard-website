@@ -1,0 +1,19 @@
+- generic [ref=e2]:
+  - generic [ref=e5]:
+    - generic [ref=e6]:
+      - link "Skip to content" [ref=e7] [cursor=pointer]:
+        - /url: "#checkout-main"
+      - generic [ref=e8]:
+        - banner [ref=e9]:
+          - link "Shmo Card Navigate to Online Store" [ref=e16] [cursor=pointer]:
+            - /url: https://shop.shmocard.com/
+        - generic [ref=e18]:
+          - generic [ref=e20]
+          - complementary [ref=e386]
+    - generic:
+      - progressbar
+  - generic [ref=e477]: Opens external website in a new window.
+  - generic [ref=e478]: Opens in a new window.
+  - generic [ref=e479]: Opens external website.
+  - status [ref=e480]
+  - alert [ref=e481]
